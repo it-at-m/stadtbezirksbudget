@@ -1,0 +1,17 @@
+management:
+  endpoints:
+    access:
+      default: none
+
+logging:
+  include-application-group: false
+  level:
+    org:
+      springframework: INFO
+
+camel:
+  main:
+    tracing: false
+
+# Custom properties
+output : mock:output
