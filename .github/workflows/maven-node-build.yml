@@ -15,10 +15,10 @@ jobs:
       fail-fast: false
       matrix:
         include: # hier müssen die Pfade angegeben werden
-          - app-path: refarch-backend
-          - app-path: refarch-frontend
-          - app-path: refarch-eai
-          - app-path: refarch-webcomponent
+          - app-path: stadtbezirksbudget-backend
+          - app-path: stadtbezirksbudget-frontend
+          - app-path: stadtbezirksbudget-eai
+          - app-path: stadtbezirksbudget-webcomponent
 
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-checkout@9767179088fd2e344d1a24c17404ab809a60f1b6 # v1.0.20
