@@ -16,8 +16,8 @@ on:
         description: Service-Name
         required: true
         options:
-          - refarch-backend
-          - refarch-eai
+          - stadtbezirksbudget-backend
+          - stadtbezirksbudget-eai
 
 jobs:
   release-maven:
