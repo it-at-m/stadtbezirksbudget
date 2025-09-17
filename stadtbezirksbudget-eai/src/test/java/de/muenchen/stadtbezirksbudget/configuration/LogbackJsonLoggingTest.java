@@ -1,4 +1,4 @@
-package de.muenchen.refarch.configuration;
+package de.muenchen.stadtbezirksbudget.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

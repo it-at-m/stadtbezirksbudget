@@ -40,7 +40,7 @@ logging:
       console: # set to empty to disable structured logging locally
   level:
     root: INFO
-    de.muenchen.refarch: DEBUG
+    de.muenchen.stadtbezirksbudget: DEBUG
     org.springframework.cache: TRACE
     org.springframework.web: DEBUG
 
