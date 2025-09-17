@@ -9,9 +9,9 @@
   },
   "app": {
     "name": {
-      "part1": "RefArch-",
-      "part2": "Kick",
-      "part3": "Starter",
+      "part1": "Stadt",
+      "part2": "bezirks",
+      "part3": "budget",
       "full": "@:app.name.part1@:app.name.part2@:app.name.part3"
     },
     "search": "Suche"
