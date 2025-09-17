@@ -1,4 +1,4 @@
-package de.muenchen.refarch;
+package de.muenchen.stadtbezirksbudget;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;

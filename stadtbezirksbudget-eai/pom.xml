@@ -10,11 +10,11 @@
         <relativePath />
     </parent>
 
-    <groupId>de.muenchen.refarch</groupId>
-    <artifactId>refarch-eai</artifactId>
+    <groupId>de.muenchen.stadtbezirksbudget</groupId>
+    <artifactId>stadtbezirksbudget-eai</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>refarch-eai</name>
+    <name>stadtbezirksbudget-eai</name>
     <description>This is the default starting project for a EAI project based on the reference architecture of it@M</description>
     <url>https://github.com/it-at-m/refarch-templates</url>
     <licenses>

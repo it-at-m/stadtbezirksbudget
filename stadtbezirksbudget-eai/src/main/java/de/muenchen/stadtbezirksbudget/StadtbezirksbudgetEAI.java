@@ -1,12 +1,12 @@
-package de.muenchen.refarch;
+package de.muenchen.stadtbezirksbudget;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @SuppressWarnings("PMD.UseUtilityClass")
-public class Application {
+public class StadtbezirksbudgetEAI {
     public static void main(final String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(StadtbezirksbudgetEAI.class, args);
     }
 }

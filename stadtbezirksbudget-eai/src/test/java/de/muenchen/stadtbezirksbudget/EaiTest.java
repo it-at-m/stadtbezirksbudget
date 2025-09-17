@@ -1,4 +1,4 @@
-package de.muenchen.refarch;
+package de.muenchen.stadtbezirksbudget;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
