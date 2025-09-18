@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.configuration.security;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Ticker;
+import de.muenchen.stadtbezirksbudget.utils.LogUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -91,7 +92,7 @@ public class UserInfoAuthoritiesConverter implements Converter<Jwt, Collection<G
             final Map<String, Object> map = restTemplate.exchange(this.userInfoUri, HttpMethod.GET, entity,
                     Map.class).getBody();
 
-            log.debug("Response from user-info Endpoint: {}", map);
+            log.debug("Response from user-info Endpoint: {}", LogUtils.sanitizeObjectForLog(map));
             if (map != null && map.containsKey(CLAIM_AUTHORITIES)) {
                 authorities = asAuthorities(map.get(CLAIM_AUTHORITIES));
             }
