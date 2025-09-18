@@ -1,5 +1,7 @@
 package de.muenchen.stadtbezirksbudget.configuration.filter;
 
+import static de.muenchen.stadtbezirksbudget.utils.LogUtils.sanitizeForLog;
+
 import de.muenchen.stadtbezirksbudget.configuration.security.SecurityProperties;
 import de.muenchen.stadtbezirksbudget.security.AuthUtils;
 import jakarta.servlet.FilterChain;
@@ -61,9 +63,9 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
         if (checkForLogging(request)) {
             log.info("User {} executed {} on URI {} with http status {}",
-                    AuthUtils.getUsername(),
+                    sanitizeForLog(AuthUtils.getUsername()),
                     request.getMethod(),
-                    request.getRequestURI(),
+                    sanitizeForLog(request.getRequestURI()),
                     response.getStatus());
         }
     }

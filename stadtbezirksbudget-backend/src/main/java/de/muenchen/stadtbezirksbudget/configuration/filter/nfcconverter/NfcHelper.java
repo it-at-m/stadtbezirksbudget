@@ -1,5 +1,7 @@
 package de.muenchen.stadtbezirksbudget.configuration.filter.nfcconverter;
 
+import static de.muenchen.stadtbezirksbudget.utils.LogUtils.sanitizeForLog;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import edu.umd.cs.findbugs.annotations.SuppressMatchType;
 import jakarta.servlet.http.Cookie;
@@ -38,10 +40,10 @@ public class NfcHelper {
             return null;
         }
 
-        log.debug("String BEFORE nfc conversion: \"{}\".", in);
+        log.debug("String BEFORE nfc conversion: \"{}\".", sanitizeForLog(in));
         log.debug("Length of String BEFORE nfc conversion: {}.", in.length());
         final String nfcConvertedContent = Normalizer.normalize(in, Normalizer.Form.NFC);
-        log.debug("String AFTER nfc conversion: \"{}\".", nfcConvertedContent);
+        log.debug("String AFTER nfc conversion: \"{}\".", sanitizeForLog(nfcConvertedContent));
         log.debug("Length of String AFTER nfc conversion: {}.", nfcConvertedContent.length());
         return nfcConvertedContent;
     }
@@ -55,7 +57,12 @@ public class NfcHelper {
      * @see Normalizer#normalize(CharSequence, Normalizer.Form)
      */
     public static StringBuffer nfcConverter(final StringBuffer in) {
-        return new StringBuffer(nfcConverter(in.toString()));
+        if (in == null) {
+            log.debug("StringBuffer BEFORE nfc conversion is \"null\".");
+            return null;
+        }
+        final String converted = nfcConverter(in.toString());
+        return converted == null ? null : new StringBuffer(converted);
     }
 
     /**
