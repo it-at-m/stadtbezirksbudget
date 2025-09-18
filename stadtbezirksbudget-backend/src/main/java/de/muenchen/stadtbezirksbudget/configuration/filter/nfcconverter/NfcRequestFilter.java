@@ -52,12 +52,12 @@ public class NfcRequestFilter extends OncePerRequestFilter {
         log.debug("Intercepting request for URI {}", sanitizeForLog(request.getRequestURI()));
 
         final String contentType = request.getContentType();
-        log.debug("ContentType for request with URI: \"{}\"", contentType);
+        log.debug("ContentType for request with URI: \"{}\"", sanitizeForLog(contentType));
         if (contentType != null && CONTENT_TYPES.stream().anyMatch(contentType::startsWith)) {
             log.debug("Processing request {}.", sanitizeForLog(request.getRequestURI()));
             filterChain.doFilter(new NfcRequest(request), response);
         } else {
-            log.debug("Skip processing of HTTP request since it's content type \"{}\" is not in whitelist.", contentType);
+            log.debug("Skip processing of HTTP request since it's content type \"{}\" is not in whitelist.", sanitizeForLog(contentType));
             filterChain.doFilter(request, response);
         }
     }
