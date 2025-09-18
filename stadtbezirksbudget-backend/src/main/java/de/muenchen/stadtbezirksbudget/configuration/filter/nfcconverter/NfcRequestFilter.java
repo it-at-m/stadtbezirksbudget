@@ -1,7 +1,5 @@
 package de.muenchen.stadtbezirksbudget.configuration.filter.nfcconverter;
 
-import static de.muenchen.stadtbezirksbudget.utils.LogUtils.sanitizeForLog;
-
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,15 +47,15 @@ public class NfcRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         log.debug("Request-Type={}", request.getClass().getName());
-        log.debug("Intercepting request for URI {}", sanitizeForLog(request.getRequestURI()));
+        log.debug("Intercepting request for URI {}", request.getRequestURI());
 
         final String contentType = request.getContentType();
-        log.debug("ContentType for request with URI: \"{}\"", sanitizeForLog(contentType));
+        log.debug("ContentType for request with URI: \"{}\"", contentType);
         if (contentType != null && CONTENT_TYPES.stream().anyMatch(contentType::startsWith)) {
-            log.debug("Processing request {}.", sanitizeForLog(request.getRequestURI()));
+            log.debug("Processing request {}.", request.getRequestURI());
             filterChain.doFilter(new NfcRequest(request), response);
         } else {
-            log.debug("Skip processing of HTTP request since it's content type \"{}\" is not in whitelist.", sanitizeForLog(contentType));
+            log.debug("Skip processing of HTTP request since it's content type \"{}\" is not in whitelist.", contentType);
             filterChain.doFilter(request, response);
         }
     }
