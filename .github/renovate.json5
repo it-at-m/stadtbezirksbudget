@@ -8,7 +8,7 @@
   "commitMessageAction": "Upgrade",
   "packageRules": [
     {
-      "matchUpdateTypes": ["pin"],
+      "matchUpdateTypes": ["pin", "pinDigest", "digest"],
       "commitMessagePrefix": "📌",
       "commitMessageAction": "Pin"
     },
