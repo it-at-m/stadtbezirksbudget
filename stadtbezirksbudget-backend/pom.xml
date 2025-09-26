@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.stadtbezirksbudget</groupId>
     <artifactId>stadtbezirksbudget-backend</artifactId>
-    <version>0.0.0</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>stadtbezirksbudget-backend</name>
     <description>This is the default starting project for a backend project based on the reference architecture of it@M</description>
@@ -27,7 +27,7 @@
         <url>https://github.com/it-at-m/stadtbezirksbudget.git</url>
         <connection>scm:git:https://github.com/it-at-m/stadtbezirksbudget.git</connection>
         <developerConnection>scm:git:https://github.com/it-at-m/stadtbezirksbudget.git</developerConnection>
-        <tag>stadtbezirksbudget-backend-0.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <developers>
         <developer>
