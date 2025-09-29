@@ -4,6 +4,7 @@
     "github>it-at-m/refarch//refarch-tools/refarch-renovate/refarch-renovate-config.json5",
     "schedule:weekends",
   ],
+  "timezone": "Europe/Berlin",
   "labels": ["📌 Dependencies"],
   "commitMessagePrefix": "⬆️",
   "commitMessageAction": "Upgrade",
