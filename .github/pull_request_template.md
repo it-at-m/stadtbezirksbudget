@@ -12,6 +12,6 @@ Issue: #XXX
 ## Checklist
 
 - [ ] Updated documentation
-- [ ] Added unit, integration and component tests
+- [ ] Added automated tests (unit/integration/component)
 - [ ] Complied with UI/UX design (if UI change was made)
 - [ ] Met all acceptance criteria of the issue
