@@ -2,16 +2,19 @@
 
 ## Context
 
-The term components stands for the vue components, in the form of single-file components, in this context. These contain a template,
-a script part and styling.
+In this context, components refer to Vue single-file components, which consist of a template, script, and styling. Separating functional logic from components
+improves maintainability, reusability, and testability. When logic is tightly coupled to components, it becomes harder to reuse, test, and maintain. By moving
+logic to composables or services, we promote a cleaner architecture and better separation of concerns.
 
 ## Decision
 
-There should be no functional logic in components. The code of a component should be limited to data binding.
-The logic, apart from data binding, is implemented in composables or services.
+Vue components don't contain functional logic. The code within a component is limited to data binding and presentation. All other logic, apart from
+data binding, is implemented in composables or services.
 
 ## Consequences
 
-The logic is easier to test because it can be tested independently of the components. The logic may need to be
-written more generically because it is not coupled to the components.
-
+- Logic is easier to test because it can be tested independently of the components.
+- Separation of concerns is improved, making the codebase more maintainable and scalable.
+- Logic becomes more reusable across different components.
+- Logic may need to be written more generically, as it is not coupled to specific components.
+- There may be a slight increase in abstraction and initial onboarding effort for new developers.

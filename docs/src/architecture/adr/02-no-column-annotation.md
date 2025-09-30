@@ -2,22 +2,21 @@
 
 ## Context
 
-The code should be readable and contain no unnecessary elements.
-Consequently, we should avoid redundant information.
-The default behavior of Hibernate in our application is that the name of the table column and the name of the property are equal.
+To keep the codebase readable and maintainable, we aim to avoid unnecessary or redundant elements.
+In previous projects, mismatches between property names and column names have led to confusion and errors.
+Hibernate's default behavior in our application is to map property names directly to table column names, which supports clarity and consistency.
 
 ## Decision
 
-Hibernate's `@Column` annotation is only used when absolutely necessary, for example when the name of the table column and the name of the property differ.
+Hibernate's `@Column` annotation is only used when strictly necessary, such as when the property name and the table column name differ.
+In general, property and column names should always match.
 
-Mainly, the name should match.
-
-Additional column definitions are not done by Hibernate, as we use Flyway for versioning database schemas.
+Additional column definitions are managed via Flyway, not Hibernate, to ensure consistent database schema versioning.
 
 ## Consequences
 
-Renaming will affect the entire code (entities, dtos). This shows once again how important a well-thought-out naming is.
-
-It is very important that the column name and the property name must be the same.
-This way, while examining the database, it is immediately apparent which property in the source code corresponds to each part of it.
-This should also increase comprehension because there are no different terms for the same things.
+- Renaming a property or column will require changes throughout the codebase (entities, DTOs, etc.), highlighting the importance of thoughtful naming from the
+  start.
+- Strictly matching property and column names improves traceability between code and database, making it easier to understand and maintain both.
+- Consistency reduces the risk of errors and misunderstandings, as there are no differing terms for the same concept.
+- If the rule is not followed, it may lead to confusion, harder debugging, and increased maintenance effort.
