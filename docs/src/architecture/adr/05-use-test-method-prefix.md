@@ -17,4 +17,3 @@ frontend and backend test methods.
 - Automated tooling and test runners can reliably discover test methods.
 - Searching for tests in the codebase becomes more straightforward.
 - Method names are slightly longer due to the prefix.
-- Migrating existing methods to the new convention may require some effort.

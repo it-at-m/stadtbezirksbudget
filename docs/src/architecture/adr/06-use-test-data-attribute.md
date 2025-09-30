@@ -8,7 +8,7 @@ reducing false positives/negatives.
 
 ## Decision
 
-All HTML tags that need to be tested must have a `data-test` attribute that uniquely identifies the element within the tested component.
+All HTML tags that need to be tested have a `data-test` attribute that uniquely identifies the element within the tested component.
 
 ## Consequences
 

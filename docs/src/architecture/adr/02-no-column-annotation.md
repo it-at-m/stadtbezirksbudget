@@ -9,7 +9,7 @@ Hibernate's default behavior in our application is to map property names directl
 ## Decision
 
 Hibernate's `@Column` annotation is only used when strictly necessary, such as when the property name and the table column name differ.
-In general, property and column names should always match.
+In general, property and column names always match.
 
 Additional column definitions are managed via Flyway, not Hibernate, to ensure consistent database schema versioning.
 
@@ -19,4 +19,3 @@ Additional column definitions are managed via Flyway, not Hibernate, to ensure c
   start.
 - Strictly matching property and column names improves traceability between code and database, making it easier to understand and maintain both.
 - Consistency reduces the risk of errors and misunderstandings, as there are no differing terms for the same concept.
-- If the rule is not followed, it may lead to confusion, harder debugging, and increased maintenance effort.

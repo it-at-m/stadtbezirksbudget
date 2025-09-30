@@ -18,5 +18,3 @@ are reviewed to ensure that no sensitive or internal information is exposed to t
 - There is a risk of exposing sensitive or internal information if error messages are not properly reviewed and sanitized.
 - Error message formats may need to be standardized for consistency and clarity.
 - Implementing this approach may require changes to existing error handling logic in the backend.
-
-## References
