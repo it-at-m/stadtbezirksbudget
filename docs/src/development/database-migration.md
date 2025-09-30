@@ -11,27 +11,27 @@ Migrations can mostly be generated using the built-in IntelliJ feature for datab
 To make any changes to the database schema:
 
 1. **Create a New SQL Script**: Create a new SQL script in the migration folder located at `src/main/resources/db/migration` in the backend codebase.
-  
+
 2. **Naming Convention**: The script name must adhere to the following format:
 
    ```text
    V<version_number>__<description_split_with_underscores>.sql
    ```
+
    - **Example**: If the last migration is `V10__add_users_table.sql`, the next one should be named `V11__add_orders_table.sql`.
-  
-3. **Version Number Management**: 
+
+3. **Version Number Management**:
    - The `<version_number>` should be the next available number, ensuring uniqueness across all migration scripts.
-   - To maintain coordination among team members, it's essential to communicate which version numbers are being used for new migrations. 
+   - To maintain coordination among team members, it's essential to communicate which version numbers are being used for new migrations.
    - Before creating a new migration, check the existing migration files to confirm the latest version number.
-  
-4. **Handling Naming Conflicts**: 
+
+4. **Handling Naming Conflicts**:
    - When reviewing and merging pull requests (PRs) that include migration files, be particularly vigilant for naming conflicts.
    - You can identify a naming conflict if the migration file shows as `modified` rather than `added` in the PR.
 
 ## Important Guidelines
 
 - **Immutable Migrations**: Once a migration script has been applied to the database, it **cannot** be modified. If any errors are discovered in an applied migration, a new migration script must be created to rectify the issue.
-  
 - **PostgreSQL Dialect**: All SQL migration scripts must be written using the PostgreSQL dialect to ensure compatibility with the database.
 
 ## Example Workflow
