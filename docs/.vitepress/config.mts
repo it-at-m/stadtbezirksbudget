@@ -20,30 +20,46 @@ const vitepressConfig = defineConfig({
     nav: [
       { text: "Home", link: "/" },
       { text: "About", link: "/about/" },
-      { text: "Features", items: [
-          { text: "Features", link: "/features/" }
-        ]
+      {
+        text: "Features",
+        items: [{ text: "Features", link: "/features/" }],
       },
-      { text: "Architecture", items: [
-          { text: "Architecture", link: "/architecture/" }
-        ]
+      {
+        text: "Architecture",
+        items: [{ text: "Architecture", link: "/architecture/" }],
       },
-      { text: "Development", items: [
-          { text: "Database Migration", link: "/development/database-migration" }
-        ]
+      {
+        text: "Development",
+        items: [
+          { text: "Tools", link: "/development/tools" },
+          {
+            text: "Database Migration",
+            link: "/development/database-migration",
+          },
+        ],
       },
     ],
     sidebar: [
       { text: "About", link: "/about/" },
-      { text: "Features", link: "/features/", items: [
-        ]
+      {
+        text: "Features",
+        link: "/features/",
+        items: [],
       },
-      { text: "Architecture", link: "/architecture/", items: [
-        ]
+      {
+        text: "Architecture",
+        link: "/architecture/",
+        items: [],
       },
-      { text: "Development", items: [
-          { text: "Database Migration", link: "/development/database-migration" }
-        ]
+      {
+        text: "Development",
+        items: [
+          { text: "Tools", link: "/development/tools" },
+          {
+            text: "Database Migration",
+            link: "/development/database-migration",
+          },
+        ],
       },
     ],
     socialLinks: [
