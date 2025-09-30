@@ -4,8 +4,8 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 // https://vitepress.dev/reference/site-config
 const vitepressConfig = defineConfig({
   base: "/stadtbezirksbudget/",
-  title: "RefArch Docs Template",
-  description: "Documentation template from the RefArch Templates",
+  title: "Stadtbezirksbudget",
+  description: "Documentation for Stadtbezirksbudget",
   head: [
     [
       "link",
@@ -15,29 +15,59 @@ const vitepressConfig = defineConfig({
       },
     ],
   ],
-  lastUpdated: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
+      { text: "About", link: "/about/" },
       {
-        text: "Docs",
+        text: "Features",
+        items: [{ text: "Features", link: "/features/" }],
+      },
+      {
+        text: "Architecture",
+        items: [{ text: "Architecture", link: "/architecture/" }],
+      },
+      {
+        text: "Development",
         items: [
-          { text: "Example", link: "/example" },
-          { text: "External link", link: "https://refarch.oss.muenchen.de" },
+          { text: "Tools", link: "/development/tools" },
+          {
+            text: "Database Migration",
+            link: "/development/database-migration",
+          },
         ],
       },
     ],
     sidebar: [
-      { text: "Example", link: "/example" },
-      { text: "External link", link: "https://refarch.oss.muenchen.de" },
+      { text: "About", link: "/about/" },
+      {
+        text: "Features",
+        link: "/features/",
+        items: [],
+      },
+      {
+        text: "Architecture",
+        link: "/architecture/",
+        items: [],
+      },
+      {
+        text: "Development",
+        items: [
+          { text: "Tools", link: "/development/tools" },
+          {
+            text: "Database Migration",
+            link: "/development/database-migration",
+          },
+        ],
+      },
     ],
     socialLinks: [
-      { icon: "github", link: "https://github.com/it-at-m/refarch-templates" },
+      { icon: "github", link: "https://github.com/it-at-m/stadtbezirksbudget" },
     ],
     editLink: {
       pattern:
-        "https://github.com/it-at-m/refarch-templates/blob/main/docs/:path",
+        "https://github.com/it-at-m/stadtbezirksbudget/blob/main/docs/src/:path",
       text: "View this page on GitHub",
     },
     footer: {
@@ -54,6 +84,12 @@ const vitepressConfig = defineConfig({
     image: {
       lazyLoading: true,
     },
+  },
+  srcDir: "./src",
+  cleanUrls: true,
+  lastUpdated: true,
+  vite: {
+    publicDir: "../public",
   },
 });
 

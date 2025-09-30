@@ -3,16 +3,15 @@
 layout: home
 
 hero:
-  name: "RefArch Docs Template"
-  text: "Starter files for Vitepress-based documentation"
-  tagline: "This is the default template for writing documentation in RefArch applications"
+  name: "Stadtbezirksbudget"
+  tagline: "This is the documentation for the Stadtbezirksbudget project"
   actions:
     - theme: brand
-      text: Example
-      link: /example
+      text: Home
+      link: /
     - theme: alt
-      text: ⤴ External link
-      link: https://refarch.oss.muenchen.de
+      text: ⤴ Repository
+      link: https://github.com/it-at-m/stadtbezirksbudget
 features:
   - icon: 1️⃣
     title: Title 1
