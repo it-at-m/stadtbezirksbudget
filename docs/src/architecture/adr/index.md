@@ -1,6 +1,6 @@
 # Architecture Design Records (ADRs)
 
-TODO: Introduction-Text
+Architecture Decision Records (ADR) are documented architectural decisions, each of which clarifies specific coding rules and guidelines that collectively shape our code.
 
 - [ADR-00 Is-Template](./00-is-template)
 - [ADR-01 Use-Immutable-Variables](./01-use-immutable-variables)
