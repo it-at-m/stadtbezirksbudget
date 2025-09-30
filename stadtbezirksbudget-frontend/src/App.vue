@@ -58,9 +58,7 @@
     <v-navigation-drawer v-model="drawer">
       <v-list>
         <v-list-item :to="{ name: ROUTES_GETSTARTED }">
-          <v-list-item-title>
-            Erste Schritte
-          </v-list-item-title>
+          <v-list-item-title> Erste Schritte </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

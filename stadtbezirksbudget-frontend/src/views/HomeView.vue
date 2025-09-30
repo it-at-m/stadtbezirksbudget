@@ -29,7 +29,6 @@ import { checkHealth } from "@/api/health-client";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
 
-
 const snackbarStore = useSnackbarStore();
 const status = ref("DOWN");
 

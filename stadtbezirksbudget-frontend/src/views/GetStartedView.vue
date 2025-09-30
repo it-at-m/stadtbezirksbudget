@@ -2,9 +2,7 @@
   <v-container>
     <v-row class="text-center">
       <v-col>
-        <h1 class="text-h3 font-weight-bold mb-10">
-          Dokumentation
-        </h1>
+        <h1 class="text-h3 font-weight-bold mb-10">Dokumentation</h1>
         <h3>Weiterführende Links sind hier zu finden:</h3>
         <div>
           <a
