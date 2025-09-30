@@ -15,7 +15,6 @@ const vitepressConfig = defineConfig({
       },
     ],
   ],
-  lastUpdated: true,
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -54,6 +53,12 @@ const vitepressConfig = defineConfig({
     image: {
       lazyLoading: true,
     },
+  },
+  srcDir: "./src",
+  cleanUrls: true,
+  lastUpdated: true,
+  vite: {
+    publicDir: "../public",
   },
 });
 
