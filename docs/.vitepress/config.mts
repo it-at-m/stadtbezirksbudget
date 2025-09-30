@@ -31,6 +31,7 @@ const vitepressConfig = defineConfig({
       {
         text: "Development",
         items: [
+          { text: "Conventions", link: "/development/conventions" },
           { text: "Tools", link: "/development/tools" },
           {
             text: "Database Migration",
@@ -54,6 +55,7 @@ const vitepressConfig = defineConfig({
       {
         text: "Development",
         items: [
+          { text: "Conventions", link: "/development/conventions" },
           { text: "Tools", link: "/development/tools" },
           {
             text: "Database Migration",
