@@ -1,9 +1,11 @@
 import { createI18n } from "vue-i18n";
 import { de as deVuetify } from "vuetify/locale";
 
-type MessageSchema = typeof messages.de;
-type Locales = "de";
+interface MessageSchema {
+  $vuetify: typeof deVuetify;
+}
 
+type Locales = "de";
 const messages = {
   de: {
     $vuetify: {
