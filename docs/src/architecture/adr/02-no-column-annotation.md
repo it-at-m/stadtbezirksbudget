@@ -1,4 +1,4 @@
-# ADR-02 No-Hibernate-Column
+# ADR-02 No-Column-Annotation
 
 ## Context
 

@@ -2,7 +2,7 @@
 
 ## Context
 
-The code should have a certain uniformity. This also applies to the tests.
+The code should have a certain uniformity. This also applies to the method names of test classes.
 
 ## Decision
 

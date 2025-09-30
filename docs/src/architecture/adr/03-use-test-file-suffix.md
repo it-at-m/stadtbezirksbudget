@@ -11,4 +11,4 @@ All test files in the frontend end with the suffix `.test` (instead of .spec).
 
 ## Consequences
 
-Other than code uniformity and a slightly longer class name, no implications are noticeable.
+Code uniformity improves but class names are slightly longer.
