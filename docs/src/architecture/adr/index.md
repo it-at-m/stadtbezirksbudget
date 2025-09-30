@@ -10,3 +10,6 @@ TODO: Introduction-Text
 - [ADR-05 Use-Test-Method-Prefix](./05-use-test-method-prefix)
 - [ADR-06 Use-Test-Data-Attribute](./06-use-test-data-attribute)
 - [ADR-07 Reduce-Testing-Of-Mapping](./07-reduce-testing-of-mapping)
+- [ADR-08 Define-Dtos-As-Records](./08-define-dtos-as-records)
+- [ADR-09 No-Complex-Frontend-Components](./09-no-complex-frontend-components)
+- [ADR-10 Send-Api-Error-Message](./10-send-api-error-message)
