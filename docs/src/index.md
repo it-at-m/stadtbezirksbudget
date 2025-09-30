@@ -7,11 +7,11 @@ hero:
   tagline: "This is the documentation for the Stadtbezirksbudget project"
   actions:
     - theme: brand
-      text: Home
-      link: /
+      text: About
+      link: /about
     - theme: alt
-      text: ⤴ Repository
-      link: https://github.com/it-at-m/stadtbezirksbudget
+      text: Architecture
+      link: /architecture/
 features:
   - icon: 1️⃣
     title: Title 1
