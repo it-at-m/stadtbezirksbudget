@@ -28,16 +28,16 @@ This section provides an overview of the tools utilized in the project and their
   server-side applications.
 - [spring.io](https://spring.io/)
 
-## Vuetify
-
-- **Frontend Framework**: Vuetify, built on Vue.js, is employed for developing the user interface, offering a rich set of components and a responsive design
-  system.
-- [vuetifyjs.com](https://vuetifyjs.com/)
-
 ## Vue.js
 
 - **Frontend Framework**: Vue.js is the underlying JavaScript framework used for building interactive user interfaces.
 - [vuejs.org](https://vuejs.org/)
+
+## Vuetify
+
+- **UI Component Library**: Vuetify, built on Vue.js, is employed for developing the user interface, offering a rich set of Material Design components and a
+  responsive design system.
+- [vuetifyjs.com](https://vuetifyjs.com/)
 
 ## VitePress
 
