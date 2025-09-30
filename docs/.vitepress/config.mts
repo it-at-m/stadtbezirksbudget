@@ -19,8 +19,32 @@ const vitepressConfig = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
+      { text: "About", link: "/about/" },
+      { text: "Features", items: [
+          { text: "Features", link: "/features/" }
+        ]
+      },
+      { text: "Architecture", items: [
+          { text: "Architecture", link: "/architecture/" }
+        ]
+      },
+      { text: "Development", items: [
+          { text: "Database Migration", link: "/development/database-migration" }
+        ]
+      },
     ],
     sidebar: [
+      { text: "About", link: "/about/" },
+      { text: "Features", link: "/features/", items: [
+        ]
+      },
+      { text: "Architecture", link: "/architecture/", items: [
+        ]
+      },
+      { text: "Development", items: [
+          { text: "Database Migration", link: "/development/database-migration" }
+        ]
+      },
     ],
     socialLinks: [
       { icon: "github", link: "https://github.com/it-at-m/stadtbezirksbudget" },
