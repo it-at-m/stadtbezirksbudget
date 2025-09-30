@@ -4,8 +4,8 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 // https://vitepress.dev/reference/site-config
 const vitepressConfig = defineConfig({
   base: "/stadtbezirksbudget/",
-  title: "RefArch Docs Template",
-  description: "Documentation template from the RefArch Templates",
+  title: "Stadtbezirksbudget",
+  description: "Documentation for Stadtbezirksbudget",
   head: [
     [
       "link",
@@ -19,24 +19,15 @@ const vitepressConfig = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      {
-        text: "Docs",
-        items: [
-          { text: "Example", link: "/example" },
-          { text: "External link", link: "https://refarch.oss.muenchen.de" },
-        ],
-      },
     ],
     sidebar: [
-      { text: "Example", link: "/example" },
-      { text: "External link", link: "https://refarch.oss.muenchen.de" },
     ],
     socialLinks: [
-      { icon: "github", link: "https://github.com/it-at-m/refarch-templates" },
+      { icon: "github", link: "https://github.com/it-at-m/stadtbezirksbudget" },
     ],
     editLink: {
       pattern:
-        "https://github.com/it-at-m/refarch-templates/blob/main/docs/:path",
+        "https://github.com/it-at-m/stadtbezirksbudget/blob/main/docs/src/:path",
       text: "View this page on GitHub",
     },
     footer: {
