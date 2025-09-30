@@ -21,7 +21,7 @@ A commit message should follow the format:
 Examples for possible commit messages:
 
 - `🐛 Fix error while user image is loading`
-- `✨ Add editing todos`
+- `✨ Add user registration dialog`
 - `📝 Update README with new installation instructions`
 
 ## Branch naming
