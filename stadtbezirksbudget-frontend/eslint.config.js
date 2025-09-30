@@ -28,7 +28,6 @@ export default defineConfigWithVueTs(
         { registeredComponentsOnly: false },
       ],
     },
-    settings: {},
   },
   globalIgnores(["dist", "target", "node_modules", "env.d.ts"])
 );
