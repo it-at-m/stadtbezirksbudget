@@ -1,7 +1,7 @@
 name: ✨ Feature request
 description: Suggest an idea or possible new feature for this project.
-title: "[Feature] "
-labels: ["Type: Feature"]
+title: "✨ "
+labels: ["✨ Enhancement"]
 body:
   - type: markdown
     attributes:
@@ -13,16 +13,15 @@ body:
     attributes:
       value: "## General"
   - type: dropdown
-    id: template
+    id: component
     attributes:
-      label: Relevant template
+      label: Relevant component
       multiple: true
-      description: Name(s) of the affected template(s) (if applicable)
+      description: Name(s) of the affected component(s) (if applicable)
       options:
-        - refarch-frontend
-        - refarch-backend
-        - refarch-eai
-        - refarch-webcomponent
+        - stadtbezirksbudget-frontend
+        - stadtbezirksbudget-backend
+        - stadtbezirksbudget-eai
     validations:
       required: false
   - type: textarea

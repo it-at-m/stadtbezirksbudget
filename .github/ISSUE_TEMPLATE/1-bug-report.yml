@@ -1,7 +1,7 @@
-name: 🐞 Bug report
+name: 🐛 Bug report
 description: Report a bug to help the project improve.
-title: "[Bug] "
-labels: ["Type: Bug"]
+title: "🐛 "
+labels: ["🐛 Bug"]
 body:
   - type: markdown
     attributes:
@@ -50,16 +50,15 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: template
+    id: component
     attributes:
-      label: Affected template
+      label: Relevant component
       multiple: true
-      description: Name(s) of the affected template(s) (if applicable)
+      description: Name(s) of the affected component(s) (if applicable)
       options:
-        - refarch-frontend
-        - refarch-backend
-        - refarch-eai
-        - refarch-webcomponent
+        - stadtbezirksbudget-frontend
+        - stadtbezirksbudget-backend
+        - stadtbezirksbudget-eai
     validations:
       required: false
   - type: input

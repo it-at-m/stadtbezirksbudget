@@ -1,7 +1,7 @@
-name: 📄 Documentation change (not web documentation)
-description: Suggest a documentation change for this project (should not be used for topics related to the web documentation, see 'RefArch - Documentation' below)
-title: "[Documentation] "
-labels: ["Type: Documentation"]
+name: 📝 Documentation change
+description: Suggest a documentation change for this project
+title: "📝 "
+labels: ["📝 Documentation"]
 body:
   - type: markdown
     attributes:
@@ -13,17 +13,15 @@ body:
     attributes:
       value: "## General"
   - type: dropdown
-    id: template
+    id: component
     attributes:
-      label: Relevant documentation
+      label: Relevant component
       multiple: true
-      description: Affected documentation parts
+      description: Name(s) of the affected component(s) (if applicable)
       options:
-        - refarch-frontend
-        - refarch-backend
-        - refarch-eai
-        - refarch-webcomponent
-        - Other
+        - stadtbezirksbudget-frontend
+        - stadtbezirksbudget-backend
+        - stadtbezirksbudget-eai
     validations:
       required: true
   - type: textarea
