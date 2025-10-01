@@ -1,6 +1,7 @@
 name: 📝 Documentation change
 description: Suggest a documentation change for this project
 title: "📝 "
+type: task
 labels: ["📝 Documentation"]
 body:
   - type: markdown
@@ -48,6 +49,28 @@ body:
       description: Additional context (references, links, screenshots, ...) that might be helpful
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: "## Definitions"
+  - type: checkboxes
+    id: DoR
+    attributes:
+      label: Definition of Ready (DoR)
+      options:
+        - label: The user story is clearly and comprehensively formulated.
+        - label: Acceptance criteria are clearly and comprehensively formulated
+        - label: The user story was estimated.
+        - label: The user story was discussed with the PO or contact person from the department.
+  - type: checkboxes
+    id: DoD
+    attributes:
+      label: Definition of Done (DoD)
+      options:
+        - label: The code has been peer reviewed
+        - label: The code has been documented.
+        - label: There is a UX design (decision) [may only be necessary for front-end tasks].
+        - label: The user story has been fully implemented and is available on the test environment.
+        - label: The implementation of the acceptance criteria was approved by the PO or the contact person from the department.
   - type: markdown
     attributes:
       value: "## Confirmations"

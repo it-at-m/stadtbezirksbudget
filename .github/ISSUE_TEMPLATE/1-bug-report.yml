@@ -1,6 +1,7 @@
 name: 🐛 Bug report
 description: Report a bug to help the project improve.
 title: "🐛 "
+type: bug
 labels: ["🐛 Bug"]
 body:
   - type: markdown
@@ -107,6 +108,28 @@ body:
       render: shell
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: "## Definitions"
+  - type: checkboxes
+    id: DoR
+    attributes:
+      label: Definition of Ready (DoR)
+      options:
+        - label: The user story is clearly and comprehensively formulated.
+        - label: Acceptance criteria are clearly and comprehensively formulated
+        - label: The user story was estimated.
+        - label: The user story was discussed with the PO or contact person from the department.
+  - type: checkboxes
+    id: DoD
+    attributes:
+      label: Definition of Done (DoD)
+      options:
+        - label: The code has been peer reviewed
+        - label: The code has been documented.
+        - label: There is a UX design (decision) [may only be necessary for front-end tasks].
+        - label: The user story has been fully implemented and is available on the test environment.
+        - label: The implementation of the acceptance criteria was approved by the PO or the contact person from the department.
   - type: textarea
     id: screenshots
     attributes:
