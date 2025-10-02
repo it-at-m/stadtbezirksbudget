@@ -2,8 +2,8 @@
 
 ## Context
 
-Readable code is very important for every project. The aim is for good code that explains itself and thus only requires a description above methods/classes. In
-complex or misleading cases, comments are desired.
+Readable code is very important for every project. The aim is for good code that explains itself. Javadoc comments provide structural documentation for public
+APIs, while inline comments are desired only in complex or misleading cases.
 
 ## Decision
 
