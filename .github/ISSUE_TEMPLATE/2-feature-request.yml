@@ -23,6 +23,7 @@ body:
         - stadtbezirksbudget-frontend
         - stadtbezirksbudget-backend
         - stadtbezirksbudget-eai
+        - other
     validations:
       required: false
   - type: textarea
