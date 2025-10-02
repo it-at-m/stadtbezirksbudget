@@ -118,6 +118,14 @@ const vitepressConfig = defineConfig({
               text: "ADR-10 Send-Api-Error-Message",
               link: "/architecture/adr/10-send-api-error-message",
             },
+            {
+              text: "ADR-11 Use-Directory-Structure",
+              link: "/architecture/adr/11-use-directory-structure",
+            },
+            {
+              text: "ADR-12 Use-Comments",
+              link: "/architecture/adr/12-use-comments",
+            },
           ],
         },
       ],

@@ -9,7 +9,7 @@ ADRs serve as a living record of important technical decisions made throughout t
 choices, ensure consistency, and support onboarding of new developers. By documenting the context, decision, and consequences, ADRs make it easier to revisit
 and adapt decisions as requirements evolve.
 
-Each ADR follows a standardized template to ensure clarity and comparability. The template can be found in [ADR-00 Is-Template](./00-is-template). New ADRs
+Each ADR follows a standardized template to ensure clarity and comparability. The template can be found in [ADR-00 Is-Template](./adr/00-is-template). New ADRs
 should be added whenever a significant architectural or coding decision is made, and existing ADRs should be updated if decisions change.
 
 ## ADRs in the project
@@ -24,3 +24,5 @@ should be added whenever a significant architectural or coding decision is made,
 - [ADR-08 Define-Dtos-As-Records](./adr/08-define-dtos-as-records)
 - [ADR-09 No-Complex-Frontend-Components](./adr/09-no-complex-frontend-components)
 - [ADR-10 Send-Api-Error-Message](./adr/10-send-api-error-message)
+- [ADR-11 Use-Directory-Structure](./adr/11-use-directory-structure)
+- [ADR-12 Use-Comments](./adr/12-use-comments)
