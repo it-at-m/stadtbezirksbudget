@@ -19,7 +19,7 @@ const vitepressConfig = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "About", link: "/about/" },
+      { text: "About", link: "/about" },
       {
         text: "Features",
         items: [{ text: "Features", link: "/features/" }],
@@ -33,6 +33,7 @@ const vitepressConfig = defineConfig({
       {
         text: "Development",
         items: [
+          { text: "Conventions", link: "/development/conventions" },
           { text: "Tools", link: "/development/tools" },
           {
             text: "Database Migration",
@@ -58,6 +59,7 @@ const vitepressConfig = defineConfig({
         {
           text: "Development",
           items: [
+            { text: "Conventions", link: "/development/conventions" },
             { text: "Tools", link: "/development/tools" },
             {
               text: "Database Migration",
