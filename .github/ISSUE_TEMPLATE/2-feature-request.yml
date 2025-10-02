@@ -13,19 +13,6 @@ body:
   - type: markdown
     attributes:
       value: "## General"
-  - type: dropdown
-    id: component
-    attributes:
-      label: Relevant component
-      multiple: true
-      description: Name(s) of the affected component(s) (if applicable)
-      options:
-        - stadtbezirksbudget-frontend
-        - stadtbezirksbudget-backend
-        - stadtbezirksbudget-eai
-        - other
-    validations:
-      required: false
   - type: textarea
     id: problem-description
     attributes:
@@ -67,20 +54,20 @@ body:
     attributes:
       label: Definition of Ready (DoR)
       options:
-        - label: Die User Story ist klar und verständlich formuliert
-        - label: Die Akzeptanzkriterien sind klar und verständlich formuliert
-        - label: Die User Story wurde geschätzt
-        - label: Die User Story wurde mit PO oder Ansprechperson aus dem Fachbereich besprochen
+        - label: Die User Story ist klar und verständlich formuliert.
+        - label: Die Akzeptanzkriterien sind klar und verständlich formuliert.
+        - label: Die User Story wurde geschätzt.
+        - label: Die User Story wurde mit PO oder Ansprechperson aus dem Fachbereich besprochen.
   - type: checkboxes
     id: DoD
     attributes:
       label: Definition of Done (DoD)
       options:
-        - label: Der Code wurde einem Peer-Review unterzogen
-        - label: Der Code wurde dokumentiert
-        - label: Es liegt ein(e) UX-Design(entscheidung) vor [nur bei Frontend-Tasks notwendig]
-        - label: Die User Story ist vollständig umgesetzt und steht auf der Testumgebung zur Verfügung
-        - label: Die Umsetzung der Akzeptanzkriterien wurde durch PO oder Ansprechperson aus dem Fachbereich abgenommen
+        - label: Der Code wurde einem Peer-Review unterzogen.
+        - label: Der Code wurde dokumentiert.
+        - label: Es liegt ein(e) UX-Design(entscheidung) vor [nur bei Frontend-Tasks notwendig].
+        - label: Die User Story ist vollständig umgesetzt und steht auf der Testumgebung zur Verfügung.
+        - label: Die Umsetzung der Akzeptanzkriterien wurde durch PO oder Ansprechperson aus dem Fachbereich abgenommen.
   - type: markdown
     attributes:
       value: "## Confirmations"
