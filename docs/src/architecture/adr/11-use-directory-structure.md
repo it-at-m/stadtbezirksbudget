@@ -6,7 +6,8 @@ A defined directory structure is required so that all developers know where to l
 
 ## Decision
 
-The structure inside `stadtbezirksbudget-backend/src/main/java` is to be feature-oriented, except for common packages (e.g. `config`, `security`, `util`, etc.). This means that all files related to a specific feature (e.g. `budget`, `user`, etc.) are in the same parent directory.
+The structure inside `stadtbezirksbudget-backend/src/main/java` is to be feature-oriented, except for common packages (e.g. `config`, `security`, `util`, etc.).
+This means that all files related to a specific feature (e.g. `budget`, `user`, etc.) are in the same parent directory.
 
 ## Consequences
 
