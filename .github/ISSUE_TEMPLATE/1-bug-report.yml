@@ -1,7 +1,8 @@
-name: 🐞 Bug report
+name: 🐛 Bug report
 description: Report a bug to help the project improve.
-title: "[Bug] "
-labels: ["Type: Bug"]
+title: "🐛 "
+type: bug
+labels: ["🐛 Bug"]
 body:
   - type: markdown
     attributes:
@@ -50,16 +51,16 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: template
+    id: component
     attributes:
-      label: Affected template
+      label: Relevant component
       multiple: true
-      description: Name(s) of the affected template(s) (if applicable)
+      description: Name(s) of the affected component(s) (if applicable)
       options:
-        - refarch-frontend
-        - refarch-backend
-        - refarch-eai
-        - refarch-webcomponent
+        - stadtbezirksbudget-frontend
+        - stadtbezirksbudget-backend
+        - stadtbezirksbudget-eai
+        - other
     validations:
       required: false
   - type: input
@@ -122,6 +123,28 @@ body:
       description: Additional context (references, links, ...) that might be helpful
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: "## Definitions"
+  - type: checkboxes
+    id: DoR
+    attributes:
+      label: Definition of Ready (DoR)
+      options:
+        - label: Die User Story ist klar und verständlich formuliert
+        - label: Die Akzeptanzkriterien sind klar und verständlich formuliert
+        - label: Die User Story wurde geschätzt
+        - label: Die User Story wurde mit PO oder Ansprechperson aus dem Fachbereich besprochen
+  - type: checkboxes
+    id: DoD
+    attributes:
+      label: Definition of Done (DoD)
+      options:
+        - label: Der Code wurde einem Peer-Review unterzogen
+        - label: Der Code wurde dokumentiert
+        - label: Es liegt ein(e) UX-Design(entscheidung) vor [nur bei Frontend-Tasks notwendig]
+        - label: Die User Story ist vollständig umgesetzt und steht auf der Testumgebung zur Verfügung
+        - label: Die Umsetzung der Akzeptanzkriterien wurde durch PO oder Ansprechperson aus dem Fachbereich abgenommen
   - type: markdown
     attributes:
       value: "## Confirmations"

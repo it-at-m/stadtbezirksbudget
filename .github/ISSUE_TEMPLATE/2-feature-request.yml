@@ -1,7 +1,8 @@
 name: ✨ Feature request
 description: Suggest an idea or possible new feature for this project.
-title: "[Feature] "
-labels: ["Type: Feature"]
+title: "✨ "
+type: feature
+labels: ["✨ Enhancement"]
 body:
   - type: markdown
     attributes:
@@ -13,16 +14,16 @@ body:
     attributes:
       value: "## General"
   - type: dropdown
-    id: template
+    id: component
     attributes:
-      label: Relevant template
+      label: Relevant component
       multiple: true
-      description: Name(s) of the affected template(s) (if applicable)
+      description: Name(s) of the affected component(s) (if applicable)
       options:
-        - refarch-frontend
-        - refarch-backend
-        - refarch-eai
-        - refarch-webcomponent
+        - stadtbezirksbudget-frontend
+        - stadtbezirksbudget-backend
+        - stadtbezirksbudget-eai
+        - other
     validations:
       required: false
   - type: textarea
@@ -58,6 +59,28 @@ body:
       description: Additional context (references, links, screenshots, ...) that might be helpful
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: "## Definitions"
+  - type: checkboxes
+    id: DoR
+    attributes:
+      label: Definition of Ready (DoR)
+      options:
+        - label: Die User Story ist klar und verständlich formuliert
+        - label: Die Akzeptanzkriterien sind klar und verständlich formuliert
+        - label: Die User Story wurde geschätzt
+        - label: Die User Story wurde mit PO oder Ansprechperson aus dem Fachbereich besprochen
+  - type: checkboxes
+    id: DoD
+    attributes:
+      label: Definition of Done (DoD)
+      options:
+        - label: Der Code wurde einem Peer-Review unterzogen
+        - label: Der Code wurde dokumentiert
+        - label: Es liegt ein(e) UX-Design(entscheidung) vor [nur bei Frontend-Tasks notwendig]
+        - label: Die User Story ist vollständig umgesetzt und steht auf der Testumgebung zur Verfügung
+        - label: Die Umsetzung der Akzeptanzkriterien wurde durch PO oder Ansprechperson aus dem Fachbereich abgenommen
   - type: markdown
     attributes:
       value: "## Confirmations"
