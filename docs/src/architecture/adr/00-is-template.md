@@ -16,5 +16,5 @@ What becomes easier or more difficult to do because of this change?
 
 ## References (optional)
 
-- [ToDo (Issue e.g. Changes to existing code)]()
-- [Related ADRs]()
+- [ToDo (Issue e.g. Changes to existing code)](#adr-00-is-template)
+- [Related ADRs](#adr-00-is-template)
