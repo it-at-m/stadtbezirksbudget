@@ -116,20 +116,20 @@ body:
     attributes:
       label: Definition of Ready (DoR)
       options:
-        - label: The user story is clearly and comprehensively formulated.
-        - label: Acceptance criteria are clearly and comprehensively formulated
-        - label: The user story was estimated.
-        - label: The user story was discussed with the PO or contact person from the department.
+        - label: Die User Story ist klar und verständlich formuliert
+        - label: Die Akzeptanzkriterien sind klar und verständlich formuliert
+        - label: Die User Story wurde geschätzt
+        - label: Die User Story wurde mit PO oder Ansprechperson aus dem Fachbereich besprochen
   - type: checkboxes
     id: DoD
     attributes:
       label: Definition of Done (DoD)
       options:
-        - label: The code has been peer reviewed
-        - label: The code has been documented.
-        - label: There is a UX design (decision) [may only be necessary for front-end tasks].
-        - label: The user story has been fully implemented and is available on the test environment.
-        - label: The implementation of the acceptance criteria was approved by the PO or the contact person from the department.
+        - label: Der Code wurde einem Peer-Review unterzogen
+        - label: Der Code wurde dokumentiert
+        - label: Es liegt ein(e) UX-Design(entscheidung) vor [nur bei Frontend-Tasks notwendig]
+        - label: Die User Story ist vollständig umgesetzt und steht auf der Testumgebung zur Verfügung
+        - label: Die Umsetzung der Akzeptanzkriterien wurde durch PO oder Ansprechperson aus dem Fachbereich abgenommen
   - type: textarea
     id: screenshots
     attributes:
