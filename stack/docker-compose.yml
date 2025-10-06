@@ -132,7 +132,7 @@ services:
     security_opt: *security_settings
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.3.2
+    image: confluentinc/cp-zookeeper:7.7.5@sha256:7f012166110a9e1c88220ae773e24482fcc2d80caf4ca72ff712c6ee47d2101f
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -142,7 +142,7 @@ services:
       - kafka
 
   kafka:
-    image: confluentinc/cp-kafka:7.3.2
+    image: confluentinc/cp-kafka:7.7.5@sha256:5cdfb3e4a72298c566ac54949eacc847ce0f1c55bf8aba988d487e581299db86
     depends_on:
       - zookeeper
     ports:
