@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.4</version> <!-- must match the chosen Camel version in properties -> camel-spring-boot-dependencies.version, see e.g. https://central.sonatype.com/artifact/org.apache.camel.springboot/camel-spring-boot/dependencies and search for 'spring-boot-starter' -->
-        <relativePath />
+        <version>3.5.4
+        </version> <!-- must match the chosen Camel version in properties -> camel-spring-boot-dependencies.version, see e.g. https://central.sonatype.com/artifact/org.apache.camel.springboot/camel-spring-boot/dependencies and search for 'spring-boot-starter' -->
+        <relativePath/>
     </parent>
 
     <groupId>de.muenchen.stadtbezirksbudget</groupId>
@@ -47,6 +49,7 @@
 
         <!-- Core Frameworks -->
         <camel-spring-boot-dependencies.version>4.14.1</camel-spring-boot-dependencies.version>
+        <spring-kafka.version>3.3.10</spring-kafka.version>
 
         <!-- Logging -->
         <logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
@@ -61,7 +64,7 @@
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-        <argLine /> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
+        <argLine/> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
 
         <!-- Release -->
         <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
@@ -70,8 +73,8 @@
         <refarch-tools.version>1.2.0</refarch-tools.version>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
-        <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
-        <p2.password /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.username/> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.password/> <!-- must be empty, override via Maven settings.xml if needed -->
         <p2.mirror>download.eclipse.org</p2.mirror>
     </properties>
 
@@ -112,6 +115,7 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
@@ -281,12 +285,12 @@
                                 </p2Mirror>
                             </p2Mirrors>
                         </eclipse>
-                        <trimTrailingWhitespace />
-                        <endWithNewline />
-                        <importOrder />
-                        <removeUnusedImports />
-                        <removeWildcardImports />
-                        <formatAnnotations />
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <removeWildcardImports/>
+                        <formatAnnotations/>
                     </java>
                 </configuration>
                 <executions>
@@ -338,7 +342,8 @@
                 <configuration>
                     <effort>Max</effort>
                     <excludeFilterFile>spotbugs-exclude-rules.xml</excludeFilterFile>
-                    <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs-results</spotbugsXmlOutputDirectory> <!-- required to ensure only the artifact jar is on top level when building -->
+                    <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs-results
+                    </spotbugsXmlOutputDirectory> <!-- required to ensure only the artifact jar is on top level when building -->
                     <plugins>
                         <plugin>
                             <groupId>com.h3xstream.findsecbugs</groupId>

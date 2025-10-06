@@ -46,6 +46,7 @@
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
+        <spring-kafka.version>3.3.10</spring-kafka.version>
 
         <!-- Linting & Formatting -->
         <spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
@@ -124,6 +125,7 @@
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
         </dependency>
 
         <!-- Caching -->
