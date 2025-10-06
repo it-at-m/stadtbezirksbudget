@@ -17,3 +17,9 @@ appswitcher.apps:
     image-url: http://localhost:8084/logos/Keycloak.png
     tags:
       - global
+  kafka-ui:
+    display-name: Kafka UI
+    url: http://localhost:8089
+    # image-url: TODO add logo
+    tags:
+      - global
