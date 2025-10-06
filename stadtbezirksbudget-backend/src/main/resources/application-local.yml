@@ -25,6 +25,13 @@ spring:
           # requires client to be in audience claim, see https://www.keycloak.org/docs/latest/server_admin/#_audience_resolve
           audiences:
             - ${sso.client}
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: sbb-backend
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 # Enable swagger-ui
 springdoc:
