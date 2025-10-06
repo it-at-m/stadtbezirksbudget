@@ -13,6 +13,5 @@ public class KafkaConsumer {
     @KafkaListener(topics = "sbb-eai-topic", groupId = "sbb-backend")
     public void listen(String message) {
         LOG.info("Received message in group sbb-backend: " + message);
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 }
