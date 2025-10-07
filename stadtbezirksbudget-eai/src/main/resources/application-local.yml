@@ -3,3 +3,14 @@ server:
 
 logging:
   include-application-group: false
+
+cloud:
+  aws:
+    credentials:
+      access-key: minio
+      secret-key: miniominio
+    region:
+      static: eu-central-1
+    s3:
+      endpoint: http://localhost:9000
+      bucket-name: sbb-bucket

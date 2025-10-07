@@ -56,3 +56,14 @@ refarch:
     client-id: ${sso.client}
     user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
     logging-mode: all
+
+cloud:
+  aws:
+    credentials:
+      access-key: minio
+      secret-key: miniominio
+    region:
+      static: eu-central-1
+    s3:
+      endpoint: http://localhost:9000
+      bucket-name: sbb-bucket

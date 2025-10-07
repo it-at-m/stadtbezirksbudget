@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -46,6 +47,7 @@
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
+        <aws-sdk.version>2.35.0</aws-sdk.version>
 
         <!-- Linting & Formatting -->
         <spotless-maven-plugin.version>2.46.1</spotless-maven-plugin.version>
@@ -57,7 +59,7 @@
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
-        <argLine /> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
+        <argLine/> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
 
         <!-- Release -->
         <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
@@ -82,8 +84,8 @@
         <flyway.locations>classpath:db/migration/schema,classpath:db/migration/testdata</flyway.locations>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
-        <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
-        <p2.password /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.username/> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.password/> <!-- must be empty, override via Maven settings.xml if needed -->
         <p2.mirror>download.eclipse.org</p2.mirror>
     </properties>
 
@@ -193,6 +195,11 @@
             <groupId>com.github.therapi</groupId>
             <artifactId>therapi-runtime-javadoc</artifactId>
             <version>${therapi-runtime-javadoc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>${aws-sdk.version}</version>
         </dependency>
 
         <!-- Testing -->
@@ -406,12 +413,12 @@
                                 </p2Mirror>
                             </p2Mirrors>
                         </eclipse>
-                        <trimTrailingWhitespace />
-                        <endWithNewline />
-                        <importOrder />
-                        <removeUnusedImports />
-                        <removeWildcardImports />
-                        <formatAnnotations />
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <removeWildcardImports/>
+                        <formatAnnotations/>
                     </java>
                 </configuration>
                 <executions>
@@ -463,7 +470,8 @@
                 <configuration>
                     <effort>Max</effort>
                     <excludeFilterFile>spotbugs-exclude-rules.xml</excludeFilterFile>
-                    <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs-results</spotbugsXmlOutputDirectory> <!-- required to ensure only the artifact jar is on top level when building -->
+                    <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs-results
+                    </spotbugsXmlOutputDirectory> <!-- required to ensure only the artifact jar is on top level when building -->
                     <plugins>
                         <plugin>
                             <groupId>com.h3xstream.findsecbugs</groupId>
