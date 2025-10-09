@@ -32,8 +32,8 @@ classDiagram
     class Bankverbindung{
         person: String
         geldinstitut: String
-        iban: Iban
-        bic: Bic
+        iban: String
+        bic: String
     }
 
     class Finanzierung{
