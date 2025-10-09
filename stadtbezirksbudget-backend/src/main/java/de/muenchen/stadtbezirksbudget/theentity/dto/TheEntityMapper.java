@@ -4,7 +4,7 @@ import de.muenchen.stadtbezirksbudget.theentity.TheEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface TheEntityMapper {
 
     TheEntityResponseDTO toDTO(TheEntity theEntity);
