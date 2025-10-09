@@ -1,4 +1,5 @@
-# Datenmodell
+# Data model
+
 ```mermaid
 classDiagram
     Antrag "1..n"--"1" Antragssteller

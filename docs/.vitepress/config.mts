@@ -22,7 +22,10 @@ const vitepressConfig = defineConfig({
       { text: "About", link: "/about" },
       {
         text: "Features",
-        items: [{ text: "Features", link: "/features/" }],
+        items: [
+          { text: "Features", link: "/features/" },
+          { text: "Data model", link: "/features/data-model" },
+        ],
       },
       {
         text: "Architecture",
@@ -48,7 +51,7 @@ const vitepressConfig = defineConfig({
         {
           text: "Features",
           link: "/features/",
-          items: [],
+          items: [{ text: "Data model", link: "/features/data-model" }],
         },
         {
           text: "Architecture",
