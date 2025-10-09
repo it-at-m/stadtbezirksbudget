@@ -45,7 +45,6 @@ classDiagram
     }
 
     class Antragssteller{
-        //1
         name: String
         telefonNr: String
         email: String
