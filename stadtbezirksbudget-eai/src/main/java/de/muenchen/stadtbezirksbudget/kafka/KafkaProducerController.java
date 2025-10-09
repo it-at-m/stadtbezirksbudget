@@ -1,5 +1,6 @@
-package de.muenchen.stadtbezirksbudget.eai.kafka;
+package de.muenchen.stadtbezirksbudget.kafka;
 
+import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +14,11 @@ public class KafkaProducerController {
 
     private static final String TOPIC = "sbb-eai-topic";
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<KafkaDTO, KafkaDTO> kafkaTemplate;
 
     @PostMapping("/publish")
-    public String publishMessage(@RequestBody String message) {
-        kafkaTemplate.send(TOPIC, message);
-        return "Message published successfully";
+    public String publishMessage(@RequestBody KafkaDTO content) {
+        kafkaTemplate.send(TOPIC, content);
+        return "Content published successfully";
     }
 }
