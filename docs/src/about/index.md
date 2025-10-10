@@ -26,4 +26,4 @@ For more details, visit the [architecture documentation](../architecture)
 <a href="./Soll-Prozess.png" target="_blank"><img src="./Soll-Prozess.png" alt="Description of the Soll-Prozess image" /></a>
 <a href="./Soll-Prozess.png" target="_blank">Open in new tab</a>
 
-The target Process provides a visual representation of the intended workflow and interactions between all parties involved in the application process.
+The target process provides a visual representation of the intended workflow and interactions between all parties involved in the application process.
