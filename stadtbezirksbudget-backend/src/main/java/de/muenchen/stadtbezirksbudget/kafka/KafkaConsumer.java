@@ -12,7 +12,7 @@ public class KafkaConsumer {
     private static final Logger LOG = LoggerFactory.getLogger(KafkaConsumer.class);
 
     @KafkaListener(topics = "sbb-eai-topic", groupId = "sbb-backend")
-    public void listen(KafkaDTO message) {
-        LOG.info("Received message in group sbb-backend: " + message);
+    public void listen(KafkaDTO content) {
+        LOG.info("Received message in group sbb-backend: " + content.toString());
     }
 }
