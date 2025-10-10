@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.configuration;
+package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -34,9 +34,12 @@ class LogbackJsonLoggingTest {
 
     private Throwable exception;
 
-    @Configuration
-    @SuppressWarnings("PMD.TestClassWithoutTestCases")
-    /* default */ static class TestConfiguration {
+    private static Throwable genExceptionStack(final Throwable root, final int index) {
+        if (index > 0) {
+            return new IllegalArgumentException("stackmessage-#%d: (%s)".formatted(index, StringUtils.repeat("abcd ", 20)), genExceptionStack(root, index - 1));
+        } else {
+            return root;
+        }
     }
 
     @BeforeEach
@@ -101,11 +104,8 @@ class LogbackJsonLoggingTest {
                 .findFirst().orElseThrow();
     }
 
-    private static Throwable genExceptionStack(final Throwable root, final int index) {
-        if (index > 0) {
-            return new IllegalArgumentException("stackmessage-#%d: (%s)".formatted(index, StringUtils.repeat("abcd ", 20)), genExceptionStack(root, index - 1));
-        } else {
-            return root;
-        }
+    @Configuration
+    @SuppressWarnings("PMD.TestClassWithoutTestCases")
+    /* default */ static class TestConfiguration {
     }
 }

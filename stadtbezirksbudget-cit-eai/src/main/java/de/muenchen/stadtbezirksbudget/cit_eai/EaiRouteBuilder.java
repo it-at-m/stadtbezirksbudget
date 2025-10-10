@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget;
+package de.muenchen.stadtbezirksbudget.cit_eai;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
@@ -10,10 +10,9 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EaiRouteBuilder extends RouteBuilder {
 
+    public static final String DIRECT_ROUTE = "direct:eai-route";
     @Value("${output}")
     private String outputRoute;
-
-    public static final String DIRECT_ROUTE = "direct:eai-route";
 
     @Override
     public void configure() {
