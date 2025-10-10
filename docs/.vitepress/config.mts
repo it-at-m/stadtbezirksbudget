@@ -27,7 +27,7 @@ const vitepressConfig = defineConfig({
       {
         text: "Architecture",
         items: [
-          { text: "Architecture Design Records", link: "/architecture/adr" },
+          { text: "Architecture Decision Records", link: "/architecture/adr" },
         ],
       },
       {
@@ -53,7 +53,7 @@ const vitepressConfig = defineConfig({
         {
           text: "Architecture",
           items: [
-            { text: "Architecture Design Records", link: "/architecture/adr" },
+            { text: "Architecture Decision Records", link: "/architecture/adr" },
           ],
         },
         {
@@ -70,7 +70,7 @@ const vitepressConfig = defineConfig({
       ],
       "/architecture/adr/": [
         {
-          text: "Architecture Design Records",
+          text: "Architecture Decision Records",
           items: [
             {
               text: "Overview",
