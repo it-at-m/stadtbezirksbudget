@@ -7,10 +7,10 @@ A clear language policy ensures that both the database model and the application
 
 ## Decision
 
-All of the application code is written in English.
-Only the entities and their attribute names in the database model are written in German.
+All application code (including identifiers, comments, and business logic) is written in English.
 
-German entities and their attribute names from the database model are used unchanged in the code.
+An explicit exception exists for entity and attribute names that map directly to the German database model.
+German entity and attribute names from the database are therefore referenced unchanged when the code interacts with those persisted fields.
 
 ## Consequences
 
