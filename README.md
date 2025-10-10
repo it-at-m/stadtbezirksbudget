@@ -55,7 +55,7 @@ To get a better overview on what's currently being worked on, check out our [pro
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-To learn more about how you can contribute, please read our [contribution documentation][contribute-documentation] and also check out our [Architecture Decision Records][architecture-decision-records] and [conventions][conventions].
+To learn more about how you can contribute, please read our [contribution documentation][contribute-documentation] and also check out our [architecture decision records][architecture-decision-records] and [conventions][conventions].
 
 ## License
 
