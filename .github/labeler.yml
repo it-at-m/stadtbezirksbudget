@@ -15,7 +15,7 @@
       - any-glob-to-any-file: [ 'stadtbezirksbudget-backend/**' ]
 "🏗️ EAI":
   - changed-files:
-      - any-glob-to-any-file: [ 'stadtbezirksbudget-eai/**' ]
+      - any-glob-to-any-file: [ 'stadtbezirksbudget-cit-eai/**' ]
 "🏗️ Frontend":
   - changed-files:
       - any-glob-to-any-file: [ 'stadtbezirksbudget-frontend/**' ]
