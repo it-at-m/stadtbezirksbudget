@@ -14,7 +14,7 @@
     <artifactId>stadtbezirksbudget-cit-eai</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>stadtbezirksbudget-eai</name>
+    <name>stadtbezirksbudget-cit-eai</name>
     <description>This is the default starting project for a EAI project based on the reference architecture of it@M</description>
     <url>https://github.com/it-at-m/stadtbezirksbudget</url>
     <licenses>
