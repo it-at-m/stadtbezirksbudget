@@ -1,4 +1,4 @@
-# Architecture Design Records (ADRs)
+# Architecture Decision Records (ADRs)
 
 Architecture Decision Records (ADR) are documented architectural decisions, each of which clarifies specific coding rules and guidelines that collectively shape
 our codebase.
