@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class KafkaConsumer {
+public class KafkaConsumerService {
     @KafkaListener(topics = "sbb-eai-topic", groupId = "sbb-backend")
     public void listen(@Header(name = KafkaHeaders.RECEIVED_KEY) String key, KafkaDTO content) {
         UUID uuidKey = UUID.fromString(key);
