@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.cit_eai;
+package de.muenchen.stadtbezirksbudget.citEai;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

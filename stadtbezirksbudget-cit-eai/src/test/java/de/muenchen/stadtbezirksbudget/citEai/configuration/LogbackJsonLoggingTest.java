@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
+package de.muenchen.stadtbezirksbudget.citEai.configuration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

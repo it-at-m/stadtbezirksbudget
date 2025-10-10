@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.cit_eai;
+package de.muenchen.stadtbezirksbudget.citEai;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

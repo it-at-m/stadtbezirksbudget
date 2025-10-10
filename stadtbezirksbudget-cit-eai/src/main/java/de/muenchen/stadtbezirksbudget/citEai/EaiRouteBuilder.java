@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.cit_eai;
+package de.muenchen.stadtbezirksbudget.citEai;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.LoggingLevel;
