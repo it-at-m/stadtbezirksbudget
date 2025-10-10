@@ -1,0 +1,48 @@
+package de.muenchen.stadtbezirksbudget.kafka;
+
+import static de.muenchen.stadtbezirksbudget.TestConstants.SPRING_NO_SECURITY_PROFILE;
+import static de.muenchen.stadtbezirksbudget.TestConstants.SPRING_TEST_PROFILE;
+import static org.mockito.Mockito.timeout;
+import static org.mockito.Mockito.verify;
+
+import de.muenchen.stadtbezirksbudget.TestConstants;
+import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.test.context.EmbeddedKafka;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
+
+@Testcontainers
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureMockMvc
+@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@EmbeddedKafka(partitions = 1, topics = { "sbb-eai-topic" })
+class KafkaConsumerServiceTest {
+    @Container
+    @ServiceConnection
+    @SuppressWarnings("unused")
+    private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
+            DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
+
+    @Autowired
+    private KafkaTemplate<String, KafkaDTO> kafkaTemplate;
+    @MockitoSpyBean
+    private KafkaConsumerService kafkaConsumerService;
+
+    @Test
+    void testListen() {
+        KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
+        kafkaTemplate.send("sbb-eai-topic", kafkaDTO.id().toString(), kafkaDTO);
+        verify(kafkaConsumerService, timeout(5000)).listen(String.valueOf(kafkaDTO.id()), kafkaDTO);
+    }
+}
