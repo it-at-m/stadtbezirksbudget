@@ -21,11 +21,9 @@ By integrating these systems, the application process aims to enhance efficiency
 
 For more details, visit the [architecture documentation](../architecture)
 
-
 ## Target process
 
-<a href="./Soll-Prozess.png" target="_blank"><img src="./Soll-Prozess.png" /></a>
+<a href="./Soll-Prozess.png" target="_blank"><img src="./Soll-Prozess.png" alt="Description of the Soll-Prozess image" /></a>
 <a href="./Soll-Prozess.png" target="_blank">Open in new tab</a>
 
 The target Process provides a visual representation of the intended workflow and interactions between all parties involved in the application process.
-
