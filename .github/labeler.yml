@@ -13,7 +13,7 @@
 "🏗️ Backend":
   - changed-files:
       - any-glob-to-any-file: [ 'stadtbezirksbudget-backend/**' ]
-"🏗️ EAI":
+"🏗️ CIT-EAI":
   - changed-files:
       - any-glob-to-any-file: [ 'stadtbezirksbudget-cit-eai/**' ]
 "🏗️ Frontend":
