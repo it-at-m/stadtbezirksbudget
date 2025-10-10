@@ -14,11 +14,11 @@ public class KafkaProducerController {
 
     private static final String TOPIC = "sbb-eai-topic";
     @Autowired
-    private KafkaTemplate<KafkaDTO, KafkaDTO> kafkaTemplate;
+    private KafkaTemplate<String, KafkaDTO> kafkaTemplate;
 
     @PostMapping("/publish")
     public String publishMessage(@RequestBody KafkaDTO content) {
-        kafkaTemplate.send(TOPIC, content);
+        kafkaTemplate.send(TOPIC, content.id().toString(), content);
         return "Content published successfully";
     }
 }
