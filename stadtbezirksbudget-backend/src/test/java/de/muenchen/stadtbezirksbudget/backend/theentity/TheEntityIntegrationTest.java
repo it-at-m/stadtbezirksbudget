@@ -70,7 +70,7 @@ class TheEntityIntegrationTest {
         @Test
         void givenEntityId_thenReturnEntity() throws Exception {
             mockMvc.perform(get("/theEntity/{theEntityID}", testEntityId)
-                            .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.id", is(testEntityId.toString())));
@@ -82,9 +82,9 @@ class TheEntityIntegrationTest {
         @Test
         void givenPageNumberAndPageSize_thenReturnPageOfEntities() throws Exception {
             mockMvc.perform(get("/theEntity")
-                            .param("pageNumber", "0")
-                            .param("pageSize", "10")
-                            .contentType(MediaType.APPLICATION_JSON))
+                    .param("pageNumber", "0")
+                    .param("pageSize", "10")
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.content", hasSize(greaterThanOrEqualTo(0))));
@@ -99,8 +99,8 @@ class TheEntityIntegrationTest {
             final String requestBody = objectMapper.writeValueAsString(requestDTO);
 
             mockMvc.perform(post("/theEntity")
-                            .content(requestBody)
-                            .contentType(MediaType.APPLICATION_JSON))
+                    .content(requestBody)
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isCreated())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.textAttribute", is(requestDTO.textAttribute())));
@@ -115,8 +115,8 @@ class TheEntityIntegrationTest {
             final String requestBody = objectMapper.writeValueAsString(requestDTO);
 
             mockMvc.perform(put("/theEntity/{theEntityId}", testEntityId)
-                            .content(requestBody)
-                            .contentType(MediaType.APPLICATION_JSON))
+                    .content(requestBody)
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.id", is(testEntityId.toString())))
@@ -129,7 +129,7 @@ class TheEntityIntegrationTest {
         @Test
         void givenEntityId_thenEntityIsDeleted() throws Exception {
             mockMvc.perform(delete("/theEntity/{theEntityId}", testEntityId)
-                            .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
         }
     }

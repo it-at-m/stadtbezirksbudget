@@ -27,8 +27,8 @@ public class KeycloakRolesAuthoritiesConverter implements Converter<Jwt, Collect
             return Collections.emptySet();
         }
         return Stream.concat(
-                        Optional.of(defaultConverter.convert(jwt)).orElse(Collections.emptySet()).stream(),
-                        extractRoles(jwt).stream())
+                Optional.of(defaultConverter.convert(jwt)).orElse(Collections.emptySet()).stream(),
+                extractRoles(jwt).stream())
                 .collect(Collectors.toSet());
     }
 
