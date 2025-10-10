@@ -1,0 +1,29 @@
+package de.muenchen.stadtbezirksbudget.kafka;
+
+import static org.mockito.Mockito.verify;
+
+import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.kafka.core.KafkaTemplate;
+
+@ExtendWith(MockitoExtension.class)
+class KafkaProducerServiceTest {
+
+    @Mock
+    private KafkaTemplate<String, KafkaDTO> kafkaTemplate;
+
+    @InjectMocks
+    private KafkaProducerService kafkaProducerService;
+
+    @Test
+    void testPublishMessage() {
+        KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
+        kafkaProducerService.publishMessage(kafkaDTO);
+        verify(kafkaTemplate).send("sbb-eai-topic", kafkaDTO.id().toString(), kafkaDTO);
+    }
+}
