@@ -7,7 +7,7 @@ classDiagram
     Antrag "1"--"1" Finanzierung
     Antrag "1..n"--"1" Bankverbindung
     Antrag "1..n"--"0..1" Vertretungsberechtigter
-    Antrag "1..n"--"0||2..n" Mitglied
+    Antrag "1..n"--"0..n" Mitglied
     Finanzierung "1"--"1..n" VoraussichtlicheAusgabe
     Finanzierung "1"--"1..n" Finanzierungsmittel
     Adresse "1"--"1..n" Antragssteller
