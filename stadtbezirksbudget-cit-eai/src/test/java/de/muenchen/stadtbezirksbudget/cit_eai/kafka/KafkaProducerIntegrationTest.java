@@ -1,8 +1,10 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.kafka;
 
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.stadtbezirksbudget.cit_eai.TestConstants;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -23,17 +26,22 @@ class KafkaProducerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
+    @MockitoSpyBean
+    private KafkaProducerService kafkaProducerService;
 
     @Nested
     class PublishMessage {
         @Test
         void testValidPublishMessageReturnOK() throws Exception {
-            final String message = "{\"id\":\"" + UUID.randomUUID() + "\",\"param1\":\"test\",\"param2\":123}";
+            final KafkaDTO message = new KafkaDTO(UUID.randomUUID(), "test", 123);
             mockMvc
                     .perform(post("/kafka/publish")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(message))
+                            .content(objectMapper.writeValueAsString(message)))
                     .andExpect(status().isOk());
+            verify(kafkaProducerService).publishMessage(message);
         }
     }
 }
