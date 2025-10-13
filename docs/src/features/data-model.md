@@ -12,9 +12,9 @@ classDiagram
     Finanzierung "1"--"1..n" Finanzierungsmittel
     Adresse "1"--"1..n" Mitglied
     Adresse "1"--"1..n" Zahlungsempfaenger
-    Zahlungsempfaenger "1"--"1..n"Bankverbindung
-    Zahlungsempfaenger "1"--"1..n"Vertretungsberechtigter
-    Zahlungsempfaenger "1"--"1..n"Antragssteller
+    Zahlungsempfaenger "1"--"1..n" Bankverbindung
+    Zahlungsempfaenger <|-- Vertretungsberechtigter
+    Zahlungsempfaenger <|-- Antragssteller
 
     class Antrag{
         eingangsdatum: Date
