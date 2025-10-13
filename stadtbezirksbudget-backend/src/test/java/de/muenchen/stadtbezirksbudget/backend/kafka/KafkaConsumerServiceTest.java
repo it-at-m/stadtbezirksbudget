@@ -1,11 +1,11 @@
-package de.muenchen.stadtbezirksbudget.kafka;
+package de.muenchen.stadtbezirksbudget.backend.kafka;
 
-import static de.muenchen.stadtbezirksbudget.TestConstants.SPRING_NO_SECURITY_PROFILE;
-import static de.muenchen.stadtbezirksbudget.TestConstants.SPRING_TEST_PROFILE;
+import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
+import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
-import de.muenchen.stadtbezirksbudget.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;

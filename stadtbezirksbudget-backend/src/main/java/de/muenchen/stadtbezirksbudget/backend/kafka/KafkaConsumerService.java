@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.kafka;
+package de.muenchen.stadtbezirksbudget.backend.kafka;
 
 import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import java.util.UUID;
