@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.antrag;
+package de.muenchen.stadtbezirksbudget.antrag.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;

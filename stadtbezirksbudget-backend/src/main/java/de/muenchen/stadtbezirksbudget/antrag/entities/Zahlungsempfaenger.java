@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.antrag;
+package de.muenchen.stadtbezirksbudget.antrag.entities;
 
 import de.muenchen.stadtbezirksbudget.common.BaseEntity;
 import jakarta.persistence.Entity;
@@ -11,12 +11,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Bankverbindung extends BaseEntity {
+public abstract class Zahlungsempfaenger extends BaseEntity {
+    @NotBlank private String telefonNr;
+    @NotBlank private String email;
     @NotNull @ManyToOne
-    private Zahlungsempfaenger zahlungsempfaenger;
-
-    @NotBlank private String person;
-    @NotBlank private String geldinstitut;
-    @NotBlank private String iban;
-    @NotBlank private String bic;
+    private Adresse adresse;
 }

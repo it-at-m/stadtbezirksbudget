@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.antrag;
+package de.muenchen.stadtbezirksbudget.antrag.entities;
 
 public enum Rechtsform {
     natuerlichePerson,

@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.antrag;
+package de.muenchen.stadtbezirksbudget.antrag.entities;
 
 import de.muenchen.stadtbezirksbudget.common.BaseEntity;
 import jakarta.persistence.Entity;
