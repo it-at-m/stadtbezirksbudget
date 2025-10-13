@@ -17,7 +17,7 @@ jobs:
         include: # hier müssen die Pfade angegeben werden
           - app-path: stadtbezirksbudget-backend
           - app-path: stadtbezirksbudget-frontend
-          - app-path: stadtbezirksbudget-eai
+          - app-path: stadtbezirksbudget-cit-eai
           - app-path: stadtbezirksbudget-webcomponent
 
     steps:
