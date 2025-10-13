@@ -24,7 +24,7 @@ For more details, visit the [architecture documentation](../architecture/)
 ## Target process
 
 <a href="./Soll-Prozess.png" target="_blank" rel="noopener noreferrer">
-    <img src="./Soll-Prozess.png" alt="Description of the Soll-Prozess image" />
+    <img src="./Soll-Prozess.png" alt="Target process diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
 </a>
 <a href="./Soll-Prozess.png" target="_blank" rel="noopener noreferrer">Open in new tab</a>
 
