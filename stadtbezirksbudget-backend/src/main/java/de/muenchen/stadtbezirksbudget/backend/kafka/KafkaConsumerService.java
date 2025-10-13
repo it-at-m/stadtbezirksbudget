@@ -1,6 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.kafka;
 
-import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

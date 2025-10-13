@@ -6,7 +6,6 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
-import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
