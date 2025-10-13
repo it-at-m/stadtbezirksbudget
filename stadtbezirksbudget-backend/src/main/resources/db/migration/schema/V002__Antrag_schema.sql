@@ -116,15 +116,15 @@ CREATE TABLE zahlungsempfaenger
     CONSTRAINT pk_zahlungsempfaenger PRIMARY KEY (id)
 );
 
+ALTER TABLE mitglied
+    ADD CONSTRAINT uc_4346ab10d20ccf5199cbcaee8 UNIQUE (nachname, vorname, adresse_id);
+
 ALTER TABLE bankverbindung
     ADD CONSTRAINT uc_79b9fc5faada2c50fc7a5cae5 UNIQUE (person, geldinstitut, iban, bic, zahlungsempfaenger_id);
 
 ALTER TABLE zahlungsempfaenger
     ADD CONSTRAINT uc_8ec5b2df9546feafd9ef863a7 UNIQUE (dtype, email, adresse_id, nachname, vorname, name, zielsetzung,
                                                         rechtsform);
-
-ALTER TABLE antrag_mitglieder
-    ADD CONSTRAINT uc_antrag_mitglieder_mitglieder UNIQUE (mitglieder_id);
 
 ALTER TABLE adresse
     ADD CONSTRAINT uc_cff3c04d7299fe58dd0a0dfef UNIQUE (strasse, hausnummer, ort, postleitzahl);

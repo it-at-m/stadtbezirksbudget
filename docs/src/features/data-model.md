@@ -7,7 +7,7 @@ classDiagram
     Antrag "1"--"1" Finanzierung
     Antrag "1..n"--"1" Bankverbindung
     Antrag "1..n"--"0..1" Vertretungsberechtigter
-    Antrag "1"--"0..n" Mitglied
+    Antrag "1..n"--"0..n" Mitglied
     Finanzierung "1"--"1..n" VoraussichtlicheAusgabe
     Finanzierung "1"--"1..n" Finanzierungsmittel
     Adresse "1"--"1..n" Mitglied
@@ -24,7 +24,7 @@ classDiagram
     }
 
     class Projekt{
-        <<UniqueConstraint>>
+        <<@UniqueConstraint>>
         beschreibung: String
         ende: Date
         start: Date
@@ -32,7 +32,7 @@ classDiagram
     }
 
     class Bankverbindung{
-        <<UniqueConstraint>>
+        <<@UniqueConstraint>>
         bic: String
         geldinstitut: String
         iban: String
@@ -48,14 +48,14 @@ classDiagram
     }
 
     class Antragssteller{
-        <<UniqueConstraint>>
+        <<@UniqueConstraint>>
         name: String
         rechtsform: Enum[natuerlichPerson, juristischePerson, sonstigeVereinigungen]
         zielsetzung: String
     }
 
     class Adresse{
-        <<UniqueConstraint>>
+        <<@UniqueConstraint>>
         hausnummer: String
         ort: String
         postleitzahl: String
@@ -63,7 +63,7 @@ classDiagram
     }
 
     class Vertretungsberechtigter{
-        <<UniqueConstraint>>
+        <<@UniqueConstraint>>
         mobilNr: String
         nachname: String
         vorname: String
@@ -82,6 +82,7 @@ classDiagram
     }
 
     class Mitglied{
+        <<@UniqueConstraint>>
         nachname: String
         vorname: String
     }
