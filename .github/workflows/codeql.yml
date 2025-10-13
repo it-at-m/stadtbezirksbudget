@@ -51,7 +51,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build-path: [ "./stadtbezirksbudget-backend", "./stadtbezirksbudget-cit-eai" ] # JSON array formatted as string, contains the paths to the java projects to build
+        build-path: [ "./stadtbezirksbudget-backend", "./stadtbezirksbudget-cit-eai", "./stadtbezirksbudget-common" ] # JSON array formatted as string, contains the paths to the java projects to build
     steps:
       - uses: it-at-m/lhm_actions/action-templates/actions/action-codeql@691ffa2542ed7cc1c53c416d22ace9a153d5152f # v1.0.21
         if: ${{ env.analyze-java == 'true' && (github.ref_name == 'main' || needs.check-changes.outputs.java == 'true') }}
