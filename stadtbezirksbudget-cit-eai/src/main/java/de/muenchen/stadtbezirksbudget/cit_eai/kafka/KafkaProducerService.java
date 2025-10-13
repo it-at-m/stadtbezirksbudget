@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
  * <p>
  * <b>Used Application Properties:</b>
  * <ul>
- * <li><b>spring.kafka.consumer.group-id</b>: The Kafka Consumer Group ID</li>
  * <li><b>spring.kafka.template.default-topic</b>: The Kafka topic name</li>
  * </ul>
  */
