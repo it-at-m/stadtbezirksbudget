@@ -7,80 +7,88 @@ classDiagram
     Antrag "1"--"1" Finanzierung
     Antrag "1..n"--"1" Bankverbindung
     Antrag "1..n"--"0..1" Vertretungsberechtigter
-    Antrag "1..n"--"0..n" Mitglied
+    Antrag "1"--"0..n" Mitglied
     Finanzierung "1"--"1..n" VoraussichtlicheAusgabe
     Finanzierung "1"--"1..n" Finanzierungsmittel
-    Adresse "1"--"1..n" Antragssteller
-    Adresse "1"--"1..n" Vertretungsberechtigter
-    Adresse "1"--"1..n" Bankverbindung
     Adresse "1"--"1..n" Mitglied
+    Adresse "1"--"1..n" Zahlungsempfaenger
+    Zahlungsempfaenger "1"--"1..n"Bankverbindung
+    Zahlungsempfaenger "1"--"1..n"Vertretungsberechtigter
+    Zahlungsempfaenger "1"--"1..n"Antragssteller
 
     class Antrag{
-        bezirksausschussNr: int
         eingangsdatum: Date
-        zuwendungenDritterBeschreibung: String
         istPersonVorsteuerabzugsberechtigt: boolean
+        zuwendungenDritterBeschreibung: String
+        bezirksausschussNr: int
     }
 
     class Projekt{
-        titel: String
-        start: Date
-        ende: Date
+        <<UniqueConstraint>>
         beschreibung: String
+        ende: Date
+        start: Date
+        titel: String
     }
 
     class Bankverbindung{
-        person: String
+        <<UniqueConstraint>>
+        bic: String
         geldinstitut: String
         iban: String
-        bic: String
+        person: String
     }
 
     class Finanzierung{
-        istProjektVorsteuerabzugsberechtigt: boolean
-        bewilligterZuschuss: double
+        bewilligterZuschuss: Double
         istEinladungsFoerderhinweis: boolean
+        istProjektVorsteuerabzugsberechtigt: boolean
         istWebsiteFoerderhinweis: boolean
         sonstigerFoerderhinweis: String
     }
 
     class Antragssteller{
+        <<UniqueConstraint>>
         name: String
-        telefonNr: String
-        email: String
         rechtsform: Enum[natuerlichPerson, juristischePerson, sonstigeVereinigungen]
         zielsetzung: String
     }
 
     class Adresse{
-        strasse: String
+        <<UniqueConstraint>>
         hausnummer: String
-        postleitzahl: String
         ort: String
+        postleitzahl: String
+        strasse: String
     }
 
     class Vertretungsberechtigter{
+        <<UniqueConstraint>>
+        mobilNr: String
         nachname: String
         vorname: String
-        telefonNr: String
-        email: String
-        mobilNr: String
     }
 
     class VoraussichtlicheAusgabe{
-        kategorie: String
         betrag: double
         direktoriumNotiz: String
+        kategori: String
     }
 
     class Finanzierungsmittel{
-        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
         betrag: double
         direktoriumNotiz: String
+        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
     }
 
     class Mitglied{
         nachname: String
         vorname: String
+    }
+
+    class Zahlungsempfaenger{
+        <<abstract>>
+        email: String
+        telefonNr: String
     }
 ```
