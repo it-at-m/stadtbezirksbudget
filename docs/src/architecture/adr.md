@@ -1,4 +1,4 @@
-# Architecture Design Records (ADRs)
+# Architecture Decision Records (ADRs)
 
 Architecture Decision Records (ADR) are documented architectural decisions, each of which clarifies specific coding rules and guidelines that collectively shape
 our codebase.
@@ -26,3 +26,4 @@ should be added whenever a significant architectural or coding decision is made,
 - [ADR-10 Send-Api-Error-Message](./adr/10-send-api-error-message)
 - [ADR-11 Use-Directory-Structure](./adr/11-use-directory-structure)
 - [ADR-12 Use-Comments](./adr/12-use-comments)
+- [ADR-13 Use-Consistent-Code-Language](./adr/13-use-consistent-code-language)
