@@ -10,6 +10,7 @@ import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
@@ -26,7 +27,7 @@ import org.testcontainers.utility.DockerImageName;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
-@EmbeddedKafka(partitions = 1, topics = { "sbb-eai-topic" })
+@EmbeddedKafka(partitions = 1, topics = "${spring.kafka.template.default-topic}")
 class KafkaConsumerServiceTest {
     @Container
     @ServiceConnection
@@ -34,6 +35,8 @@ class KafkaConsumerServiceTest {
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
 
+    @Value("${spring.kafka.template.default-topic}")
+    private String topic;
     @Autowired
     private KafkaTemplate<String, KafkaDTO> kafkaTemplate;
     @MockitoSpyBean
@@ -42,7 +45,7 @@ class KafkaConsumerServiceTest {
     @Test
     void testListen() {
         KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
-        kafkaTemplate.send("sbb-eai-topic", kafkaDTO.id().toString(), kafkaDTO);
+        kafkaTemplate.send(topic, kafkaDTO.id().toString(), kafkaDTO);
         verify(kafkaConsumerService, timeout(5000)).listen(String.valueOf(kafkaDTO.id()), kafkaDTO);
     }
 }

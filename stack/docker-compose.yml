@@ -195,7 +195,7 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --list
       
       echo -e 'Creating kafka topics...'
-      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic sbb-eai-topic --replication-factor 1 --partitions 1
+      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic stadtbezirksbudget-cit-backend-local --replication-factor 1 --partitions 1
 
       echo -e 'Resulting topics:'
       kafka-topics --bootstrap-server kafka:9092 --list

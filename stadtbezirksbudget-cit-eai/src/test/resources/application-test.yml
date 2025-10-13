@@ -13,5 +13,13 @@ camel:
   main:
     tracing: false
 
+spring:
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    template:
+      default-topic: stadtbezirksbudget-cit-backend-local
+
 # Custom properties
-output : mock:output
+output: mock:output
