@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.cit_eai.TestConstants;
 import java.util.UUID;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,12 +24,15 @@ class KafkaProducerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    void testPublishMessage() throws Exception {
-        String message = "{\"id\":\"" + UUID.randomUUID() + "\",\"param1\":\"test\",\"param2\":123}";
-        mockMvc.perform(post("/kafka/publish")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(message))
-                .andExpect(status().isOk());
+    @Nested
+    class PublishMessage {
+        @Test
+        void testValidPublishMessageReturnOK() throws Exception {
+            String message = "{\"id\":\"" + UUID.randomUUID() + "\",\"param1\":\"test\",\"param2\":123}";
+            mockMvc.perform(post("/kafka/publish")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(message))
+                    .andExpect(status().isOk());
+        }
     }
 }

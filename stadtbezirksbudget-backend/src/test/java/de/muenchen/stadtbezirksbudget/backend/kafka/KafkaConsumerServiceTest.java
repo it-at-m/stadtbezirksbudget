@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import java.util.UUID;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,10 +43,13 @@ class KafkaConsumerServiceTest {
     @MockitoSpyBean
     private KafkaConsumerService kafkaConsumerService;
 
-    @Test
-    void testListen() {
-        KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
-        kafkaTemplate.send(topic, kafkaDTO.id().toString(), kafkaDTO);
-        verify(kafkaConsumerService, timeout(5000)).listen(String.valueOf(kafkaDTO.id()), kafkaDTO);
+    @Nested
+    class Listen {
+        @Test
+        void testListen() {
+            KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
+            kafkaTemplate.send(topic, kafkaDTO.id().toString(), kafkaDTO);
+            verify(kafkaConsumerService, timeout(5000)).listen(String.valueOf(kafkaDTO.id()), kafkaDTO);
+        }
     }
 }

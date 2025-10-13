@@ -4,6 +4,7 @@ import static org.mockito.Mockito.verify;
 
 import de.muenchen.stadtbezirksbudget.common.KafkaDTO;
 import java.util.UUID;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,10 +22,13 @@ class KafkaProducerServiceTest {
     @InjectMocks
     private KafkaProducerService kafkaProducerService;
 
-    @Test
-    void testPublishMessage() {
-        KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
-        kafkaProducerService.publishMessage(kafkaDTO);
-        verify(kafkaTemplate).send(topic, kafkaDTO.id().toString(), kafkaDTO);
+    @Nested
+    class PublishMessage {
+        @Test
+        void testPublishMessageCallsSend() {
+            KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
+            kafkaProducerService.publishMessage(kafkaDTO);
+            verify(kafkaTemplate).send(topic, kafkaDTO.id().toString(), kafkaDTO);
+        }
     }
 }
