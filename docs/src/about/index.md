@@ -19,7 +19,7 @@ This documentation will guide users through the intended process, illustrating h
 
 By integrating these systems, the application process aims to enhance efficiency, transparency, and user satisfaction in the handling of applications within the city district.
 
-For more details, visit the [architecture documentation](../architecture)
+For more details, visit the [architecture documentation](../architecture/)
 
 ## Target process
 
