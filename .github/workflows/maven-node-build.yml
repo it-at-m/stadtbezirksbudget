@@ -18,7 +18,6 @@ jobs:
           - app-path: stadtbezirksbudget-backend
           - app-path: stadtbezirksbudget-frontend
           - app-path: stadtbezirksbudget-cit-eai
-          - app-path: stadtbezirksbudget-common
           - app-path: stadtbezirksbudget-webcomponent
 
     steps:
