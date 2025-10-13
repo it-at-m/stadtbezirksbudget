@@ -26,7 +26,7 @@ class KafkaProducerServiceTest {
     class PublishMessage {
         @Test
         void testPublishMessageCallsSend() {
-            KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
+            final KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
             kafkaProducerService.publishMessage(kafkaDTO);
             verify(kafkaTemplate).send(topic, kafkaDTO.id().toString(), kafkaDTO);
         }

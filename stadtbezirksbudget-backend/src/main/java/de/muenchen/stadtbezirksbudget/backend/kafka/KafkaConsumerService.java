@@ -11,12 +11,13 @@ import org.springframework.stereotype.Service;
 
 /**
  * Service for consuming and processing messages from a Kafka topic.
- * This service listens to messages of type KafkaDTO from a predefined Kafka topic and processes them.
+ * This service listens to messages of type KafkaDTO from a predefined Kafka topic and processes
+ * them.
  * <p>
  * <b>Used Application Properties:</b>
  * <ul>
- *   <li><b>spring.kafka.consumer.group-id</b>: The Kafka Consumer Group ID</li>
- *   <li><b>spring.kafka.template.default-topic</b>: The Kafka topic name</li>
+ * <li><b>spring.kafka.consumer.group-id</b>: The Kafka Consumer Group ID</li>
+ * <li><b>spring.kafka.template.default-topic</b>: The Kafka topic name</li>
  * </ul>
  * These properties are used via @Value injection and in the @KafkaListener annotation.
  */
@@ -27,14 +28,15 @@ public class KafkaConsumerService {
     private String groupId;
 
     /**
-     * Receives and processes messages from the Kafka topic <i>spring.kafka.template.default-topic</i> in the group <i>spring.kafka.consumer.group-id</i>.
+     * Receives and processes messages from the Kafka topic <i>spring.kafka.template.default-topic</i>
+     * in the group <i>spring.kafka.consumer.group-id</i>.
      *
      * @param key the key of the received Kafka message as String
      * @param content the received message as KafkaDTO
      */
     @KafkaListener(topics = "${spring.kafka.template.default-topic}", groupId = "${spring.kafka.consumer.group-id}")
-    public void listen(@Header(name = KafkaHeaders.RECEIVED_KEY) String key, KafkaDTO content) {
-        UUID uuidKey = UUID.fromString(key);
+    public void listen(@Header(name = KafkaHeaders.RECEIVED_KEY) final String key, final KafkaDTO content) {
+        final UUID uuidKey = UUID.fromString(key);
         log.info("Received message in group {} with key {}: {}", groupId, uuidKey, content.toString());
     }
 }

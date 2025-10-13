@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 
 /**
  * Service for publishing messages to a Kafka topic.
- * This service provides functionality to send messages of type KafkaDTO to a predefined Kafka topic.
+ * This service provides functionality to send messages of type KafkaDTO to a predefined Kafka
+ * topic.
  * <p>
  * <b>Used Application Properties:</b>
  * <ul>
- *   <li><b>spring.kafka.consumer.group-id</b>: The Kafka Consumer Group ID</li>
- *   <li><b>spring.kafka.template.default-topic</b>: The Kafka topic name</li>
+ * <li><b>spring.kafka.consumer.group-id</b>: The Kafka Consumer Group ID</li>
+ * <li><b>spring.kafka.template.default-topic</b>: The Kafka topic name</li>
  * </ul>
  */
 @Service
@@ -28,7 +29,7 @@ public class KafkaProducerService {
      *
      * @param content the message to be published as KafkaDTO
      */
-    public void publishMessage(KafkaDTO content) {
+    public void publishMessage(final KafkaDTO content) {
         kafkaTemplate.send(topic, content.id().toString(), content);
     }
 }

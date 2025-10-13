@@ -28,8 +28,9 @@ class KafkaProducerIntegrationTest {
     class PublishMessage {
         @Test
         void testValidPublishMessageReturnOK() throws Exception {
-            String message = "{\"id\":\"" + UUID.randomUUID() + "\",\"param1\":\"test\",\"param2\":123}";
-            mockMvc.perform(post("/kafka/publish")
+            final String message = "{\"id\":\"" + UUID.randomUUID() + "\",\"param1\":\"test\",\"param2\":123}";
+            mockMvc
+                    .perform(post("/kafka/publish")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(message))
                     .andExpect(status().isOk());
