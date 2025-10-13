@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.4</version> <!-- must match the chosen Camel version in properties -> camel-spring-boot-dependencies.version, see e.g. https://central.sonatype.com/artifact/org.apache.camel.springboot/camel-spring-boot/dependencies and search for 'spring-boot-starter' -->
+        <version>3.5.4</version>
         <relativePath />
     </parent>
 
@@ -45,8 +45,6 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
-        <!-- Core Frameworks -->
-        <camel-spring-boot-dependencies.version>4.14.1</camel-spring-boot-dependencies.version>
 
         <!-- Logging -->
         <logstash-logback-encoder.version>8.1</logstash-logback-encoder.version>
@@ -77,28 +75,13 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Camel BOM -->
             <dependency>
-                <groupId>org.apache.camel.springboot</groupId>
-                <artifactId>camel-spring-boot-dependencies</artifactId>
-                <version>${camel-spring-boot-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
-
-        <!-- Camel -->
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.springboot</groupId>
-            <artifactId>camel-servlet-starter</artifactId>
-        </dependency>
 
         <!--  Spring-Boot-Actuator (https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.enabling) -->
         <dependency>
@@ -111,11 +94,6 @@
         </dependency>
 
         <!-- Test -->
-        <dependency>
-            <groupId>org.apache.camel</groupId>
-            <artifactId>camel-test-spring-junit5</artifactId>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
