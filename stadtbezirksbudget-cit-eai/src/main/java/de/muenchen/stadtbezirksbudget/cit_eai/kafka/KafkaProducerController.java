@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.kafka;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ public class KafkaProducerController {
      * @return confirmation text that the message was published successfully
      */
     @PostMapping("/publish")
-    public String publishMessage(@RequestBody final KafkaDTO message) {
+    public String publishMessage(@RequestBody @Valid final KafkaDTO message) {
         kafkaProducerService.publishMessage(message);
         return "Message published successfully";
     }

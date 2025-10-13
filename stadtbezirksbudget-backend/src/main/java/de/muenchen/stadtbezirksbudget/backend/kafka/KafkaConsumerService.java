@@ -35,7 +35,15 @@ public class KafkaConsumerService {
      */
     @KafkaListener(topics = "${spring.kafka.template.default-topic}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(@Header(name = KafkaHeaders.RECEIVED_KEY) final String key, final KafkaDTO content) {
-        final UUID uuidKey = UUID.fromString(key);
-        log.info("Received message in group {} with key {}: {}", groupId, uuidKey, content.toString());
+        try {
+            final UUID uuidKey = UUID.fromString(key);
+            if (!uuidKey.equals(content.id())) {
+                log.warn("Message key {} does not match content ID {}. Skipping message.", key, content.id());
+                return;
+            }
+            log.info("Received message in group {} with key {}: {}", groupId, uuidKey, content);
+        } catch (IllegalArgumentException e) {
+            log.error("Failed to parse message key as UUID: {}. Skipping message.", key, e);
+        }
     }
 }
