@@ -6,13 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Service for consuming and processing messages from a Kafka topic.
  * This service listens to the 'sbb-eai-topic' Kafka topic and processes incoming messages of type KafkaDTO.
  */
-@Component
+@Service
 @Slf4j
 public class KafkaConsumerService {
     /**
