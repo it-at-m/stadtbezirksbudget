@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @EmbeddedKafka(partitions = 1, topics = "${spring.kafka.template.default-topic}")
 @ActiveProfiles(TestConstants.SPRING_TEST_PROFILE)
-class KafkaProducerControllerTest {
+class KafkaProducerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
