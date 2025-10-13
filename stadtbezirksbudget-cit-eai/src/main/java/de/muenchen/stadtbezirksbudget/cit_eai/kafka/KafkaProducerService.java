@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.kafka;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
  * </ul>
  */
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class KafkaProducerService {
     private final KafkaTemplate<String, KafkaDTO> kafkaTemplate;
@@ -29,5 +31,6 @@ public class KafkaProducerService {
      */
     public void publishMessage(final KafkaDTO content) {
         kafkaTemplate.send(topic, content.id().toString(), content);
+        log.info("Published message to topic {} with key {}: {}", topic, content.id(), content);
     }
 }
