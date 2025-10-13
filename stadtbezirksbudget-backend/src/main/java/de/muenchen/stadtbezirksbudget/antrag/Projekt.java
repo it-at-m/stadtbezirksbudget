@@ -2,22 +2,18 @@ package de.muenchen.stadtbezirksbudget.antrag;
 
 import de.muenchen.stadtbezirksbudget.common.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import java.util.Date;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class Projekt extends BaseEntity {
-    private String titel;
-    private String beschreibung;
-    private Date start;
-    private Date ende;
+    @NotBlank private String titel;
+    @NotBlank private String beschreibung;
+    @NotEmpty private Date start;
+    @NotEmpty private Date ende;
 }

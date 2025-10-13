@@ -3,29 +3,26 @@ package de.muenchen.stadtbezirksbudget.antrag;
 import de.muenchen.stadtbezirksbudget.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class Finanzierung extends BaseEntity {
     private boolean istProjektVorsteuerabzugsberechtigt;
-    private double bewilligterZuschuss;
+    @PositiveOrZero private Double bewilligterZuschuss;
     private boolean istEinladungsFoerderhinweis;
     private boolean istWebsiteFoerderhinweis;
-    private String sonstigeFoerderhinweis;
+    @NotNull private String sonstigeFoerderhinweise;
 
-    @OneToMany
+    @NotEmpty @OneToMany
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben;
 
-    @OneToMany
+    @NotEmpty @OneToMany
     private List<Finanzierungsmittel> finanzierungsmittelListe;
 }

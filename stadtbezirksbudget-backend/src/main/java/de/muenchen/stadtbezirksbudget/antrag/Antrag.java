@@ -5,41 +5,38 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.util.Date;
 import java.util.List;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class Antrag extends BaseEntity {
-    private int bezirksausschussNr;
-    private Date eingangsdatum;
-    private String zuwendungenDritterBeschreibung;
-    private boolean istPersonVorsteuerabzugsberechtigt;
+    @NotEmpty @Positive private int bezirksausschussNr;
+    @NotEmpty private Date eingangsdatum;
+    @NotNull private String zuwendungenDritterBeschreibung;
+    @NotEmpty private boolean istPersonVorsteuerabzugsberechtigt;
 
-    @OneToOne
+    @NotNull @OneToOne
     private Projekt projekt;
 
-    @OneToOne
+    @NotNull @OneToOne
     private Finanzierung finanzierung;
 
-    @ManyToOne
+    @NotNull @ManyToOne
     private Antragsteller antragsteller;
 
-    @ManyToOne
+    @NotNull @ManyToOne
     private Bankverbindung bankverbindung;
 
     @ManyToOne
-    private Vertretungsberechtigter vertretungsberechtigter; //TODO 1 -- 0..1 Verbindung
+    private Vertretungsberechtigter vertretungsberechtigter;
 
-    @ManyToMany
-    private List<Mitglied> mitglieder; //TODO 1..n--0||2..n Verbindung
+    @NotNull @ManyToMany
+    private List<Mitglied> mitglieder;
 }

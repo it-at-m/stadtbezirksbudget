@@ -2,20 +2,17 @@ package de.muenchen.stadtbezirksbudget.antrag;
 
 import de.muenchen.stadtbezirksbudget.common.BaseEntity;
 import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class VoraussichtlicheAusgabe extends BaseEntity {
-    private String kategorie;
-    private double betrag;
-    private String direktoriumNotiz;
+    @NotBlank private String kategorie;
+    @PositiveOrZero private double betrag;
+    @NotNull private String direktoriumNotiz;
 }
