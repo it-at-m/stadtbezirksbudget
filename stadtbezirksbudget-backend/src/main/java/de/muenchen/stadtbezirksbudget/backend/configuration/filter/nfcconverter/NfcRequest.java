@@ -182,6 +182,7 @@ public class NfcRequest extends HttpServletRequestWrapper implements HttpServlet
     }
 
     @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING", matchType = SuppressMatchType.EXACT)
+    @SuppressWarnings("PMD.RelianceOnDefaultCharset")
     @Override
     public ServletInputStream getInputStream() throws IOException {
 
