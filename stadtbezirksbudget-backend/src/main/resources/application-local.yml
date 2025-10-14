@@ -29,6 +29,7 @@ spring:
     consumer:
       bootstrap-servers: localhost:29092
       group-id: stadtbezirksbudget-backend
+      auto-offset-reset: earliest
     template:
       default-topic: stadtbezirksbudget-cit-backend-local
 
