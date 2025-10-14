@@ -9,10 +9,6 @@ logging:
     org:
       springframework: INFO
 
-camel:
-  main:
-    tracing: false
-
 spring:
   kafka:
     producer:
