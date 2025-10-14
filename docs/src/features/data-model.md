@@ -41,7 +41,7 @@ classDiagram
     }
 
     class Finanzierung{
-        bewilligterZuschuss: Double
+        bewilligterZuschuss: [Optional] Double 
         istEinladungsFoerderhinweis: boolean
         istProjektVorsteuerabzugsberechtigt: boolean
         istWebsiteFoerderhinweis: boolean
