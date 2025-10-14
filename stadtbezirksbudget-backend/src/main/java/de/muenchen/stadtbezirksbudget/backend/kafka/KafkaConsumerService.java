@@ -35,6 +35,10 @@ public class KafkaConsumerService {
      */
     @KafkaListener(topics = "${spring.kafka.template.default-topic}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(@Header(name = KafkaHeaders.RECEIVED_KEY) final String key, final KafkaDTO content) {
+        if (key == null) {
+            log.error("Received null message key. Skipping message: {}", content);
+            return;
+        }
         try {
             final UUID uuidKey = UUID.fromString(key);
             if (!uuidKey.equals(content.id())) {
