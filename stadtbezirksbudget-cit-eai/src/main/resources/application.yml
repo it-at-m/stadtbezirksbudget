@@ -50,7 +50,7 @@ info:
     description: "@project.description@"
   build:
     java.version: "@java.version@"
-    spring-cloud.version: @spring-cloud-dependencies.version@
+    spring-cloud.version: "@spring-cloud-dependencies.version@"
 
 # Custom properties
 output: direct:foo
