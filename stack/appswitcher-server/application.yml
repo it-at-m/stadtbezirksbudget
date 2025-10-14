@@ -20,6 +20,6 @@ appswitcher.apps:
   minio:
     display-name: Minio (S3)
     url: http://localhost:9001
-    # image-url: TODO add logo
+    image-url: https://avatars.githubusercontent.com/u/695951
     tags:
       - global
