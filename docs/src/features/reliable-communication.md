@@ -13,10 +13,10 @@ application itself to be fault-tolerant.
 flowchart LR
     classDef project stroke: #0f0
     cit[CIT form server]
-    citEai[Stadtbezirsbudget\nCIT-EAI]
+    citEai[Stadtbezirksbudget\nCIT-EAI]
     dbs[DBS Zammad]
     dbsEai[Zammad-EAI]
-    sbb[Stadtbezirsbudget\nBackend]
+    sbb[Stadtbezirksbudget\nBackend]
     kafka[(Kafka event bus)]
     cit --> citEai:::project
     citEai:::project --> kafka
