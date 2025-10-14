@@ -57,4 +57,4 @@ your contribution. The labels should match the prefixes used in branch naming.
 | 🛠️ Maintenance   | General maintenance and updates                      | #545454 |
 | 🏗️ Backend       | Changes related to Backend                           | #ff7f00 |
 | 🏗️ Frontend      | Changes related to Frontend                          | #ff7f00 |
-| 🏗️ EAI           | Changes related to EAI                               | #ff7f00 |
+| 🏗️ CIT-EAI       | Changes related to CIT-EAI                           | #ff7f00 |
