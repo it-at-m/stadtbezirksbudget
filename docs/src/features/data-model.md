@@ -24,19 +24,19 @@ classDiagram
     }
 
     class Projekt{
-        <<@UniqueConstraint>>
-        beschreibung: String
-        ende: Date
-        start: Date
-        titel: String
+        beschreibung: String<fk>
+        ende: Date<fk>
+        start: Date<fk>
+        titel: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Bankverbindung{
-        <<@UniqueConstraint>>
-        bic: String
-        geldinstitut: String
-        iban: String
-        person: String
+        bic: String<fk>
+        geldinstitut: String<fk>
+        iban: String<fk>
+        person: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Finanzierung{
@@ -48,25 +48,25 @@ classDiagram
     }
 
     class Antragssteller{
-        <<@UniqueConstraint>>
-        name: String
-        rechtsform: Enum[natuerlichPerson, juristischePerson, sonstigeVereinigungen]
-        zielsetzung: String
+        name: String<fk>
+        rechtsform: Enum[natuerlichPerson, juristischePerson, sonstigeVereinigungen]<fk>
+        zielsetzung: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Adresse{
-        <<@UniqueConstraint>>
-        hausnummer: String
-        ort: String
-        postleitzahl: String
-        strasse: String
+        hausnummer: String<fk>
+        ort: String<fk>
+        postleitzahl: String<fk>
+        strasse: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Vertretungsberechtigter{
-        <<@UniqueConstraint>>
-        mobilNr: String
-        nachname: String
-        vorname: String
+        mobilNr: String<fk>
+        nachname: String<fk>
+        vorname: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class VoraussichtlicheAusgabe{
@@ -82,14 +82,15 @@ classDiagram
     }
 
     class Mitglied{
-        <<@UniqueConstraint>>
-        nachname: String
-        vorname: String
+        nachname: String<fk>
+        vorname: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Zahlungsempfaenger{
         <<abstract>>
-        email: String
-        telefonNr: String
+        email: String<fk>
+        telefonNr: String<fk>
+        %% All attributes except UUID are <fk> (including child-attributes)
     }
 ```
