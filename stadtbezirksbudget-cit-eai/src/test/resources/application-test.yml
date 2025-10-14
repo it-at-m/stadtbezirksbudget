@@ -9,9 +9,5 @@ logging:
     org:
       springframework: INFO
 
-camel:
-  main:
-    tracing: false
-
 # Custom properties
 output : mock:output
