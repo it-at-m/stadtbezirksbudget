@@ -29,6 +29,9 @@ public class KafkaConsumerService {
     /**
      * Receives and processes messages from the Kafka topic <i>spring.kafka.template.default-topic</i>
      * in the group <i>spring.kafka.consumer.group-id</i>.
+     * <p>
+     * The method validates that the message key matches the content's ID. Messages with mismatched
+     * keys are logged as warnings and skipped to maintain data integrity.
      *
      * @param key the key of the received Kafka message as String
      * @param content the received message as KafkaDTO
