@@ -31,7 +31,7 @@ For more details, visit the [architecture documentation](../architecture/)
 
 The target process provides a visual representation of the intended workflow and interactions between all parties involved in the application process.
 
-<a href="target-process.png" target="_blank" rel="noopener noreferrer">
-    <img src="target-process.png" alt="Target process diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
+<a href="./target-process.png" target="_blank" rel="noopener noreferrer">
+    <img src="./target-process.png" alt="Target process diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
 </a>
-<a href="target-process.png" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+<a href="./target-process.png" target="_blank" rel="noopener noreferrer">Open in new tab</a>
