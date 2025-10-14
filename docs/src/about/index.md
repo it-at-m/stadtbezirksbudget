@@ -1,8 +1,3 @@
-<script setup>
-// noinspection ES6UnusedImports
-import targetProcessUrl from "./target-process.png";
-</script>
-
 # About
 
 In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more
@@ -46,6 +41,11 @@ For more details, visit the [architecture documentation](../architecture/)
 ## Target process
 
 The target process provides a visual representation of the intended workflow and interactions between all parties involved in the application process.
+
+<script setup>
+// noinspection ES6UnusedImports
+import targetProcessUrl from "./target-process.png";
+</script>
 
 <a :href="targetProcessUrl" target="_blank" rel="noopener noreferrer">
     <img :src="targetProcessUrl" alt="Target process diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
