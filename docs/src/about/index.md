@@ -1,5 +1,11 @@
 # About
 
+In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more efficient. An online form is being introduced for citizens to submit their applications, along with a clear digital representation of the application for processing by administrative staff.
+
+The Project is based on [Spring](https://spring.io/) and [Vue.js](https://vuejs.org/)
+
+To learn more about the used reference architecture of IT@M, checkout its [documentation](https://refarch.oss.muenchen.de/) or [code](https://github.com/it-at-m/refarch).
+
 ## Introduction
 
 The application process within the city district is designed to facilitate effective communication between citizens and caseworkers, as well as among caseworkers, district committees, and other involved parties. This documentation outlines the intended workflow of our specialized application, which aims to streamline the submission and processing of applications.
@@ -23,9 +29,9 @@ For more details, visit the [architecture documentation](../architecture/)
 
 ## Target process
 
-<a href="./Soll-Prozess.png" target="_blank" rel="noopener noreferrer">
-    <img src="./Soll-Prozess.png" alt="Target process diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
-</a>
-<a href="./Soll-Prozess.png" target="_blank" rel="noopener noreferrer">Open in new tab</a>
-
 The target process provides a visual representation of the intended workflow and interactions between all parties involved in the application process.
+
+<a href="target-process.png" target="_blank" rel="noopener noreferrer">
+    <img src="target-process.png" alt="Target process diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
+</a>
+<a href="target-process.png" target="_blank" rel="noopener noreferrer">Open in new tab</a>
