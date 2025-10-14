@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.eai.s3;
+package de.muenchen.stadtbezirksbudget.cit_eai.s3;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
