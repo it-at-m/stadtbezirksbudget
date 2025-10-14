@@ -16,6 +16,14 @@ spring:
   flyway:
     locations:
       - classpath:db/migration/schema
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties.spring.json:
+        trusted.packages: de.muenchen.stadtbezirksbudget.backend.*
+        type.mapping: de.muenchen.stadtbezirksbudget.kafka.KafkaDTO:de.muenchen.stadtbezirksbudget.backend.kafka.KafkaDTO
 
 server:
   error:
