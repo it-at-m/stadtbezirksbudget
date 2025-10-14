@@ -19,6 +19,7 @@ classDiagram
     class Antrag{
         eingangsdatum: Date
         istPersonVorsteuerabzugsberechtigt: boolean
+        istZuwendungDritter: boolean
         zuwendungenDritterBeschreibung: String
         bezirksausschussNr: int
     }

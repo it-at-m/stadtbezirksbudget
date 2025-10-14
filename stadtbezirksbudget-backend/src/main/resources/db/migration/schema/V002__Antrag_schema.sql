@@ -13,6 +13,7 @@ CREATE TABLE antrag
     id                                   UUID         NOT NULL,
     bezirksausschuss_nr                  INTEGER      NOT NULL,
     eingangsdatum                        TIMESTAMP WITHOUT TIME ZONE,
+    ist_zuwendung_dritter                BOOLEAN      NOT NULL,
     zuwendungen_dritter_beschreibung     VARCHAR(255) NOT NULL,
     ist_person_vorsteuerabzugsberechtigt BOOLEAN      NOT NULL,
     projekt_id                           UUID         NOT NULL,

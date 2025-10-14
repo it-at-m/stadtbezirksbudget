@@ -19,6 +19,7 @@ import lombok.Setter;
 public class Antrag extends BaseEntity {
     @NotEmpty @Positive private int bezirksausschussNr;
     @NotEmpty private Date eingangsdatum;
+    private boolean istZuwendungDritter;
     @NotNull private String zuwendungenDritterBeschreibung;
     @NotEmpty private boolean istPersonVorsteuerabzugsberechtigt;
 
