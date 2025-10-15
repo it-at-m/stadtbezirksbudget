@@ -6,8 +6,7 @@ be interconnected. In particular, the reliability and fault tolerance of the com
 citizen applications must never be lost.
 
 For this reason, we are using the Kafka event bus. It is operated centrally and with high availability, ensuring reliability without requiring the
-Stadtbezirksbudget
-application itself to be fault-tolerant.
+Stadtbezirksbudget application itself to be high available.
 
 ```mermaid
 flowchart LR
