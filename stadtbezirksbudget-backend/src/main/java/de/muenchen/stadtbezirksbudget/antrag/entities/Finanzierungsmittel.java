@@ -2,6 +2,8 @@ package de.muenchen.stadtbezirksbudget.antrag.entities;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
@@ -15,6 +17,7 @@ public class Finanzierungsmittel extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @NotNull @Enumerated(EnumType.STRING)
     private Kategorie kategorie;
     @PositiveOrZero private double betrag;
     @NotNull private String direktoriumNotiz;

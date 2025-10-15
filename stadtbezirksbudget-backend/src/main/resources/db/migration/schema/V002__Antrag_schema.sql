@@ -11,7 +11,7 @@ CREATE TABLE adresse
 CREATE TABLE anderer_zuwendungsantrag
 (
     id           UUID NOT NULL,
-    antragsdatum TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    antragsdatum date NOT NULL,
     stelle       VARCHAR(255),
     CONSTRAINT pk_andererzuwendungsantrag PRIMARY KEY (id)
 );
@@ -20,7 +20,7 @@ CREATE TABLE antrag
 (
     id                                   UUID    NOT NULL,
     bezirksausschuss_nr                  INTEGER NOT NULL,
-    eingangsdatum                        TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    eingangsdatum                        date    NOT NULL,
     ist_person_vorsteuerabzugsberechtigt BOOLEAN NOT NULL,
     projekt_id                           UUID    NOT NULL,
     finanzierung_id                      UUID    NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE bearbeitungsstand
 (
     id              UUID         NOT NULL,
     anmerkungen     VARCHAR(255) NOT NULL,
-    status          SMALLINT,
+    status          VARCHAR(255) NOT NULL,
     ist_mittelabruf BOOLEAN      NOT NULL,
     CONSTRAINT pk_bearbeitungsstand PRIMARY KEY (id)
 );
@@ -82,7 +82,7 @@ CREATE TABLE finanzierung_voraussichtliche_ausgaben
 CREATE TABLE finanzierungsmittel
 (
     id                UUID             NOT NULL,
-    kategorie         SMALLINT,
+    kategorie         VARCHAR(255),
     betrag            DOUBLE PRECISION NOT NULL,
     direktorium_notiz VARCHAR(255)     NOT NULL,
     CONSTRAINT pk_finanzierungsmittel PRIMARY KEY (id)
@@ -93,8 +93,8 @@ CREATE TABLE projekt
     id           UUID NOT NULL,
     titel        VARCHAR(255),
     beschreibung VARCHAR(255),
-    start        TIMESTAMP WITHOUT TIME ZONE,
-    ende         TIMESTAMP WITHOUT TIME ZONE,
+    start        date NOT NULL,
+    ende         date NOT NULL,
     CONSTRAINT pk_projekt PRIMARY KEY (id)
 );
 
@@ -109,26 +109,22 @@ CREATE TABLE voraussichtliche_ausgabe
 
 CREATE TABLE zahlungsempfaenger
 (
-    id          UUID         NOT NULL,
+    id          UUID NOT NULL,
     dtype       VARCHAR(31),
     telefon_nr  VARCHAR(255),
     email       VARCHAR(255),
-    adresse_id  UUID         NOT NULL,
+    adresse_id  UUID,
     nachname    VARCHAR(255),
     vorname     VARCHAR(255),
-    mobil_nr    VARCHAR(255) NOT NULL,
+    mobil_nr    VARCHAR(255),
     name        VARCHAR(255),
-    zielsetzung VARCHAR(255) NOT NULL,
+    zielsetzung VARCHAR(255),
     rechtsform  SMALLINT,
     CONSTRAINT pk_zahlungsempfaenger PRIMARY KEY (id)
 );
 
 ALTER TABLE bankverbindung
     ADD CONSTRAINT uc_79b9fc5faada2c50fc7a5cae5 UNIQUE (person, geldinstitut, iban, bic, zahlungsempfaenger_id);
-
-ALTER TABLE zahlungsempfaenger
-    ADD CONSTRAINT uc_8ec5b2df9546feafd9ef863a7 UNIQUE (dtype, email, adresse_id, nachname, vorname, name, zielsetzung,
-                                                        rechtsform);
 
 ALTER TABLE antrag_andere_zuwendungsantraege
     ADD CONSTRAINT uc_antrag_andere_zuwendungsantraege_anderezuwendungsantraege UNIQUE (andere_zuwendungsantraege_id);
@@ -183,3 +179,11 @@ ALTER TABLE finanzierung_voraussichtliche_ausgaben
 
 ALTER TABLE finanzierung_voraussichtliche_ausgaben
     ADD CONSTRAINT fk_finvoraus_on_voraussichtliche_ausgabe FOREIGN KEY (voraussichtliche_ausgaben_id) REFERENCES voraussichtliche_ausgabe (id);
+
+CREATE INDEX idx_antrag_projekt ON antrag(projekt_id);
+CREATE INDEX idx_antrag_finanzierung ON antrag(finanzierung_id);
+CREATE INDEX idx_antrag_antragsteller ON antrag(antragsteller_id);
+CREATE INDEX idx_antrag_bankverbindung ON antrag(bankverbindung_id);
+CREATE INDEX idx_antrag_vertretungsberechtigter ON antrag(vertretungsberechtigter_id);
+CREATE INDEX idx_bankverbindung_zahlungsempfaenger ON bankverbindung(zahlungsempfaenger_id);
+CREATE INDEX idx_zahlungsempfaenger_adresse ON zahlungsempfaenger(adresse_id);

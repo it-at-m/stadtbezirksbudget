@@ -5,9 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,9 +20,9 @@ public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotEmpty @Positive private int bezirksausschussNr;
+    @PositiveOrZero private int bezirksausschussNr;
     @NotNull private LocalDate eingangsdatum;
-    @NotEmpty private boolean istPersonVorsteuerabzugsberechtigt;
+    private boolean istPersonVorsteuerabzugsberechtigt;
 
     @NotNull @ManyToOne
     private Projekt projekt;
