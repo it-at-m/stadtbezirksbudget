@@ -2,8 +2,8 @@ package de.muenchen.stadtbezirksbudget.antrag.entities;
 
 import de.muenchen.stadtbezirksbudget.common.BaseEntity;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,12 +18,10 @@ import lombok.Setter;
 @Setter
 public class Antrag extends BaseEntity {
     @NotEmpty @Positive private int bezirksausschussNr;
-    @NotEmpty private Date eingangsdatum;
-    private boolean istZuwendungDritter;
-    @NotNull private String zuwendungenDritterBeschreibung;
+    @NotNull private Date eingangsdatum;
     @NotEmpty private boolean istPersonVorsteuerabzugsberechtigt;
 
-    @NotNull @OneToOne
+    @NotNull @ManyToOne
     private Projekt projekt;
 
     @NotNull @OneToOne
@@ -38,6 +36,6 @@ public class Antrag extends BaseEntity {
     @ManyToOne
     private Vertretungsberechtigter vertretungsberechtigter;
 
-    @NotNull @ManyToMany
-    private List<Mitglied> mitglieder;
+    @OneToMany
+    private List<AndererZuwendungsantrag> andereZuwendungsantraege;
 }
