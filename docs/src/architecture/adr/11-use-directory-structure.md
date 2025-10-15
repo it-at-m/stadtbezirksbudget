@@ -8,7 +8,7 @@ A defined directory structure is required so that all developers know where to l
 
 The structure in the backend and EAI is feature-oriented, except for common packages (e.g. `common`, `security`, `util`, etc.).
 This means that all files related to a specific feature (e.g. `budget`, `user`, etc.) are in the same parent directory.
-Inside each feature-based-package, we use a type-oriented structure (e. g. `entities`, `dtos`, `repositories`, etc.).
+Inside each feature-based package, we use a type-oriented structure (e.g. `entities`, `dtos`, `repositories`, etc.).
 
 In the frontend, the structure is layer-oriented, meaning that all files of the same type (e.g. `components`, `services`, etc.) are in the same parent
 directory. In these directories, files can be further organized by feature.
