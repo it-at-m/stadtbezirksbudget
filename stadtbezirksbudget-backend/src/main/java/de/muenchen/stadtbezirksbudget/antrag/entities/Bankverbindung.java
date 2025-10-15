@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,9 @@ import lombok.Setter;
 @Setter
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "person", "geldinstitut", "iban", "bic", "zahlungsempfaenger_id" }))
 public class Bankverbindung extends BaseEntity {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @NotNull @ManyToOne
     private Zahlungsempfaenger zahlungsempfaenger;
 

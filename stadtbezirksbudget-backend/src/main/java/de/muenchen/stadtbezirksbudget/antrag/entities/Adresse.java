@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
+import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,9 @@ import lombok.Setter;
 @Setter
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "strasse", "hausnummer", "ort", "postleitzahl" }))
 public class Adresse extends BaseEntity {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @NotBlank private String strasse;
     @NotBlank private String hausnummer;
     @NotBlank private String ort;

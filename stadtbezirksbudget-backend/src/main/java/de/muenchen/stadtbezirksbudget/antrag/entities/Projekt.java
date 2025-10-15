@@ -5,8 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import java.util.Date;
+import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +16,11 @@ import lombok.Setter;
 @Setter
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "titel", "beschreibung", "start", "ende" }))
 public class Projekt extends BaseEntity {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @NotBlank private String titel;
     @NotBlank private String beschreibung;
-    @NotEmpty private Date start;
-    @NotEmpty private Date ende;
+    @NotNull private LocalDate start;
+    @NotNull private LocalDate ende;
 }

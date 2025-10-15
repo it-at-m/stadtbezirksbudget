@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,8 +20,15 @@ import lombok.Setter;
         )
 )
 public abstract class Zahlungsempfaenger extends BaseEntity {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @NotBlank private String telefonNr;
     @NotBlank private String email;
     @NotNull @ManyToOne
     private Adresse adresse;
+
+    protected Zahlungsempfaenger() {
+        super();
+    }
 }

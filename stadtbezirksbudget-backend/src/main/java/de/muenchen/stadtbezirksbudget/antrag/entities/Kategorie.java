@@ -1,7 +1,7 @@
 package de.muenchen.stadtbezirksbudget.antrag.entities;
 
 public enum Kategorie {
-    einnahmen,
-    eigenmittel,
-    zuwendungenDritter
+    EINNAHMEN,
+    EIGENMITTEL,
+    ZUWENDUNGEN_DRITTER
 }

@@ -4,7 +4,8 @@ import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Date;
+import java.io.Serial;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AndererZuwendungsantrag extends BaseEntity {
-    @NotNull private Date antragsdatum;
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @NotNull private LocalDate antragsdatum;
     @NotBlank private String stelle;
 }
