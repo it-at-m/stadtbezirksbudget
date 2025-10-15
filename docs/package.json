@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build",
+    "preview": "vitepress build && vitepress preview",
     "lint": "prettier . --check && markdownlint .",
     "fix": "prettier . --write && markdownlint -f ."
   },

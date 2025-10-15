@@ -19,7 +19,7 @@ const vitepressConfig = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "About", link: "/about" },
+      { text: "About", link: "/about/" },
       {
         text: "Features",
         items: [
@@ -30,7 +30,8 @@ const vitepressConfig = defineConfig({
       {
         text: "Architecture",
         items: [
-          { text: "Architecture Design Records", link: "/architecture/adr" },
+          { text: "Architecture", link: "/architecture/" },
+          { text: "Architecture Decision Records", link: "/architecture/adr" },
         ],
       },
       {
@@ -55,8 +56,12 @@ const vitepressConfig = defineConfig({
         },
         {
           text: "Architecture",
+          link: "/architecture/",
           items: [
-            { text: "Architecture Design Records", link: "/architecture/adr" },
+            {
+              text: "Architecture Decision Records",
+              link: "/architecture/adr",
+            },
           ],
         },
         {
@@ -73,7 +78,7 @@ const vitepressConfig = defineConfig({
       ],
       "/architecture/adr/": [
         {
-          text: "Architecture Design Records",
+          text: "Architecture Decision Records",
           items: [
             {
               text: "Overview",
