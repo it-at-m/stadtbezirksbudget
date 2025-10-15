@@ -2,6 +2,8 @@
 
 The following section presents the architecture diagram, illustrating the core systems and their interactions within the Stadtbezirksbudget application. This visual overview highlights how the form server, communication tools, documentation systems, and the specialized application work together to streamline the application process.
 
+## Architecture Diagram
+
 ::: info
 The architecture diagram contains dashed boxes and lines that are not part of the MVP (Minimum Viable Product) and will not be implemented in the first version.
 :::
