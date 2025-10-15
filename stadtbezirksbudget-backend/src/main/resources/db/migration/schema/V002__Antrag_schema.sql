@@ -8,26 +8,32 @@ CREATE TABLE adresse
     CONSTRAINT pk_adresse PRIMARY KEY (id)
 );
 
+CREATE TABLE anderer_zuwendungsantrag
+(
+    id           UUID NOT NULL,
+    antragsdatum TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    stelle       VARCHAR(255),
+    CONSTRAINT pk_andererzuwendungsantrag PRIMARY KEY (id)
+);
+
 CREATE TABLE antrag
 (
-    id                                   UUID         NOT NULL,
-    bezirksausschuss_nr                  INTEGER      NOT NULL,
-    eingangsdatum                        TIMESTAMP WITHOUT TIME ZONE,
-    ist_zuwendung_dritter                BOOLEAN      NOT NULL,
-    zuwendungen_dritter_beschreibung     VARCHAR(255) NOT NULL,
-    ist_person_vorsteuerabzugsberechtigt BOOLEAN      NOT NULL,
-    projekt_id                           UUID         NOT NULL,
-    finanzierung_id                      UUID         NOT NULL,
-    antragsteller_id                     UUID         NOT NULL,
-    bankverbindung_id                    UUID         NOT NULL,
+    id                                   UUID    NOT NULL,
+    bezirksausschuss_nr                  INTEGER NOT NULL,
+    eingangsdatum                        TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    ist_person_vorsteuerabzugsberechtigt BOOLEAN NOT NULL,
+    projekt_id                           UUID    NOT NULL,
+    finanzierung_id                      UUID    NOT NULL,
+    antragsteller_id                     UUID    NOT NULL,
+    bankverbindung_id                    UUID    NOT NULL,
     vertretungsberechtigter_id           UUID,
     CONSTRAINT pk_antrag PRIMARY KEY (id)
 );
 
-CREATE TABLE antrag_mitglieder
+CREATE TABLE antrag_andere_zuwendungsantraege
 (
-    antrag_id     UUID NOT NULL,
-    mitglieder_id UUID NOT NULL
+    antrag_id                    UUID NOT NULL,
+    andere_zuwendungsantraege_id UUID NOT NULL
 );
 
 CREATE TABLE bankverbindung
@@ -39,6 +45,15 @@ CREATE TABLE bankverbindung
     iban                  VARCHAR(255),
     bic                   VARCHAR(255),
     CONSTRAINT pk_bankverbindung PRIMARY KEY (id)
+);
+
+CREATE TABLE bearbeitungsstand
+(
+    id              UUID         NOT NULL,
+    anmerkungen     VARCHAR(255) NOT NULL,
+    status          SMALLINT,
+    ist_mittelabruf BOOLEAN      NOT NULL,
+    CONSTRAINT pk_bearbeitungsstand PRIMARY KEY (id)
 );
 
 CREATE TABLE finanzierung
@@ -71,15 +86,6 @@ CREATE TABLE finanzierungsmittel
     betrag            DOUBLE PRECISION NOT NULL,
     direktorium_notiz VARCHAR(255)     NOT NULL,
     CONSTRAINT pk_finanzierungsmittel PRIMARY KEY (id)
-);
-
-CREATE TABLE mitglied
-(
-    id         UUID NOT NULL,
-    nachname   VARCHAR(255),
-    vorname    VARCHAR(255),
-    adresse_id UUID NOT NULL,
-    CONSTRAINT pk_mitglied PRIMARY KEY (id)
 );
 
 CREATE TABLE projekt
@@ -117,15 +123,15 @@ CREATE TABLE zahlungsempfaenger
     CONSTRAINT pk_zahlungsempfaenger PRIMARY KEY (id)
 );
 
-ALTER TABLE mitglied
-    ADD CONSTRAINT uc_4346ab10d20ccf5199cbcaee8 UNIQUE (nachname, vorname, adresse_id);
-
 ALTER TABLE bankverbindung
     ADD CONSTRAINT uc_79b9fc5faada2c50fc7a5cae5 UNIQUE (person, geldinstitut, iban, bic, zahlungsempfaenger_id);
 
 ALTER TABLE zahlungsempfaenger
     ADD CONSTRAINT uc_8ec5b2df9546feafd9ef863a7 UNIQUE (dtype, email, adresse_id, nachname, vorname, name, zielsetzung,
                                                         rechtsform);
+
+ALTER TABLE antrag_andere_zuwendungsantraege
+    ADD CONSTRAINT uc_antrag_andere_zuwendungsantraege_anderezuwendungsantraege UNIQUE (andere_zuwendungsantraege_id);
 
 ALTER TABLE adresse
     ADD CONSTRAINT uc_cff3c04d7299fe58dd0a0dfef UNIQUE (strasse, hausnummer, ort, postleitzahl);
@@ -157,17 +163,14 @@ ALTER TABLE antrag
 ALTER TABLE bankverbindung
     ADD CONSTRAINT FK_BANKVERBINDUNG_ON_ZAHLUNGSEMPFAENGER FOREIGN KEY (zahlungsempfaenger_id) REFERENCES zahlungsempfaenger (id);
 
-ALTER TABLE mitglied
-    ADD CONSTRAINT FK_MITGLIED_ON_ADRESSE FOREIGN KEY (adresse_id) REFERENCES adresse (id);
-
 ALTER TABLE zahlungsempfaenger
     ADD CONSTRAINT FK_ZAHLUNGSEMPFAENGER_ON_ADRESSE FOREIGN KEY (adresse_id) REFERENCES adresse (id);
 
-ALTER TABLE antrag_mitglieder
-    ADD CONSTRAINT fk_antmit_on_antrag FOREIGN KEY (antrag_id) REFERENCES antrag (id);
+ALTER TABLE antrag_andere_zuwendungsantraege
+    ADD CONSTRAINT fk_antandzuw_on_anderer_zuwendungsantrag FOREIGN KEY (andere_zuwendungsantraege_id) REFERENCES anderer_zuwendungsantrag (id);
 
-ALTER TABLE antrag_mitglieder
-    ADD CONSTRAINT fk_antmit_on_mitglied FOREIGN KEY (mitglieder_id) REFERENCES mitglied (id);
+ALTER TABLE antrag_andere_zuwendungsantraege
+    ADD CONSTRAINT fk_antandzuw_on_antrag FOREIGN KEY (antrag_id) REFERENCES antrag (id);
 
 ALTER TABLE finanzierung_finanzierungsmittel_liste
     ADD CONSTRAINT fk_finfinlis_on_finanzierung FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
