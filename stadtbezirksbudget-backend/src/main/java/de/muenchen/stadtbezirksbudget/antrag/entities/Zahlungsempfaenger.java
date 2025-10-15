@@ -1,6 +1,6 @@
 package de.muenchen.stadtbezirksbudget.antrag.entities;
 
-import de.muenchen.stadtbezirksbudget.common.BaseEntity;
+import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
