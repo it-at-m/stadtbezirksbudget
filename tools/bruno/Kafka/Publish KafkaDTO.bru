@@ -1,0 +1,23 @@
+meta {
+  name: Publish KafkaDTO
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{cit-eai}}/kafka/publish
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "id": "{{$randomUUID}}",
+    "param1": "{{$randomWords}}",
+    "param2": "{{$randomInt}}"
+  }
+}
+
+body:text {
+  Kafka Test Message
+}
