@@ -13,6 +13,7 @@
         <h1 class="text-h3 font-weight-bold mb-3">
           Willkommen beim Stadtbezirksbudget von it@M
         </h1>
+        <dummy-list />
         <p>
           Das API-Gateway ist:
           <span :class="status">{{ status }}</span>
@@ -26,6 +27,7 @@
 import { onMounted, ref } from "vue";
 
 import { checkHealth } from "@/api/health-client";
+import DummyList from "@/components/DummyList.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
 
