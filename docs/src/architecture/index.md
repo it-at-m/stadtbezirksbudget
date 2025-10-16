@@ -14,7 +14,7 @@ import architectureUrl from "./architecture.png";
 </script>
 
 <a :href="architectureUrl" target="_blank" rel="noopener noreferrer">
-    <img :src="architectureUrl" alt="Architecture diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
+    <img :src="architectureUrl" alt="Architecture diagram showing all system components and their interactions" />
 </a>
 <a :href="architectureUrl" target="_blank" rel="noopener noreferrer">Open in new tab</a>
 
