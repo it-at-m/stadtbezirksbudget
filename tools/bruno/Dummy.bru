@@ -1,0 +1,20 @@
+meta {
+  name: Dummy
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{backend}}/dummyEntity?pageNumber=1&pageSize=20
+  body: none
+  auth: inherit
+}
+
+params:query {
+  pageNumber: 1
+  pageSize: 20
+}
+
+settings {
+  encodeUrl: true
+}
