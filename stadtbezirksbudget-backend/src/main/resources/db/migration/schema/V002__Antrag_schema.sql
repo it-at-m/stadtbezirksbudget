@@ -164,3 +164,4 @@ CREATE INDEX idx_antrag_bankverbindung ON antrag(bankverbindung_id);
 CREATE INDEX idx_antrag_vertretungsberechtigter ON antrag(vertretungsberechtigter_id);
 CREATE INDEX idx_bankverbindung_zahlungsempfaenger ON bankverbindung(zahlungsempfaenger_id);
 CREATE INDEX idx_zahlungsempfaenger_adresse ON zahlungsempfaenger(adresse_id);
+CREATE INDEX idx_antrag_bearbeitungsstand ON antrag(bearbeitungsstand_id);

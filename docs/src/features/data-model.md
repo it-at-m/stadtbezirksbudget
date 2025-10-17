@@ -39,7 +39,7 @@ classDiagram
         beschreibung: String<fk>
         start: Date<fk>
         ende: Date<fk>
-        %% All attributes except UUID are <fk>
+    %% All attributes except UUID are <fk>
     }
 
     class Bankverbindung{
@@ -47,7 +47,7 @@ classDiagram
         geldinstitut: String<fk>
         iban: String<fk>
         bic: String<fk>        
-        %% All attributes except UUID are <fk>
+    %% All attributes except UUID are <fk>
     }
 
     class Finanzierung{
@@ -63,7 +63,7 @@ classDiagram
         name: String<fk>
         rechtsform: Enum[natuerlichPerson, juristischePerson, sonstigeVereinigungen]<fk>
         zielsetzung: String<fk>
-        %% All attributes except UUID are <fk>
+    %% All attributes except UUID are <fk>
     }
 
     class Adresse{
@@ -71,14 +71,14 @@ classDiagram
         hausnummer: String<fk>
         postleitzahl: String<fk>
         ort: String<fk>
-        %% All attributes except UUID are <fk>
+    %% All attributes except UUID are <fk>
     }
 
     class Vertretungsberechtigter{
         nachname: String<fk>
         vorname: String<fk>
         mobilNr: String<fk>
-        %% All attributes except UUID are <fk>
+    %% All attributes except UUID are <fk>
     }
 
     class VoraussichtlicheAusgabe{
@@ -97,7 +97,7 @@ classDiagram
         <<abstract>>
         email: String<fk>
         telefonNr: String<fk>
-        %% All attributes except UUID are <fk> (including child-attributes)
+    %% All attributes except UUID are <fk> (including child-attributes)
     }
 
     class Status {
