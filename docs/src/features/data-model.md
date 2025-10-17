@@ -19,9 +19,8 @@ classDiagram
 
     class Antrag{
         eingangsdatum: Date
-        bezirksausschussNr: int
         istPersonVorsteuerabzugsberechtigt: boolean
-        istAndererZuwendungsantrag: boolean
+        bezirksausschussNr: int
     }
 
     class Bearbeitungsstand{
@@ -35,28 +34,27 @@ classDiagram
     }
 
     class Projekt{
-        titel: String<fk>
         beschreibung: String<fk>
-        start: Date<fk>
         ende: Date<fk>
+        start: Date<fk>
+        titel: String<fk>
     %% All attributes except UUID are <fk>
     }
 
     class Bankverbindung{
-        person: String<fk>
+        bic: String<fk>
         geldinstitut: String<fk>
         iban: String<fk>
-        bic: String<fk>        
+        person: String<fk>
     %% All attributes except UUID are <fk>
     }
 
     class Finanzierung{
-        istProjektVorsteuerabzugsberechtigt: boolean
-        istEinladungsFoerderhinweis: boolean
-        istWebsiteFoerderhinweis: boolean
-        istSonstigerFoerderhinweis: boolean
-        sonstigerFoerderhinweis: String
         bewilligterZuschuss: [Optional] Double
+        istEinladungsFoerderhinweis: boolean
+        istProjektVorsteuerabzugsberechtigt: boolean
+        istWebsiteFoerderhinweis: boolean
+        sonstigerFoerderhinweis: String
     }
 
     class Antragssteller{
@@ -67,30 +65,30 @@ classDiagram
     }
 
     class Adresse{
-        strasse: String<fk>
         hausnummer: String<fk>
-        postleitzahl: String<fk>
         ort: String<fk>
+        postleitzahl: String<fk>
+        strasse: String<fk>
     %% All attributes except UUID are <fk>
     }
 
     class Vertretungsberechtigter{
+        mobilNr: String<fk>
         nachname: String<fk>
         vorname: String<fk>
-        mobilNr: String<fk>
     %% All attributes except UUID are <fk>
     }
 
     class VoraussichtlicheAusgabe{
-        kategorie: String
         betrag: double
         direktoriumNotiz: String
+        kategorie: String
     }
 
     class Finanzierungsmittel{
-        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
         betrag: double
         direktoriumNotiz: String
+        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
     }
 
     class Zahlungsempfaenger{
