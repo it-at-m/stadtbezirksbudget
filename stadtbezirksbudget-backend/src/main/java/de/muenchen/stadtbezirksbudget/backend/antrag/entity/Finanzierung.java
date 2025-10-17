@@ -26,6 +26,7 @@ public class Finanzierung extends BaseEntity {
     @PositiveOrZero private Double bewilligterZuschuss;
     private boolean istEinladungsFoerderhinweis;
     private boolean istWebsiteFoerderhinweis;
+    private boolean istSonstigerFoerderhinweis;
     @NotNull private String sonstigeFoerderhinweise;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")

@@ -23,6 +23,7 @@ CREATE TABLE antrag
     bezirksausschuss_nr                  INTEGER NOT NULL,
     eingangsdatum                        date    NOT NULL,
     ist_person_vorsteuerabzugsberechtigt BOOLEAN NOT NULL,
+    ist_anderer_zuwendungsantrag         BOOLEAN NOT NULL,
     projekt_id                           UUID    NOT NULL,
     finanzierung_id                      UUID    NOT NULL,
     antragsteller_id                     UUID    NOT NULL,
@@ -59,6 +60,7 @@ CREATE TABLE finanzierung
     bewilligter_zuschuss                  DOUBLE PRECISION,
     ist_einladungs_foerderhinweis         BOOLEAN      NOT NULL,
     ist_website_foerderhinweis            BOOLEAN      NOT NULL,
+    ist_sonstiger_foerderhinweis          BOOLEAN      NOT NULL,
     sonstige_foerderhinweise              VARCHAR(255) NOT NULL,
     CONSTRAINT pk_finanzierung PRIMARY KEY (id)
 );
@@ -81,6 +83,13 @@ CREATE TABLE projekt
     start        date NOT NULL,
     ende         date NOT NULL,
     CONSTRAINT pk_projekt PRIMARY KEY (id)
+);
+
+CREATE TABLE the_entity
+(
+    id             UUID       NOT NULL,
+    text_attribute VARCHAR(8) NOT NULL,
+    CONSTRAINT pk_theentity PRIMARY KEY (id)
 );
 
 CREATE TABLE voraussichtliche_ausgabe
