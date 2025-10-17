@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: {{backend}}/dummyEntity?pageNumber=1&pageSize=20
+  url: {{backend}}/dummyEntity?page=1&size=20
   body: none
   auth: inherit
 }
 
 params:query {
-  pageNumber: 1
-  pageSize: 20
+  page: 1
+  size: 20
 }
 
 settings {
