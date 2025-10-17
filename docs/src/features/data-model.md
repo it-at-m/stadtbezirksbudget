@@ -19,8 +19,9 @@ classDiagram
 
     class Antrag{
         eingangsdatum: Date
-        istPersonVorsteuerabzugsberechtigt: boolean
         bezirksausschussNr: int
+        istPersonVorsteuerabzugsberechtigt: boolean
+        istAndererZuwendungsantrag: boolean
     }
 
     class Bearbeitungsstand{
@@ -34,68 +35,69 @@ classDiagram
     }
 
     class Projekt{
-        beschreibung: String<fk>
-        ende: Date<fk>
-        start: Date<fk>
         titel: String<fk>
-    %% All attributes except UUID are <fk>
+        beschreibung: String<fk>
+        start: Date<fk>
+        ende: Date<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Bankverbindung{
-        bic: String<fk>
+        person: String<fk>
         geldinstitut: String<fk>
         iban: String<fk>
-        person: String<fk>
-    %% All attributes except UUID are <fk>
+        bic: String<fk>        
+        %% All attributes except UUID are <fk>
     }
 
     class Finanzierung{
-        bewilligterZuschuss: [Optional] Double
-        istEinladungsFoerderhinweis: boolean
         istProjektVorsteuerabzugsberechtigt: boolean
+        istEinladungsFoerderhinweis: boolean
         istWebsiteFoerderhinweis: boolean
+        istSonstigerFoerderhinweis: boolean
         sonstigerFoerderhinweis: String
+        bewilligterZuschuss: [Optional] Double
     }
 
     class Antragssteller{
         name: String<fk>
         rechtsform: Enum[natuerlichPerson, juristischePerson, sonstigeVereinigungen]<fk>
         zielsetzung: String<fk>
-    %% All attributes except UUID are <fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Adresse{
-        hausnummer: String<fk>
-        ort: String<fk>
-        postleitzahl: String<fk>
         strasse: String<fk>
-    %% All attributes except UUID are <fk>
+        hausnummer: String<fk>
+        postleitzahl: String<fk>
+        ort: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class Vertretungsberechtigter{
-        mobilNr: String<fk>
         nachname: String<fk>
         vorname: String<fk>
-    %% All attributes except UUID are <fk>
+        mobilNr: String<fk>
+        %% All attributes except UUID are <fk>
     }
 
     class VoraussichtlicheAusgabe{
+        kategorie: String
         betrag: double
         direktoriumNotiz: String
-        kategorie: String
     }
 
     class Finanzierungsmittel{
+        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
         betrag: double
         direktoriumNotiz: String
-        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
     }
 
     class Zahlungsempfaenger{
         <<abstract>>
         email: String<fk>
         telefonNr: String<fk>
-    %% All attributes except UUID are <fk> (including child-attributes)
+        %% All attributes except UUID are <fk> (including child-attributes)
     }
 
     class Status {
