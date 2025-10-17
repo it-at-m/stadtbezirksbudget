@@ -11,6 +11,10 @@ import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert ein Projekt mit Titel, Beschreibung sowie Start- und Enddatum.
+ * Das Projekt ist eindeutig durch die Kombination aus Titel, Beschreibung, Start- und Enddatum.
+ */
 @Entity
 @Getter
 @Setter

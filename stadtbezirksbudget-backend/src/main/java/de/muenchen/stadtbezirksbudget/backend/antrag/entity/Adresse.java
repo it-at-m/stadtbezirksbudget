@@ -9,6 +9,10 @@ import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert eine Adresse mit Straße, Hausnummer, Ort und Postleitzahl.
+ * Die Adresse ist eindeutig durch die Kombination aus Straße, Hausnummer, Ort und Postleitzahl.
+ */
 @Entity
 @Getter
 @Setter

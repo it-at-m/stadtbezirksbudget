@@ -14,6 +14,10 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert einen Antrag, der verschiedene Attribute wie das Eingangsdatum,
+ * den zuständigen Projekt und den Antragsteller enthält.
+ */
 @Entity
 @Getter
 @Setter

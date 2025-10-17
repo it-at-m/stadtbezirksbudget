@@ -11,6 +11,10 @@ import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert die Finanzierungsmittel eines Projekts.
+ * Enthält Informationen über die Kategorie, den Betrag und Notizen zum Direktorium.
+ */
 @Entity
 @Getter
 @Setter

@@ -10,6 +10,10 @@ import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert eine voraussichtliche Ausgabe im Rahmen einer Finanzierung.
+ * Enthält Informationen über die Kategorie, den Betrag und Notizen zum Direktorium.
+ */
 @Entity
 @Getter
 @Setter

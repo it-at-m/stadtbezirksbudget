@@ -7,6 +7,10 @@ import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert einen vertretungsberechtigten Zahlungsempfänger.
+ * Enthält Informationen über den Nachnamen, Vornamen und die Mobilnummer.
+ */
 @Entity
 @Getter
 @Setter

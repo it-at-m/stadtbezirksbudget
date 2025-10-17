@@ -11,6 +11,10 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert die Finanzierung eines Projekts.
+ * Enthält Informationen über bewilligte Zuschüsse und verschiedene Förderhinweise.
+ */
 @Entity
 @Getter
 @Setter

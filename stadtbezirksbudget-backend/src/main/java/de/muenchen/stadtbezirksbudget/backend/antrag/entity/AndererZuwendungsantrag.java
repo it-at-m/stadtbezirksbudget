@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert einen anderen Zuwendungsantrag, der mit einem bestehenden Antrag verknüpft ist.
+ * Enthält das Antragsdatum und die Stelle, die den Antrag gestellt hat.
+ */
 @Entity
 @Getter
 @Setter

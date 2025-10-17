@@ -9,6 +9,9 @@ import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert den Bearbeitungsstand eines Antrags, einschließlich Anmerkungen und Status.
+ */
 @Entity
 @Getter
 @Setter

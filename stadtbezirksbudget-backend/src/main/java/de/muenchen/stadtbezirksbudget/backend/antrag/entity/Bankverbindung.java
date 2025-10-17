@@ -11,6 +11,11 @@ import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Repräsentiert eine Bankverbindung eines Zahlungsempfängers.
+ * Enthält Informationen über die Person, das Geldinstitut, IBAN und BIC.
+ * Die Bankverbindung ist eindeutig durch die Kombination aus Person, Geldinstitut, IBAN und BIC.
+ */
 @Entity
 @Getter
 @Setter
