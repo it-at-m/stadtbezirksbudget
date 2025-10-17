@@ -12,8 +12,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert ein Projekt mit Titel, Beschreibung sowie Start- und Enddatum.
- * Das Projekt ist eindeutig durch die Kombination aus Titel, Beschreibung, Start- und Enddatum.
+ * Represents a project with a title, description, start date, and end date.
+ * The project is uniquely identified by the combination of its title, description, start date, and
+ * end date.
  */
 @Entity
 @Getter

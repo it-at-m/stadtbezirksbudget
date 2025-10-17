@@ -10,8 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert eine Adresse mit Straße, Hausnummer, Ort und Postleitzahl.
- * Die Adresse ist eindeutig durch die Kombination aus Straße, Hausnummer, Ort und Postleitzahl.
+ * Represents an address with street, house number, city, and postal code.
+ * The address is unique based on the combination of street, house number, city, and postal code.
  */
 @Entity
 @Getter

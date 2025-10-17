@@ -15,8 +15,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert einen Antrag, der verschiedene Attribute wie das Eingangsdatum,
- * den zuständigen Projekt und den Antragsteller enthält.
+ * Represents a request that contains various attributes such as the date of receipt,
+ * the responsible project, and the requester.
  */
 @Entity
 @Getter

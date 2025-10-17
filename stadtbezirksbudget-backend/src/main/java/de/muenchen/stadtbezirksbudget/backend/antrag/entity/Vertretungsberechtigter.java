@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert einen vertretungsberechtigten Zahlungsempfänger.
- * Enthält Informationen über den Nachnamen, Vornamen und die Mobilnummer.
+ * Represents a payment recipient with power of representation.
+ * Contains information about the last name, first name, and mobile number.
  */
 @Entity
 @Getter

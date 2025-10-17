@@ -14,6 +14,12 @@ import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Abstract base class for payees that contains basic information
+ * such as phone number, email, and address. This class serves as a
+ * superclass for specific types of payees, such as applicants
+ * and authorized representatives.
+ */
 @Entity
 @Getter
 @Setter

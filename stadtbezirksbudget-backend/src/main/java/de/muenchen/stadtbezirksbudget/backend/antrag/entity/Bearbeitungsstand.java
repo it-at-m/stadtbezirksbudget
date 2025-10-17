@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert den Bearbeitungsstand eines Antrags, einschließlich Anmerkungen und Status.
+ * Represents the processing status of an application, including comments and status.
  */
 @Entity
 @Getter

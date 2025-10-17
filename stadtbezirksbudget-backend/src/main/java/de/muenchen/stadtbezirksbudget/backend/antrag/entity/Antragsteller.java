@@ -10,8 +10,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert einen Antragsteller, der Teil des Zahlungsempfängers ist.
- * Enthält Informationen über den Namen, die Zielsetzung und die Rechtsform des Antragstellers.
+ * Represents an applicant that is part of the payee.
+ * Contains information about the applicant's name, purpose, and legal form.
  */
 @Entity
 @Getter

@@ -12,9 +12,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert eine Bankverbindung eines Zahlungsempfängers.
- * Enthält Informationen über die Person, das Geldinstitut, IBAN und BIC.
- * Die Bankverbindung ist eindeutig durch die Kombination aus Person, Geldinstitut, IBAN und BIC.
+ * Represents a payee's bank details.
+ * Contains information about the person, the financial institution, IBAN, and BIC.
+ * The bank details are uniquely identified by the combination of person, financial institution,
+ * IBAN, and BIC.
  */
 @Entity
 @Getter

@@ -11,8 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert eine voraussichtliche Ausgabe im Rahmen einer Finanzierung.
- * Enthält Informationen über die Kategorie, den Betrag und Notizen zum Direktorium.
+ * Represents an anticipated expenditure in the context of financing.
+ * Contains information about the category, the amount, and notes for the board of directors.
  */
 @Entity
 @Getter

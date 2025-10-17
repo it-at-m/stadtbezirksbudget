@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert die Finanzierungsmittel eines Projekts.
- * Enthält Informationen über die Kategorie, den Betrag und Notizen zum Direktorium.
+ * Represents the funding for a project.
+ * Contains information about the category, amount, and notes for the board of directors.
  */
 @Entity
 @Getter

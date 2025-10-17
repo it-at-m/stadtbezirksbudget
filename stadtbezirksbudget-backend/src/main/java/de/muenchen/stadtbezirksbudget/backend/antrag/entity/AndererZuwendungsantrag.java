@@ -11,8 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert einen anderen Zuwendungsantrag, der mit einem bestehenden Antrag verknüpft ist.
- * Enthält das Antragsdatum und die Stelle, die den Antrag gestellt hat.
+ * Represents another grant application that is linked to an existing application.
+ * Contains the application date and the agency that submitted the application.
  */
 @Entity
 @Getter

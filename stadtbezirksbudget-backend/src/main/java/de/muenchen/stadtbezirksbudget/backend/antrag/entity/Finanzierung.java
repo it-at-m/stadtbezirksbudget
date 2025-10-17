@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Repräsentiert die Finanzierung eines Projekts.
- * Enthält Informationen über bewilligte Zuschüsse und verschiedene Förderhinweise.
+ * Represents the financing of a project.
+ * Contains information about approved grants and various funding references.
  */
 @Entity
 @Getter
