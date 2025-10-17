@@ -2,10 +2,10 @@
 
 ```mermaid
 classDiagram
+    Antrag "1"--"1" Finanzierung
+    Antrag "1"--"1" Bearbeitungsstand
     Antrag "1..n"--"1" Antragssteller
     Antrag "1..n"--"1" Projekt
-    Antrag "1"--"1" Finanzierung
-    Antrag "1" -- "1" Bearbeitungsstand
     Antrag "1..n"--"1" Bankverbindung
     Antrag "1..n"--"0..1" Vertretungsberechtigter
     Antrag "1" -- "0..n" AndererZuwendungsantrag
@@ -19,8 +19,9 @@ classDiagram
 
     class Antrag{
         eingangsdatum: Date
-        istPersonVorsteuerabzugsberechtigt: boolean
         bezirksausschussNr: int
+        istPersonVorsteuerabzugsberechtigt: boolean
+        istAndererZuwendungsantrag: boolean
     }
 
     class Bearbeitungsstand{
@@ -34,27 +35,28 @@ classDiagram
     }
 
     class Projekt{
-        beschreibung: String<fk>
-        ende: Date<fk>
-        start: Date<fk>
         titel: String<fk>
+        beschreibung: String<fk>
+        start: Date<fk>
+        ende: Date<fk>
     %% All attributes except UUID are <fk>
     }
 
     class Bankverbindung{
-        bic: String<fk>
+        person: String<fk>
         geldinstitut: String<fk>
         iban: String<fk>
-        person: String<fk>
+        bic: String<fk>
     %% All attributes except UUID are <fk>
     }
 
     class Finanzierung{
-        bewilligterZuschuss: [Optional] Double
-        istEinladungsFoerderhinweis: boolean
         istProjektVorsteuerabzugsberechtigt: boolean
+        istEinladungsFoerderhinweis: boolean
         istWebsiteFoerderhinweis: boolean
+        istSonstigerFoerderhinweis: boolean
         sonstigerFoerderhinweis: String
+        bewilligterZuschuss: [Optional] Double
     }
 
     class Antragssteller{
@@ -65,36 +67,36 @@ classDiagram
     }
 
     class Adresse{
+        strasse: String<fk>
         hausnummer: String<fk>
         ort: String<fk>
         postleitzahl: String<fk>
-        strasse: String<fk>
     %% All attributes except UUID are <fk>
     }
 
     class Vertretungsberechtigter{
-        mobilNr: String<fk>
         nachname: String<fk>
         vorname: String<fk>
+        mobilNr: String<fk>
     %% All attributes except UUID are <fk>
     }
 
     class VoraussichtlicheAusgabe{
+        kategorie: String
         betrag: double
         direktoriumNotiz: String
-        kategorie: String
     }
 
     class Finanzierungsmittel{
+        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
         betrag: double
         direktoriumNotiz: String
-        kategorie: Enum[einnahmen, eigenmittel, zuwendungenDritter]
     }
 
     class Zahlungsempfaenger{
         <<abstract>>
-        email: String<fk>
         telefonNr: String<fk>
+        email: String<fk>
     %% All attributes except UUID are <fk> (including child-attributes)
     }
 
