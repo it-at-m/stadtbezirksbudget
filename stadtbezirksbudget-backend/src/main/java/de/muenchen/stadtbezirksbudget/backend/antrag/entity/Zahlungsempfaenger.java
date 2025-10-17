@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.antrag.entities;
+package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.DiscriminatorColumn;
@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import java.io.Serial;
 import lombok.Getter;
@@ -16,6 +18,11 @@ import lombok.Setter;
 @Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
+@Table(
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = { "dtype", "telefon_nr", "email", "adresse_id", "nachname", "vorname", "mobil_nr", "name", "zielsetzung", "rechtsform" }
+        )
+)
 public abstract class Zahlungsempfaenger extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.antrag.entities;
+package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 public enum Status {
     EINGEGANGEN,

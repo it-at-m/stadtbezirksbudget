@@ -13,6 +13,7 @@ CREATE TABLE anderer_zuwendungsantrag
     id           UUID NOT NULL,
     antragsdatum date NOT NULL,
     stelle       VARCHAR(255),
+    antrag_id    UUID,
     CONSTRAINT pk_andererzuwendungsantrag PRIMARY KEY (id)
 );
 
@@ -28,12 +29,6 @@ CREATE TABLE antrag
     bankverbindung_id                    UUID    NOT NULL,
     vertretungsberechtigter_id           UUID,
     CONSTRAINT pk_antrag PRIMARY KEY (id)
-);
-
-CREATE TABLE antrag_andere_zuwendungsantraege
-(
-    antrag_id                    UUID NOT NULL,
-    andere_zuwendungsantraege_id UUID NOT NULL
 );
 
 CREATE TABLE bankverbindung
@@ -82,7 +77,7 @@ CREATE TABLE finanzierung_voraussichtliche_ausgaben
 CREATE TABLE finanzierungsmittel
 (
     id                UUID             NOT NULL,
-    kategorie         VARCHAR(255),
+    kategorie         VARCHAR(255)     NOT NULL,
     betrag            DOUBLE PRECISION NOT NULL,
     direktorium_notiz VARCHAR(255)     NOT NULL,
     CONSTRAINT pk_finanzierungsmittel PRIMARY KEY (id)
@@ -114,20 +109,21 @@ CREATE TABLE zahlungsempfaenger
     telefon_nr  VARCHAR(255),
     email       VARCHAR(255),
     adresse_id  UUID,
+    name        VARCHAR(255),
+    zielsetzung VARCHAR(255),
+    rechtsform  VARCHAR(255),
     nachname    VARCHAR(255),
     vorname     VARCHAR(255),
     mobil_nr    VARCHAR(255),
-    name        VARCHAR(255),
-    zielsetzung VARCHAR(255),
-    rechtsform  SMALLINT,
     CONSTRAINT pk_zahlungsempfaenger PRIMARY KEY (id)
 );
 
 ALTER TABLE bankverbindung
     ADD CONSTRAINT uc_79b9fc5faada2c50fc7a5cae5 UNIQUE (person, geldinstitut, iban, bic, zahlungsempfaenger_id);
 
-ALTER TABLE antrag_andere_zuwendungsantraege
-    ADD CONSTRAINT uc_antrag_andere_zuwendungsantraege_anderezuwendungsantraege UNIQUE (andere_zuwendungsantraege_id);
+ALTER TABLE zahlungsempfaenger
+    ADD CONSTRAINT uc_8ec5b2df9546feafd9ef863a7 UNIQUE (dtype, email, adresse_id, nachname, vorname, name, zielsetzung,
+                                                        rechtsform);
 
 ALTER TABLE adresse
     ADD CONSTRAINT uc_cff3c04d7299fe58dd0a0dfef UNIQUE (strasse, hausnummer, ort, postleitzahl);
@@ -140,6 +136,9 @@ ALTER TABLE finanzierung_finanzierungsmittel_liste
 
 ALTER TABLE finanzierung_voraussichtliche_ausgaben
     ADD CONSTRAINT uc_finanzierungvoraussichtlicheausgabe_voraussichtlicheausgaben UNIQUE (voraussichtliche_ausgaben_id);
+
+ALTER TABLE anderer_zuwendungsantrag
+    ADD CONSTRAINT FK_ANDERERZUWENDUNGSANTRAG_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id);
 
 ALTER TABLE antrag
     ADD CONSTRAINT FK_ANTRAG_ON_ANTRAGSTELLER FOREIGN KEY (antragsteller_id) REFERENCES zahlungsempfaenger (id);
@@ -161,12 +160,6 @@ ALTER TABLE bankverbindung
 
 ALTER TABLE zahlungsempfaenger
     ADD CONSTRAINT FK_ZAHLUNGSEMPFAENGER_ON_ADRESSE FOREIGN KEY (adresse_id) REFERENCES adresse (id);
-
-ALTER TABLE antrag_andere_zuwendungsantraege
-    ADD CONSTRAINT fk_antandzuw_on_anderer_zuwendungsantrag FOREIGN KEY (andere_zuwendungsantraege_id) REFERENCES anderer_zuwendungsantrag (id);
-
-ALTER TABLE antrag_andere_zuwendungsantraege
-    ADD CONSTRAINT fk_antandzuw_on_antrag FOREIGN KEY (antrag_id) REFERENCES antrag (id);
 
 ALTER TABLE finanzierung_finanzierungsmittel_liste
     ADD CONSTRAINT fk_finfinlis_on_finanzierung FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);

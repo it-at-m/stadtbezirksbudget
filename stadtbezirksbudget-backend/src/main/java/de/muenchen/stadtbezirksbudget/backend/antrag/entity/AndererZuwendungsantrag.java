@@ -1,7 +1,8 @@
-package de.muenchen.stadtbezirksbudget.antrag.entities;
+package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
@@ -18,4 +19,7 @@ public class AndererZuwendungsantrag extends BaseEntity {
 
     @NotNull private LocalDate antragsdatum;
     @NotBlank private String stelle;
+
+    @ManyToOne
+    private Antrag antrag;
 }
