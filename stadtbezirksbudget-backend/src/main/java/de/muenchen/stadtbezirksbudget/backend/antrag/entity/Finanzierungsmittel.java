@@ -24,6 +24,7 @@ public class Finanzierungsmittel extends BaseEntity {
 
     @NotNull @Enumerated(EnumType.STRING)
     private Kategorie kategorie;
+
     @PositiveOrZero private double betrag;
     @NotNull private String direktoriumNotiz;
 

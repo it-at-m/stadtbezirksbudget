@@ -23,8 +23,8 @@ public class Antragsteller extends Zahlungsempfaenger {
 
     @NotBlank private String name;
 
-    @NotBlank private String zielsetzung;
-
     @Enumerated(EnumType.STRING)
     private Rechtsform rechtsform;
+
+    @NotBlank private String zielsetzung;
 }

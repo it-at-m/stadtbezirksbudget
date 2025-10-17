@@ -21,8 +21,8 @@ public class Bearbeitungsstand extends BaseEntity {
 
     @NotNull private String anmerkungen;
 
+    private boolean istMittelabruf;
+
     @NotNull @Enumerated(EnumType.STRING)
     private Status status;
-
-    private boolean istMittelabruf;
 }

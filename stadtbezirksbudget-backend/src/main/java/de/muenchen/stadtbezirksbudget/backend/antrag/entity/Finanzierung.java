@@ -23,11 +23,11 @@ public class Finanzierung extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     private boolean istProjektVorsteuerabzugsberechtigt;
-    @PositiveOrZero private Double bewilligterZuschuss;
     private boolean istEinladungsFoerderhinweis;
     private boolean istWebsiteFoerderhinweis;
     private boolean istSonstigerFoerderhinweis;
     @NotNull private String sonstigeFoerderhinweise;
+    @PositiveOrZero private Double bewilligterZuschuss;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben;

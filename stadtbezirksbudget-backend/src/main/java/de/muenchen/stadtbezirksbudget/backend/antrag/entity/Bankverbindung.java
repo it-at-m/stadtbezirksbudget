@@ -24,11 +24,11 @@ public class Bankverbindung extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotNull @ManyToOne
-    private Zahlungsempfaenger zahlungsempfaenger;
-
     @NotBlank private String person;
     @NotBlank private String geldinstitut;
     @NotBlank private String iban;
     @NotBlank private String bic;
+
+    @NotNull @ManyToOne
+    private Zahlungsempfaenger zahlungsempfaenger;
 }

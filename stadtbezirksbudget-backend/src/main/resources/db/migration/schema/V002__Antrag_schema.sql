@@ -20,15 +20,15 @@ CREATE TABLE anderer_zuwendungsantrag
 CREATE TABLE antrag
 (
     id                                   UUID    NOT NULL,
-    bezirksausschuss_nr                  INTEGER NOT NULL,
     eingangsdatum                        date    NOT NULL,
+    bezirksausschuss_nr                  INTEGER NOT NULL,
     ist_person_vorsteuerabzugsberechtigt BOOLEAN NOT NULL,
     ist_anderer_zuwendungsantrag         BOOLEAN NOT NULL,
-    projekt_id                           UUID    NOT NULL,
+    bearbeitungsstand_id                 UUID    NOT NULL,
     finanzierung_id                      UUID    NOT NULL,
+    projekt_id                           UUID    NOT NULL,
     antragsteller_id                     UUID    NOT NULL,
     bankverbindung_id                    UUID    NOT NULL,
-    bearbeitungsstand_id                 UUID    NOT NULL,
     vertretungsberechtigter_id           UUID,
     CONSTRAINT pk_antrag PRIMARY KEY (id)
 );
@@ -36,11 +36,11 @@ CREATE TABLE antrag
 CREATE TABLE bankverbindung
 (
     id                    UUID NOT NULL,
-    zahlungsempfaenger_id UUID NOT NULL,
     person                VARCHAR(255),
     geldinstitut          VARCHAR(255),
     iban                  VARCHAR(255),
     bic                   VARCHAR(255),
+    zahlungsempfaenger_id UUID NOT NULL,
     CONSTRAINT pk_bankverbindung PRIMARY KEY (id)
 );
 
@@ -48,8 +48,8 @@ CREATE TABLE bearbeitungsstand
 (
     id              UUID         NOT NULL,
     anmerkungen     VARCHAR(255) NOT NULL,
-    status          VARCHAR(255) NOT NULL,
     ist_mittelabruf BOOLEAN      NOT NULL,
+    status          VARCHAR(255) NOT NULL,
     CONSTRAINT pk_bearbeitungsstand PRIMARY KEY (id)
 );
 
@@ -57,11 +57,11 @@ CREATE TABLE finanzierung
 (
     id                                    UUID         NOT NULL,
     ist_projekt_vorsteuerabzugsberechtigt BOOLEAN      NOT NULL,
-    bewilligter_zuschuss                  DOUBLE PRECISION,
     ist_einladungs_foerderhinweis         BOOLEAN      NOT NULL,
     ist_website_foerderhinweis            BOOLEAN      NOT NULL,
     ist_sonstiger_foerderhinweis          BOOLEAN      NOT NULL,
     sonstige_foerderhinweise              VARCHAR(255) NOT NULL,
+    bewilligter_zuschuss                  DOUBLE PRECISION,
     CONSTRAINT pk_finanzierung PRIMARY KEY (id)
 );
 
@@ -85,13 +85,6 @@ CREATE TABLE projekt
     CONSTRAINT pk_projekt PRIMARY KEY (id)
 );
 
-CREATE TABLE the_entity
-(
-    id             UUID       NOT NULL,
-    text_attribute VARCHAR(8) NOT NULL,
-    CONSTRAINT pk_theentity PRIMARY KEY (id)
-);
-
 CREATE TABLE voraussichtliche_ausgabe
 (
     id                UUID             NOT NULL,
@@ -110,8 +103,8 @@ CREATE TABLE zahlungsempfaenger
     email       VARCHAR(255),
     adresse_id  UUID NOT NULL,
     name        VARCHAR(255),
-    zielsetzung VARCHAR(255),
     rechtsform  VARCHAR(255),
+    zielsetzung VARCHAR(255),
     nachname    VARCHAR(255),
     vorname     VARCHAR(255),
     mobil_nr    VARCHAR(255),

@@ -25,25 +25,25 @@ public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @PositiveOrZero private int bezirksausschussNr;
     @NotNull private LocalDate eingangsdatum;
+    @PositiveOrZero private int bezirksausschussNr;
     private boolean istPersonVorsteuerabzugsberechtigt;
     private boolean istAndererZuwendungsantrag;
 
-    @NotNull @ManyToOne
-    private Projekt projekt;
+    @NotNull @OneToOne
+    private Bearbeitungsstand bearbeitungsstand;
 
     @NotNull @OneToOne(fetch = FetchType.LAZY)
     private Finanzierung finanzierung;
+
+    @NotNull @ManyToOne
+    private Projekt projekt;
 
     @NotNull @ManyToOne
     private Antragsteller antragsteller;
 
     @NotNull @ManyToOne
     private Bankverbindung bankverbindung;
-
-    @NotNull @OneToOne
-    private Bearbeitungsstand bearbeitungsstand;
 
     @ManyToOne
     private Vertretungsberechtigter vertretungsberechtigter;
