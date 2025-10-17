@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -19,4 +20,7 @@ public class VoraussichtlicheAusgabe extends BaseEntity {
     @NotBlank private String kategorie;
     @PositiveOrZero private double betrag;
     @NotNull private String direktoriumNotiz;
+
+    @NotNull @ManyToOne
+    private Finanzierung finanzierung;
 }

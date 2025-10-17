@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +30,8 @@ public abstract class Zahlungsempfaenger extends BaseEntity {
 
     @NotBlank private String telefonNr;
     @NotBlank private String email;
-    @NotBlank @ManyToOne
+
+    @NotNull @ManyToOne
     private Adresse adresse;
 
     protected Zahlungsempfaenger() {

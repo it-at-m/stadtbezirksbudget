@@ -24,9 +24,9 @@ public class Finanzierung extends BaseEntity {
     private boolean istWebsiteFoerderhinweis;
     @NotNull private String sonstigeFoerderhinweise;
 
-    @NotEmpty @OneToMany
+    @NotEmpty @OneToMany(mappedBy = "finanzierung")
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben;
 
-    @NotEmpty @OneToMany
+    @NotEmpty @OneToMany(mappedBy = "finanzierung")
     private List<Finanzierungsmittel> finanzierungsmittelListe;
 }

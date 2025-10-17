@@ -4,6 +4,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
@@ -21,4 +22,7 @@ public class Finanzierungsmittel extends BaseEntity {
     private Kategorie kategorie;
     @PositiveOrZero private double betrag;
     @NotNull private String direktoriumNotiz;
+
+    @NotNull @ManyToOne
+    private Finanzierung finanzierung;
 }

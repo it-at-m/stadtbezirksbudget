@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@DiscriminatorValue("Antragsteller")
 public class Antragsteller extends Zahlungsempfaenger {
     @Serial
     private static final long serialVersionUID = 1L;

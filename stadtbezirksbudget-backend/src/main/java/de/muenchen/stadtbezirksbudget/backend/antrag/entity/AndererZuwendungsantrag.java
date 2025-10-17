@@ -20,6 +20,6 @@ public class AndererZuwendungsantrag extends BaseEntity {
     @NotNull private LocalDate antragsdatum;
     @NotBlank private String stelle;
 
-    @ManyToOne
+    @NotNull @ManyToOne
     private Antrag antrag;
 }

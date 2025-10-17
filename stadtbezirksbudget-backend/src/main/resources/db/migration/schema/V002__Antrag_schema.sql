@@ -13,7 +13,7 @@ CREATE TABLE anderer_zuwendungsantrag
     id           UUID NOT NULL,
     antragsdatum date NOT NULL,
     stelle       VARCHAR(255),
-    antrag_id    UUID,
+    antrag_id    UUID NOT NULL,
     CONSTRAINT pk_andererzuwendungsantrag PRIMARY KEY (id)
 );
 
@@ -27,6 +27,7 @@ CREATE TABLE antrag
     finanzierung_id                      UUID    NOT NULL,
     antragsteller_id                     UUID    NOT NULL,
     bankverbindung_id                    UUID    NOT NULL,
+    bearbeitungsstand_id                 UUID    NOT NULL,
     vertretungsberechtigter_id           UUID,
     CONSTRAINT pk_antrag PRIMARY KEY (id)
 );
@@ -62,24 +63,13 @@ CREATE TABLE finanzierung
     CONSTRAINT pk_finanzierung PRIMARY KEY (id)
 );
 
-CREATE TABLE finanzierung_finanzierungsmittel_liste
-(
-    finanzierung_id              UUID NOT NULL,
-    finanzierungsmittel_liste_id UUID NOT NULL
-);
-
-CREATE TABLE finanzierung_voraussichtliche_ausgaben
-(
-    finanzierung_id              UUID NOT NULL,
-    voraussichtliche_ausgaben_id UUID NOT NULL
-);
-
 CREATE TABLE finanzierungsmittel
 (
     id                UUID             NOT NULL,
     kategorie         VARCHAR(255)     NOT NULL,
     betrag            DOUBLE PRECISION NOT NULL,
     direktorium_notiz VARCHAR(255)     NOT NULL,
+    finanzierung_id   UUID             NOT NULL,
     CONSTRAINT pk_finanzierungsmittel PRIMARY KEY (id)
 );
 
@@ -99,6 +89,7 @@ CREATE TABLE voraussichtliche_ausgabe
     kategorie         VARCHAR(255),
     betrag            DOUBLE PRECISION NOT NULL,
     direktorium_notiz VARCHAR(255)     NOT NULL,
+    finanzierung_id   UUID             NOT NULL,
     CONSTRAINT pk_voraussichtlicheausgabe PRIMARY KEY (id)
 );
 
@@ -108,7 +99,7 @@ CREATE TABLE zahlungsempfaenger
     dtype       VARCHAR(31),
     telefon_nr  VARCHAR(255),
     email       VARCHAR(255),
-    adresse_id  UUID,
+    adresse_id  UUID NOT NULL,
     name        VARCHAR(255),
     zielsetzung VARCHAR(255),
     rechtsform  VARCHAR(255),
@@ -131,12 +122,6 @@ ALTER TABLE adresse
 ALTER TABLE projekt
     ADD CONSTRAINT uc_de31f3372638318247e13c50a UNIQUE (titel, beschreibung, start, ende);
 
-ALTER TABLE finanzierung_finanzierungsmittel_liste
-    ADD CONSTRAINT uc_finanzierungfinanzierungsmittellist_finanzierungsmittelliste UNIQUE (finanzierungsmittel_liste_id);
-
-ALTER TABLE finanzierung_voraussichtliche_ausgaben
-    ADD CONSTRAINT uc_finanzierungvoraussichtlicheausgabe_voraussichtlicheausgaben UNIQUE (voraussichtliche_ausgaben_id);
-
 ALTER TABLE anderer_zuwendungsantrag
     ADD CONSTRAINT FK_ANDERERZUWENDUNGSANTRAG_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id);
 
@@ -145,6 +130,9 @@ ALTER TABLE antrag
 
 ALTER TABLE antrag
     ADD CONSTRAINT FK_ANTRAG_ON_BANKVERBINDUNG FOREIGN KEY (bankverbindung_id) REFERENCES bankverbindung (id);
+
+ALTER TABLE antrag
+    ADD CONSTRAINT FK_ANTRAG_ON_BEARBEITUNGSSTAND FOREIGN KEY (bearbeitungsstand_id) REFERENCES bearbeitungsstand (id);
 
 ALTER TABLE antrag
     ADD CONSTRAINT FK_ANTRAG_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
@@ -158,20 +146,14 @@ ALTER TABLE antrag
 ALTER TABLE bankverbindung
     ADD CONSTRAINT FK_BANKVERBINDUNG_ON_ZAHLUNGSEMPFAENGER FOREIGN KEY (zahlungsempfaenger_id) REFERENCES zahlungsempfaenger (id);
 
+ALTER TABLE finanzierungsmittel
+    ADD CONSTRAINT FK_FINANZIERUNGSMITTEL_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
+
+ALTER TABLE voraussichtliche_ausgabe
+    ADD CONSTRAINT FK_VORAUSSICHTLICHEAUSGABE_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
+
 ALTER TABLE zahlungsempfaenger
     ADD CONSTRAINT FK_ZAHLUNGSEMPFAENGER_ON_ADRESSE FOREIGN KEY (adresse_id) REFERENCES adresse (id);
-
-ALTER TABLE finanzierung_finanzierungsmittel_liste
-    ADD CONSTRAINT fk_finfinlis_on_finanzierung FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
-
-ALTER TABLE finanzierung_finanzierungsmittel_liste
-    ADD CONSTRAINT fk_finfinlis_on_finanzierungsmittel FOREIGN KEY (finanzierungsmittel_liste_id) REFERENCES finanzierungsmittel (id);
-
-ALTER TABLE finanzierung_voraussichtliche_ausgaben
-    ADD CONSTRAINT fk_finvoraus_on_finanzierung FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
-
-ALTER TABLE finanzierung_voraussichtliche_ausgaben
-    ADD CONSTRAINT fk_finvoraus_on_voraussichtliche_ausgabe FOREIGN KEY (voraussichtliche_ausgaben_id) REFERENCES voraussichtliche_ausgabe (id);
 
 CREATE INDEX idx_antrag_projekt ON antrag(projekt_id);
 CREATE INDEX idx_antrag_finanzierung ON antrag(finanzierung_id);

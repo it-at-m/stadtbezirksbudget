@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -27,7 +28,7 @@ public class Antrag extends BaseEntity {
     @NotNull @ManyToOne
     private Projekt projekt;
 
-    @NotNull @OneToOne
+    @NotNull @OneToOne(fetch = FetchType.LAZY)
     private Finanzierung finanzierung;
 
     @NotNull @ManyToOne
@@ -35,6 +36,9 @@ public class Antrag extends BaseEntity {
 
     @NotNull @ManyToOne
     private Bankverbindung bankverbindung;
+
+    @NotNull @OneToOne
+    private Bearbeitungsstand bearbeitungsstand;
 
     @ManyToOne
     private Vertretungsberechtigter vertretungsberechtigter;
