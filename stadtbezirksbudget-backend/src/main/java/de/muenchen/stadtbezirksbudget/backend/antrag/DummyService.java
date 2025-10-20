@@ -1,9 +1,11 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.DummyEntity;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DummyService {
 
+    private final SecureRandom secureRandom = new SecureRandom();
     private final DummyMapper dummyMapper;
 
     public DummyEntity getDummy() {
@@ -24,7 +27,7 @@ public class DummyService {
         dummy.setName("Dummy");
         dummy.setAge(25);
         dummy.setEmail("dummy@email.com");
-        dummy.setWeight(Math.random() * 101);
+        dummy.setWeight(secureRandom.nextDouble() * 101);
         return dummy;
     }
 
