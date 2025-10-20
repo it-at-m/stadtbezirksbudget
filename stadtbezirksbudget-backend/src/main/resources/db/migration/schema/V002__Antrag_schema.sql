@@ -103,7 +103,7 @@ CREATE TABLE zahlungsempfaenger
     email       VARCHAR(255) NOT NULL CHECK(zahlungsempfaenger.email <> ''),
     adresse_id  UUID NOT NULL,
     name        VARCHAR(255),
-    rechtsform  VARCHAR(255) CHECK (zahlungsempfaenger.rechtsform IS NULL OR name <> ''),
+    rechtsform  VARCHAR(255) CHECK (zahlungsempfaenger.rechtsform IS NULL OR zahlungsempfaenger.rechtsform <> ''),
     zielsetzung VARCHAR(255),
     nachname    VARCHAR(255),
     vorname     VARCHAR(255),
