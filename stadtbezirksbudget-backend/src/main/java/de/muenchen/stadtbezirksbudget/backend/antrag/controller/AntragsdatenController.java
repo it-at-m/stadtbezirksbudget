@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/antragsdaten")
+@RequestMapping("/antragsdatenSubset")
 public class AntragsdatenController {
     private final DummyAntragsdatenService dummyService;
 
