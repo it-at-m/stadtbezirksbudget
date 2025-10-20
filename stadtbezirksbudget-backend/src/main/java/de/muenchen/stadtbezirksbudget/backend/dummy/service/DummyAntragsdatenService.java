@@ -5,6 +5,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,8 @@ public class DummyAntragsdatenService {
     private final SecureRandom secureRandom = new SecureRandom();
 
     private AntragsdatenSubsetDTO generateAntragsdaten() {
-        return new AntragsdatenSubsetDTO(getRandomStatus(), secureRandom.nextInt(25), getRandomDate(), "Projekt: " + secureRandom.nextInt(2_000), "AdminAG",
+        return new AntragsdatenSubsetDTO(UUID.randomUUID(), getRandomStatus(), secureRandom.nextInt(25), getRandomDate(),
+                "Projekt: " + secureRandom.nextInt(2_000), "AdminAG",
                 secureRandom.nextInt(20_000), "", "admin");
     }
 
