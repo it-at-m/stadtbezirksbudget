@@ -1,10 +1,10 @@
 CREATE TABLE adresse
 (
     id           UUID NOT NULL,
-    strasse      VARCHAR(255),
-    hausnummer   VARCHAR(255),
-    ort          VARCHAR(255),
-    postleitzahl VARCHAR(255),
+    strasse      VARCHAR(255) NOT NULL CHECK(adresse.strasse <> ''),
+    hausnummer   VARCHAR(255) NOT NULL CHECK(adresse.hausnummer <> ''),
+    ort          VARCHAR(255) NOT NULL CHECK(adresse.ort <> ''),
+    postleitzahl VARCHAR(255) NOT NULL CHECK(adresse.postleitzahl <> ''),
     CONSTRAINT pk_adresse PRIMARY KEY (id)
 );
 
@@ -12,7 +12,7 @@ CREATE TABLE anderer_zuwendungsantrag
 (
     id           UUID NOT NULL,
     antragsdatum date NOT NULL,
-    stelle       VARCHAR(255),
+    stelle       VARCHAR(255) NOT NULL CHECK(anderer_zuwendungsantrag.stelle <> ''),
     antrag_id    UUID NOT NULL,
     CONSTRAINT pk_andererzuwendungsantrag PRIMARY KEY (id)
 );
@@ -36,10 +36,10 @@ CREATE TABLE antrag
 CREATE TABLE bankverbindung
 (
     id                    UUID NOT NULL,
-    person                VARCHAR(255),
-    geldinstitut          VARCHAR(255),
-    iban                  VARCHAR(255),
-    bic                   VARCHAR(255),
+    person                VARCHAR(255) NOT NULL CHECK(bankverbindung.person <> ''),
+    geldinstitut          VARCHAR(255) NOT NULL CHECK(bankverbindung.geldinstitut <> ''),
+    iban                  VARCHAR(255) NOT NULL CHECK(bankverbindung.iban <> ''),
+    bic                   VARCHAR(255) NOT NULL CHECK(bankverbindung.bic <> ''),
     zahlungsempfaenger_id UUID NOT NULL,
     CONSTRAINT pk_bankverbindung PRIMARY KEY (id)
 );
@@ -49,7 +49,7 @@ CREATE TABLE bearbeitungsstand
     id              UUID         NOT NULL,
     anmerkungen     VARCHAR(255) NOT NULL,
     ist_mittelabruf BOOLEAN      NOT NULL,
-    status          VARCHAR(255) NOT NULL,
+    status          VARCHAR(255) NOT NULL CHECK(bearbeitungsstand.status <> ''),
     CONSTRAINT pk_bearbeitungsstand PRIMARY KEY (id)
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE finanzierung
 CREATE TABLE finanzierungsmittel
 (
     id                UUID             NOT NULL,
-    kategorie         VARCHAR(255)     NOT NULL,
+    kategorie         VARCHAR(255)     NOT NULL CHECK(finanzierungsmittel.kategorie <> ''),
     betrag            DOUBLE PRECISION NOT NULL,
     direktorium_notiz VARCHAR(255)     NOT NULL,
     finanzierung_id   UUID             NOT NULL,
@@ -78,8 +78,8 @@ CREATE TABLE finanzierungsmittel
 CREATE TABLE projekt
 (
     id           UUID NOT NULL,
-    titel        VARCHAR(255),
-    beschreibung VARCHAR(255),
+    titel        VARCHAR(255) NOT NULL CHECK(projekt.titel <> ''),
+    beschreibung VARCHAR(255) NOT NULL CHECK(projekt.beschreibung <> ''),
     start        date NOT NULL,
     ende         date NOT NULL,
     CONSTRAINT pk_projekt PRIMARY KEY (id)
@@ -88,7 +88,7 @@ CREATE TABLE projekt
 CREATE TABLE voraussichtliche_ausgabe
 (
     id                UUID             NOT NULL,
-    kategorie         VARCHAR(255),
+    kategorie         VARCHAR(255)     NOT NULL CHECK(voraussichtliche_ausgabe.kategorie <> ''),
     betrag            DOUBLE PRECISION NOT NULL,
     direktorium_notiz VARCHAR(255)     NOT NULL,
     finanzierung_id   UUID             NOT NULL,
@@ -98,12 +98,12 @@ CREATE TABLE voraussichtliche_ausgabe
 CREATE TABLE zahlungsempfaenger
 (
     id          UUID NOT NULL,
-    dtype       VARCHAR(31),
-    telefon_nr  VARCHAR(255),
-    email       VARCHAR(255),
+    dtype       VARCHAR(31)  Not NULL CHECK(dtype IN ('Antragsteller', 'Vertretungsberechtigter')),
+    telefon_nr  VARCHAR(255) NOT NULL CHECK(zahlungsempfaenger.telefon_nr <> ''),
+    email       VARCHAR(255) NOT NULL CHECK(zahlungsempfaenger.email <> ''),
     adresse_id  UUID NOT NULL,
     name        VARCHAR(255),
-    rechtsform  VARCHAR(255),
+    rechtsform  VARCHAR(255) CHECK (zahlungsempfaenger.rechtsform IS NULL OR name <> ''),
     zielsetzung VARCHAR(255),
     nachname    VARCHAR(255),
     vorname     VARCHAR(255),
@@ -111,18 +111,20 @@ CREATE TABLE zahlungsempfaenger
     CONSTRAINT pk_zahlungsempfaenger PRIMARY KEY (id)
 );
 
-ALTER TABLE bankverbindung
-    ADD CONSTRAINT uc_79b9fc5faada2c50fc7a5cae5 UNIQUE (person, geldinstitut, iban, bic, zahlungsempfaenger_id);
+ALTER TABLE zahlungsempfaenger
+    ADD CONSTRAINT UniqueAntragsteller UNIQUE (dtype, telefon_nr, email, adresse_id, name, zielsetzung, rechtsform);
 
 ALTER TABLE zahlungsempfaenger
-    ADD CONSTRAINT uc_8ec5b2df9546feafd9ef863a7 UNIQUE (dtype, email, adresse_id, nachname, vorname, name, zielsetzung,
-                                                        rechtsform);
+    ADD CONSTRAINT UniqueVertretungsberechtigter UNIQUE (dtype, telefon_nr, email, adresse_id, nachname, vorname, mobil_nr);
+
+ALTER TABLE bankverbindung
+    ADD CONSTRAINT UniqueBankverbindung UNIQUE (person, geldinstitut, iban, bic, zahlungsempfaenger_id);
 
 ALTER TABLE adresse
-    ADD CONSTRAINT uc_cff3c04d7299fe58dd0a0dfef UNIQUE (strasse, hausnummer, ort, postleitzahl);
+    ADD CONSTRAINT UniqueAdresse UNIQUE (strasse, hausnummer, ort, postleitzahl);
 
 ALTER TABLE projekt
-    ADD CONSTRAINT uc_de31f3372638318247e13c50a UNIQUE (titel, beschreibung, start, ende);
+    ADD CONSTRAINT UniqueProjekt UNIQUE (titel, beschreibung, start, ende);
 
 ALTER TABLE anderer_zuwendungsantrag
     ADD CONSTRAINT FK_ANDERERZUWENDUNGSANTRAG_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id);

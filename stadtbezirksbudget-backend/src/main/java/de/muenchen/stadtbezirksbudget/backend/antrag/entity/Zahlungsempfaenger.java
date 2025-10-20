@@ -26,9 +26,14 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Table(
-        uniqueConstraints = @UniqueConstraint(
-                columnNames = { "dtype", "telefon_nr", "email", "adresse_id", "nachname", "vorname", "mobil_nr", "name", "zielsetzung", "rechtsform" }
-        )
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "UniqueVertretungsberechtigter",
+                        columnNames = { "dtype", "telefonNr", "email", "adresse_id", "nachname", "vorname", "mobilNr" }
+                ),
+                @UniqueConstraint(
+                        name = "UniqueAntragsteller", columnNames = { "dtype", "telefonNr", "email", "adresse_id", "name", "zielsetzung", "rechtsform" }
+                ) }
 )
 public abstract class Zahlungsempfaenger extends BaseEntity {
     @Serial
