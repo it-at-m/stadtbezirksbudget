@@ -1,5 +1,6 @@
-package de.muenchen.stadtbezirksbudget.backend.dummy;
+package de.muenchen.stadtbezirksbudget.backend.dummy.service;
 
+import de.muenchen.stadtbezirksbudget.backend.dummy.DummyMapper;
 import de.muenchen.stadtbezirksbudget.backend.dummy.entity.DummyEntity;
 import java.security.SecureRandom;
 import java.util.List;

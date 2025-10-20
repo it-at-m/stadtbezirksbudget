@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.dummy;
 
 import de.muenchen.stadtbezirksbudget.backend.dummy.dto.DummyDTO;
 import de.muenchen.stadtbezirksbudget.backend.dummy.entity.DummyEntity;
+import de.muenchen.stadtbezirksbudget.backend.dummy.service.DummyService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
