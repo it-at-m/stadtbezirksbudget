@@ -6,8 +6,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import java.io.Serial;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,7 +27,7 @@ public class Antrag extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @NotNull private LocalDate eingangsdatum;
-    @Positive private int bezirksausschussNr;
+    @Min(1) @Max(25) private int bezirksausschussNr;
     private boolean istPersonVorsteuerabzugsberechtigt;
     private boolean istAndererZuwendungsantrag;
 

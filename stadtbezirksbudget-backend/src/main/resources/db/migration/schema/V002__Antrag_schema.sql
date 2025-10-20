@@ -98,7 +98,7 @@ CREATE TABLE voraussichtliche_ausgabe
 CREATE TABLE zahlungsempfaenger
 (
     id          UUID NOT NULL,
-    dtype       VARCHAR(31)  Not NULL CHECK(dtype IN ('Antragsteller', 'Vertretungsberechtigter')),
+    dtype       VARCHAR(31)  NOT NULL CHECK(dtype IN ('Antragsteller', 'Vertretungsberechtigter')),
     telefon_nr  VARCHAR(255) NOT NULL CHECK(zahlungsempfaenger.telefon_nr <> ''),
     email       VARCHAR(255) NOT NULL CHECK(zahlungsempfaenger.email <> ''),
     adresse_id  UUID NOT NULL,
