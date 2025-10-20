@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
+package de.muenchen.stadtbezirksbudget.backend.dummy.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import lombok.Getter;

@@ -1,7 +1,7 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag;
+package de.muenchen.stadtbezirksbudget.backend.dummy;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.DummyDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.DummyEntity;
+import de.muenchen.stadtbezirksbudget.backend.dummy.dto.DummyDTO;
+import de.muenchen.stadtbezirksbudget.backend.dummy.entity.DummyEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

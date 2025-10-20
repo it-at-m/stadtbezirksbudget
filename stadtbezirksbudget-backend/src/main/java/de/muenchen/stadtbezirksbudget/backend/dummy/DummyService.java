@@ -1,6 +1,6 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag;
+package de.muenchen.stadtbezirksbudget.backend.dummy;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.DummyEntity;
+import de.muenchen.stadtbezirksbudget.backend.dummy.entity.DummyEntity;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.UUID;
