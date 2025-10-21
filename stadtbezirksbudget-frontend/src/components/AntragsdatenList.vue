@@ -27,20 +27,26 @@ const snackbarStore = useSnackbarStore();
 const antragsdatenSubsetList = ref<Page<AntragsdatenSubset>>();
 
 onMounted(() => {
-  getAntragsdatenSubsetList(1, 15)
-    .catch((error) => {
-      snackbarStore.showMessage(error);
-    });
+  getAntragsdatenSubsetList(1, 15).catch((error) => {
+    snackbarStore.showMessage(error);
+  });
 });
 
 const itemsPerPage = ref(5);
 const headers = ref<DataTableHeader[]>([
-  { title: "Status", key: "antragsstatus", align: "start"},
+  { title: "Status", key: "antragsstatus", align: "start" },
+  { title: "Nummer", key: "dummyTicketnummer", align: "start" },
   { title: "BA", key: "bezirksausschussnummer", align: "start" },
   { title: "Antragsdatum", key: "eingangsdatum", align: "start" },
   { title: "Projekt", key: "projekttitel", align: "start" },
   { title: "Antragsteller/in", key: "antragstellerName", align: "start" },
   { title: "Beantragtes Budget", key: "beantragtesBudget", align: "start" },
+  { title: "Aktualisierung", key: "dummyAktualisierungsArt", align: "start" },
+  {
+    title: "Datum Aktualisierung",
+    key: "dummyAktualisierungsDatum",
+    align: "start",
+  },
   { title: "Anmerkungen", key: "anmerkungen", align: "start" },
   { title: "Bearbeiter/in", key: "bearbeiter", align: "start" },
 ]);
@@ -57,14 +63,24 @@ async function loadItems({
 }) {
   loading.value = true;
   try {
-    const pageResponse: Page<AntragsdatenSubset> = await getAntragsdatenSubsetList(
-      page - 1,
-      itemsPerPage
-    );
+    const pageResponse: Page<AntragsdatenSubset> =
+      await getAntragsdatenSubsetList(page - 1, itemsPerPage);
 
-    console.debug('Antwort von getAntragsdatenSubsetList:', pageResponse);
+    console.debug("Antwort von getAntragsdatenSubsetList:", pageResponse);
 
-    serverItems.value = pageResponse.content;
+    serverItems.value = pageResponse.content.map((item) => ({
+      antragsstatus: item.antragsstatus,
+      dummyTicketnummer: "Warten auf Zammad...",
+      bezirksausschussnummer: item.bezirksausschussnummer,
+      eingangsdatum: item.eingangsdatum,
+      projekttitel: item.projekttitel,
+      antragstellerName: item.antragstellerName,
+      beantragtesBudget: item.beantragtesBudget,
+      dummyAktualisierungsArt: "Warten auf Zammad...",
+      dummyAktualisierungsDatum: "Warten auf Zammad...",
+      anmerkungen: item.anmerkungen,
+      bearbeiter: item.bearbeiter,
+    }));
     totalItems.value = pageResponse.page.totalElements;
   } catch (error) {
     let errorMessage = "Ein unbekannter Fehler ist aufgetreten.";
@@ -77,7 +93,6 @@ async function loadItems({
       show: true,
     });
   } finally {
-
     loading.value = false;
   }
 }

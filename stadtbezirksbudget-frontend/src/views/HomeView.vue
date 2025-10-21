@@ -13,11 +13,16 @@
         <h1 class="text-h3 font-weight-bold mb-3">
           Willkommen beim Stadtbezirksbudget von it@M
         </h1>
-        <antragsdaten-list />
         <p>
           Das API-Gateway ist:
           <span :class="status">{{ status }}</span>
         </p>
+      </v-col>
+      <v-col
+        cols="12"
+        class="text-left"
+      >
+        <antragsdaten-list />
       </v-col>
     </v-row>
   </v-container>
@@ -27,9 +32,9 @@
 import { onMounted, ref } from "vue";
 
 import { checkHealth } from "@/api/health-client";
+import AntragsdatenList from "@/components/AntragsdatenList.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
-import AntragsdatenList from "@/components/AntragsdatenList.vue";
 
 const snackbarStore = useSnackbarStore();
 const status = ref("DOWN");
