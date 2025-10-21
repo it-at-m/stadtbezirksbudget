@@ -18,7 +18,7 @@
     "fix": "prettier . --write && eslint . --fix"
   },
   "dependencies": {
-    "@muenchen/muc-patternlab-vue": "5.7.0",
+    "@muenchen/muc-patternlab-vue": "6.1.0",
     "@vueuse/core": "13.9.0",
     "vue": "3.5.22"
   },
@@ -37,7 +37,7 @@
     "jsdom": "27.0.0",
     "prettier": "3.6.2",
     "typescript": "5.9.3",
-    "vite": "7.1.10",
+    "vite": "7.1.11",
     "vite-plugin-vue-devtools": "8.0.2",
     "vitest": "3.2.4",
     "vue-tsc": "3.1.1"
