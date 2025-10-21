@@ -1,10 +1,10 @@
-import type Dummy from "@/types/Dummy.ts";
 import type Page from "@/types/Page.ts";
 
 import { defaultResponseHandler, getConfig } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
+import type AntragsdatenSubset from "@/types/AntragsdatenSubset.ts";
 
-export function getDummyList(page: number, size: number): Promise<Page<Dummy>> {
+export function getAntragsdatenSubsetList(page: number, size: number): Promise<Page<AntragsdatenSubset>> {
   return fetch(
     `${BACKEND}/antragsdatenSubset?page=${page}&size=${size}`,
     getConfig()
