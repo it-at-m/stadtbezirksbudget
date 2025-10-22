@@ -42,10 +42,10 @@ onMounted(() => {
   });
 });
 
-const itemsPerPage = ref(5);
+const itemsPerPage = ref(10);
 const computedHeaders = computed<DataTableHeader[]>(() => {
-  const baseWidth = screenWidth.value * 0.95 / 11;
-  const percentage = screenWidth.value * 0.95 / 100;
+  const baseWidth = (screenWidth.value * 0.95) / 11;
+  const percentage = (screenWidth.value * 0.95) / 100;
   return [
     {
       title: "Status",

@@ -1,24 +1,5 @@
 <template>
   <v-container fluid>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          src="@/assets/logo.png"
-          class="my-3"
-          height="200"
-        />
-      </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="text-h3 font-weight-bold mb-3">
-          Willkommen beim Stadtbezirksbudget von it@M
-        </h1>
-        <p>
-          Das API-Gateway ist:
-          <span :class="status">{{ status }}</span>
-        </p>
-      </v-col>
-    </v-row>
     <v-row>
       <v-col
         cols="12"
