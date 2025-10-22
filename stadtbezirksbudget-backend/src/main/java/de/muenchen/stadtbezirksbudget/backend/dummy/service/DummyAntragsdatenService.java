@@ -23,10 +23,21 @@ public class DummyAntragsdatenService {
 
     private AntragsdatenSubsetDTO generateAntragsdaten() {
         return new AntragsdatenSubsetDTO(UUID.randomUUID(), getRandomStatus(), secureRandom.nextInt(25), getRandomDate(),
-                "Projekt: " + secureRandom.nextInt(2_000), "AdminAG",
+                getRandomWords("Lorem ipsum dolor sit amet consetetur"),
+                getRandomWords("Lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam"),
                 secureRandom.nextInt(20_000),
-                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
-                "admin");
+                getRandomWords("Lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam nonumy eirmod tempor invidunt"),
+                getRandomWords("Lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam"));
+    }
+
+    private String getRandomWords(String text) {
+        String[] words = text.split(" ");
+        int numberOfWords = secureRandom.nextInt(words.length - 1)+1;
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < numberOfWords; i++) {
+            result.append(words[i]).append(" ");
+        }
+        return result.toString().trim();
     }
 
     private Status getRandomStatus() {
