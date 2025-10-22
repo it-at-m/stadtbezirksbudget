@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row class="text-center">
       <v-col cols="12">
         <v-img
@@ -18,11 +18,13 @@
           <span :class="status">{{ status }}</span>
         </p>
       </v-col>
+    </v-row>
+    <v-row>
       <v-col
         cols="12"
         class="text-left"
       >
-        <antragsdaten-list />
+        <v-card rounded="lg"><antragsdaten-list /></v-card>
       </v-col>
     </v-row>
   </v-container>

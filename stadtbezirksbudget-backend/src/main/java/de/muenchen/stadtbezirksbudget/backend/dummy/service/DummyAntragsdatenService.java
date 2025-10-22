@@ -24,7 +24,9 @@ public class DummyAntragsdatenService {
     private AntragsdatenSubsetDTO generateAntragsdaten() {
         return new AntragsdatenSubsetDTO(UUID.randomUUID(), getRandomStatus(), secureRandom.nextInt(25), getRandomDate(),
                 "Projekt: " + secureRandom.nextInt(2_000), "AdminAG",
-                secureRandom.nextInt(20_000), "", "admin");
+                secureRandom.nextInt(20_000),
+                "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
+                "admin");
     }
 
     private Status getRandomStatus() {
