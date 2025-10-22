@@ -4,6 +4,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragsdatenSubsetDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -30,10 +31,10 @@ public class DummyAntragsdatenService {
                 getRandomWords("Lorem ipsum dolor sit amet consetetur sadipscing elitr sed diam"));
     }
 
-    private String getRandomWords(String text) {
-        String[] words = text.split(" ");
-        int numberOfWords = secureRandom.nextInt(words.length - 1)+1;
-        StringBuilder result = new StringBuilder();
+    private String getRandomWords(final String text) {
+        final String[] words = text.split(" ");
+        final int numberOfWords = secureRandom.nextInt(words.length - 1) + 1;
+        final StringBuilder result = new StringBuilder();
         for (int i = 0; i < numberOfWords; i++) {
             result.append(words[i]).append(" ");
         }
@@ -44,8 +45,8 @@ public class DummyAntragsdatenService {
         return Status.values()[secureRandom.nextInt(Status.values().length)];
     }
 
-    private LocalDate getRandomDate() {
-        return LocalDate.ofEpochDay(secureRandom.nextInt(10_000));
+    private String getRandomDate() {
+        return LocalDate.ofEpochDay(secureRandom.nextInt(10_000)).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
     public Page<AntragsdatenSubsetDTO> getAllEntities(final Pageable pageable) {
