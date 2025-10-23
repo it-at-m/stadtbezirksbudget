@@ -1,7 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.controller;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragsdatenSubsetDTO;
-import de.muenchen.stadtbezirksbudget.backend.dummy.service.DummyAntragsdatenService;
+import de.muenchen.stadtbezirksbudget.backend.antrag.service.AntragsdatenSubsetService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/antragsdatenSubset")
 public class AntragsdatenController {
-    private final DummyAntragsdatenService dummyService;
+    private final AntragsdatenSubsetService antragsdatenSubsetService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<AntragsdatenSubsetDTO> getAntragsdatenSubsetByPageAndSize(@PageableDefault final Pageable pageable) {
-        final Page<AntragsdatenSubsetDTO> antragsdatenSubsetPage = dummyService.getAllEntities(pageable);
+        final Page<AntragsdatenSubsetDTO> antragsdatenSubsetPage = antragsdatenSubsetService.getAllEntities(pageable);
         final List<AntragsdatenSubsetDTO> antragsdatenSubsetList = antragsdatenSubsetPage.getContent().stream().toList();
         return new PageImpl<>(antragsdatenSubsetList, antragsdatenSubsetPage.getPageable(), antragsdatenSubsetPage.getTotalElements());
     }
