@@ -76,9 +76,9 @@ VALUES ('60000000-0000-0000-0000-000000000001', 'Antragsteller', '0890000000', '
         '00000000-0000-0000-0000-000000000002', NULL, NULL, NULL, 'Test 11', 'Vertreter', '00000000000'),
        ('60000000-0000-0000-0000-00000000010c', 'Vertretungsberechtigter', '0890000000', 'vertreter12@example.org',
         '00000000-0000-0000-0000-000000000001', NULL, NULL, NULL, 'Test 12', 'Vertreter', '00000000000'),
-       ('60000000-0000-0000-0000-00000000010d', 'Vertretungsberechtigter', '08900000000', 'vertreter13@example.org',
+       ('60000000-0000-0000-0000-00000000010d', 'Vertretungsberechtigter', '0890000000', 'vertreter13@example.org',
         '00000000-0000-0000-0000-000000000000', NULL, NULL, NULL, 'Test 13', 'Vertreter', '00000000000'),
-       ('60000000-0000-0000-0000-00000000010e', 'Vertretungsberechtigter', '08900000000', 'vertreter14@example.org',
+       ('60000000-0000-0000-0000-00000000010e', 'Vertretungsberechtigter', '0890000000', 'vertreter14@example.org',
         '00000000-0000-0000-0000-000000000001', NULL, NULL, NULL, 'Test 14', 'Vertreter', '00000000000'),
-       ('60000000-0000-0000-0000-00000000010f', 'Vertretungsberechtigter', '08900000000', 'vertreter15@example.org',
+       ('60000000-0000-0000-0000-00000000010f', 'Vertretungsberechtigter', '0890000000', 'vertreter15@example.org',
         '00000000-0000-0000-0000-000000000002', NULL, NULL, NULL, 'Test 15', 'Vertreter', '00000000000');
