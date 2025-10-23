@@ -23,4 +23,5 @@ VALUES ('30000000-0000-0000-0000-000000000001', 'Bearbeitungsstand für Antrag 0
        ('30000000-0000-0000-0000-000000000012', 'Bearbeitungsstand für Antrag 018', true,
         'WARTEN_AUF_BUERGERRUECKMELDUNG'),
        ('30000000-0000-0000-0000-000000000013', 'Bearbeitungsstand für Antrag 019', true, 'PRUEFUNG_RECHNUNGEN'),
-       ('30000000-0000-0000-0000-000000000014', 'Bearbeitungsstand für Antrag 020', true, 'EINGEGANGEN');
+       ('30000000-0000-0000-0000-000000000014', 'Bearbeitungsstand für Antrag 020', true, 'EINGEGANGEN'),
+       ('30000000-0000-0000-0000-000000000015', 'Bearbeitungsstand für Antrag 021', false, 'ABGESCHLOSSEN');
