@@ -84,7 +84,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth + 2 * percentage}px`,
     },
     {
-      title: "Beantragtes Budget",
+      title: "Beantragtes Budget / €",
       key: "formatiertesBudget",
       align: "start",
       maxWidth: `${baseWidth - 2 * percentage}px`,
