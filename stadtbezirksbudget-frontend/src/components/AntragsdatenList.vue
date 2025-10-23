@@ -85,9 +85,9 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
     },
     {
       title: "Beantragtes Budget",
-      key: "beantragtesBudget",
-      align: "end",
-      maxWidth: `${baseWidth - 3 * percentage}px`,
+      key: "formatiertesBudget",
+      align: "start",
+      maxWidth: `${baseWidth - 2 * percentage}px`,
     },
     {
       title: "Aktualisierung",
@@ -105,7 +105,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       title: "Anmerkungen",
       key: "anmerkungen",
       align: "start",
-      maxWidth: `${baseWidth + 9 * percentage}px`,
+      maxWidth: `${baseWidth + 8 * percentage}px`,
       class: `truncate`,
     },
     {
@@ -142,6 +142,10 @@ async function loadItems({
       projekttitel: item.projekttitel,
       antragstellerName: item.antragstellerName,
       beantragtesBudget: item.beantragtesBudget,
+      formatiertesBudget: item.beantragtesBudget.toLocaleString("de-DE", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+      }),
       dummyAktualisierungsArt: "Fachanwendung",
       dummyAktualisierungsDatum: "01.01.2025",
       anmerkungen: item.anmerkungen,
