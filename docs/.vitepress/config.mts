@@ -29,6 +29,10 @@ const vitepressConfig = defineConfig({
             link: "/features/reliable-communication",
           },
         ],
+        items: [
+          { text: "Features", link: "/features/" },
+          { text: "Data model", link: "/features/data-model" },
+        ],
       },
       {
         text: "Architecture",
@@ -65,6 +69,7 @@ const vitepressConfig = defineConfig({
               link: "/features/reliable-communication",
             },
           ],
+          items: [{ text: "Data model", link: "/features/data-model" }],
         },
         {
           text: "Architecture",
