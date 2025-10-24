@@ -52,7 +52,7 @@ VALUES ('60000000-0000-0000-0000-000000000001', 'Antragsteller', '0890000000', '
         NULL,
         NULL),
        ('60000000-0000-0000-0000-000000000010', 'Antragsteller', '0890000000', 'person16@example.org',
-        '00000000-0000-0000-0000-000000000002', NULL, 'NATUERLICHE_PERSON', NULL, 'Test', 'Antragsteller',
+        '00000000-0000-0000-0000-000000000002', 'Antragsteller Test', 'NATUERLICHE_PERSON', NULL, NULL, NULL,
         NULL),
        ('60000000-0000-0000-0000-000000000101', 'Vertretungsberechtigter', '0890000000', 'vertreter1@example.org',
         '00000000-0000-0000-0000-000000000000', NULL, NULL, NULL, 'Test 1', 'Vertreter', '00000000000'),
