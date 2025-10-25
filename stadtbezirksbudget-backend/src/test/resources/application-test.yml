@@ -2,6 +2,15 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  kafka:
+    consumer:
+      group-id: stadtbezirksbudget-backend
+      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    template:
+      default-topic: stadtbezirksbudget-cit-backend-local
 
 logging:
   include-application-group: false # disabled because application group is only relevant when deployed

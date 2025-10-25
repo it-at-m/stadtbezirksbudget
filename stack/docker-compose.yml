@@ -87,33 +87,33 @@ services:
     ports:
       - "8083:8080"
     environment:
-    - ALLOWED_ORIGINS_PUBLIC=http://localhost:*
-    - ALLOWED_ORIGINS_CLIENTS=http://localhost:*
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_ID=sso
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_URI=http://keycloak:8100/
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_PREDICATES_0=Path=/api/sso/userinfo
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_FILTERS_0=RewritePath=/api/sso/userinfo, /auth/realms/local_realm/protocol/openid-connect/userinfo
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_ID=backend
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_URI=http://host.docker.internal:39146/
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_PREDICATES_0=Path=/api/backend-service/**
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_FILTERS_0=RewritePath=/api/backend-service/(?<urlsegments>.*), /$\{urlsegments}
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_ID=frontend
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_URI=http://host.docker.internal:8081/
-    - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_PREDICATES_0=Path=/**
-    - SPRING_PROFILES_ACTIVE=hazelcast-local
-    - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://keycloak:8100/auth/realms/local_realm
-    - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SSO_ISSUERURI=$${spring.security.oauth2.resourceserver.jwt.issuer-uri}
-    - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_PROVIDER=sso
-    - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_CLIENTID=local
-    - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_CLIENTSECRET=client_secret
-    - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_SCOPE=profile, openid, roles
+      - ALLOWED_ORIGINS_PUBLIC=http://localhost:*
+      - ALLOWED_ORIGINS_CLIENTS=http://localhost:*
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_ID=sso
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_URI=http://keycloak:8100/
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_PREDICATES_0=Path=/api/sso/userinfo
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_0_FILTERS_0=RewritePath=/api/sso/userinfo, /auth/realms/local_realm/protocol/openid-connect/userinfo
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_ID=backend
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_URI=http://host.docker.internal:39146/
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_PREDICATES_0=Path=/api/backend-service/**
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_1_FILTERS_0=RewritePath=/api/backend-service/(?<urlsegments>.*), /$\{urlsegments}
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_ID=frontend
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_URI=http://host.docker.internal:8081/
+      - SPRING_CLOUD_GATEWAY_SERVER_WEBFLUX_ROUTES_2_PREDICATES_0=Path=/**
+      - SPRING_PROFILES_ACTIVE=hazelcast-local
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://keycloak:8100/auth/realms/local_realm
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SSO_ISSUERURI=$${spring.security.oauth2.resourceserver.jwt.issuer-uri}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_PROVIDER=sso
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_CLIENTID=local
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_CLIENTSECRET=client_secret
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_SCOPE=profile, openid, roles
     networks:
       - keycloak
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
       <<: *healthcheck
-      test: [ "CMD-SHELL", "curl http://localhost:8080/actuator/health/liveness" ]
+      test: ["CMD-SHELL", "curl http://localhost:8080/actuator/health/liveness"]
     security_opt: *security_settings
 
   appswitcher-server:
@@ -131,5 +131,76 @@ services:
       test: ["CMD-SHELL", "/workspace/health-check"]
     security_opt: *security_settings
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.7.5@sha256:7f012166110a9e1c88220ae773e24482fcc2d80caf4ca72ff712c6ee47d2101f
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      start_period: 15s
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    networks:
+      - kafka
+
+  kafka:
+    image: confluentinc/cp-kafka:7.7.5@sha256:5cdfb3e4a72298c566ac54949eacc847ce0f1c55bf8aba988d487e581299db86
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - kafka
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:0.7.2@sha256:8f2ff02d64b0a7a2b71b6b3b3148b85f66d00ec20ad40c30bdcd415d46d31818
+    ports:
+      - "8089:8080"
+    depends_on:
+      - kafka
+      - zookeeper
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+      DYNAMIC_CONFIG_ENABLED: "true"
+    networks:
+      - kafka
+
+  init-kafka:
+    image: confluentinc/cp-kafka:7.7.5@sha256:5cdfb3e4a72298c566ac54949eacc847ce0f1c55bf8aba988d487e581299db86
+    depends_on:
+      - kafka
+    entrypoint: ["/bin/bash", "-c"]
+    networks:
+      - kafka
+    command: |
+      "      
+      # blocks until kafka is reachable
+      echo -e 'Currently available topics:'
+      kafka-topics --bootstrap-server kafka:9092 --list
+      
+      echo -e 'Creating kafka topics...'
+      kafka-topics --bootstrap-server kafka:9092 --create --if-not-exists --topic stadtbezirksbudget-cit-backend-local --replication-factor 1 --partitions 1
+
+      echo -e 'Resulting topics:'
+      kafka-topics --bootstrap-server kafka:9092 --list
+      "
+
 networks:
   keycloak:
+  kafka:

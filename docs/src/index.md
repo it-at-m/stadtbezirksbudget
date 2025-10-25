@@ -19,7 +19,8 @@ features:
   - icon: 2️⃣
     title: Title 2
     details: Add some interesting information here
-  - icon: 3️⃣
-    title: Title 3
-    details: Add some interesting information here
+  - icon: 📨
+    title: Reliable communication
+    details: The project uses a robust communication architecture to ensure reliable data exchange between all connected systems. To achieve this, the event bus Kafka is used.
+    link: /features/reliable-communication
 ---
