@@ -26,8 +26,11 @@ public class AntragSummaryService {
     private final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
 
     public Page<AntragSummaryDTO> getAllEntities(final Pageable pageable) {
-        final List<Antrag> antragList = antragRepository.findAll(pageable).stream().toList();
-        final List<AntragSummaryDTO> list = antragList.stream().map(antrag -> {
+        final Page<Antrag> antragPage = antragRepository.findAll(pageable);
+        if (antragPage.isEmpty()) {
+            return new PageImpl<>(List.of(), pageable, 0);
+        }
+        final List<AntragSummaryDTO> list = antragPage.getContent().stream().map(antrag -> {
             final Finanzierung finanzierung = antrag.getFinanzierung();
             final double beantragtesBudget = voraussichtlicheAusgabeRepository.findByFinanzierungId(finanzierung.getId()).stream()
                     .mapToDouble(VoraussichtlicheAusgabe::getBetrag)
@@ -46,9 +49,6 @@ public class AntragSummaryService {
                     antrag.getBearbeitungsstand().getAnmerkungen(),
                     "Admin");
         }).collect(Collectors.toList());
-        final int start = (int) pageable.getOffset();
-        final int end = Math.min(start + pageable.getPageSize(), list.size());
-        final List<AntragSummaryDTO> subList = list.subList(start, end);
-        return new PageImpl<>(subList, pageable, list.size());
+        return new PageImpl<>(list, pageable, antragPage.getTotalElements());
     }
 }
