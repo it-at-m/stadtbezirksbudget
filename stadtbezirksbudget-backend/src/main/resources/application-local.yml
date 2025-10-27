@@ -26,8 +26,8 @@ spring:
           audiences:
             - ${sso.client}
   kafka:
+    bootstrap-servers: localhost:29092
     consumer:
-      bootstrap-servers: localhost:29092
       group-id: stadtbezirksbudget-backend
     template:
       default-topic: stadtbezirksbudget-cit-backend-local
