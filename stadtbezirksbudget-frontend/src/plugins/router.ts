@@ -3,13 +3,13 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import { ROUTES_GETSTARTED, ROUTES_HOME } from "@/constants";
 import GetStartedView from "@/views/GetStartedView.vue";
-import ListView from "@/views/ListView.vue";
+import HomeView from "@/views/HomeView.vue";
 
 const routes = [
   {
     path: "/",
     name: ROUTES_HOME,
-    component: ListView,
+    component: HomeView,
     meta: {},
   },
   {
