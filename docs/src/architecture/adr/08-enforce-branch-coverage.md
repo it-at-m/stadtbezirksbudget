@@ -6,11 +6,11 @@ High test coverage is a key factor for ensuring software quality. To ensure a co
 
 ## Decision
 
-We are setting a minimum of 80% branch coverage for both the backend and the frontend.
+We are setting a minimum of 80% branch coverage.
 
 Code that is difficult or impossible to test can be excluded from the coverage. Furthermore, generated code does not count towards coverage and should be excluded.
 
-For components, coverage will not be considered and the UI will be tested only rudimentarily where it is dynamic (e.g., `v-if`).
+For ui components, coverage will not be considered and the UI will be tested only rudimentarily where it is dynamic (e.g., `v-if`).
 
 ## Consequences
 
