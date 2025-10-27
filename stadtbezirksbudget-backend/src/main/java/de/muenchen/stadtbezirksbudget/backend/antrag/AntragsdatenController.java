@@ -1,7 +1,5 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag.controller;
+package de.muenchen.stadtbezirksbudget.backend.antrag;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragsdatenSubsetDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.service.AntragsdatenSubsetService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/antragsdatenSubset")
+@RequestMapping("/antragSummary")
 public class AntragsdatenController {
-    private final AntragsdatenSubsetService antragsdatenSubsetService;
+    private final AntragSummaryService antragSummaryService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<AntragsdatenSubsetDTO> getAntragsdatenSubsetByPageAndSize(@PageableDefault final Pageable pageable) {
-        final Page<AntragsdatenSubsetDTO> antragsdatenSubsetPage = antragsdatenSubsetService.getAllEntities(pageable);
-        final List<AntragsdatenSubsetDTO> antragsdatenSubsetList = antragsdatenSubsetPage.getContent().stream().toList();
+    public Page<AntragSummaryDTO> getAntragsdatenSubsetByPageAndSize(@PageableDefault final Pageable pageable) {
+        final Page<AntragSummaryDTO> antragsdatenSubsetPage = antragSummaryService.getAllEntities(pageable);
+        final List<AntragSummaryDTO> antragsdatenSubsetList = antragsdatenSubsetPage.getContent().stream().toList();
         return new PageImpl<>(antragsdatenSubsetList, antragsdatenSubsetPage.getPageable(), antragsdatenSubsetPage.getTotalElements());
     }
 }

@@ -1,6 +1,6 @@
 import { Status } from "./Status.ts";
 
-export default interface AntragsdatenSubset {
+export default interface AntragSummary {
   id: string;
   antragsstatus: Status;
   bezirksausschussnummer: number;

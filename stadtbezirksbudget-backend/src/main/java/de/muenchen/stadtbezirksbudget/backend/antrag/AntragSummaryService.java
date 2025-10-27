@@ -1,6 +1,5 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag.service;
+package de.muenchen.stadtbezirksbudget.backend.antrag;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragsdatenSubsetDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
@@ -21,14 +20,14 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AntragsdatenSubsetService {
+public class AntragSummaryService {
     private final AntragRepository antragRepository;
     private final FinanzierungsmittelRepository finanzierungsmittelRepository;
     private final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
 
-    public Page<AntragsdatenSubsetDTO> getAllEntities(final Pageable pageable) {
+    public Page<AntragSummaryDTO> getAllEntities(final Pageable pageable) {
         final List<Antrag> antragList = antragRepository.findAll(pageable).stream().toList();
-        final List<AntragsdatenSubsetDTO> list = antragList.stream().map(antrag -> {
+        final List<AntragSummaryDTO> list = antragList.stream().map(antrag -> {
             final Finanzierung finanzierung = antrag.getFinanzierung();
             final double beantragtesBudget = voraussichtlicheAusgabeRepository.findByFinanzierungId(finanzierung.getId()).stream()
                     .mapToDouble(VoraussichtlicheAusgabe::getBetrag)
@@ -36,7 +35,7 @@ public class AntragsdatenSubsetService {
                     - finanzierungsmittelRepository.findByFinanzierungId(finanzierung.getId()).stream()
                             .mapToDouble(Finanzierungsmittel::getBetrag)
                             .sum();
-            return new AntragsdatenSubsetDTO(
+            return new AntragSummaryDTO(
                     antrag.getId(),
                     antrag.getBearbeitungsstand().getStatus(),
                     antrag.getBezirksausschussNr(),
@@ -49,7 +48,7 @@ public class AntragsdatenSubsetService {
         }).collect(Collectors.toList());
         final int start = (int) pageable.getOffset();
         final int end = Math.min(start + pageable.getPageSize(), list.size());
-        final List<AntragsdatenSubsetDTO> subList = list.subList(start, end);
+        final List<AntragSummaryDTO> subList = list.subList(start, end);
         return new PageImpl<>(subList, pageable, list.size());
     }
 }

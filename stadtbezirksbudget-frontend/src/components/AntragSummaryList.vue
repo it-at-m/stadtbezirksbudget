@@ -1,5 +1,5 @@
 <template>
-  {{ antragsdatenSubsetList }}
+  {{ antragSummaryList }}
   <v-data-table-server
     v-model:items-per-page="itemsPerPage"
     :headers="computedHeaders"
@@ -22,22 +22,22 @@
 </template>
 
 <script setup lang="ts">
-import type AntragsdatenSubset from "@/types/AntragsdatenSubset.ts";
+import type AntragSummary from "@/types/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 import type { DataTableHeader } from "vuetify";
 
 import { computed, onMounted, ref } from "vue";
 
-import { getAntragsdatenSubsetList } from "@/api/fetch-antragsdatenSubset-list.ts";
+import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 const snackbarStore = useSnackbarStore();
-const antragsdatenSubsetList = ref<Page<AntragsdatenSubset>>();
+const antragSummaryList = ref<Page<AntragSummary>>();
 const screenWidth = ref(window.innerWidth);
 
 onMounted(() => {
-  getAntragsdatenSubsetList(1, 15).catch((error) => {
+  getAntragsSummaryList(1, 15).catch((error) => {
     snackbarStore.showMessage(error);
   });
 });
@@ -117,7 +117,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
   ];
 });
 const search = ref("");
-const serverItems = ref<AntragsdatenSubset[]>([]);
+const serverItems = ref<AntragSummary[]>([]);
 const loading = ref(false);
 const totalItems = ref(0);
 async function loadItems({
@@ -129,10 +129,10 @@ async function loadItems({
 }) {
   loading.value = true;
   try {
-    const pageResponse: Page<AntragsdatenSubset> =
-      await getAntragsdatenSubsetList(page - 1, itemsPerPage);
+    const pageResponse: Page<AntragSummary> =
+      await getAntragsSummaryList(page - 1, itemsPerPage);
 
-    console.debug("Antwort von getAntragsdatenSubsetList:", pageResponse);
+    console.debug("Antwort von getAntragSummaryList:", pageResponse);
 
     serverItems.value = pageResponse.content.map((item) => ({
       antragsstatus: item.antragsstatus,

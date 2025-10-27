@@ -1,15 +1,15 @@
-import type AntragsdatenSubset from "@/types/AntragsdatenSubset.ts";
+import type AntragSummary from "@/types/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
 import { defaultResponseHandler, getConfig } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
 
-export function getAntragsdatenSubsetList(
+export function getAntragsSummaryList(
   page: number,
   size: number
-): Promise<Page<AntragsdatenSubset>> {
+): Promise<Page<AntragSummary>> {
   return fetch(
-    `${BACKEND}/antragsdatenSubset?page=${page}&size=${size}`,
+    `${BACKEND}/antragSummary?page=${page}&size=${size}`,
     getConfig()
   )
     .then((response) => {

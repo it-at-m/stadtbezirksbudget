@@ -5,7 +5,7 @@
         cols="12"
         class="text-left"
       >
-        <v-card rounded="lg"><antragsdaten-list /></v-card>
+        <v-card rounded="lg"><antrag-summary-list /></v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -15,7 +15,7 @@
 import { onMounted, ref } from "vue";
 
 import { checkHealth } from "@/api/health-client";
-import AntragsdatenList from "@/components/AntragsdatenList.vue";
+import AntragSummaryList from "@/components/AntragSummaryList.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
 
