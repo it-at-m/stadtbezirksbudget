@@ -1,5 +1,4 @@
 <template>
-  {{ antragSummaryList }}
   <v-data-table-server
     v-model:items-per-page="itemsPerPage"
     :headers="computedHeaders"
@@ -32,8 +31,16 @@ import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
 
-const snackbarStore = useSnackbarStore();
-const antragSummaryList = ref<Page<AntragSummary>>();
+const {
+  items,
+  totalItems,
+  page,
+  itemsPerPage,
+  loading,
+  fetchItems,
+  updateOptions,
+} = useAntragSummaryList();
+
 const screenWidth = ref(window.innerWidth);
 
 onMounted(() => {
