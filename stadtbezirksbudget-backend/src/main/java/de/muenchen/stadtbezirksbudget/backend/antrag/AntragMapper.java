@@ -11,8 +11,8 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface AntragMapper {
     @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
-    @Mapping(target = "zammadNr", constant = "ZM-10011001")
-    @Mapping(target = "eingangDatum", expression = "java(antrag.getEingangsdatum().atStartOfDay())")
+    @Mapping(target = "zammadNr", constant = "ZM-10011001") // TODO: Replace with actual zammadNr
+    @Mapping(target = "eingangDatum", expression = "java(antrag.getEingangsdatum().atStartOfDay())") // TODO: Replace with actual date
     @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
     @Mapping(
@@ -20,9 +20,10 @@ public interface AntragMapper {
             expression =
                     "java(antrag.getFinanzierung().getBeantragtesBudget())"
     )
-    @Mapping(target = "aktualisierung", constant = "Fachanwendung")
-    @Mapping(target = "aktualisierungDatum", expression = "java(LocalDateTime.now())")
+    @Mapping(target = "aktualisierung", constant = "Fachanwendung") // TODO: Replace with actual application
+    @Mapping(target = "aktualisierungDatum", expression = "java(LocalDateTime.now())") // TODO: Replace with actual date
     @Mapping(target = "anmerkungen", source = "antrag.bearbeitungsstand.anmerkungen")
     @Mapping(target = "bearbeiter", constant = "Max Mustermann")
+        // TODO: Replace with actual bearbeiter
     AntragSummaryDTO toAntragSummaryDTO(Antrag antrag);
 }
