@@ -39,6 +39,6 @@ public class AntragController {
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
                 .map(antragMapper::toAntragSummaryDTO)
                 .toList();
-        return new PageImpl<>(summaryList, pageable, antragPage.getTotalElements());
+        return new PageImpl<>(summaryList, antragPage.getPageable(), antragPage.getTotalElements());
     }
 }
