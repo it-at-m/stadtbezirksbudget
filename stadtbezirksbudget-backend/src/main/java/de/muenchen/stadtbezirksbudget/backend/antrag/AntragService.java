@@ -24,6 +24,7 @@ public class AntragService {
      * @return a page of Antrag entities
      */
     public Page<Antrag> getAntragPage(final Pageable pageable) {
+        log.info("Get antrag page with page number {} and page size {}", pageable.getPageNumber(), pageable.getPageSize());
         return antragRepository.findAll(pageable);
     }
 }
