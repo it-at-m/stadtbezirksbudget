@@ -37,7 +37,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
-class AntragsdatenControllerIntegrationTest {
+class AntragControllerIntegrationTest {
 
     @Autowired
     private AntragRepository antragRepository;

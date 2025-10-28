@@ -9,7 +9,7 @@ export function getAntragsSummaryList(
   size: number
 ): Promise<Page<AntragSummary>> {
   return fetch(
-    `${BACKEND}/antragSummary?page=${page}&size=${size}`,
+    `${BACKEND}/antrag?page=${page}&size=${size}`,
     getConfig()
   )
     .then((response) => {

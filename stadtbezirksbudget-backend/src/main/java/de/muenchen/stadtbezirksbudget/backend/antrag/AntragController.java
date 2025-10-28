@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/antragSummary")
-public class AntragsdatenController {
+@RequestMapping("/antrag")
+public class AntragController {
     private final AntragSummaryService antragSummaryService;
 
     @GetMapping
