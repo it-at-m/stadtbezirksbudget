@@ -135,24 +135,32 @@ const vitepressConfig = defineConfig({
               link: "/architecture/adr/07-reduce-testing-of-mapping",
             },
             {
-              text: "ADR-08 Define-Dtos-As-Records",
-              link: "/architecture/adr/08-define-dtos-as-records",
+              text: "ADR-08 Enforce-Branch-Coverage",
+              link: "/architecture/adr/08-enforce-branch-coverage",
             },
             {
-              text: "ADR-09 No-Complex-Frontend-Components",
-              link: "/architecture/adr/09-no-complex-frontend-components",
+              text: "ADR-09 Define-Dtos-As-Records",
+              link: "/architecture/adr/09-define-dtos-as-records",
             },
             {
-              text: "ADR-10 Send-Api-Error-Message",
-              link: "/architecture/adr/10-send-api-error-message",
+              text: "ADR-10 No-Complex-Frontend-Components",
+              link: "/architecture/adr/10-no-complex-frontend-components",
             },
             {
-              text: "ADR-11 Use-Directory-Structure",
-              link: "/architecture/adr/11-use-directory-structure",
+              text: "ADR-11 Send-Api-Error-Message",
+              link: "/architecture/adr/11-send-api-error-message",
             },
             {
-              text: "ADR-12 Use-Comments",
-              link: "/architecture/adr/12-use-comments",
+              text: "ADR-12 Use-Directory-Structure",
+              link: "/architecture/adr/12-use-directory-structure",
+            },
+            {
+              text: "ADR-13 Use-Comments",
+              link: "/architecture/adr/13-use-comments",
+            },
+            {
+              text: "ADR-14 Use-Consistent-Code-Language",
+              link: "/architecture/adr/14-use-consistent-code-language",
             },
           ],
         },
