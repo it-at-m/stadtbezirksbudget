@@ -3,3 +3,9 @@ server:
 
 logging:
   include-application-group: false
+
+spring:
+  kafka:
+    bootstrap-servers: localhost:29092
+    template:
+      default-topic: stadtbezirksbudget-cit-backend-local
