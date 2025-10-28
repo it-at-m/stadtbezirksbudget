@@ -34,4 +34,22 @@ public class Finanzierung extends BaseEntity {
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
     private List<Finanzierungsmittel> finanzierungsmittelListe;
+
+    /**
+     * Calculates the requested budget by subtracting the total financing amounts
+     * from the total anticipated expenses.
+     *
+     * @return the requested budget amount
+     */
+    public double getBeantragtesBudget() {
+        double ausgaben =
+                voraussichtlicheAusgaben.stream()
+                        .mapToDouble(VoraussichtlicheAusgabe::getBetrag)
+                        .sum();
+        double mittel =
+                finanzierungsmittelListe.stream()
+                        .mapToDouble(Finanzierungsmittel::getBetrag)
+                        .sum();
+        return ausgaben - mittel;
+    }
 }
