@@ -23,8 +23,6 @@ public class AntragController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<AntragSummaryDTO> getAntragsdatenSubsetByPageAndSize(@PageableDefault final Pageable pageable) {
-        final Page<AntragSummaryDTO> antragsdatenSubsetPage = antragSummaryService.getAllEntities(pageable);
-        final List<AntragSummaryDTO> antragsdatenSubsetList = antragsdatenSubsetPage.getContent().stream().toList();
-        return new PageImpl<>(antragsdatenSubsetList, antragsdatenSubsetPage.getPageable(), antragsdatenSubsetPage.getTotalElements());
+        return antragSummaryService.getAllEntities(pageable);
     }
 }
