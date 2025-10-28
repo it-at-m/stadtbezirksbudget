@@ -1,4 +1,4 @@
-# ADR-10 Send-Api-Error-Message
+# ADR-11 Send-Api-Error-Message
 
 ## Context
 

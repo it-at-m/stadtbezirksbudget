@@ -1,4 +1,4 @@
-# ADR-09 No-Complex-Frontend-Components
+# ADR-10 No-Complex-Frontend-Components
 
 ## Context
 

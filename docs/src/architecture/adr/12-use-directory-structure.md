@@ -1,4 +1,4 @@
-# ADR-11 Use-Directory-Structure
+# ADR-12 Use-Directory-Structure
 
 ## Context
 
