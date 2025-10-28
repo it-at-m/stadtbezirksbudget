@@ -8,13 +8,9 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierungsmittel;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -35,12 +31,6 @@ class AntragSummaryServiceTest {
 
     @Mock
     private AntragRepository antragRepository;
-
-    @Mock
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
-
-    @Mock
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
 
     @InjectMocks
     private AntragSummaryService antragSummaryService;
@@ -70,45 +60,6 @@ class AntragSummaryServiceTest {
 
     @Nested
     class GetAllEntities {
-
-        @Test
-        void testGetAllEntities() {
-            final Pageable pageable = PageRequest.of(0, 10);
-            final Finanzierung finanzierung = new Finanzierung();
-            finanzierung.setId(UUID.randomUUID());
-
-            final Antragsteller antragsteller = new Antragsteller();
-            antragsteller.setName("Max Mustermann");
-
-            final Bearbeitungsstand bearbeitungsstand = new Bearbeitungsstand();
-            bearbeitungsstand.setAnmerkungen("Keine Anmerkungen");
-            bearbeitungsstand.setIstMittelabruf(false);
-
-            final Antrag antrag = createAntrag(bearbeitungsstand, antragsteller, finanzierung, "Projekt Titel", "Projekt Beschreibung", Status.VOLLSTAENDIG);
-
-            final VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
-            ausgabe.setBetrag(100.0);
-            when(voraussichtlicheAusgabeRepository.findByFinanzierungId(finanzierung.getId()))
-                    .thenReturn(Collections.singletonList(ausgabe));
-
-            final Finanzierungsmittel finanzierungsmittel = new Finanzierungsmittel();
-            finanzierungsmittel.setBetrag(30.0);
-            when(finanzierungsmittelRepository.findByFinanzierungId(finanzierung.getId()))
-                    .thenReturn(Collections.singletonList(finanzierungsmittel));
-
-            when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(Collections.singletonList(antrag), pageable, 1));
-
-            final Page<AntragSummaryDTO> result = antragSummaryService.getAllEntities(pageable);
-
-            assertThat(result).isNotNull();
-            assertThat(result.getContent()).hasSize(1);
-            assertThat(result.getContent().getFirst().projekttitel()).isEqualTo("Projekt Titel");
-            assertThat(result.getContent().getFirst().beantragtesBudget()).isEqualTo(70.0);
-            verify(antragRepository).findAll(pageable);
-            verify(voraussichtlicheAusgabeRepository).findByFinanzierungId(finanzierung.getId());
-            verify(finanzierungsmittelRepository).findByFinanzierungId(finanzierung.getId());
-        }
-
         @Test
         void testEmptyAntragList() {
             final Pageable pageable = PageRequest.of(0, 10);

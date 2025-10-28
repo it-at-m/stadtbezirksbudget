@@ -37,7 +37,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
-class AntragControllerIntegrationTest {
+class AntragsdatenControllerIntegrationTest {
 
     @Autowired
     private AntragRepository antragRepository;
@@ -80,7 +80,7 @@ class AntragControllerIntegrationTest {
 
     @AfterEach
     public void tearDown() {
-        antragRepository.deleteAll();
+        antragRepository.delete(antrag);
     }
 
     @Nested
@@ -88,7 +88,7 @@ class AntragControllerIntegrationTest {
 
         @Test
         void testGivenPageableThenReturnPageOfAntragsdaten() throws Exception {
-            mockMvc.perform(get("/antragSummary")
+            mockMvc.perform(get("/antrag")
                     .param("page", "0")
                     .param("size", "10")
                     .contentType(MediaType.APPLICATION_JSON))
@@ -105,7 +105,7 @@ class AntragControllerIntegrationTest {
         void testGivenEmptyDatabaseThenReturnEmptyPage() throws Exception {
             antragRepository.deleteAll();
 
-            mockMvc.perform(get("/antragSummary")
+            mockMvc.perform(get("/antrag")
                     .param("page", "0")
                     .param("size", "10")
                     .contentType(MediaType.APPLICATION_JSON))

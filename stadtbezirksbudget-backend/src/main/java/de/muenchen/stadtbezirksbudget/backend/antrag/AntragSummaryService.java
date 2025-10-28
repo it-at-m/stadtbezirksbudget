@@ -1,8 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierungsmittel;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
@@ -11,6 +9,8 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.Voraussichtliche
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +32,29 @@ public class AntragSummaryService {
         if (antragPage.isEmpty()) {
             return new PageImpl<>(List.of(), pageable, 0);
         }
+
+        final List<UUID> finanzierungIds = antragPage.getContent().stream()
+                .map(antrag -> antrag.getFinanzierung().getId())
+                .collect(Collectors.toList());
+
+        final Map<UUID, List<VoraussichtlicheAusgabe>> ausgabenMap = voraussichtlicheAusgabeRepository
+                .findByFinanzierungIdIn(finanzierungIds).stream()
+                .collect(Collectors.groupingBy(va -> va.getFinanzierung().getId()));
+
+        final Map<UUID, List<Finanzierungsmittel>> mittelMap = finanzierungsmittelRepository
+                .findByFinanzierungIdIn(finanzierungIds).stream()
+                .collect(Collectors.groupingBy(fm -> fm.getFinanzierung().getId()));
+
         final List<AntragSummaryDTO> list = antragPage.getContent().stream().map(antrag -> {
-            final Finanzierung finanzierung = antrag.getFinanzierung();
-            final double beantragtesBudget = voraussichtlicheAusgabeRepository.findByFinanzierungId(finanzierung.getId()).stream()
+            final UUID finanzierungId = antrag.getFinanzierung().getId();
+            final double ausgaben = ausgabenMap.getOrDefault(finanzierungId, List.of()).stream()
                     .mapToDouble(VoraussichtlicheAusgabe::getBetrag)
-                    .sum()
-                    - finanzierungsmittelRepository.findByFinanzierungId(finanzierung.getId()).stream()
-                            .mapToDouble(Finanzierungsmittel::getBetrag)
-                            .sum();
+                    .sum();
+            final double mittel = mittelMap.getOrDefault(finanzierungId, List.of()).stream()
+                    .mapToDouble(Finanzierungsmittel::getBetrag)
+                    .sum();
+            final double beantragtesBudget = ausgaben - mittel;
+
             return new AntragSummaryDTO(
                     antrag.getId(),
                     antrag.getBearbeitungsstand().getStatus(),
@@ -54,6 +69,7 @@ public class AntragSummaryService {
                     antrag.getBearbeitungsstand().getAnmerkungen(),
                     "Admin");
         }).collect(Collectors.toList());
+
         return new PageImpl<>(list, pageable, antragPage.getTotalElements());
     }
 
