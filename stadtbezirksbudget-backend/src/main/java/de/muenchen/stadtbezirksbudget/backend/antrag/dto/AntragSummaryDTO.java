@@ -4,6 +4,9 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Data Transfer Object (DTO) representing a summary of an Antrag.
+ */
 public record AntragSummaryDTO(
         UUID id,
         Status status,

@@ -8,12 +8,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service to handle business logic related to Antrag entities.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
 
+    /**
+     * Retrieves a paginated list of Antrag entities.
+     *
+     * @param pageable pagination information
+     * @return a page of Antrag entities
+     */
     public Page<Antrag> getAntragPage(final Pageable pageable) {
         return antragRepository.findAll(pageable);
     }

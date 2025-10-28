@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller to handle requests related to Antrag entities.
+ */
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -23,6 +26,12 @@ public class AntragController {
     private final AntragService antragService;
     private final AntragMapper antragMapper;
 
+    /**
+     * Retrieves a paginated list of Antrag summaries.
+     *
+     * @param pageable pagination information
+     * @return a page of AntragSummaryDTOs
+     */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public Page<AntragSummaryDTO> getAntragSummaryPage(@PageableDefault final Pageable pageable) {
