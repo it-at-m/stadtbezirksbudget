@@ -10,7 +10,7 @@ We are setting a minimum of 80% branch coverage.
 
 Code that is difficult or impossible to test can be excluded from the coverage. Furthermore, generated code does not count towards coverage and should be excluded.
 
-For ui components, coverage will not be considered and the UI will be tested only rudimentarily where it is dynamic (e.g., `v-if`).
+For ui components, coverage will not be considered and the UI will be tested only rudimentarily where it is dynamic (e.g., conditional rendering, DOM updates).
 
 ## Consequences
 
