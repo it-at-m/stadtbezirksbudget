@@ -7,6 +7,7 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties.spring.json.add.type.headers: true
       properties.spring.json.type.mapping: de.muenchen.stadtbezirksbudget.kafka.KafkaDTO:de.muenchen.stadtbezirksbudget.cit_eai.kafka.KafkaDTO
 
 server:
