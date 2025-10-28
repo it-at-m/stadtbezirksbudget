@@ -2,11 +2,11 @@ import { Status } from "./Status.ts";
 
 export default interface AntragSummary {
   id: string;
-  antragsstatus: Status;
-  zammadNummer: string;
-  bezirksausschussnummer: number;
+  status: Status;
+  zammadNr: string;
+  bezirksausschussNr: number;
   eingangDatum: Date;
-  projekttitel: string;
+  projektTitel: string;
   antragstellerName: string;
   beantragtesBudget: number;
   aktualisierung: string;

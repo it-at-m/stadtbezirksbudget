@@ -20,8 +20,8 @@
     <template v-slot:[`header.beantragtesBudget`]>
       <div class="text-left">Beantragtes<br />Budget [€]</div>
     </template>
-    <template v-slot:[`item.antragsstatus`]="{ item }">
-      {{ StatusText[item.antragsstatus] }}
+    <template v-slot:[`item.status`]="{ item }">
+      {{ StatusText[item.status] }}
     </template>
     <template v-slot:[`item.eingangDatum`]="{ item }">
       {{ toDateString(new Date(item.eingangDatum)) }}
@@ -58,17 +58,17 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
   return [
     {
       title: "Status",
-      key: "antragsstatus",
+      key: "status",
       maxWidth: `${baseWidth + percentage}px`,
     },
     {
       title: "Nummer",
-      key: "zammadNummer",
+      key: "zammadNr",
       maxWidth: `${baseWidth}px`,
     },
     {
       title: "BA",
-      key: "bezirksausschussnummer",
+      key: "bezirksausschussNr",
       align: "end",
       maxWidth: `${baseWidth - 5 * percentage}px`,
     },
@@ -79,7 +79,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
     },
     {
       title: "Projekt",
-      key: "projekttitel",
+      key: "projektTitel",
       maxWidth: `${baseWidth}px`,
     },
     {
