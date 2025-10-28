@@ -25,11 +25,15 @@ import java.util.List;
 import java.util.UUID;
 
 public record AntragsdatenTestDataBuilder(AntragRepository antragRepository, AdresseRepository adresseRepository,
-        FinanzierungRepository finanzierungRepository,
-        ZahlungsempfaengerRepository antragstellerRepository,
-        ProjektRepository projektRepository,
-        BearbeitungsstandRepository bearbeitungsstandRepository,
-        BankverbindungRepository bankverbindungRepository) {
+                                          FinanzierungRepository finanzierungRepository,
+                                          ZahlungsempfaengerRepository antragstellerRepository,
+                                          ProjektRepository projektRepository,
+                                          BearbeitungsstandRepository bearbeitungsstandRepository,
+                                          BankverbindungRepository bankverbindungRepository) {
+
+    private static String generateRandomUuidString() {
+        return UUID.randomUUID().toString();
+    }
 
     private Adresse initializeAdresse() {
         final Adresse adresse = new Adresse();
@@ -123,9 +127,5 @@ public record AntragsdatenTestDataBuilder(AntragRepository antragRepository, Adr
         antrag.setAntragsteller(antragsteller);
         antrag.setBankverbindung(initializeBankverbindung(antragsteller));
         return antragRepository.save(antrag);
-    }
-
-    public static String generateRandomUuidString() {
-        return UUID.randomUUID().toString();
     }
 }

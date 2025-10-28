@@ -27,13 +27,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
-class AntragSummaryServiceTest {
+class AntragServiceTest {
 
     @Mock
     private AntragRepository antragRepository;
 
     @InjectMocks
-    private AntragSummaryService antragSummaryService;
+    private AntragService antragService;
 
     private Antrag createAntrag(final Bearbeitungsstand bearbeitungsstand, final Antragsteller antragsteller, final Finanzierung finanzierung,
             final String titel, final String beschreibung,
@@ -65,7 +65,7 @@ class AntragSummaryServiceTest {
             final Pageable pageable = PageRequest.of(0, 10);
             when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
 
-            final Page<AntragSummaryDTO> result = antragSummaryService.getAllEntities(pageable);
+            final Page<Antrag> result = antragService.getAntragPage(pageable);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).isEmpty();
@@ -91,7 +91,7 @@ class AntragSummaryServiceTest {
 
             when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(Collections.singletonList(antrag), pageable, 1));
 
-            final Page<AntragSummaryDTO> result = antragSummaryService.getAllEntities(pageable);
+            final Page<Antrag> result = antragService.getAntragPage(pageable);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(1);
@@ -117,7 +117,7 @@ class AntragSummaryServiceTest {
 
             when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(List.of(antrag1, antrag2), pageable, 2));
 
-            final Page<AntragSummaryDTO> result = antragSummaryService.getAllEntities(pageable);
+            final Page<Antrag> result = antragService.getAntragPage(pageable);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(2);

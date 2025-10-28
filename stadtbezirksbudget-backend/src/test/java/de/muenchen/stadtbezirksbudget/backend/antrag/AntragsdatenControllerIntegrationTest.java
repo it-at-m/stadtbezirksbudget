@@ -39,33 +39,25 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class AntragsdatenControllerIntegrationTest {
 
-    @Autowired
-    private AntragRepository antragRepository;
-
-    @Autowired
-    private AdresseRepository adresseRepository;
-
-    @Autowired
-    private FinanzierungRepository finanzierungRepository;
-
-    @Autowired
-    private ZahlungsempfaengerRepository antragstellerRepository;
-
-    @Autowired
-    private ProjektRepository projektRepository;
-
-    @Autowired
-    private BearbeitungsstandRepository bearbeitungsstandRepository;
-
-    @Autowired
-    private BankverbindungRepository bankverbindungRepository;
-
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
-
+    @Autowired
+    private AntragRepository antragRepository;
+    @Autowired
+    private AdresseRepository adresseRepository;
+    @Autowired
+    private FinanzierungRepository finanzierungRepository;
+    @Autowired
+    private ZahlungsempfaengerRepository antragstellerRepository;
+    @Autowired
+    private ProjektRepository projektRepository;
+    @Autowired
+    private BearbeitungsstandRepository bearbeitungsstandRepository;
+    @Autowired
+    private BankverbindungRepository bankverbindungRepository;
     @Autowired
     private MockMvc mockMvc;
 
@@ -89,9 +81,9 @@ class AntragsdatenControllerIntegrationTest {
         @Test
         void testGivenPageableThenReturnPageOfAntragsdaten() throws Exception {
             mockMvc.perform(get("/antrag")
-                    .param("page", "0")
-                    .param("size", "10")
-                    .contentType(MediaType.APPLICATION_JSON))
+                            .param("page", "0")
+                            .param("size", "10")
+                            .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.content", hasSize(1)))
@@ -106,9 +98,9 @@ class AntragsdatenControllerIntegrationTest {
             antragRepository.deleteAll();
 
             mockMvc.perform(get("/antrag")
-                    .param("page", "0")
-                    .param("size", "10")
-                    .contentType(MediaType.APPLICATION_JSON))
+                            .param("page", "0")
+                            .param("size", "10")
+                            .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.content", hasSize(0)))
