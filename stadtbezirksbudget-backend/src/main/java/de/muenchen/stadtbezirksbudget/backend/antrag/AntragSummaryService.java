@@ -8,6 +8,8 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusg
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
+
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -41,11 +43,14 @@ public class AntragSummaryService {
             return new AntragSummaryDTO(
                     antrag.getId(),
                     antrag.getBearbeitungsstand().getStatus(),
+                    "ZM-10011001",
                     antrag.getBezirksausschussNr(),
-                    antrag.getEingangsdatum().toString(),
+                    antrag.getEingangsdatum(),
                     antrag.getProjekt().getTitel(),
                     ((Antragsteller) antrag.getAntragsteller()).getName(),
                     beantragtesBudget,
+                    "Fachanwendung",
+                    new Date(),
                     antrag.getBearbeitungsstand().getAnmerkungen(),
                     "Admin");
         }).collect(Collectors.toList());
