@@ -40,13 +40,13 @@ public class Antrag extends BaseEntity {
     private Projekt projekt;
 
     @NotNull @ManyToOne
-    private Zahlungsempfaenger antragsteller;
+    private Antragsteller antragsteller;
 
     @NotNull @ManyToOne
     private Bankverbindung bankverbindung;
 
     @ManyToOne
-    private Zahlungsempfaenger vertretungsberechtigter;
+    private Vertretungsberechtigter vertretungsberechtigter;
 
     @OneToMany(mappedBy = "antrag")
     private List<AndererZuwendungsantrag> andereZuwendungsantraege;

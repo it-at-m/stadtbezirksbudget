@@ -80,7 +80,7 @@ class AntragControllerIntegrationTest {
 
     @AfterEach
     public void tearDown() {
-        antragRepository.delete(antrag);
+        antragRepository.deleteAll();
     }
 
     @Nested

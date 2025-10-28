@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FinanzierungsmittelRepository extends PagingAndSortingRepository<Finanzierungsmittel, UUID>, CrudRepository<Finanzierungsmittel, UUID> {
-    List<Finanzierungsmittel> findByFinanzierungId(UUID finanzierungID);
+    List<Finanzierungsmittel> findByFinanzierungId(UUID finanzierungId);
 }

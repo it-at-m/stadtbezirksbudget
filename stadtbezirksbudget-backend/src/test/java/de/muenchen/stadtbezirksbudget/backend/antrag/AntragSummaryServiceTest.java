@@ -122,7 +122,7 @@ class AntragSummaryServiceTest {
         }
 
         @Test
-        void testMoreRequestsThanAvailable() {
+        void testGetAllEntitiesWithDifferentStatus() {
             final Pageable pageable = PageRequest.of(0, 10);
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());
@@ -148,7 +148,7 @@ class AntragSummaryServiceTest {
         }
 
         @Test
-        void testMoreRequestsThanAvailableDifferentPageSize() {
+        void testGetAllEntitiesWithMultipleItems() {
             final Pageable pageable = PageRequest.of(0, 5);
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());

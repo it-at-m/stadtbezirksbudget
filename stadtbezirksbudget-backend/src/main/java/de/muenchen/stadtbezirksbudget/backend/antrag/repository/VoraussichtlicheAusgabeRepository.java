@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VoraussichtlicheAusgabeRepository
         extends PagingAndSortingRepository<VoraussichtlicheAusgabe, UUID>, CrudRepository<VoraussichtlicheAusgabe, UUID> {
-    List<VoraussichtlicheAusgabe> findByFinanzierungId(UUID finanzierungID);
+    List<VoraussichtlicheAusgabe> findByFinanzierungId(UUID finanzierungId);
 }

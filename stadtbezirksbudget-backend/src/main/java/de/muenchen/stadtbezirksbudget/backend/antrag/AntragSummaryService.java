@@ -47,7 +47,7 @@ public class AntragSummaryService {
                     antrag.getBezirksausschussNr(),
                     convertToLocalDateTime(antrag.getEingangsdatum()),
                     antrag.getProjekt().getTitel(),
-                    ((Antragsteller) antrag.getAntragsteller()).getName(),
+                    antrag.getAntragsteller().getName(),
                     beantragtesBudget,
                     "Fachanwendung",
                     convertToLocalDateTime(antrag.getEingangsdatum()),
