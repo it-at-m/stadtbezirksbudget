@@ -8,8 +8,8 @@ High test coverage is a key factor for ensuring software quality. To ensure a co
 
 We are setting a minimum of 80% branch coverage.
 
-Code that is difficult or impossible to test can be excluded from the coverage. Furthermore, generated code does not count towards coverage and should be excluded.
-
+We allow justified exceptions for hard-to-test code and must be documented inline with the reason and approving issue/ADR.
+Generated code is excluded.
 For ui components, coverage will not be considered and the UI will be tested only rudimentarily where it is dynamic (e.g., conditional rendering, DOM updates).
 
 ## Consequences
