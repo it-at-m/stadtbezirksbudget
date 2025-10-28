@@ -25,7 +25,7 @@ export function useAntragSummaryList() {
       })
       .catch((error) => {
         snackbarStore.showMessage({
-          message: error?.messsage || "Fehler beim Laden der Anträge",
+          message: error?.message || "Fehler beim Laden der Anträge",
           level: STATUS_INDICATORS.WARNING,
         });
       })
