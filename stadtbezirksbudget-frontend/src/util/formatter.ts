@@ -27,6 +27,7 @@ export function toDateTimeString(date: Date): string {
   return toDateString(date);
 }
 
+// Formats the number to a string with the given number of fraction digits and optional currency.
 export function toNumberString(
   amount: number,
   fractionDigits = 2,
