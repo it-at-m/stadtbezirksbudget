@@ -4,7 +4,7 @@ export function toFirstLetterUppercase(text: string): string {
 
 // Formats the date to a string.
 export function toDateString(date: Date): string {
-  return date
+  return validateDate(date)
     ? date.toLocaleDateString("de-DE", {
         year: "numeric",
         month: "2-digit",
@@ -15,12 +15,12 @@ export function toDateString(date: Date): string {
 
 // Formats the time to a string.
 export function toTimeString(date: Date): string {
-  return date ? date.toLocaleTimeString() : "";
+  return validateDate(date) ? date.toLocaleTimeString() : "";
 }
 
 // Formats the date to a string. If the date is today, only the time is returned, otherwise the date is returned.
 export function toDateTimeString(date: Date): string {
-  if (!date) return "";
+  if (!validateDate(date)) return "";
   const today = new Date();
   if (date.toDateString() === today.toDateString()) {
     return toTimeString(date);
@@ -46,4 +46,8 @@ export function toNumberString(
 
 export function toDateAndTimeString(date: Date): string {
   return date ? date.toLocaleString() : "";
+}
+
+function validateDate(date: Date): boolean {
+  return date && !isNaN(date.getTime());
 }
