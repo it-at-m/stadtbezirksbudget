@@ -5,12 +5,12 @@ export default interface AntragSummary {
   antragsstatus: Status;
   zammadNummer: string;
   bezirksausschussnummer: number;
-  eingangsdatum: Date;
+  eingangDatum: Date;
   projekttitel: string;
   antragstellerName: string;
   beantragtesBudget: number;
-  aktualisierungsArt: string;
-  datumAktualisierung: Date;
+  aktualisierung: string;
+  aktualisierungDatum: Date;
   anmerkungen: string;
   bearbeiter: string;
 }

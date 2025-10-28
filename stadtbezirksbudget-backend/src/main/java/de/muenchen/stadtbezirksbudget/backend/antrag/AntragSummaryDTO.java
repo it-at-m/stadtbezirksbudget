@@ -1,8 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
-
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,12 +9,12 @@ public record AntragSummaryDTO(
         Status antragsstatus,
         String zammadNummer,
         int bezirksausschussnummer,
-        LocalDate eingangsdatum,
+        Date eingangDatum,
         String projekttitel,
         String antragstellerName,
         double beantragtesBudget,
-        String aktualisierungsArt,
-        Date datumAktualisierung,
+        String aktualisierung,
+        Date aktualisierungDatum,
         String anmerkungen,
         String bearbeiter) {
 }
