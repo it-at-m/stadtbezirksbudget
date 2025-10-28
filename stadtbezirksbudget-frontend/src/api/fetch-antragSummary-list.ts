@@ -8,13 +8,16 @@ export function getAntragsSummaryList(
   page: number,
   size: number
 ): Promise<Page<AntragSummary>> {
-  return fetch(`${BACKEND}/antrag?page=${page}&size=${size}`, getConfig())
+  const params = new URLSearchParams({
+    page: String(page),
+    size: String(size),
+  });
+  return fetch(`${BACKEND}/antrag?${params}`, getConfig())
     .then((response) => {
       defaultResponseHandler(response);
       return response.json();
     })
     .catch((err) => {
       defaultResponseHandler(err);
-      throw err;
     });
 }
