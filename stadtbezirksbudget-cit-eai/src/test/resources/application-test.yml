@@ -9,5 +9,10 @@ logging:
     org:
       springframework: INFO
 
+spring:
+  kafka:
+    template:
+      default-topic: stadtbezirksbudget-cit-backend-local
+
 # Custom properties
-output : mock:output
+output: mock:output
