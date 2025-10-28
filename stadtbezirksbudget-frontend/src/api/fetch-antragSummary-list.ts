@@ -18,5 +18,6 @@ export function getAntragsSummaryList(
     })
     .catch((err) => {
       defaultResponseHandler(err);
+      throw err;
     });
 }
