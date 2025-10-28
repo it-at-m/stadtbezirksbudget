@@ -18,3 +18,24 @@ export enum Status {
   RUECKZAHLUNG = "RUECKZAHLUNG",
   ABGESCHLOSSEN = "ABGESCHLOSSEN",
 }
+
+export const StatusText: Record<Status, string> = {
+  [Status.EINGEGANGEN]: "Eingegangen",
+  [Status.WARTEN_AUF_BUERGERRUECKMELDUNG]: "Warten auf Bürgerrückmeldung",
+  [Status.ABGELEHNT_KEINE_RUECKMELDUNG]: "Abgelehnt, keine Rückmeldung",
+  [Status.ABGELEHNT_NICHT_ZUSTAENDIG]: "Abgelehnt, nicht zuständig",
+  [Status.ABGELEHNT_NICHT_FOERDERFAEHIG]: "Abgelehnt, nicht förderfähig",
+  [Status.VOLLSTAENDIG]: "Vollständig",
+  [Status.SITZUNGSVORLAGE_ERSTELLT]: "Sitzungsvorlage erstellt",
+  [Status.SITZUNGSVORLAGE_GENEHMIGT]: "Sitzungsvorlage genehmigt",
+  [Status.BEREIT_ZUR_ABSTIMMUNG]: "Bereit zur Abstimmung",
+  [Status.ABGELEHNT_VON_BA]: "Abgelehnt von BA",
+  [Status.ANTRAG_ANGENOMMEN]: "Antrag angenommen",
+  [Status.BESCHEID_VERFUEGEN]: "Bescheid verfügen",
+  [Status.MITTEILUNG_AN_BUERGER]: "Mitteilung an Bürger",
+  [Status.PRUEFUNG_RECHNUNGEN]: "Prüfung Rechnungen",
+  [Status.AUSZAHLUNG]: "Auszahlung",
+  [Status.RUECKFORDERUNG]: "Rückforderung",
+  [Status.RUECKZAHLUNG]: "Rückzahlung",
+  [Status.ABGESCHLOSSEN]: "Abgeschlossen",
+};
