@@ -23,8 +23,7 @@ public interface AntragMapper {
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
     @Mapping(
             target = "beantragtesBudget",
-            expression =
-                    "java(antrag.getFinanzierung().getBeantragtesBudget())"
+            expression = "java(antrag.getFinanzierung().getBeantragtesBudget())"
     )
     @Mapping(target = "aktualisierung", constant = "Fachanwendung") // TODO: Replace with actual application
     @Mapping(target = "aktualisierungDatum", expression = "java(LocalDateTime.now())") // TODO: Replace with actual date

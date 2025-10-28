@@ -80,7 +80,8 @@ class AntragsdatenControllerIntegrationTest {
 
         @Test
         void testGivenPageableThenReturnPageOfAntragsdaten() throws Exception {
-            mockMvc.perform(get("/antrag")
+            mockMvc
+                    .perform(get("/antrag")
                             .param("page", "0")
                             .param("size", "10")
                             .contentType(MediaType.APPLICATION_JSON))
@@ -97,7 +98,8 @@ class AntragsdatenControllerIntegrationTest {
         void testGivenEmptyDatabaseThenReturnEmptyPage() throws Exception {
             antragRepository.deleteAll();
 
-            mockMvc.perform(get("/antrag")
+            mockMvc
+                    .perform(get("/antrag")
                             .param("page", "0")
                             .param("size", "10")
                             .contentType(MediaType.APPLICATION_JSON))

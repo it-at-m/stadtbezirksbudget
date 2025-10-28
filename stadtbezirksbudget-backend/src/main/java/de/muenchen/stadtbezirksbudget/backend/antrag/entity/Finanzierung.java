@@ -42,14 +42,10 @@ public class Finanzierung extends BaseEntity {
      * @return the requested budget amount
      */
     public double getBeantragtesBudget() {
-        double ausgaben =
-                voraussichtlicheAusgaben.stream()
-                        .mapToDouble(VoraussichtlicheAusgabe::getBetrag)
-                        .sum();
-        double mittel =
-                finanzierungsmittelListe.stream()
-                        .mapToDouble(Finanzierungsmittel::getBetrag)
-                        .sum();
+        double ausgaben = voraussichtlicheAusgaben.stream()
+                .mapToDouble(VoraussichtlicheAusgabe::getBetrag).sum();
+        double mittel = finanzierungsmittelListe.stream()
+                .mapToDouble(Finanzierungsmittel::getBetrag).sum();
         return ausgaben - mittel;
     }
 }

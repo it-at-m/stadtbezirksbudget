@@ -24,12 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record AntragsdatenTestDataBuilder(AntragRepository antragRepository, AdresseRepository adresseRepository,
-                                          FinanzierungRepository finanzierungRepository,
-                                          ZahlungsempfaengerRepository antragstellerRepository,
-                                          ProjektRepository projektRepository,
-                                          BearbeitungsstandRepository bearbeitungsstandRepository,
-                                          BankverbindungRepository bankverbindungRepository) {
+public record AntragsdatenTestDataBuilder(
+        AntragRepository antragRepository,
+        AdresseRepository adresseRepository,
+        FinanzierungRepository finanzierungRepository,
+        ZahlungsempfaengerRepository antragstellerRepository,
+        ProjektRepository projektRepository,
+        BearbeitungsstandRepository bearbeitungsstandRepository,
+        BankverbindungRepository bankverbindungRepository) {
 
     private static String generateRandomUuidString() {
         return UUID.randomUUID().toString();
