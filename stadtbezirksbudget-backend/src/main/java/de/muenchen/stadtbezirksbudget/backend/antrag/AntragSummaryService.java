@@ -9,8 +9,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -46,19 +45,19 @@ public class AntragSummaryService {
                     antrag.getBearbeitungsstand().getStatus(),
                     "ZM-10011001",
                     antrag.getBezirksausschussNr(),
-                    convertToDate(antrag.getEingangsdatum()),
+                    convertToLocalDateTime(antrag.getEingangsdatum()),
                     antrag.getProjekt().getTitel(),
                     ((Antragsteller) antrag.getAntragsteller()).getName(),
                     beantragtesBudget,
                     "Fachanwendung",
-                    convertToDate(antrag.getEingangsdatum()),
+                    convertToLocalDateTime(antrag.getEingangsdatum()),
                     antrag.getBearbeitungsstand().getAnmerkungen(),
                     "Admin");
         }).collect(Collectors.toList());
         return new PageImpl<>(list, pageable, antragPage.getTotalElements());
     }
 
-    private Date convertToDate(final LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    private LocalDateTime convertToLocalDateTime(final LocalDate localDate) {
+        return localDate.atStartOfDay();
     }
 }
