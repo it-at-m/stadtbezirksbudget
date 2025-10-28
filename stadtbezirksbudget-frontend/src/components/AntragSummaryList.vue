@@ -38,7 +38,7 @@
 <script lang="ts" setup>
 import type { DataTableHeader } from "vuetify";
 
-import { computed, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import { useAntragSummaryList } from "@/composables/antragSummaryList.ts";
 import { StatusText } from "@/types/Status.ts";
@@ -52,6 +52,19 @@ const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
   useAntragSummaryList();
 
 const screenWidth = ref(window.innerWidth);
+
+const updateScreenWidth = () => {
+  screenWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", updateScreenWidth);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateScreenWidth);
+});
+
 const computedHeaders = computed<DataTableHeader[]>(() => {
   const baseWidth = (screenWidth.value * 0.95) / 11;
   const percentage = (screenWidth.value * 0.95) / 100;

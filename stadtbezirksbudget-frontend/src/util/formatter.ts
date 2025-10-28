@@ -21,7 +21,8 @@ export function toTimeString(date: Date): string {
 // Formats the date to a string. If the date is today, only the time is returned, otherwise the date is returned.
 export function toDateTimeString(date: Date): string {
   if (!date) return "";
-  if (date.toDateString() === new Date().toDateString()) {
+  const today = new Date();
+  if (date.toDateString() === today.toDateString()) {
     return toTimeString(date);
   }
   return toDateString(date);

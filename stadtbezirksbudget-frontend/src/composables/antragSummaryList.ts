@@ -4,6 +4,7 @@ import type Page from "@/types/Page.ts";
 import { readonly, ref } from "vue";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
+import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 export function useAntragSummaryList() {
@@ -13,7 +14,7 @@ export function useAntragSummaryList() {
   const totalItems = ref(0);
   const page = ref<number>(1);
   const itemsPerPage = ref<number>(10);
-  const loading = ref(true);
+  const loading = ref(false);
 
   function fetchItems() {
     loading.value = true;
@@ -23,7 +24,10 @@ export function useAntragSummaryList() {
         totalItems.value = content.page.totalElements;
       })
       .catch((error) => {
-        snackbarStore.showMessage(error);
+        snackbarStore.showMessage({
+          message: error?.messsage || "Fehler beim Laden der Anträge",
+          level: STATUS_INDICATORS.WARNING,
+        });
       })
       .finally(() => {
         loading.value = false;
