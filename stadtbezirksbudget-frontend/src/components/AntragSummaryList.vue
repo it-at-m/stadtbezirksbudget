@@ -119,7 +119,6 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       title: "Anmerkungen",
       key: "anmerkungen",
       maxWidth: `${baseWidth + 8 * percentage}px`,
-      class: `truncate`,
     },
     {
       title: "Bearbeiter/in",
