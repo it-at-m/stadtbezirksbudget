@@ -1,14 +1,5 @@
 <template>
   <v-data-table-server
-    v-model:items-per-page="itemsPerPage"
-    :headers="computedHeaders"
-    :header-props="{ style: { color: '#757575' } }"
-    :items="serverItems"
-    :items-length="totalItems"
-    :loading="loading"
-    :search="search"
-    :hover="true"
-    item-value="name"
     :cell-props="{
       style: {
         overflow: 'hidden',
@@ -16,40 +7,51 @@
         whiteSpace: 'nowrap',
       },
     }"
-    @update:options="loadItems"
-  ></v-data-table-server>
+    :headers="computedHeaders"
+    :hover="true"
+    :items="items"
+    :items-length="totalItems"
+    :items-per-page="itemsPerPage"
+    :loading="loading"
+    :page="page"
+    disable-sort
+    @update:options="updateOptions"
+  >
+    <template v-slot:[`header.beantragtesBudget`]>
+      <div class="text-left">Beantragtes<br />Budget [€]</div>
+    </template>
+    <template v-slot:[`item.antragsstatus`]="{ item }">
+      {{ StatusText[item.antragsstatus] }}
+    </template>
+    <template v-slot:[`item.eingangDatum`]="{ item }">
+      {{ toDateString(new Date(item.eingangDatum)) }}
+    </template>
+    <template v-slot:[`item.aktualisierungDatum`]="{ item }">
+      {{ toDateTimeString(new Date(item.aktualisierungDatum)) }}
+    </template>
+    <template v-slot:[`item.beantragtesBudget`]="{ item }">
+      {{ toNumberString(item.beantragtesBudget, 0) }}
+    </template>
+  </v-data-table-server>
 </template>
 
-<script setup lang="ts">
-import type AntragSummary from "@/types/AntragSummary.ts";
-import type Page from "@/types/Page.ts";
+<script lang="ts" setup>
 import type { DataTableHeader } from "vuetify";
 
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 
-import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
-import { STATUS_INDICATORS } from "@/constants.ts";
-import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useAntragSummaryList } from "@/composables/antragSummaryList.ts";
+import { StatusText } from "@/types/Status.ts";
+import {
+  toDateString,
+  toDateTimeString,
+  toNumberString,
+} from "@/util/formatter.ts";
 
-const {
-  items,
-  totalItems,
-  page,
-  itemsPerPage,
-  loading,
-  fetchItems,
-  updateOptions,
-} = useAntragSummaryList();
+const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
+  useAntragSummaryList();
 
 const screenWidth = ref(window.innerWidth);
-
-onMounted(() => {
-  getAntragsSummaryList(1, 15).catch((error) => {
-    snackbarStore.showMessage(error);
-  });
-});
-
-const itemsPerPage = ref(10);
 const computedHeaders = computed<DataTableHeader[]>(() => {
   const baseWidth = (screenWidth.value * 0.95) / 11;
   const percentage = (screenWidth.value * 0.95) / 100;
@@ -57,13 +59,11 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
     {
       title: "Status",
       key: "antragsstatus",
-      align: "start",
       maxWidth: `${baseWidth + percentage}px`,
     },
     {
       title: "Nummer",
-      key: "dummyTicketnummer",
-      align: "start",
+      key: "zammadNummer",
       maxWidth: `${baseWidth}px`,
     },
     {
@@ -74,104 +74,45 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
     },
     {
       title: "Antragsdatum",
-      key: "eingangsdatum",
-      align: "start",
+      key: "eingangDatum",
       maxWidth: `${baseWidth - 2 * percentage}px`,
     },
     {
       title: "Projekt",
       key: "projekttitel",
-      align: "start",
       maxWidth: `${baseWidth}px`,
     },
     {
       title: "Antragsteller/in",
       key: "antragstellerName",
-      align: "start",
       maxWidth: `${baseWidth + 2 * percentage}px`,
     },
     {
-      title: "Beantragtes Budget / €",
-      key: "formatiertesBudget",
-      align: "start",
+      key: "beantragtesBudget",
+      align: "end",
       maxWidth: `${baseWidth - 2 * percentage}px`,
     },
     {
       title: "Aktualisierung",
-      key: "dummyAktualisierungsArt",
-      align: "start",
+      key: "aktualisierung",
       maxWidth: `${baseWidth}px`,
     },
     {
       title: "Datum Aktualisierung",
-      key: "dummyAktualisierungsDatum",
-      align: "start",
+      key: "aktualisierungDatum",
       maxWidth: `${baseWidth - 2 * percentage}px`,
     },
     {
       title: "Anmerkungen",
       key: "anmerkungen",
-      align: "start",
       maxWidth: `${baseWidth + 8 * percentage}px`,
       class: `truncate`,
     },
     {
       title: "Bearbeiter/in",
       key: "bearbeiter",
-      align: "start",
       maxWidth: `${baseWidth}px`,
     },
   ];
 });
-const search = ref("");
-const serverItems = ref<AntragSummary[]>([]);
-const loading = ref(false);
-const totalItems = ref(0);
-async function loadItems({
-  page,
-  itemsPerPage,
-}: {
-  page: number;
-  itemsPerPage: number;
-}) {
-  loading.value = true;
-  try {
-    const pageResponse: Page<AntragSummary> =
-      await getAntragsSummaryList(page - 1, itemsPerPage);
-
-    console.debug("Antwort von getAntragSummaryList:", pageResponse);
-
-    serverItems.value = pageResponse.content.map((item) => ({
-      antragsstatus: item.antragsstatus,
-      dummyTicketnummer: "ZM-10011001",
-      bezirksausschussnummer: item.bezirksausschussnummer,
-      eingangsdatum: item.eingangsdatum,
-      projekttitel: item.projekttitel,
-      antragstellerName: item.antragstellerName,
-      beantragtesBudget: item.beantragtesBudget,
-      formatiertesBudget: item.beantragtesBudget.toLocaleString("de-DE", {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }),
-      dummyAktualisierungsArt: "Fachanwendung",
-      dummyAktualisierungsDatum: "01.01.2025",
-      anmerkungen: item.anmerkungen,
-      bearbeiter: item.bearbeiter,
-      id: item.id,
-    }));
-    totalItems.value = pageResponse.page.totalElements;
-  } catch (error) {
-    let errorMessage = "Ein unbekannter Fehler ist aufgetreten.";
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    }
-    snackbarStore.showMessage({
-      message: errorMessage,
-      level: STATUS_INDICATORS.WARNING,
-      show: true,
-    });
-  } finally {
-    loading.value = false;
-  }
-}
 </script>
