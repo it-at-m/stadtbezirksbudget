@@ -27,7 +27,7 @@
       {{ toDateString(new Date(item.eingangDatum)) }}
     </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
-      {{ toDateTimeString(new Date(item.aktualisierungDatum)) }}
+      {{ toDateString(new Date(item.aktualisierungDatum)) }}
     </template>
     <template v-slot:[`item.beantragtesBudget`]="{ item }">
       {{ toNumberString(item.beantragtesBudget, 0) }}

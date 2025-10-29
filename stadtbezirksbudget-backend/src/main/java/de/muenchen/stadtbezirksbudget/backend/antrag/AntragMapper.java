@@ -21,14 +21,10 @@ public interface AntragMapper {
     @Mapping(target = "eingangDatum", expression = "java(antrag.getEingangsdatum().atStartOfDay())") // TODO: Replace with actual date
     @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
-    @Mapping(
-            target = "beantragtesBudget",
-            expression = "java(antrag.getFinanzierung().getBeantragtesBudget())"
-    )
+    @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
     @Mapping(target = "aktualisierung", constant = "Fachanwendung") // TODO: Replace with actual application
     @Mapping(target = "aktualisierungDatum", expression = "java(LocalDateTime.now())") // TODO: Replace with actual date
     @Mapping(target = "anmerkungen", source = "antrag.bearbeitungsstand.anmerkungen")
-    @Mapping(target = "bearbeiter", constant = "Max Mustermann")
-    // TODO: Replace with actual bearbeiter
+    @Mapping(target = "bearbeiter", constant = "Max Mustermann") // TODO: Replace with actual bearbeiter
     AntragSummaryDTO toAntragSummaryDTO(Antrag antrag);
 }
