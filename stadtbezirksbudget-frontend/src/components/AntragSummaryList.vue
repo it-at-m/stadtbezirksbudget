@@ -38,6 +38,7 @@
 <script lang="ts" setup>
 import type { DataTableHeader } from "vuetify";
 
+import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import { useAntragSummaryList } from "@/composables/antragSummaryList.ts";
@@ -49,9 +50,9 @@ const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
 
 const screenWidth = ref(window.innerWidth);
 
-const updateScreenWidth = () => {
+const updateScreenWidth = useDebounceFn(() => {
   screenWidth.value = window.innerWidth;
-};
+}, 150);
 
 onMounted(() => {
   window.addEventListener("resize", updateScreenWidth);
