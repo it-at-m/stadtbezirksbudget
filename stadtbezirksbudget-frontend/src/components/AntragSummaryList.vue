@@ -42,11 +42,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import { useAntragSummaryList } from "@/composables/antragSummaryList.ts";
 import { StatusText } from "@/types/Status.ts";
-import {
-  toDateString,
-  toDateTimeString,
-  toNumberString,
-} from "@/util/formatter.ts";
+import { toDateString, toNumberString } from "@/util/formatter.ts";
 
 const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
   useAntragSummaryList();
