@@ -11,10 +11,10 @@ export function useAntragSummaryList() {
   const snackbarStore = useSnackbarStore();
 
   const items = ref<AntragSummary[]>([]);
-  const totalItems = ref(0);
+  const totalItems = ref<number>(0);
   const page = ref<number>(1);
   const itemsPerPage = ref<number>(10);
-  const loading = ref(false);
+  const loading = ref<boolean>(false);
 
   function fetchItems() {
     loading.value = true;
