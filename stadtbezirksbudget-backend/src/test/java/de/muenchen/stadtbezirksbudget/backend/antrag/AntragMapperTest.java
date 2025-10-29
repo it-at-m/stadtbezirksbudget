@@ -29,36 +29,36 @@ class AntragMapperTest {
     class ToAntragSummaryDTO {
         @Test
         void givenAntragEntity_thenReturnsCorrectAntragSummaryDTO() {
-            Antrag antrag = new Antrag();
+            final Antrag antrag = new Antrag();
             antrag.setId(UUID.randomUUID());
 
-            Bearbeitungsstand bearbeitungsstand = new Bearbeitungsstand();
+            final Bearbeitungsstand bearbeitungsstand = new Bearbeitungsstand();
             bearbeitungsstand.setAnmerkungen("Keine Anmerkungen");
             bearbeitungsstand.setStatus(Status.VOLLSTAENDIG);
 
             antrag.setBearbeitungsstand(bearbeitungsstand);
-            antrag.setEingangsdatum(LocalDate.now());
+            antrag.setEingangsdatum(LocalDate.of(2025, 10, 15));
 
-            Projekt projekt = new Projekt();
+            final Projekt projekt = new Projekt();
             projekt.setTitel("Testprojekt");
 
             antrag.setProjekt(projekt);
 
-            Antragsteller antragsteller = new Antragsteller();
+            final Antragsteller antragsteller = new Antragsteller();
             antragsteller.setName("Max Mustermann");
 
             antrag.setAntragsteller(antragsteller);
 
-            Finanzierung finanzierung = new Finanzierung();
-            List<VoraussichtlicheAusgabe> ausgaben = new ArrayList<>();
-            VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
+            final Finanzierung finanzierung = new Finanzierung();
+            final List<VoraussichtlicheAusgabe> ausgaben = new ArrayList<>();
+            final VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
             ausgabe.setBetrag(100.0);
             ausgabe.setKategorie("Testkategorie");
             ausgabe.setDirektoriumNotiz("Testnotiz");
             ausgaben.add(ausgabe);
             finanzierung.setVoraussichtlicheAusgaben(ausgaben);
-            List<Finanzierungsmittel> mittelListe = new ArrayList<>();
-            Finanzierungsmittel finanzierungsmittel = new Finanzierungsmittel();
+            final List<Finanzierungsmittel> mittelListe = new ArrayList<>();
+            final Finanzierungsmittel finanzierungsmittel = new Finanzierungsmittel();
             finanzierungsmittel.setBetrag(50.0);
             finanzierungsmittel.setKategorie(Kategorie.EIGENMITTEL);
             finanzierungsmittel.setDirektoriumNotiz("Testnotiz");
@@ -67,7 +67,7 @@ class AntragMapperTest {
 
             antrag.setFinanzierung(finanzierung);
 
-            AntragSummaryDTO result = antragMapper.toAntragSummaryDTO(antrag);
+            final AntragSummaryDTO result = antragMapper.toAntragSummaryDTO(antrag);
 
             assertNotNull(result);
             assertThat(result.projektTitel()).isEqualTo("Testprojekt");
@@ -75,6 +75,11 @@ class AntragMapperTest {
             assertThat(result.beantragtesBudget()).isEqualTo(50.0);
             assertThat(result.status()).isEqualTo(Status.VOLLSTAENDIG);
             assertThat(result.anmerkungen()).isEqualTo("Keine Anmerkungen");
+            assertThat(result.eingangDatum()).isEqualTo(antrag.getEingangsdatum().atStartOfDay());
+            assertThat(result.zammadNr()).isNotNull();
+            assertThat(result.aktualisierung()).isNotNull();
+            assertThat(result.aktualisierungDatum()).isNotNull();
+            assertThat(result.bearbeiter()).isNotNull();
         }
     }
 }
