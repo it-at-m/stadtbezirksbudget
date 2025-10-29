@@ -1,7 +1,11 @@
 import type AntragSummary from "@/types/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
-import { defaultResponseHandler, getConfig } from "@/api/fetch-utils.ts";
+import {
+  defaultCatchHandler,
+  defaultResponseHandler,
+  getConfig,
+} from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
 
 export function getAntragsSummaryList(
@@ -18,6 +22,6 @@ export function getAntragsSummaryList(
       return response.json();
     })
     .catch((err) => {
-      defaultResponseHandler(err);
+      return defaultCatchHandler(err);
     });
 }
