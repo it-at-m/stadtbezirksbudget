@@ -29,10 +29,15 @@ public class Finanzierung extends BaseEntity {
     private boolean istSonstigerFoerderhinweis;
     @NotNull private String sonstigeFoerderhinweise;
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
+    @NotNull @PositiveOrZero private BigDecimal summeAusgaben;
+    @NotNull @PositiveOrZero private BigDecimal summeFinanzierungsmittel;
+    @NotNull @PositiveOrZero private BigDecimal beantragtesBudget;
+    @NotNull private String kostenAnmerkung;
+    @NotNull private String begruendungEigenmittel;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
-    private List<Finanzierungsmittel> finanzierungsmittelListe;
+    private List<Finanzierungsmittel> finanzierungsmittel;
 }

@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +22,5 @@ public class Vertretungsberechtigter extends Zahlungsempfaenger {
 
     @NotBlank private String nachname;
     @NotBlank private String vorname;
-    @NotBlank private String mobilNr;
+    @NotNull private String mobilNr;
 }
