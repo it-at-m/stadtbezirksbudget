@@ -12,10 +12,10 @@ Stadtbezirksbudget application itself to be high available.
 flowchart LR
     classDef project stroke: #0f0
     cit[CIT form server]
-    citEai[Stadtbezirksbudget\nCIT-EAI]
+    citEai[Stadtbezirksbudget<br>CIT-EAI]
     dbs[DBS Zammad]
     dbsEai[Zammad-EAI]
-    sbb[Stadtbezirksbudget\nBackend]
+    sbb[Stadtbezirksbudget<br>Backend]
     kafka[(Kafka event bus)]
     cit --> citEai:::project
     citEai:::project --> kafka
@@ -44,9 +44,9 @@ further in the backend to the consumed class (in package `de.muenchen.stadtbezir
 
 ```mermaid
 flowchart LR
-    citEai[CIT-EAI\nde.muenchen.stadtbezirksbudget.cit_eai.*]
-    kafka[(Kafka event bus\nde.muenchen.stadtbezirksbudget.kafka.*)]
-    sbb[Backend\nde.muenchen.stadtbezirksbudget.backend.*]
+    citEai[CIT-EAI<br>de.muenchen.stadtbezirksbudget.cit_eai.*]
+    kafka[(Kafka event bus<br>de.muenchen.stadtbezirksbudget.kafka.*)]
+    sbb[Backend<br>de.muenchen.stadtbezirksbudget.backend.*]
     citEai --> kafka
     kafka --> sbb
 ```
