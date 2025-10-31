@@ -15,3 +15,12 @@ ALTER TABLE finanzierung
 
 ALTER TABLE finanzierung
     ADD bewilligter_zuschuss DECIMAL;
+
+ALTER TABLE finanzierung
+    ADD ist_einladung_foerderhinweis BOOLEAN;
+
+ALTER TABLE finanzierung
+    ALTER COLUMN ist_einladung_foerderhinweis SET NOT NULL;
+
+ALTER TABLE finanzierung
+    DROP COLUMN ist_einladungs_foerderhinweis;

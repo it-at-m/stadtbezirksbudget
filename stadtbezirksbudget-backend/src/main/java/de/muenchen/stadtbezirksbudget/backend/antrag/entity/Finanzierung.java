@@ -24,7 +24,7 @@ public class Finanzierung extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     private boolean istProjektVorsteuerabzugsberechtigt;
-    private boolean istEinladungsFoerderhinweis;
+    private boolean istEinladungFoerderhinweis;
     private boolean istWebsiteFoerderhinweis;
     private boolean istSonstigerFoerderhinweis;
     @NotNull private String sonstigeFoerderhinweise;
