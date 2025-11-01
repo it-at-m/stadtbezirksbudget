@@ -132,7 +132,7 @@ services:
     security_opt: *security_settings
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.7.5@sha256:7f012166110a9e1c88220ae773e24482fcc2d80caf4ca72ff712c6ee47d2101f
+    image: confluentinc/cp-zookeeper:7.7.6@sha256:35ee670b60ebbd5a962ad841da0873d992829c624274d782d9dee1d58a94e588
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
