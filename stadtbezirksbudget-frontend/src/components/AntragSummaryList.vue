@@ -70,7 +70,7 @@ onUnmounted(() => {
 });
 
 const computedHeaders = computed<DataTableHeader[]>(() => {
-  const baseWidth = (screenWidth.value * 0.95) / 10;
+  const baseWidth = (screenWidth.value * 0.95) / 11;
   return [
     {
       title: "Status",

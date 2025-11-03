@@ -54,5 +54,6 @@ function validateDate(date: Date): boolean {
 
 // Converts the boolean value istFehlbetrag to a corresponding string representation.
 export function booleanToString(value: boolean): string {
+  if (value == null) return "";
   return value ? "Fehl" : "Fest";
 }
