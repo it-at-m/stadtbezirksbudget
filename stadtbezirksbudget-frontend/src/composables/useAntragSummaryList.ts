@@ -31,7 +31,7 @@ export function useAntragSummaryList() {
    */
   function fetchItems() {
     loading.value = true;
-    getAntragsSummaryList(page.value - 1, itemsPerPage.value)
+    return getAntragsSummaryList(page.value - 1, itemsPerPage.value)
       .then((content: Page<AntragSummary>) => {
         items.value = content.content;
         totalItems.value = content.page.totalElements;
