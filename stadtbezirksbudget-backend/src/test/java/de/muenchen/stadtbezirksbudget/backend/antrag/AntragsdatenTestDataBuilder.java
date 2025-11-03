@@ -108,8 +108,8 @@ public record AntragsdatenTestDataBuilder(
         final Bankverbindung bankverbindung = new Bankverbindung();
         bankverbindung.setPerson("Max Mustermann");
         bankverbindung.setGeldinstitut("Musterbank");
-        bankverbindung.setIban("DE89370400440532013000");
-        bankverbindung.setBic("COBADEFFXXX");
+        bankverbindung.setIban("DE00123456789012345678");
+        bankverbindung.setBic("DUMMYBIC123");
         bankverbindung.setZahlungsempfaenger(antragsteller);
 
         return bankverbindungRepository.save(bankverbindung);
