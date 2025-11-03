@@ -64,7 +64,7 @@ export function toNumberString(
  * Returns an empty string if the date is invalid.
  */
 export function toDateAndTimeString(date: Date): string {
-  return validateDate(date) ? date.toLocaleString() : "";
+  return validateDate(date) ? date.toLocaleString("de-DE") : "";
 }
 
 /**
