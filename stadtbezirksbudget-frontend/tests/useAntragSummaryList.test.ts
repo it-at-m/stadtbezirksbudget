@@ -64,7 +64,7 @@ describe("useAntragSummaryList", () => {
     });
   });
 
-  test("should update options and fetch new items", async () => {
+  test("testFetchNewItemsWhenUpdateOptions", async () => {
     const mockResponse: Page<AntragSummary> = {
       content: [{ id: 2, name: "Antrag 2" }],
       page: { totalElements: 1 },
@@ -80,7 +80,7 @@ describe("useAntragSummaryList", () => {
     expect(items.value).toEqual(mockResponse.content);
   });
 
-  test("should update options correctly", () => {
+  test("testUpdateOptionsCorrectly", () => {
     const { updateOptions, page, itemsPerPage } = useAntragSummaryList();
 
     updateOptions({ page: 3, itemsPerPage: 15 });
