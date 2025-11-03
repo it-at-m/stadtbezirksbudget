@@ -32,6 +32,9 @@
     <template v-slot:[`item.beantragtesBudget`]="{ item }">
       {{ toNumberString(item.beantragtesBudget, 0) }}
     </template>
+    <template v-slot:[`item.istFehlbetrag`]="{ item }">
+      {{ booleanToString(item.istFehlbetrag) }}
+    </template>
   </v-data-table-server>
 </template>
 
@@ -43,7 +46,11 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import { useAntragSummaryList } from "@/composables/antragSummaryList.ts";
 import { StatusText } from "@/types/Status.ts";
-import { toDateString, toNumberString } from "@/util/formatter.ts";
+import {
+  booleanToString,
+  toDateString,
+  toNumberString,
+} from "@/util/formatter.ts";
 
 const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
   useAntragSummaryList();
@@ -63,13 +70,12 @@ onUnmounted(() => {
 });
 
 const computedHeaders = computed<DataTableHeader[]>(() => {
-  const baseWidth = (screenWidth.value * 0.95) / 11;
-  const percentage = (screenWidth.value * 0.95) / 100;
+  const baseWidth = (screenWidth.value * 0.95) / 10;
   return [
     {
       title: "Status",
       key: "status",
-      maxWidth: `${baseWidth + percentage}px`,
+      maxWidth: `${baseWidth}px`,
     },
     {
       title: "Nummer",
@@ -77,15 +83,25 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth}px`,
     },
     {
+      title: "Aktenzeichen",
+      key: "aktenzeichen",
+      maxWidth: `${baseWidth}px`,
+    },
+    {
       title: "BA",
       key: "bezirksausschussNr",
       align: "end",
-      maxWidth: `${baseWidth - 5 * percentage}px`,
+      maxWidth: `${baseWidth}px`,
     },
     {
       title: "Antragsdatum",
       key: "eingangDatum",
-      maxWidth: `${baseWidth - 2 * percentage}px`,
+      maxWidth: `${baseWidth}px`,
+    },
+    {
+      title: "Antragsteller/in",
+      key: "antragstellerName",
+      maxWidth: `${baseWidth}px`,
     },
     {
       title: "Projekt",
@@ -93,14 +109,14 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth}px`,
     },
     {
-      title: "Antragsteller/in",
-      key: "antragstellerName",
-      maxWidth: `${baseWidth + 2 * percentage}px`,
-    },
-    {
       key: "beantragtesBudget",
       align: "end",
-      maxWidth: `${baseWidth - 2 * percentage}px`,
+      maxWidth: `${baseWidth}px`,
+    },
+    {
+      title: "Art",
+      key: "istFehlbetrag",
+      maxWidth: `${baseWidth}px`,
     },
     {
       title: "Aktualisierung",
@@ -110,16 +126,6 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
     {
       title: "Datum Aktualisierung",
       key: "aktualisierungDatum",
-      maxWidth: `${baseWidth - 2 * percentage}px`,
-    },
-    {
-      title: "Anmerkungen",
-      key: "anmerkungen",
-      maxWidth: `${baseWidth + 8 * percentage}px`,
-    },
-    {
-      title: "Bearbeiter/in",
-      key: "bearbeiter",
       maxWidth: `${baseWidth}px`,
     },
   ];

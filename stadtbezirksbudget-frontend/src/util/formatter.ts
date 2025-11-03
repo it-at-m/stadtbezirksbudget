@@ -51,3 +51,8 @@ export function toDateAndTimeString(date: Date): string {
 function validateDate(date: Date): boolean {
   return date && !isNaN(date.getTime());
 }
+
+// Converts the boolean value istFehlbetrag to a corresponding string representation.
+export function booleanToString(value: boolean): string {
+  return value ? "Fehl" : "Fest";
+}
