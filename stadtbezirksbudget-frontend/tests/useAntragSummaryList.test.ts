@@ -12,7 +12,7 @@ vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/snackbar.ts");
 
 describe("useAntragSummaryList", () => {
-  let snackbarStoreMock;
+  let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     snackbarStoreMock = {
@@ -23,16 +23,32 @@ describe("useAntragSummaryList", () => {
 
   test("testFetchItemsSuccessfully", async () => {
     const mockResponse: Page<AntragSummary> = {
-      content: [{ id: 1, name: "Antrag 1" }],
-      page: { totalElements: 1 },
+      content: [
+        {
+          id: "2",
+          status: "IN_BEARBEITUNG",
+          zammadNr: "Z-002",
+          aktenzeichen: "AZ-002",
+          bezirksausschussNr: 2,
+          eingangDatum: "2025-01-16",
+          antragstellerName: "Test Antragsteller 2",
+          projektTitel: "Test Projekt 2",
+          beantragtesBudget: 7500,
+          istFehlbetrag: false,
+          aktualisierung: "Aktualisiert",
+          aktualisierungDatum: "2025-01-16",
+        },
+      ],
+      page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
     };
 
     (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
-    const { items, fetchItems, loading } = useAntragSummaryList();
+    const { items, totalItems, fetchItems, loading } = useAntragSummaryList();
 
     await fetchItems();
 
     expect(items.value).toEqual(mockResponse.content);
+    expect(totalItems.value).toBe(mockResponse.page.totalElements);
     expect(loading.value).toBe(false);
   });
 
@@ -66,8 +82,23 @@ describe("useAntragSummaryList", () => {
 
   test("testFetchNewItemsWhenUpdateOptions", async () => {
     const mockResponse: Page<AntragSummary> = {
-      content: [{ id: 2, name: "Antrag 2" }],
-      page: { totalElements: 1 },
+      content: [
+        {
+          id: "1",
+          status: "EINGEGANGEN",
+          zammadNr: "Z-001",
+          aktenzeichen: "AZ-001",
+          bezirksausschussNr: 1,
+          eingangDatum: "2025-01-15",
+          antragstellerName: "Test Antragsteller",
+          projektTitel: "Test Projekt",
+          beantragtesBudget: 5000,
+          istFehlbetrag: false,
+          aktualisierung: "Erstellt",
+          aktualisierungDatum: "2025-01-15",
+        },
+      ],
+      page: { size: 10, number: 0, totalElements: 1, totalPages: 1 },
     };
 
     (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
@@ -75,8 +106,10 @@ describe("useAntragSummaryList", () => {
 
     updateOptions({ page: 2, itemsPerPage: 5 });
 
+    // Wait for the fetchItems promise to resolve
     await new Promise((resolve) => setTimeout(resolve, 0));
 
+    expect(getAntragsSummaryList).toHaveBeenCalledWith(1, 5);
     expect(items.value).toEqual(mockResponse.content);
   });
 
