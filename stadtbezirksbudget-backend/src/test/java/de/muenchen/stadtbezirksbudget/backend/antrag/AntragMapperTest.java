@@ -74,12 +74,11 @@ class AntragMapperTest {
             assertThat(result.antragstellerName()).isEqualTo("Max Mustermann");
             assertThat(result.beantragtesBudget()).isEqualTo(50.0);
             assertThat(result.status()).isEqualTo(Status.VOLLSTAENDIG);
-            assertThat(result.anmerkungen()).isEqualTo("Keine Anmerkungen");
+            assertThat(result.istFehlbetrag()).isTrue();
             assertThat(result.eingangDatum()).isEqualTo(antrag.getEingangsdatum().atStartOfDay());
             assertThat(result.zammadNr()).isNotNull();
             assertThat(result.aktualisierung()).isNotNull();
             assertThat(result.aktualisierungDatum()).isNotNull();
-            assertThat(result.bearbeiter()).isNotNull();
         }
     }
 }
