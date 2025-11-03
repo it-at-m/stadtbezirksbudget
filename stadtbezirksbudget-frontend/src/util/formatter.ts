@@ -1,8 +1,15 @@
+/**
+ * Converts the first letter of the text to uppercase and the rest to lowercase.
+ * Returns an empty string if the text is empty or undefined.
+ */
 export function toFirstLetterUppercase(text: string): string {
   return text ? text.charAt(0).toUpperCase() + text.slice(1).toLowerCase() : "";
 }
 
-// Formats the date to a string.
+/**
+ * Formats the date to a string in the German locale (de-DE).
+ * Returns an empty string if the date is invalid.
+ */
 export function toDateString(date: Date): string {
   return validateDate(date)
     ? date.toLocaleDateString("de-DE", {
@@ -13,12 +20,18 @@ export function toDateString(date: Date): string {
     : "";
 }
 
-// Formats the time to a string.
+/**
+ * Formats the date to a string representing the time.
+ * Returns an empty string if the date is invalid.
+ */
 export function toTimeString(date: Date): string {
   return validateDate(date) ? date.toLocaleTimeString() : "";
 }
 
-// Formats the date to a string. If the date is today, only the time is returned, otherwise the date is returned.
+/**
+ * Formats the date. Returns the time if it's today, otherwise returns the date.
+ * Returns an empty string if the date is invalid.
+ */
 export function toDateTimeString(date: Date): string {
   if (!validateDate(date)) return "";
   const today = new Date();
@@ -28,7 +41,9 @@ export function toDateTimeString(date: Date): string {
   return toDateString(date);
 }
 
-// Formats the number to a string with the given number of fraction digits and optional currency.
+/**
+ * Formats the number to a string with specified fraction digits and optional currency.
+ */
 export function toNumberString(
   amount: number,
   fractionDigits = 2,
@@ -44,15 +59,25 @@ export function toNumberString(
   return amount.toLocaleString("de-DE", options);
 }
 
+/**
+ * Formats the date to a string including both date and time.
+ * Returns an empty string if the date is invalid.
+ */
 export function toDateAndTimeString(date: Date): string {
-  return date ? date.toLocaleString() : "";
+  return validateDate(date) ? date.toLocaleString() : "";
 }
 
+/**
+ * Validates if the provided date is a valid Date object.
+ */
 function validateDate(date: Date): boolean {
   return date && !isNaN(date.getTime());
 }
 
-// Converts the boolean value istFehlbetrag to a corresponding string representation.
+/**
+ * Converts a boolean value to a string representation.
+ * Returns "Fehl" for true, "Fest" for false, or an empty string for null/undefined.
+ */
 export function booleanToString(value: boolean): string {
   if (value == null) return "";
   return value ? "Fehl" : "Fest";
