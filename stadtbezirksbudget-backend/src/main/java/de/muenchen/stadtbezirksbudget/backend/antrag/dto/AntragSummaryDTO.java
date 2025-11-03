@@ -11,13 +11,13 @@ public record AntragSummaryDTO(
         UUID id,
         Status status,
         String zammadNr,
+        String aktenzeichen,
         int bezirksausschussNr,
         LocalDateTime eingangDatum,
-        String projektTitel,
         String antragstellerName,
+        String projektTitel,
         double beantragtesBudget,
+        boolean istFehlbetrag,
         String aktualisierung,
-        LocalDateTime aktualisierungDatum,
-        String anmerkungen,
-        String bearbeiter) {
+        LocalDateTime aktualisierungDatum) {
 }
