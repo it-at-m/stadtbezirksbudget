@@ -44,8 +44,8 @@ describe("formatter.ts tests", () => {
     });
 
     test("testFormatNumberWithCurrency", () => {
-        const amount = 1234.567;
-        expect(toNumberString(amount, 2, "EUR")).toBe("1.234,57 €");
+      const amount = 1234.567;
+      expect(toNumberString(amount, 2, "EUR")).toBe("1.234,57 €");
     });
   });
 
