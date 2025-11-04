@@ -8,7 +8,7 @@ import * as directives from "vuetify/directives";
 import AntragSummaryList from "@/components/AntragSummaryList.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
 
-vi.mock("@/composables/useAntragSummaryList.ts");
+vi.mock("@/composables/useAntragSummaryList");
 
 global.ResizeObserver = class {
   observe() {
@@ -173,5 +173,16 @@ describe("AntragSummaryList", () => {
     );
     expect(istFehlbetragElement.exists()).toBe(true);
     expect(istFehlbetragElement.text()).toBe("Fest");
+  });
+
+  test("testUpdatingUiOptionsChange", async () => {
+    mockUseAntragSummaryList.page.value = 2;
+    mockUseAntragSummaryList.itemsPerPage.value = 5;
+
+    await wrapper.vm.$nextTick();
+
+    const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
+    expect(dataTable.props("page")).toBe(2);
+    expect(dataTable.props("itemsPerPage")).toBe(5);
   });
 });
