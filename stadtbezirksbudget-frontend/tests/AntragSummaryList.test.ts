@@ -136,8 +136,8 @@ describe("AntragSummaryList", () => {
       "item-ist-fehlbetrag",
     ];
 
-    expectedItemSelectors.forEach((header) => {
-      expect(wrapper.find(`[data-test="${header}"]`).exists()).toBe(true);
+    expectedItemSelectors.forEach((selector) => {
+      expect(wrapper.find(`[data-test="${selector}"]`).exists()).toBe(true);
     });
 
     Object.defineProperty(window, "innerWidth", {
