@@ -58,7 +58,7 @@ classDiagram
 
     class Finanzierung {
         istProjektVorsteuerabzugsberechtigt: boolean
-        istEinladungsFoerderhinweis: boolean
+        istEinladungFoerderhinweis: boolean
         istWebsiteFoerderhinweis: boolean
         istSonstigerFoerderhinweis: boolean
         sonstigerFoerderhinweis: String
