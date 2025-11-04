@@ -102,6 +102,8 @@ describe("AntragSummaryList", () => {
     await wrapper.vm.$nextTick();
 
     const expectedInitialMaxWidth = (initialWidth * 0.95) / 11;
+    expect(wrapper.vm.computedHeaders).toHaveLength(11);
+    expect(wrapper.vm.computedHeaders[0].maxWidth).toBeDefined();
     const initialMaxWidth = parseFloat(
       wrapper.vm.computedHeaders[0].maxWidth.replace("px", "")
     );
@@ -126,7 +128,7 @@ describe("AntragSummaryList", () => {
     expect(newMaxWidth).toBeCloseTo(expectedNewMaxWidth, 1);
     expect(newMaxWidth).not.toBe(initialMaxWidth);
 
-    const expectedItems = [
+    const expectedItemSelectors = [
       "item-status",
       "item-aktualisierung-datum",
       "item-eingang-datum",
@@ -134,7 +136,7 @@ describe("AntragSummaryList", () => {
       "item-ist-fehlbetrag",
     ];
 
-    expectedItems.forEach((header) => {
+    expectedItemSelectors.forEach((header) => {
       expect(wrapper.find(`[data-test="${header}"]`).exists()).toBe(true);
     });
 
@@ -202,5 +204,20 @@ describe("AntragSummaryList", () => {
     const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
     expect(dataTable.props("page")).toBe(2);
     expect(dataTable.props("itemsPerPage")).toBe(5);
+  });
+  test("testPaginationTriggersUpdateOptions", async () => {
+    const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
+
+    dataTable.vm.$emit("update:options", {
+      page: 3,
+      itemsPerPage: 20,
+    });
+
+    await wrapper.vm.$nextTick();
+
+    expect(mockUseAntragSummaryList.updateOptions).toHaveBeenCalledWith({
+      page: 3,
+      itemsPerPage: 20,
+    });
   });
 });
