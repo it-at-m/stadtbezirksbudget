@@ -10,7 +10,7 @@ describe("getAntragsSummaryList", () => {
     vi.clearAllMocks();
   });
 
-  test("testFetchSuccessfull", async () => {
+  test("testFetchSuccessful", async () => {
     const mockResponse = {
       content: [
         /*...*/
@@ -18,7 +18,7 @@ describe("getAntragsSummaryList", () => {
       page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
     };
 
-    (fetch as jest.Mock).mockResolvedValueOnce({
+      (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       json: async () => mockResponse,
     });
@@ -34,10 +34,20 @@ describe("getAntragsSummaryList", () => {
 
   test("testHandleErrorsWhenFetching", async () => {
     const errorMessage = "Network Error";
-    (fetch as jest.Mock).mockRejectedValueOnce(new Error(errorMessage));
+      (fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(new Error(errorMessage));
 
     await expect(getAntragsSummaryList(1, 5)).rejects.toThrow(
       "Fehler beim Laden der Antragsliste."
     );
   });
+
+    test("testHandleHttpErrorResponse", async () => {
+        (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+            ok: false,
+            status: 404,
+            statusText: "Not Found",
+        });
+
+        await expect(getAntragsSummaryList(1, 5)).rejects.toThrow();
+    });
 });
