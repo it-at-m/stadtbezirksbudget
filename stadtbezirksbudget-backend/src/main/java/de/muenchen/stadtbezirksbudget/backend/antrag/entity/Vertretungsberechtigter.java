@@ -22,5 +22,5 @@ public class Vertretungsberechtigter extends Zahlungsempfaenger {
 
     @NotBlank private String nachname;
     @NotBlank private String vorname;
-    @NotNull private String mobilNr;
+    private String mobilNr;
 }
