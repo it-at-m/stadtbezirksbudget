@@ -14,9 +14,6 @@ global.ResizeObserver = class {
   observe() {
     // Mock implementation: No action needed
   }
-  unobserve() {
-    // Mock implementation: No action needed
-  }
   disconnect() {
     // Mock implementation: No action needed
   }
@@ -98,7 +95,8 @@ describe("AntragSummaryList", () => {
   });
 
   test("testUpdatingUiScreenSizeChange", async () => {
-    window.innerWidth = 800;
+    const originalInnerWidth = window.innerWidth;
+    Object.defineProperty(window, "innerWidth", { writable: true, value: 800 });
     window.dispatchEvent(new Event("resize"));
 
     await wrapper.vm.$nextTick();
@@ -121,6 +119,11 @@ describe("AntragSummaryList", () => {
     ).toBeLessThanOrEqual(
       wrapper.find('[data-test="antrag-summary-list"]').element.clientWidth
     );
+
+    Object.defineProperty(window, "innerWidth", {
+      writable: true,
+      value: originalInnerWidth,
+    });
   });
 
   test("testUpdatingUiItemsChange", async () => {
