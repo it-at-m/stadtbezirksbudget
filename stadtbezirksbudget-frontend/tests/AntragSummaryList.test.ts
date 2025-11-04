@@ -86,29 +86,57 @@ describe("AntragSummaryList", () => {
 
   test("testUpdatingUiScreenSizeChange", async () => {
     const originalInnerWidth = window.innerWidth;
-    Object.defineProperty(window, "innerWidth", { writable: true, value: 800 });
-    window.dispatchEvent(new Event("resize"));
+
+    const initialWidth = 1200;
+    Object.defineProperty(window, "innerWidth", {
+      writable: true,
+      value: initialWidth,
+    });
+
+    wrapper = mount(AntragSummaryList, {
+      global: {
+        plugins: [vuetify],
+      },
+    });
 
     await wrapper.vm.$nextTick();
 
-    const expectedHeaders = [
-      "header-beantragtes-budget",
+    const expectedInitialMaxWidth = (initialWidth * 0.95) / 11;
+    const initialMaxWidth = parseFloat(
+      wrapper.vm.computedHeaders[0].maxWidth.replace("px", "")
+    );
+
+    expect(initialMaxWidth).toBeCloseTo(expectedInitialMaxWidth, 1);
+
+    const newWidth = 800;
+    Object.defineProperty(window, "innerWidth", {
+      writable: true,
+      value: newWidth,
+    });
+    window.dispatchEvent(new Event("resize"));
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    await wrapper.vm.$nextTick();
+
+    const expectedNewMaxWidth = (newWidth * 0.95) / 11;
+    const newMaxWidth = parseFloat(
+      wrapper.vm.computedHeaders[0].maxWidth.replace("px", "")
+    );
+
+    expect(newMaxWidth).toBeCloseTo(expectedNewMaxWidth, 1);
+    expect(newMaxWidth).not.toBe(initialMaxWidth);
+
+    const expectedItems = [
       "item-status",
-      "item-eingang-datum",
       "item-aktualisierung-datum",
+      "item-eingang-datum",
       "item-beantragtes-budget",
       "item-ist-fehlbetrag",
     ];
 
-    expectedHeaders.forEach((header) => {
+    expectedItems.forEach((header) => {
       expect(wrapper.find(`[data-test="${header}"]`).exists()).toBe(true);
     });
-
-    expect(
-      wrapper.find('[data-test="antrag-summary-list"]').element.scrollWidth
-    ).toBeLessThanOrEqual(
-      wrapper.find('[data-test="antrag-summary-list"]').element.clientWidth
-    );
 
     Object.defineProperty(window, "innerWidth", {
       writable: true,
