@@ -39,7 +39,7 @@ classDiagram
     }
 
     class Projekt {
-        fristBruchBegrundung: String
+        fristBruchBegruendung: String
         istStartFrist: boolean
         titel: String<fk>
         beschreibung: String<fk>
