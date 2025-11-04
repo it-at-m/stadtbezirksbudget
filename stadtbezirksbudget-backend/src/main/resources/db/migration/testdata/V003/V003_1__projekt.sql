@@ -1,0 +1,2 @@
+UPDATE projekt SET ist_start_frist = true, frist_bruch_begruendung = '';
+UPDATE projekt SET ist_start_frist = false, frist_bruch_begruendung = 'Begründung 1' WHERE id = '10000000-0000-0000-0000-000000000001';
