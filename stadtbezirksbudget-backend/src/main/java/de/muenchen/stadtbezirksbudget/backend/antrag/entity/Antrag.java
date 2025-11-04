@@ -27,11 +27,8 @@ public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotNull private LocalDateTime eingangDatum;
-    @NotNull private LocalDateTime aktualisierungDatum;
     @Positive private int bezirksausschussNr;
-    @NotNull private String aktenzeichen;
-    @NotNull private String zammadTicketNr;
+    @NotNull private LocalDateTime eingangDatum;
     private boolean istPersonVorsteuerabzugsberechtigt;
     private boolean istAndererZuwendungsantrag;
 
@@ -40,6 +37,12 @@ public class Antrag extends BaseEntity {
 
     @NotNull @Enumerated(EnumType.STRING)
     private AktualisierungArt aktualisierungArt;
+
+    @NotNull private String zammadTicketNr;
+
+    @NotNull private LocalDateTime aktualisierungDatum;
+
+    @NotNull private String aktenzeichen;
 
     @NotNull @OneToOne(fetch = FetchType.LAZY)
     private Finanzierung finanzierung;

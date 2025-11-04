@@ -18,14 +18,14 @@ classDiagram
     Zahlungsempfaenger <|-- Antragssteller
 
     class Antrag {
-        eingangDatum: LocalDateTime
-        aktualisierungDatum: LocalDateTime
         bezirksausschussNr: int
-        aktenzeichen: String
-        zammadTicketNr: String
+        eingangDatum: LocalDateTime
         istPersonVorsteuerabzugsberechtigt: boolean
         istAndererZuwendungsantrag: boolean
+        zammadTicketNr: String
         aktualisierungArt: Enum[Fachanwendung, Zammad, E-Akte]
+        aktualisierungDatum: LocalDateTime
+        aktenzeichen: String
     }
 
     class Bearbeitungsstand {
@@ -39,12 +39,12 @@ classDiagram
     }
 
     class Projekt {
-        fristBruchBegruendung: String
-        istStartFrist: boolean
         titel: String<fk>
-        beschreibung: String<fk>
         start: Date<fk>
+        istStartFrist: boolean
+        fristBruchBegruendung: String
         ende: Date<fk>
+        beschreibung: String<fk>
     %% All attributes except UUID are <fk>
     }
 
@@ -58,16 +58,16 @@ classDiagram
 
     class Finanzierung {
         istProjektVorsteuerabzugsberechtigt: boolean
+        kostenAnmerkung: String
+        summeAusgaben: BigDecimal
+        summeFinanzierungsmittel: BigDecimal
+        begruendungEigenmittel: String
+        beantragtesBudget: BigDecimal
         istEinladungFoerderhinweis: boolean
         istWebsiteFoerderhinweis: boolean
         istSonstigerFoerderhinweis: boolean
-        sonstigerFoerderhinweis: String
+        sonstigeFoerderhinweise: String
         bewilligterZuschuss: [Optional] BigDecimal
-        summeAusgaben: BigDecimal
-        summeFinanzierungsmittel: BigDecimal
-        beantragtesBudget: BigDecimal
-        kostenAnmerkung: String
-        begruendungEigenmittel: String
     }
 
     class Antragssteller {

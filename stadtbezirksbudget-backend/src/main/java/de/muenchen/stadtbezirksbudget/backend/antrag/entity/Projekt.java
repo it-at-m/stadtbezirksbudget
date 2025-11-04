@@ -23,10 +23,10 @@ import lombok.Setter;
 public class Projekt extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
-    @NotNull private String fristBruchBegruendung;
-    private boolean istStartFrist;
     @NotBlank private String titel;
-    @NotBlank private String beschreibung;
     @NotNull private LocalDate start;
+    private boolean istStartFrist;
+    @NotNull private String fristBruchBegruendung;
     @NotNull private LocalDate ende;
+    @NotBlank private String beschreibung;
 }
