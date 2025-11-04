@@ -49,7 +49,7 @@ function validateDate(date: Date): boolean {
  * Converts a boolean value to a string representation.
  * Returns "Fehl" for true, "Fest" for false, or an empty string for null/undefined.
  */
-export function booleanToString(value: boolean): string {
+export function booleanToString(value: boolean | null | undefined): string {
   if (value == null) return "";
   return value ? "Fehl" : "Fest";
 }
