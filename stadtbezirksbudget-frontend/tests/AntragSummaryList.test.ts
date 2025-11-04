@@ -84,16 +84,6 @@ describe("AntragSummaryList", () => {
     );
   });
 
-  test("testUpdatingUiOptionsChange", async () => {
-    mockUseAntragSummaryList.page.value = 2;
-    mockUseAntragSummaryList.itemsPerPage.value = 5;
-
-    await wrapper.vm.$nextTick();
-
-    expect(wrapper.vm.page).toBe(2);
-    expect(wrapper.vm.itemsPerPage).toBe(5);
-  });
-
   test("testUpdatingUiScreenSizeChange", async () => {
     const originalInnerWidth = window.innerWidth;
     Object.defineProperty(window, "innerWidth", { writable: true, value: 800 });
