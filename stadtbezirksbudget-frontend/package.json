@@ -1,7 +1,7 @@
 {
   "name": "stadtbezirksbudget-frontend",
   "description": "In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more efficient. An online form is being introduced for citizens to submit their applications, along with a clear digital representation of the application for processing by administrative staff.",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "private": true,
   "license": "MIT",
@@ -27,7 +27,7 @@
     "vuetify": "3.10.8"
   },
   "devDependencies": {
-    "@cyclonedx/cyclonedx-npm": "4.0.3",
+    "@cyclonedx/cyclonedx-npm": "4.1.0",
     "@intlify/eslint-plugin-vue-i18n": "4.1.0",
     "@intlify/unplugin-vue-i18n": "11.0.1",
     "@mdi/js": "7.4.47",
