@@ -1,5 +1,6 @@
 <template>
   <v-data-table-server
+    data-test="antrag-summary-list"
     :cell-props="{
       style: {
         overflow: 'hidden',
@@ -18,22 +19,35 @@
     @update:options="updateOptions"
   >
     <template v-slot:[`header.beantragtesBudget`]>
-      <div class="text-left">Beantragtes<br />Budget [€]</div>
+      <div
+        class="text-left"
+        data-test="header-beantragtes-budget"
+      >
+        Beantragtes<br />Budget [€]
+      </div>
     </template>
     <template v-slot:[`item.status`]="{ item }">
-      {{ StatusText[item.status] }}
+      <span data-test="item-status">{{ StatusText[item.status] }}</span>
     </template>
     <template v-slot:[`item.eingangDatum`]="{ item }">
-      {{ toDateString(new Date(item.eingangDatum)) }}
+      <span data-test="item-eingang-datum">{{
+        toDateString(new Date(item.eingangDatum))
+      }}</span>
     </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
-      {{ toDateString(new Date(item.aktualisierungDatum)) }}
+      <span data-test="item-aktualisierung-datum">{{
+        toDateString(new Date(item.aktualisierungDatum))
+      }}</span>
     </template>
     <template v-slot:[`item.beantragtesBudget`]="{ item }">
-      {{ toNumberString(item.beantragtesBudget, 0) }}
+      <span data-test="item-beantragtes-budget">{{
+        toNumberString(item.beantragtesBudget, 0)
+      }}</span>
     </template>
     <template v-slot:[`item.istFehlbetrag`]="{ item }">
-      {{ booleanToString(item.istFehlbetrag) }}
+      <span data-test="item-ist-fehlbetrag">{{
+        booleanToString(item.istFehlbetrag)
+      }}</span>
     </template>
   </v-data-table-server>
 </template>
