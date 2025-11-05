@@ -17,6 +17,7 @@ export default defineConfig((configEnv) =>
           },
         },
         coverage: {
+          provider: "v8",
           enabled: true,
           exclude: [
             "**/components/**",
