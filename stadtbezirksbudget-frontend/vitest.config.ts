@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 
-import { defineConfig, mergeConfig } from "vitest/config";
+import {defineConfig, mergeConfig} from "vitest/config";
 
 import viteConfig from "./vite.config";
 
@@ -16,6 +16,13 @@ export default defineConfig((configEnv) =>
             inline: ["vuetify"],
           },
         },
+          coverage: {
+              enabled: true,
+              exclude: ["**/components/**", "**/views/**", "**/stores/**", "**/plugins/**"],
+              thresholds: {
+                  branches: 80,
+              },
+          },
       },
     })
   )
