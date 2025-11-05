@@ -16,6 +16,19 @@ export default defineConfig((configEnv) =>
             inline: ["vuetify"],
           },
         },
+        coverage: {
+          provider: "v8",
+          enabled: true,
+          exclude: [
+            "**/components/**",
+            "**/views/**",
+            "**/stores/**",
+            "**/plugins/**",
+          ],
+          thresholds: {
+            branches: 80,
+          },
+        },
       },
     })
   )
