@@ -28,7 +28,7 @@ class AntragMapperTest {
     @Nested
     class ToAntragSummaryDTO {
         @Test
-        void givenAntragEntity_thenReturnsCorrectAntragSummaryDTO() {
+        void testGivenAntragEntityThenReturnsCorrectDTO() {
             final Antrag antrag = new Antrag();
             antrag.setId(UUID.randomUUID());
 
