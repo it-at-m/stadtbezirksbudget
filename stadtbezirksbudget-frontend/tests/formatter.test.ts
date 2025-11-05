@@ -49,7 +49,7 @@ describe("formatter.ts tests", () => {
     });
   });
 
-  describe("booleanToString", () => {
+  describe("booleanToFestOrFehl", () => {
     test("testBooleanTrueReturnsFehl", () => {
       expect(booleanToFestOrFehl(true)).toBe("Fehl");
     });
