@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import {
-  booleanToString,
+  booleanToFestOrFehl,
   toDateString,
   toNumberString,
   toTimeString,
@@ -51,19 +51,19 @@ describe("formatter.ts tests", () => {
 
   describe("booleanToString", () => {
     test("testBooleanTrueReturnsFehl", () => {
-      expect(booleanToString(true)).toBe("Fehl");
+      expect(booleanToFestOrFehl(true)).toBe("Fehl");
     });
 
     test("testBooleanFalseReturnsFest", () => {
-      expect(booleanToString(false)).toBe("Fest");
+      expect(booleanToFestOrFehl(false)).toBe("Fest");
     });
 
     test("testNullReturnsEmptyString", () => {
-      expect(booleanToString(null)).toBe("");
+      expect(booleanToFestOrFehl(null)).toBe("");
     });
 
     test("testUndefinedReturnsEmptyString", () => {
-      expect(booleanToString(undefined)).toBe("");
+      expect(booleanToFestOrFehl(undefined)).toBe("");
     });
   });
 });
