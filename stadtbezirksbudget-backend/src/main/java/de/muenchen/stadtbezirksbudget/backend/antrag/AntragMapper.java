@@ -23,7 +23,7 @@ public interface AntragMapper {
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
     @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
-    @Mapping(target = "istFehlbetrag", constant = "true") // TODO: Replace with actual Logik when geforderterZuschuss is safed in data base
+    @Mapping(target = "istFehlbetrag", constant = "true") // TODO: Replace with actual Logic when geforderterZuschuss is saved in data base
     @Mapping(target = "aktualisierung", constant = "Fachanwendung") // TODO: Replace with actual application
     @Mapping(target = "aktualisierungDatum", expression = "java(LocalDateTime.now())") // TODO: Replace with actual date
     AntragSummaryDTO toAntragSummaryDTO(Antrag antrag);
