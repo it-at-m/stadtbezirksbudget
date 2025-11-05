@@ -46,7 +46,7 @@
     </template>
     <template v-slot:[`item.istFehlbetrag`]="{ item }">
       <span data-test="item-ist-fehlbetrag">{{
-        booleanToString(item.istFehlbetrag)
+        booleanToFestOrFehl(item.istFehlbetrag)
       }}</span>
     </template>
   </v-data-table-server>
@@ -61,7 +61,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 import { StatusText } from "@/types/Status.ts";
 import {
-  booleanToString,
+  booleanToFestOrFehl,
   toDateString,
   toNumberString,
 } from "@/util/formatter.ts";
