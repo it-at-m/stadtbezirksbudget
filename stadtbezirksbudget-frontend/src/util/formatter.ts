@@ -17,7 +17,7 @@ export function toDateString(date: Date): string {
  * Returns an empty string if the date is invalid.
  */
 export function toTimeString(date: Date): string {
-  return validateDate(date) ? date.toLocaleTimeString() : "";
+  return validateDate(date) ? date.toLocaleTimeString("de-DE") : "";
 }
 
 /**

@@ -23,7 +23,7 @@ describe("formatter.ts tests", () => {
   describe("toTimeString", () => {
     test("testFormatValidDateToTimeString", () => {
       const date = new Date("2023-05-15T14:30:00");
-      expect(toTimeString(date)).toBe(date.toLocaleTimeString());
+      expect(toTimeString(date)).toBe(date.toLocaleTimeString("de-DE"));
     });
 
     test("testInvalidDateReturnsEmptyString", () => {
