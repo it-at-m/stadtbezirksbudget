@@ -1,9 +1,3 @@
-<script setup>
-// noinspection ES6UnusedImports
-import statusDiagramUrl from "./status-diagram.png";
-import targetProcessUrl from "./target-process.png";
-</script>
-
 # About
 
 In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more
@@ -43,6 +37,12 @@ By integrating these systems, the application process aims to enhance efficiency
 city district.
 
 For more details, visit the [architecture documentation](../architecture/)
+
+<script setup>
+// noinspection ES6UnusedImports
+import statusDiagramUrl from "./status-diagram.png";
+import targetProcessUrl from "./target-process.png";
+</script>
 
 ## Status Values
 
