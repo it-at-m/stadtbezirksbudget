@@ -1,3 +1,9 @@
+<script setup>
+// noinspection ES6UnusedImports
+import statusDiagramUrl from "./status-diagram.png";
+import targetProcessUrl from "./target-process.png";
+</script>
+
 # About
 
 In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more
@@ -38,14 +44,18 @@ city district.
 
 For more details, visit the [architecture documentation](../architecture/)
 
+## Status Values
+
+The following diagram is showing all status values, including their transitions and simplification names, that combine one or more status values. These grouping names will be shown in the application, to reduce 18 values into 10 short names.
+
+<a :href="statusDiagramUrl" target="_blank" rel="noopener noreferrer">
+    <img :src="statusDiagramUrl" alt="Status diagram showing all status values, their short names and their transitions." />
+</a>
+<a :href="statusDiagramUrl" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+
 ## Target process
 
 The target process provides a visual representation of the intended workflow and interactions between all parties involved in the application process.
-
-<script setup>
-// noinspection ES6UnusedImports
-import targetProcessUrl from "./target-process.png";
-</script>
 
 <a :href="targetProcessUrl" target="_blank" rel="noopener noreferrer">
     <img :src="targetProcessUrl" alt="Target process diagram showing interactions between Form Server, Zammad, E‑Akte, and the specialized application" />
