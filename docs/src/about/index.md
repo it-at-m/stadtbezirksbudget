@@ -44,7 +44,7 @@ import statusDiagramUrl from "./status-diagram.png";
 import targetProcessUrl from "./target-process.png";
 </script>
 
-## Status Values
+## Status values
 
 The following diagram is showing all status values, including their transitions and simplification names, that combine one or more status values. These grouping names will be shown in the application, to reduce 18 values into 10 short names.
 
@@ -52,6 +52,8 @@ The following diagram is showing all status values, including their transitions 
     <img :src="statusDiagramUrl" alt="Status diagram showing all status values, their short names and their transitions." />
 </a>
 <a :href="statusDiagramUrl" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+
+All red-colored and green-colored areas represent final status values, meaning the application has been accepted (green) or has been declined (red).
 
 ## Target process
 
