@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.kafka;
 
+import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
+@ExcludedFromGeneratedCoverage //Excluded because it is only a dummy
 public class KafkaConsumerService {
     @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
