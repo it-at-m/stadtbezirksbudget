@@ -55,4 +55,16 @@ public class Finanzierung extends BaseEntity {
                 .map(Finanzierungsmittel::getBetrag).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
         return ausgaben.subtract(mittel);
     }
+
+    /**
+     * Returns whether the stored {@code beantragtesBudget} represents the full
+     * computed shortfall (a "Fehlbetrag").
+     *
+     * @return {@code true} when the requested budget equals the full computed shortfall; {@code false}
+     *         otherwise
+     */
+    public boolean istFehlbetrag() {
+        BigDecimal fehlbetragDiff = getBeantragtesBudget().subtract(beantragtesBudget);
+        return fehlbetragDiff.compareTo(BigDecimal.ZERO) == 0;
+    }
 }
