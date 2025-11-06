@@ -30,7 +30,7 @@ class AntragMapperTest {
     @Nested
     class ToAntragSummaryDTO {
 
-        Antrag antrag;
+        private Antrag antrag;
 
         @BeforeEach
         void setup() {

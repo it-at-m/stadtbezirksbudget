@@ -64,7 +64,7 @@ public class Finanzierung extends BaseEntity {
      *         otherwise
      */
     public boolean istFehlbetrag() {
-        BigDecimal fehlbetragDiff = getBeantragtesBudget().subtract(beantragtesBudget);
+        final BigDecimal fehlbetragDiff = getBeantragtesBudget().subtract(beantragtesBudget);
         return fehlbetragDiff.compareTo(BigDecimal.ZERO) == 0;
     }
 }
