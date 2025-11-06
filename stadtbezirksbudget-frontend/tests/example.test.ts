@@ -15,7 +15,7 @@ const vuetify = createVuetify({
 });
 
 describe("TheSnackbar.vue", () => {
-  test("renders props.message when passed", () => {
+  test("testRenderingMessageWhenPassed", () => {
     const message = "Hello_World";
     const wrapper = shallowMount(TheSnackbar, {
       global: {
