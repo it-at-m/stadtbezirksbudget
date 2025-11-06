@@ -17,14 +17,11 @@ public interface AntragMapper {
      * @return the corresponding AntragSummaryDTO
      */
     @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
-    @Mapping(target = "zammadNr", constant = "ZM-10011001") // TODO: Replace with actual zammadNr
-    @Mapping(target = "aktenzeichen", constant = "MÜN-2023-00123") // TODO: Replace with actual aktenzeichen
-    @Mapping(target = "eingangDatum", expression = "java(antrag.getEingangsdatum().atStartOfDay())") // TODO: Replace with actual date
+    @Mapping(target = "zammadNr", source = "zammadTicketNr")
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
     @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
-    @Mapping(target = "istFehlbetrag", constant = "true") // TODO: Replace with actual Logic when geforderterZuschuss is saved in data base
-    @Mapping(target = "aktualisierung", constant = "Fachanwendung") // TODO: Replace with actual application
-    @Mapping(target = "aktualisierungDatum", expression = "java(LocalDateTime.now())") // TODO: Replace with actual date
+    @Mapping(target = "istFehlbetrag", expression = "java(antrag.getFinanzierung().istFehlbetrag())")
+    @Mapping(target = "aktualisierung", source = "aktualisierungArt")
     AntragSummaryDTO toAntragSummaryDTO(Antrag antrag);
 }
