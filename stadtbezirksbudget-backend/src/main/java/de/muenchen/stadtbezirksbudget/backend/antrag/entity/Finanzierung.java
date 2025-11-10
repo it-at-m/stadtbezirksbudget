@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.Getter;
@@ -37,10 +38,10 @@ public class Finanzierung extends BaseEntity {
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
-    private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben;
+    private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
-    private List<Finanzierungsmittel> finanzierungsmittel;
+    private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
     /**
      * Calculates the requested budget by subtracting the total financing amounts
