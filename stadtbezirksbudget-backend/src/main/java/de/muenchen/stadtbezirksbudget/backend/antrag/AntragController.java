@@ -1,9 +1,11 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.security.Authorities;
 import java.util.List;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +48,18 @@ public class AntragController {
                 .map(antragMapper::toAntragSummaryDTO)
                 .toList();
         return new PageImpl<>(summaryList, antragPage.getPageable(), antragPage.getTotalElements());
+    }
+
+    /**
+     * Updates the status of an Antrag.
+     *
+     * @param id the ID of the Antrag to update
+     * @param statusUpdateDTO the DTO containing the new status
+     */
+    @PatchMapping("{id}/status")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize(Authorities.ANTRAG_UPDATE_STATUS)
+    public void updateAntragStatus(@PathVariable UUID id, @RequestBody AntragStatusUpdateDTO statusUpdateDTO) {
+        antragService.updateAntragStatus(id, statusUpdateDTO);
     }
 }
