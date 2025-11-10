@@ -168,7 +168,7 @@ describe("AntragSummaryList", () => {
 
     const statusElement = wrapper.find('[data-test="item-status"]');
     expect(statusElement.exists()).toBe(true);
-    expect(statusElement.text()).toBe("Eingegangen");
+    expect(statusElement.text()).toBe("Offen");
 
     const eingangDatumElement = wrapper.find(
       '[data-test="item-eingang-datum"]'
