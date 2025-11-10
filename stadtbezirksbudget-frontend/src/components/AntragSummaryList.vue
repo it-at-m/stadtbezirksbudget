@@ -1,6 +1,5 @@
 <template>
   <v-data-table-server
-    data-test="antrag-summary-list"
     :cell-props="{
       style: {
         overflow: 'hidden',
@@ -15,6 +14,7 @@
     :items-per-page="itemsPerPage"
     :loading="loading"
     :page="page"
+    data-test="antrag-summary-list"
     disable-sort
     @update:options="updateOptions"
   >
@@ -27,7 +27,10 @@
       </div>
     </template>
     <template v-slot:[`item.status`]="{ item }">
-      <span data-test="item-status">{{ StatusText[item.status] }}</span>
+      <antrag-status-select
+        :antrag-id="item.id"
+        :status="item.status"
+      />
     </template>
     <template v-slot:[`item.eingangDatum`]="{ item }">
       <span data-test="item-eingang-datum">{{
@@ -58,6 +61,7 @@ import type { DataTableHeader } from "vuetify";
 import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
+import AntragStatusSelect from "@/components/common/AntragStatusSelect.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 import { StatusText } from "@/types/Status.ts";
 import {
