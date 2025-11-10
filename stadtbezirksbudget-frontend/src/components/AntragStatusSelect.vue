@@ -15,7 +15,7 @@ import type { Status } from "@/types/Status.ts";
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect.ts";
 
 const props = defineProps<{ antragId: string; status: Status }>();
-const { status, updateStatus, statusOptions } = useAntragStatusSelect(
+const { updateStatus, status, statusOptions } = useAntragStatusSelect(
   props.antragId,
   props.status
 );

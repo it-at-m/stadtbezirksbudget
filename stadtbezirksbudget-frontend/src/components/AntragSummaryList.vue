@@ -63,7 +63,6 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusSelect from "@/components/AntragStatusSelect.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
-import { StatusText } from "@/types/Status.ts";
 import {
   booleanToFestOrFehl,
   toDateString,
