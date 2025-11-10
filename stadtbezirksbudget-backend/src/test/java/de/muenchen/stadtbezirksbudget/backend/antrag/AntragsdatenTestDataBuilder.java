@@ -105,7 +105,7 @@ public record AntragsdatenTestDataBuilder(
 
         finanzierung.setSummeAusgaben(new BigDecimal("5000.00"));
         finanzierung.setSummeFinanzierungsmittel(new BigDecimal("2000.00"));
-        finanzierung.setBeantragtesBudget(new BigDecimal("5000.00"));
+        finanzierung.setBeantragtesBudget(new BigDecimal("3000.00"));
 
         finanzierung.setKostenAnmerkung(generateRandomUuidString());
         finanzierung.setBegruendungEigenmittel("");
