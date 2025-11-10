@@ -42,7 +42,7 @@ describe("AntragSummaryList", () => {
           projektTitel: "Test Projekt",
           beantragtesBudget: 5000,
           istFehlbetrag: false,
-          aktualisierung: "Erstellt",
+          aktualisierung: "ZAMMAD",
           aktualisierungDatum: "2025-01-15",
         },
       ]),
@@ -82,6 +82,7 @@ describe("AntragSummaryList", () => {
     expect(wrapper.find('[data-test="item-ist-fehlbetrag"]').exists()).toBe(
       true
     );
+    expect(wrapper.find('[data-test="item-aktualisierung-art"]').exists()).toBe(true);
   });
 
   test("testUpdatingUiScreenSizeChange", async () => {
@@ -131,6 +132,7 @@ describe("AntragSummaryList", () => {
     const expectedItemSelectors = [
       "item-status",
       "item-aktualisierung-datum",
+      "item-aktualisierung-art",
       "item-eingang-datum",
       "item-beantragtes-budget",
       "item-ist-fehlbetrag",
@@ -159,7 +161,7 @@ describe("AntragSummaryList", () => {
         projektTitel: "Test Projekt 2",
         beantragtesBudget: 7500,
         istFehlbetrag: false,
-        aktualisierung: "Aktualisiert",
+        aktualisierung: "FACHANWENDUNG",
         aktualisierungDatum: "2025-01-16",
       },
     ];
@@ -181,6 +183,13 @@ describe("AntragSummaryList", () => {
     );
     expect(aktualisierungDatumElement.exists()).toBe(true);
     expect(aktualisierungDatumElement.text()).toBe("16.01.2025");
+
+    const aktualisierungArtElement = wrapper.find(
+      '[data-test="item-aktualisierung-art"]'
+    );
+
+    expect(aktualisierungArtElement.exists()).toBe(true);
+    expect(aktualisierungArtElement.text()).toBe("Fachanwendung");
 
     const beantragtesBudgetElement = wrapper.find(
       '[data-test="item-beantragtes-budget"]'
