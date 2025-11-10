@@ -1,4 +1,5 @@
 import { defineConfig } from "vitepress";
+import lightbox from "vitepress-plugin-lightbox";
 import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
@@ -185,6 +186,10 @@ const vitepressConfig = defineConfig({
     },
   },
   markdown: {
+    config: (md) => {
+      // Use lightbox plugin
+      md.use(lightbox, {});
+    },
     image: {
       lazyLoading: true,
     },
