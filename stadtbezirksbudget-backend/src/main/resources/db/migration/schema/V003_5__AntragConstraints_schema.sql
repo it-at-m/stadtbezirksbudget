@@ -42,3 +42,9 @@ ALTER TABLE finanzierungsmittel
 
 ALTER TABLE voraussichtliche_ausgabe
     ALTER COLUMN betrag SET NOT NULL;
+
+ALTER TABLE projekt
+    DROP CONSTRAINT UniqueProjekt;
+
+ALTER TABLE projekt
+    ADD CONSTRAINT UniqueProjekt UNIQUE (titel, start, ist_start_frist, frist_bruch_begruendung, ende, beschreibung);
