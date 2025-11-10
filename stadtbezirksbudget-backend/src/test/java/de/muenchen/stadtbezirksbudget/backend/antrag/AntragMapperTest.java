@@ -57,19 +57,19 @@ class AntragMapperTest {
             final Finanzierung finanzierung = new Finanzierung();
             final List<VoraussichtlicheAusgabe> ausgaben = new ArrayList<>();
             final VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
-            ausgabe.setBetrag(BigDecimal.valueOf(100.0));
+            ausgabe.setBetrag(new BigDecimal("100.0"));
             ausgabe.setKategorie("Testkategorie");
             ausgabe.setDirektoriumNotiz("Testnotiz");
             ausgaben.add(ausgabe);
             finanzierung.setVoraussichtlicheAusgaben(ausgaben);
             final List<Finanzierungsmittel> mittelListe = new ArrayList<>();
             final Finanzierungsmittel finanzierungsmittel = new Finanzierungsmittel();
-            finanzierungsmittel.setBetrag(BigDecimal.valueOf(50.0));
+            finanzierungsmittel.setBetrag(new BigDecimal("50.0"));
             finanzierungsmittel.setKategorie(Kategorie.EIGENMITTEL);
             finanzierungsmittel.setDirektoriumNotiz("Testnotiz");
             mittelListe.add(finanzierungsmittel);
             finanzierung.setFinanzierungsmittel(mittelListe);
-            finanzierung.setBeantragtesBudget(BigDecimal.valueOf(50.0));
+            finanzierung.setBeantragtesBudget(new BigDecimal("50.0"));
 
             antrag.setFinanzierung(finanzierung);
         }
@@ -84,7 +84,7 @@ class AntragMapperTest {
 
         @Test
         void testGivenAntragEntityWithNoFehlbetragThenReturnsCorrectDTO() {
-            antrag.getFinanzierung().setBeantragtesBudget(BigDecimal.valueOf(25.0));
+            antrag.getFinanzierung().setBeantragtesBudget(new BigDecimal("25.0"));
             final AntragSummaryDTO result = antragMapper.toAntragSummaryDTO(antrag);
 
             assertNotNull(result);

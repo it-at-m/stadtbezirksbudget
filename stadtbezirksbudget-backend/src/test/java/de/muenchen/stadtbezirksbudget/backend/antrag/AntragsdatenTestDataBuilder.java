@@ -81,11 +81,11 @@ public record AntragsdatenTestDataBuilder(
         final Finanzierung finanzierung = new Finanzierung();
         finanzierung.setIstProjektVorsteuerabzugsberechtigt(true);
         finanzierung.setSonstigeFoerderhinweise("Keine");
-        finanzierung.setBewilligterZuschuss(BigDecimal.valueOf(10_000.0));
+        finanzierung.setBewilligterZuschuss(new BigDecimal("10000.0"));
 
         final Finanzierungsmittel finanzierungsmittel = new Finanzierungsmittel();
         finanzierungsmittel.setKategorie(Kategorie.EIGENMITTEL);
-        finanzierungsmittel.setBetrag(BigDecimal.valueOf(2000.0));
+        finanzierungsmittel.setBetrag(new BigDecimal("2000.0"));
         finanzierungsmittel.setDirektoriumNotiz("Notiz zu Finanzierungsmitteln " + generateRandomUuidString());
         finanzierungsmittel.setFinanzierung(finanzierung);
 
@@ -95,7 +95,7 @@ public record AntragsdatenTestDataBuilder(
 
         final VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
         ausgabe.setKategorie("Material " + generateRandomUuidString());
-        ausgabe.setBetrag(BigDecimal.valueOf(5000.0));
+        ausgabe.setBetrag(new BigDecimal("5000.0"));
         ausgabe.setDirektoriumNotiz("Notiz zu Materialausgaben " + generateRandomUuidString());
         ausgabe.setFinanzierung(finanzierung);
 
@@ -103,9 +103,9 @@ public record AntragsdatenTestDataBuilder(
         voraussichtlicheAusgabenListe.add(ausgabe);
         finanzierung.setVoraussichtlicheAusgaben(voraussichtlicheAusgabenListe);
 
-        finanzierung.setSummeAusgaben(BigDecimal.valueOf(5000.0));
-        finanzierung.setSummeFinanzierungsmittel(BigDecimal.valueOf(2000.0));
-        finanzierung.setBeantragtesBudget(BigDecimal.valueOf(5000.0));
+        finanzierung.setSummeAusgaben(new BigDecimal("5000.0"));
+        finanzierung.setSummeFinanzierungsmittel(new BigDecimal("2000.0"));
+        finanzierung.setBeantragtesBudget(new BigDecimal("5000.0"));
 
         finanzierung.setKostenAnmerkung(generateRandomUuidString());
         finanzierung.setBegruendungEigenmittel("");
