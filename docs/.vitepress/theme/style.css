@@ -9,8 +9,8 @@
 
 /* Enables footer on all pages instead of only the home page */
 footer.VPFooter {
-  display: block !important;
   z-index: 100 !important;
+  display: block !important;
 }
 
 @media all and (max-width: 450px) {
