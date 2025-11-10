@@ -20,16 +20,26 @@
 import mediumZoom from "medium-zoom";
 import { useRouter } from "vitepress";
 import DefaultTheme from "vitepress/theme";
-import { onMounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const { Layout } = DefaultTheme;
 const router = useRouter();
+const zoom = ref(null);
+
 const setupMediumZoom = () => {
-  mediumZoom("[data-zoomable]", {
+  detachMediumZoom();
+  zoom.value = mediumZoom("[data-zoomable]", {
     background: "transparent",
   });
 };
+const detachMediumZoom = () => {
+  if (zoom.value) {
+    zoom.value.detach();
+  }
+};
+
 onMounted(setupMediumZoom);
+onUnmounted(detachMediumZoom);
 router.onAfterRouteChange = setupMediumZoom;
 </script>
 
