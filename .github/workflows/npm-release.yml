@@ -18,7 +18,6 @@ on:
         default: stadtbezirksbudget-frontend
         options:
           - stadtbezirksbudget-frontend # Add or modify frontend paths according to your project structure
-          - stadtbezirksbudget-webcomponent
       skip-deployment:
         default: true
         type: boolean
