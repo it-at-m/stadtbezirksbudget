@@ -48,7 +48,7 @@ public class Finanzierung extends BaseEntity {
      *
      * @return the requested budget amount
      */
-    public BigDecimal getBeantragtesBudget() {
+    public BigDecimal computeBeantragtesBudget() {
         final BigDecimal ausgaben = voraussichtlicheAusgaben.stream()
                 .map(VoraussichtlicheAusgabe::getBetrag).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
         final BigDecimal mittel = finanzierungsmittel.stream()
@@ -64,7 +64,7 @@ public class Finanzierung extends BaseEntity {
      *         otherwise
      */
     public boolean istFehlbetrag() {
-        final BigDecimal fehlbetragDiff = getBeantragtesBudget().subtract(beantragtesBudget);
+        final BigDecimal fehlbetragDiff = computeBeantragtesBudget().subtract(beantragtesBudget);
         return fehlbetragDiff.compareTo(BigDecimal.ZERO) == 0;
     }
 }
