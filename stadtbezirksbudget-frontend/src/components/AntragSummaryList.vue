@@ -34,8 +34,10 @@
         toDateString(new Date(item.eingangDatum))
       }}</span>
     </template>
-    <template v-slot:[`item.aktualisierung`]="{item}">
-      <span data-test="item-aktualisierung-art">{{ AktualisierungsArtText[item.aktualisierung] }}</span>
+    <template v-slot:[`item.aktualisierung`]="{ item }">
+      <span data-test="item-aktualisierung-art">{{
+        AktualisierungsArtText[item.aktualisierung]
+      }}</span>
     </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
       <span data-test="item-aktualisierung-datum">{{
@@ -62,13 +64,13 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import { AktualisierungsArtText } from "@/types/AktualisierungsArt.ts";
 import { StatusText } from "@/types/Status.ts";
 import {
   booleanToFestOrFehl,
   toDateString,
   toNumberString,
 } from "@/util/formatter.ts";
-import { AktualisierungsArtText } from "@/types/AktualisierungsArt.ts";
 
 const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
   useAntragSummaryList();
