@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +40,7 @@ public class AntragService {
     public void updateAntragStatus(final UUID id, final AntragStatusUpdateDTO statusUpdateDTO) {
         log.info("Update status of antrag with id {} to {}", id, statusUpdateDTO.status());
         final Antrag antrag = antragRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Antrag with id " + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("Antrag with id " + id + " not found"));
         antrag.getBearbeitungsstand().setStatus(statusUpdateDTO.status());
         antragRepository.save(antrag);
     }
