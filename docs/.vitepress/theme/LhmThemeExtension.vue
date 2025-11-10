@@ -7,8 +7,8 @@
           target="_blank"
         >
           <img
-            src="https://assets.muenchen.de/logos/lhm/logo-lhm-muenchen.svg"
             alt="Logo Landeshauptstadt München"
+            src="https://assets.muenchen.de/logos/lhm/logo-lhm-muenchen.svg"
           />
         </a>
       </div>
@@ -17,9 +17,30 @@
 </template>
 
 <script setup>
+import mediumZoom from "medium-zoom";
+import { useRouter } from "vitepress";
 import DefaultTheme from "vitepress/theme";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const { Layout } = DefaultTheme;
+const router = useRouter();
+const zoom = ref(null);
+
+const setupMediumZoom = () => {
+  detachMediumZoom();
+  zoom.value = mediumZoom("[data-zoomable]", {
+    background: "transparent",
+  });
+};
+const detachMediumZoom = () => {
+  if (zoom.value) {
+    zoom.value.detach();
+  }
+};
+
+onMounted(setupMediumZoom);
+onUnmounted(detachMediumZoom);
+router.onAfterRouteChange = setupMediumZoom;
 </script>
 
 <style scoped>
@@ -29,16 +50,16 @@ const { Layout } = DefaultTheme;
 }
 @media (min-width: 768px) {
   .extra + .logo:before {
-    margin-right: 16px;
-    margin-left: 16px;
     width: 1px;
     height: 24px;
-    background-color: var(--vp-c-divider);
+    margin-right: 16px;
+    margin-left: 16px;
     content: "";
+    background-color: var(--vp-c-divider);
   }
 }
 .logo img {
-  filter: var(--muc-logo-filter);
   height: 28px;
+  filter: var(--muc-logo-filter);
 }
 </style>
