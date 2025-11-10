@@ -41,8 +41,8 @@ classDiagram
     class Projekt {
         titel: String<fk>
         start: Date<fk>
-        istStartFrist: boolean
-        fristBruchBegruendung: String
+        istStartFrist: boolean <fk>
+        fristBruchBegruendung: String <fk>
         ende: Date<fk>
         beschreibung: String<fk>
     %% All attributes except UUID are <fk>
@@ -114,21 +114,21 @@ classDiagram
     class Status {
         <<enumeration>>
         eingegangen
-        wartenAufBuergerrueckmeldung
-        abgelehnt_keineRueckmeldung
-        abgelehnt_nichtZustaendig
-        abgelehnt_nichtFoerderfaehig
+        warten_auf_buergerrueckmeldung
+        abgelehnt_keine_rueckmeldung
+        abgelehnt_nicht_zustaendig
+        abgelehnt_nicht_foerderfaehig
+        abgelehnt_von_ba
+        ablehnungsbescheid_erstellt
         vollstaendig
-        sitzungsvorlageErstellt
-        sitzungsvorlageGenehmigt
-        bereitZurAbstimmung
-        abgelehnt_vonBA
-        antragAngenommen
-        bescheidVerfuegen
-        mitteilungAnBuerger
-        pruefungRechnungen
+        sitzungsvorlage_erstellt
+        sitzungsvorlage_uebermittelt
+        beschluss_erhalten
+        ablehnungsbeschluss_erhalten
+        zuwendungsbescheid_erstellt
+        zuwendungsbescheid_versendet
+        verwendungsnachweise_geprueft
         auszahlung
-        rueckforderung
         rueckzahlung
         abgeschlossen
     }
