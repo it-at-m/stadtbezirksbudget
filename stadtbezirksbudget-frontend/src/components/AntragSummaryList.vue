@@ -34,6 +34,9 @@
         toDateString(new Date(item.eingangDatum))
       }}</span>
     </template>
+    <template v-slot:[`item.aktualisierung`]="{item}">
+      <span data-test="item-aktualisierung-art">{{ AktualisierungsArtText[item.aktualisierung] }}</span>
+    </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
       <span data-test="item-aktualisierung-datum">{{
         toDateString(new Date(item.aktualisierungDatum))
@@ -65,6 +68,7 @@ import {
   toDateString,
   toNumberString,
 } from "@/util/formatter.ts";
+import { AktualisierungsArtText } from "@/types/AktualisierungsArt.ts";
 
 const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
   useAntragSummaryList();
