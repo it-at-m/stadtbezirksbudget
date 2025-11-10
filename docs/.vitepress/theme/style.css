@@ -25,3 +25,12 @@ footer.VPFooter {
     object-position: left;
   }
 }
+
+.medium-zoom-overlay {
+  backdrop-filter: blur(5rem);
+}
+
+.medium-zoom-overlay,
+.medium-zoom-image--opened {
+  z-index: 999;
+}
