@@ -9,6 +9,7 @@
     item-title="longText"
     variant="plain"
     @update:model-value="updateStatus"
+    @update:focused="resetStatus"
   >
     <template #item="{ props, item }">
       <v-list-item
@@ -29,8 +30,6 @@ import type { Status } from "@/types/Status.ts";
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect.ts";
 
 const props = defineProps<{ antragId: string; status: Status }>();
-const { updateStatus, status, statusOptions } = useAntragStatusSelect(
-  props.antragId,
-  props.status
-);
+const { updateStatus, resetStatus, status, statusOptions } =
+  useAntragStatusSelect(props.antragId, props.status);
 </script>

@@ -19,6 +19,7 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
   const snackbarStore = useSnackbarStore();
 
   const status = ref<Status>(initialValue);
+  const oldStatus = ref<Status>(initialValue);
   const statusOptions = Object.values(Status).map((status) => ({
     value: status,
     ...StatusText[status],
@@ -29,15 +30,18 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
    * @param newStatus - The new status to set for the Antrag.
    */
   function updateStatus(newStatus: Status) {
+    if (!newStatus) return;
     updateAntragStatus(antragId, newStatus)
       .then(() => {
         status.value = newStatus;
+        oldStatus.value = newStatus;
         snackbarStore.showMessage({
           message: `Antragsstatus aktualisiert`,
           level: STATUS_INDICATORS.SUCCESS,
         });
       })
       .catch((error) => {
+        status.value = oldStatus.value;
         snackbarStore.showMessage({
           message:
             error?.message || "Fehler beim Aktualisieren des Antragsstatus",
@@ -46,8 +50,19 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
       });
   }
 
+  /**
+   * Resets the status to the old value if focus is lost without a change.
+   * @param focus
+   */
+  function resetStatus(focus: boolean) {
+    if (!focus) {
+      status.value = oldStatus.value;
+    }
+  }
+
   return {
     updateStatus,
+    resetStatus,
     // Current status of the Antrag
     status,
     // Available status options
