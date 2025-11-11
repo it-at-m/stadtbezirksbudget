@@ -77,7 +77,7 @@ import { onMounted, ref } from "vue";
 import { getUser } from "@/api/user-client";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import { APPSWITCHER_URL } from "@/constants.ts";
+import { APPSWITCHER_URL } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
