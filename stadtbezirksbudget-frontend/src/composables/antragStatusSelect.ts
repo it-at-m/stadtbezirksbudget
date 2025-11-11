@@ -18,8 +18,9 @@ import { Status, StatusText } from "@/types/Status.ts";
 export function useAntragStatusSelect(antragId: string, initialValue: Status) {
   const snackbarStore = useSnackbarStore();
 
-  const status = ref<Status>(initialValue);
+  const status = ref<Status | undefined>(initialValue);
   const oldStatus = ref<Status>(initialValue);
+  const search = ref<string>("");
   const statusOptions = Object.values(Status).map((status) => ({
     value: status,
     ...StatusText[status],
@@ -47,6 +48,9 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
             error?.message || "Fehler beim Aktualisieren des Antragsstatus",
           level: STATUS_INDICATORS.WARNING,
         });
+      })
+      .finally(() => {
+        (document.activeElement as HTMLElement)?.blur();
       });
   }
 
@@ -55,8 +59,12 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
    * @param focus
    */
   function resetStatus(focus: boolean) {
-    if (!focus) {
+    if (focus) {
+      search.value = StatusText[oldStatus.value].shortText;
+      status.value = undefined;
+    } else {
       status.value = oldStatus.value;
+      search.value = "";
     }
   }
 
@@ -65,6 +73,8 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
     resetStatus,
     // Current status of the Antrag
     status,
+    // Search term for filtering status options
+    search,
     // Available status options
     statusOptions: readonly(statusOptions),
   };

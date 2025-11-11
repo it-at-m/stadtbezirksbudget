@@ -3,6 +3,7 @@
     v-model="status"
     :filter-keys="['raw.shortText', 'raw.longText']"
     :items="statusOptions"
+    :search="search"
     data-test="antrag-status-select"
     density="compact"
     hide-details="auto"
@@ -30,6 +31,13 @@ import type { Status } from "@/types/Status.ts";
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect.ts";
 
 const props = defineProps<{ antragId: string; status: Status }>();
-const { updateStatus, resetStatus, status, statusOptions } =
+const { updateStatus, resetStatus, status, search, statusOptions } =
   useAntragStatusSelect(props.antragId, props.status);
 </script>
+
+<style scoped>
+/*noinspection CssUnusedSymbol*/
+:deep(.v-field__input) {
+  flex-wrap: nowrap;
+}
+</style>
