@@ -37,6 +37,11 @@
         toDateString(new Date(item.eingangDatum))
       }}</span>
     </template>
+    <template v-slot:[`item.aktualisierung`]="{ item }">
+      <span data-test="item-aktualisierung-art">{{
+        AktualisierungsArtText[item.aktualisierung]
+      }}</span>
+    </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
       <span data-test="item-aktualisierung-datum">{{
         toDateString(new Date(item.aktualisierungDatum))
@@ -63,6 +68,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusSelect from "@/components/AntragStatusSelect.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import { AktualisierungsArtText } from "@/types/AktualisierungsArt.ts";
 import {
   booleanToFestOrFehl,
   toDateString,

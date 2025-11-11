@@ -54,7 +54,7 @@ class AntragServiceTest {
         antrag.setId(UUID.randomUUID());
         antrag.setBearbeitungsstand(bearbeitungsstand);
         antrag.setBezirksausschussNr(123);
-        antrag.setEingangsdatum(LocalDate.now());
+        antrag.setEingangDatum(LocalDate.now().atStartOfDay());
         antrag.setProjekt(projekt);
         antrag.setAntragsteller(antragsteller);
         antrag.setFinanzierung(finanzierung);
