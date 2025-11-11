@@ -10,7 +10,7 @@ describe("updateAntragStatus", () => {
     vi.clearAllMocks();
   });
 
-  test("resolves on successful 2xx response", async () => {
+  test("testResolvesOnSuccessfulResponse", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       status: 200,
@@ -30,7 +30,7 @@ describe("updateAntragStatus", () => {
     );
   });
 
-  test("rejects with ApiError message on network failure", async () => {
+  test("testApiErrorOnNetworkError", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
       new Error("Network Error")
     );
@@ -40,7 +40,7 @@ describe("updateAntragStatus", () => {
     );
   });
 
-  test("rejects with ApiError message on non-ok HTTP response", async () => {
+  test("testApiErrorOnHttpNonOk", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: false,
       status: 404,
