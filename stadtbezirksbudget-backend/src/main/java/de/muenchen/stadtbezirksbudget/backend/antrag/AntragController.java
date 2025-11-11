@@ -4,6 +4,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.security.Authorities;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +60,7 @@ public class AntragController {
     @PatchMapping("{id}/status")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize(Authorities.ANTRAG_UPDATE_STATUS)
-    public void updateAntragStatus(@PathVariable final UUID id, @RequestBody final AntragStatusUpdateDTO statusUpdateDTO) {
+    public void updateAntragStatus(@PathVariable final UUID id, @RequestBody @Valid final AntragStatusUpdateDTO statusUpdateDTO) {
         antragService.updateAntragStatus(id, statusUpdateDTO);
     }
 }
