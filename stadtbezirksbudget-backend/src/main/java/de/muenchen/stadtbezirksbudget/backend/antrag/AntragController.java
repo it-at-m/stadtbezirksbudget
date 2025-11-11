@@ -59,7 +59,7 @@ public class AntragController {
     @PatchMapping("{id}/status")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize(Authorities.ANTRAG_UPDATE_STATUS)
-    public void updateAntragStatus(@PathVariable UUID id, @RequestBody AntragStatusUpdateDTO statusUpdateDTO) {
+    public void updateAntragStatus(@PathVariable final UUID id, @RequestBody final AntragStatusUpdateDTO statusUpdateDTO) {
         antragService.updateAntragStatus(id, statusUpdateDTO);
     }
 }
