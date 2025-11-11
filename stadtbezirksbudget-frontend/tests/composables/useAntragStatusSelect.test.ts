@@ -9,7 +9,7 @@ import { Status } from "@/types/Status.ts";
 vi.mock("@/api/update-antragStatus.ts");
 vi.mock("@/stores/snackbar.ts");
 
-describe("useAntragStatusSelect (composable)", () => {
+describe("useAntragStatusSelect", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe("useAntragStatusSelect (composable)", () => {
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
   });
 
-  test("updates status on successful API call and shows success snackbar", async () => {
+  test("testUpdatesStatusOnSuccessfulApiCallAndShowsSuccessSnackbar", async () => {
     (updateAntragStatus as vi.Mock).mockResolvedValue(undefined);
 
     const { status, updateStatus } = useAntragStatusSelect(
@@ -38,7 +38,7 @@ describe("useAntragStatusSelect (composable)", () => {
     });
   });
 
-  test("shows API error message in snackbar on rejected promise", async () => {
+  test("testShowsApiErrorMessageInSnackbarOnRejectedPromise", async () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue(new Error("API Error"));
 
     const { status, updateStatus } = useAntragStatusSelect(
@@ -57,7 +57,7 @@ describe("useAntragStatusSelect (composable)", () => {
     });
   });
 
-  test("shows generic error message when rejected without message", async () => {
+  test("testShowsGenericErrorMessageWhenRejectedWithoutMessage", async () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue({});
 
     const { status, updateStatus } = useAntragStatusSelect(
@@ -74,5 +74,48 @@ describe("useAntragStatusSelect (composable)", () => {
       message: "Fehler beim Aktualisieren des Antragsstatus",
       level: STATUS_INDICATORS.WARNING,
     });
+  });
+
+  test("testResetStatusSetsOldStatusWhenFocusFalse", () => {
+    const { status, resetStatus } = useAntragStatusSelect(
+      "1",
+      Status.EINGEGANGEN
+    );
+
+    // simuliere Änderung ohne erfolgreiche API-Antwort (oldStatus bleibt initial)
+    status.value = Status.ABGELEHNT_KEINE_RUECKMELDUNG;
+
+    resetStatus(false);
+
+    expect(status.value).toBe(Status.EINGEGANGEN);
+  });
+
+  test("testResetStatusKeepsNewStatusWhenFocusTrue", () => {
+    const { status, resetStatus } = useAntragStatusSelect(
+      "1",
+      Status.EINGEGANGEN
+    );
+
+    status.value = Status.ABGELEHNT_NICHT_ZUSTAENDIG;
+
+    resetStatus(true);
+
+    expect(status.value).toBe(Status.ABGELEHNT_NICHT_ZUSTAENDIG);
+  });
+
+  test("testUpdateStatusReturnsEarlyWhenNewStatusIsFalsy", () => {
+    const { status, updateStatus } = useAntragStatusSelect(
+      "1",
+      Status.EINGEGANGEN
+    );
+
+    (updateAntragStatus as vi.Mock).mockClear();
+    (updateAntragStatus as vi.Mock).mockResolvedValue(undefined);
+
+    updateStatus(undefined);
+
+    expect(updateAntragStatus).not.toHaveBeenCalled();
+    expect(status.value).toBe(Status.EINGEGANGEN);
+    expect(snackbarStoreMock.showMessage).not.toHaveBeenCalled();
   });
 });

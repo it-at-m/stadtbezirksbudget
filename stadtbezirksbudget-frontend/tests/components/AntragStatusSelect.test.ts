@@ -31,6 +31,7 @@ describe("AntragStatusSelect", () => {
         { title: "Abgelehnt", value: "ABGELEHNT" },
       ]),
       updateStatus: vi.fn(),
+      resetStatus: vi.fn(),
     };
 
     vi.mocked(useAntragStatusSelect).mockReturnValue(mockUseAntragStatusSelect);
@@ -60,11 +61,20 @@ describe("AntragStatusSelect", () => {
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
     expect(autocomplete.exists()).toBe(true);
     expect(mockUseAntragStatusSelect.status.value).toBe("EINGEGANGEN");
-
-    await autocomplete.vm.$emit("update:model-value", "ABGELEHNT");
+    await autocomplete.vm.$emit("update:modelValue", "ABGELEHNT");
 
     expect(mockUseAntragStatusSelect.updateStatus).toHaveBeenCalledWith(
       "ABGELEHNT"
     );
+  });
+
+  test("testCallsResetStatusWhenFocused", async () => {
+    const wrapper = createWrapper();
+
+    const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
+
+    await autocomplete.vm.$emit("update:focused", true);
+
+    expect(mockUseAntragStatusSelect.resetStatus).toHaveBeenCalledWith(true);
   });
 });
