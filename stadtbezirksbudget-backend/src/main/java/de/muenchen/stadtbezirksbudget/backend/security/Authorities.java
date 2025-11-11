@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * {@link org.springframework.stereotype.Service} classes in the method security annotations
  * (e.g. {@link PreAuthorize}).
  */
-@SuppressWarnings("PMD.DataClass")
 public final class Authorities {
     public static final String ANTRAG_GET_SUMMARYPAGE = "hasAnyRole('reader', 'writer')";
 
