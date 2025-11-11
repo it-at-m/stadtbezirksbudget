@@ -29,12 +29,12 @@ describe("useAntragStatusSelect", () => {
 
     updateStatus(Status.ABGELEHNT_KEINE_RUECKMELDUNG);
 
-    await new Promise((r) => setTimeout(r, 0));
-
-    expect(status.value).toBe(Status.ABGELEHNT_KEINE_RUECKMELDUNG);
-    expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-      message: `Antragsstatus aktualisiert`,
-      level: STATUS_INDICATORS.SUCCESS,
+    await vi.waitFor(() => {
+      expect(status.value).toBe(Status.ABGELEHNT_KEINE_RUECKMELDUNG);
+      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+        message: `Antragsstatus aktualisiert`,
+        level: STATUS_INDICATORS.SUCCESS,
+      });
     });
   });
 
@@ -48,12 +48,12 @@ describe("useAntragStatusSelect", () => {
 
     updateStatus(Status.ABGELEHNT_NICHT_ZUSTAENDIG);
 
-    await new Promise((r) => setTimeout(r, 0));
-
-    expect(status.value).toBe(Status.EINGEGANGEN);
-    expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-      message: "API Error",
-      level: STATUS_INDICATORS.WARNING,
+    await vi.waitFor(() => {
+      expect(status.value).toBe(Status.EINGEGANGEN);
+      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+        message: "API Error",
+        level: STATUS_INDICATORS.WARNING,
+      });
     });
   });
 
@@ -67,12 +67,12 @@ describe("useAntragStatusSelect", () => {
 
     updateStatus(Status.ABGELEHNT_VON_BA);
 
-    await new Promise((r) => setTimeout(r, 0));
-
-    expect(status.value).toBe(Status.EINGEGANGEN);
-    expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-      message: "Fehler beim Aktualisieren des Antragsstatus",
-      level: STATUS_INDICATORS.WARNING,
+    await vi.waitFor(() => {
+      expect(status.value).toBe(Status.EINGEGANGEN);
+      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+        message: "Fehler beim Aktualisieren des Antragsstatus",
+        level: STATUS_INDICATORS.WARNING,
+      });
     });
   });
 
