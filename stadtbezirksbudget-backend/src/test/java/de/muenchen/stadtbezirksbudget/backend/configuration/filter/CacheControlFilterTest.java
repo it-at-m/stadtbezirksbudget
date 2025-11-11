@@ -36,7 +36,7 @@ class CacheControlFilterTest {
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
 
-    private static final String GET_ENDPOINT_URL = "/antrag";
+    private static final String ANTRAG_ENDPOINT_URL = "/antrag";
 
     private static final String EXPECTED_CACHE_CONTROL_HEADER_VALUES = "no-cache, no-store, must-revalidate";
 
@@ -45,7 +45,7 @@ class CacheControlFilterTest {
 
     @Test
     void testForCacheControlHeadersForAntragEndpoint() {
-        final ResponseEntity<String> response = testRestTemplate.exchange(GET_ENDPOINT_URL, HttpMethod.GET, null, String.class);
+        final ResponseEntity<String> response = testRestTemplate.exchange(ANTRAG_ENDPOINT_URL, HttpMethod.GET, null, String.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertTrue(response.getHeaders().containsKey(HttpHeaders.CACHE_CONTROL));
         assertEquals(EXPECTED_CACHE_CONTROL_HEADER_VALUES, response.getHeaders().getCacheControl());
