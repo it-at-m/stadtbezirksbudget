@@ -49,7 +49,7 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
   return {
     updateStatus,
     // Current status of the Antrag
-    status: readonly(status),
+    status,
     // Available status options
     statusOptions: readonly(statusOptions),
   };
