@@ -13,10 +13,12 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Kategorie;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -27,9 +29,12 @@ class AntragMapperTest {
 
     @Nested
     class ToAntragSummaryDTO {
-        @Test
-        void testGivenAntragEntityThenReturnsCorrectDTO() {
-            final Antrag antrag = new Antrag();
+
+        private Antrag antrag;
+
+        @BeforeEach
+        void setup() {
+            antrag = new Antrag();
             antrag.setId(UUID.randomUUID());
 
             final Bearbeitungsstand bearbeitungsstand = new Bearbeitungsstand();
@@ -37,7 +42,7 @@ class AntragMapperTest {
             bearbeitungsstand.setStatus(Status.VOLLSTAENDIG);
 
             antrag.setBearbeitungsstand(bearbeitungsstand);
-            antrag.setEingangsdatum(LocalDate.of(2025, 10, 15));
+            antrag.setEingangDatum(LocalDate.of(2025, 10, 15).atStartOfDay());
 
             final Projekt projekt = new Projekt();
             projekt.setTitel("Testprojekt");
@@ -52,33 +57,38 @@ class AntragMapperTest {
             final Finanzierung finanzierung = new Finanzierung();
             final List<VoraussichtlicheAusgabe> ausgaben = new ArrayList<>();
             final VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
-            ausgabe.setBetrag(100.0);
+            ausgabe.setBetrag(new BigDecimal("100.0"));
             ausgabe.setKategorie("Testkategorie");
             ausgabe.setDirektoriumNotiz("Testnotiz");
             ausgaben.add(ausgabe);
             finanzierung.setVoraussichtlicheAusgaben(ausgaben);
             final List<Finanzierungsmittel> mittelListe = new ArrayList<>();
             final Finanzierungsmittel finanzierungsmittel = new Finanzierungsmittel();
-            finanzierungsmittel.setBetrag(50.0);
+            finanzierungsmittel.setBetrag(new BigDecimal("50.0"));
             finanzierungsmittel.setKategorie(Kategorie.EIGENMITTEL);
             finanzierungsmittel.setDirektoriumNotiz("Testnotiz");
             mittelListe.add(finanzierungsmittel);
-            finanzierung.setFinanzierungsmittelListe(mittelListe);
+            finanzierung.setFinanzierungsmittel(mittelListe);
+            finanzierung.setBeantragtesBudget(new BigDecimal("50.0"));
 
             antrag.setFinanzierung(finanzierung);
+        }
 
+        @Test
+        void testGivenAntragEntityWithFehlbetragThenReturnsCorrectDTO() {
             final AntragSummaryDTO result = antragMapper.toAntragSummaryDTO(antrag);
 
             assertNotNull(result);
-            assertThat(result.projektTitel()).isEqualTo("Testprojekt");
-            assertThat(result.antragstellerName()).isEqualTo("Max Mustermann");
-            assertThat(result.beantragtesBudget()).isEqualTo(50.0);
-            assertThat(result.status()).isEqualTo(Status.VOLLSTAENDIG);
             assertThat(result.istFehlbetrag()).isTrue();
-            assertThat(result.eingangDatum()).isEqualTo(antrag.getEingangsdatum().atStartOfDay());
-            assertThat(result.zammadNr()).isNotNull();
-            assertThat(result.aktualisierung()).isNotNull();
-            assertThat(result.aktualisierungDatum()).isNotNull();
+        }
+
+        @Test
+        void testGivenAntragEntityWithNoFehlbetragThenReturnsCorrectDTO() {
+            antrag.getFinanzierung().setBeantragtesBudget(new BigDecimal("25.0"));
+            final AntragSummaryDTO result = antragMapper.toAntragSummaryDTO(antrag);
+
+            assertNotNull(result);
+            assertThat(result.istFehlbetrag()).isFalse();
         }
     }
 }

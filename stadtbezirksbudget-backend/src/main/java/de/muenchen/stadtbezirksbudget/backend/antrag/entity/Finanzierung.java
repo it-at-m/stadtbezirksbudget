@@ -7,7 +7,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,17 +26,22 @@ public class Finanzierung extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     private boolean istProjektVorsteuerabzugsberechtigt;
-    private boolean istEinladungsFoerderhinweis;
+    @NotNull private String kostenAnmerkung;
+    @NotNull @PositiveOrZero private BigDecimal summeAusgaben;
+    @NotNull @PositiveOrZero private BigDecimal summeFinanzierungsmittel;
+    @NotNull private String begruendungEigenmittel;
+    @NotNull @PositiveOrZero private BigDecimal beantragtesBudget;
+    private boolean istEinladungFoerderhinweis;
     private boolean istWebsiteFoerderhinweis;
     private boolean istSonstigerFoerderhinweis;
     @NotNull private String sonstigeFoerderhinweise;
-    @PositiveOrZero private Double bewilligterZuschuss;
+    @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
-    private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben;
+    private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
-    private List<Finanzierungsmittel> finanzierungsmittelListe;
+    private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
     /**
      * Calculates the requested budget by subtracting the total financing amounts
@@ -41,11 +49,23 @@ public class Finanzierung extends BaseEntity {
      *
      * @return the requested budget amount
      */
-    public double getBeantragtesBudget() {
-        final double ausgaben = voraussichtlicheAusgaben.stream()
-                .mapToDouble(VoraussichtlicheAusgabe::getBetrag).sum();
-        final double mittel = finanzierungsmittelListe.stream()
-                .mapToDouble(Finanzierungsmittel::getBetrag).sum();
-        return ausgaben - mittel;
+    public BigDecimal computeBeantragtesBudget() {
+        final BigDecimal ausgaben = voraussichtlicheAusgaben.stream()
+                .map(VoraussichtlicheAusgabe::getBetrag).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
+        final BigDecimal mittel = finanzierungsmittel.stream()
+                .map(Finanzierungsmittel::getBetrag).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
+        return ausgaben.subtract(mittel);
+    }
+
+    /**
+     * Returns whether the stored {@code beantragtesBudget} represents the full
+     * computed shortfall (a "Fehlbetrag").
+     *
+     * @return {@code true} when the requested budget equals the full computed shortfall; {@code false}
+     *         otherwise
+     */
+    public boolean istFehlbetrag() {
+        final BigDecimal fehlbetragDiff = computeBeantragtesBudget().subtract(getBeantragtesBudget());
+        return fehlbetragDiff.compareTo(BigDecimal.ZERO) == 0;
     }
 }

@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Adresse;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bankverbindung;
@@ -19,6 +20,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.Bearbeitungsstan
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,7 @@ public record AntragsdatenTestDataBuilder(
         projekt.setBeschreibung("Beschreibung des Projekts " + generateRandomUuidString());
         projekt.setStart(LocalDate.now());
         projekt.setEnde(LocalDate.now().plusMonths(6));
+        projekt.setFristBruchBegruendung("");
         return projektRepository.save(projekt);
     }
 
@@ -78,27 +81,34 @@ public record AntragsdatenTestDataBuilder(
         final Finanzierung finanzierung = new Finanzierung();
         finanzierung.setIstProjektVorsteuerabzugsberechtigt(true);
         finanzierung.setSonstigeFoerderhinweise("Keine");
-        finanzierung.setBewilligterZuschuss(10_000.0);
+        finanzierung.setBewilligterZuschuss(new BigDecimal("10000.00"));
 
         final Finanzierungsmittel finanzierungsmittel = new Finanzierungsmittel();
         finanzierungsmittel.setKategorie(Kategorie.EIGENMITTEL);
-        finanzierungsmittel.setBetrag(2000.0);
+        finanzierungsmittel.setBetrag(new BigDecimal("2000.00"));
         finanzierungsmittel.setDirektoriumNotiz("Notiz zu Finanzierungsmitteln " + generateRandomUuidString());
         finanzierungsmittel.setFinanzierung(finanzierung);
 
         final List<Finanzierungsmittel> finanzierungsmittelListe = new ArrayList<>();
         finanzierungsmittelListe.add(finanzierungsmittel);
-        finanzierung.setFinanzierungsmittelListe(finanzierungsmittelListe);
+        finanzierung.setFinanzierungsmittel(finanzierungsmittelListe);
 
         final VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
         ausgabe.setKategorie("Material " + generateRandomUuidString());
-        ausgabe.setBetrag(5000.0);
+        ausgabe.setBetrag(new BigDecimal("5000.00"));
         ausgabe.setDirektoriumNotiz("Notiz zu Materialausgaben " + generateRandomUuidString());
         ausgabe.setFinanzierung(finanzierung);
 
         final List<VoraussichtlicheAusgabe> voraussichtlicheAusgabenListe = new ArrayList<>();
         voraussichtlicheAusgabenListe.add(ausgabe);
         finanzierung.setVoraussichtlicheAusgaben(voraussichtlicheAusgabenListe);
+
+        finanzierung.setSummeAusgaben(new BigDecimal("5000.00"));
+        finanzierung.setSummeFinanzierungsmittel(new BigDecimal("2000.00"));
+        finanzierung.setBeantragtesBudget(new BigDecimal("3000.00"));
+
+        finanzierung.setKostenAnmerkung(generateRandomUuidString());
+        finanzierung.setBegruendungEigenmittel("");
 
         return finanzierungRepository.save(finanzierung);
     }
@@ -119,15 +129,20 @@ public record AntragsdatenTestDataBuilder(
         final Antrag antrag = new Antrag();
         final Adresse adresse = initializeAdresse();
         final Antragsteller antragsteller = initializeAntragsteller(adresse);
-        antrag.setEingangsdatum(LocalDate.now());
+        antrag.setEingangDatum(LocalDate.now().atStartOfDay());
         antrag.setBezirksausschussNr(1);
         antrag.setIstPersonVorsteuerabzugsberechtigt(true);
         antrag.setIstAndererZuwendungsantrag(false);
         antrag.setBearbeitungsstand(initializeBearbeitungsstand());
+        antrag.setAktualisierungArt(AktualisierungArt.E_AKTE);
+        antrag.setZammadTicketNr("000000000");
+        antrag.setAktualisierungDatum(LocalDate.now().atStartOfDay());
+        antrag.setAktenzeichen("0000.0-00-0000");
         antrag.setFinanzierung(initializeFinanzierung());
         antrag.setProjekt(initializeProjekt());
         antrag.setAntragsteller(antragsteller);
         antrag.setBankverbindung(initializeBankverbindung(antragsteller));
+        antrag.setAndereZuwendungsantraege(new ArrayList<>());
         return antragRepository.save(antrag);
     }
 }

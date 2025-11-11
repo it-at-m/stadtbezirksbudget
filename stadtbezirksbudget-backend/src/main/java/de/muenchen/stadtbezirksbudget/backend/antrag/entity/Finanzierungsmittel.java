@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +26,7 @@ public class Finanzierungsmittel extends BaseEntity {
     @NotNull @Enumerated(EnumType.STRING)
     private Kategorie kategorie;
 
-    @PositiveOrZero private double betrag;
+    @NotNull @PositiveOrZero private BigDecimal betrag;
     @NotNull private String direktoriumNotiz;
 
     @NotNull @ManyToOne
