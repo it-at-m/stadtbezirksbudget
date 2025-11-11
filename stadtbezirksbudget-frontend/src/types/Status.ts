@@ -19,23 +19,80 @@ export enum Status {
   ABGESCHLOSSEN = "ABGESCHLOSSEN",
 }
 
-export const StatusText: Record<Status, string> = {
-  [Status.EINGEGANGEN]: "Offen",
-  [Status.WARTEN_AUF_BUERGERRUECKMELDUNG]: "Warten",
-  [Status.ABGELEHNT_KEINE_RUECKMELDUNG]: "Abgelehnt",
-  [Status.ABGELEHNT_NICHT_ZUSTAENDIG]: "Abgelehnt",
-  [Status.ABGELEHNT_NICHT_FOERDERFAEHIG]: "Abgelehnt",
-  [Status.ABGELEHNT_VON_BA]: "Abgelehnt",
-  [Status.ABLEHNUNGSBESCHEID_ERSTELLT]: "Zurückgewiesen",
-  [Status.VOLLSTAENDIG]: "Vorbereitung",
-  [Status.SITZUNGSVORLAGE_ERSTELLT]: "Vorbereitung",
-  [Status.SITZUNGSVORLAGE_UEBERMITTELT]: "Vorbereitung",
-  [Status.ZUWENDUNGSBESCHEID_VERSENDET]: "Nachricht an Bürger",
-  [Status.BESCHLUSS_ERHALTEN]: "Angenommen",
-  [Status.ABLEHNUNGSBESCHLUSS_ERHALTEN]: "Zurückgewiesen",
-  [Status.ZUWENDUNGSBESCHEID_ERSTELLT]: "Bewilligt",
-  [Status.VERWENDUNGSNACHWEISE_GEPRUEFT]: "Finanzierung",
-  [Status.AUSZAHLUNG]: "Finanzierung",
-  [Status.RUECKZAHLUNG]: "Rückzahlung",
-  [Status.ABGESCHLOSSEN]: "Abgeschlossen",
+export const StatusText: Record<
+  Status,
+  { shortText: string; longText: string }
+> = {
+  [Status.EINGEGANGEN]: {
+    shortText: "Offen",
+    longText: "Antrag eingegangen",
+  },
+  [Status.WARTEN_AUF_BUERGERRUECKMELDUNG]: {
+    shortText: "Warten",
+    longText: "Warten auf Bürgerrückmeldung",
+  },
+  [Status.ABGELEHNT_KEINE_RUECKMELDUNG]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Keine Rückmeldung",
+  },
+  [Status.ABGELEHNT_NICHT_ZUSTAENDIG]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Nicht zuständig",
+  },
+  [Status.ABGELEHNT_NICHT_FOERDERFAEHIG]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Nicht förderfähig",
+  },
+  [Status.ABGELEHNT_VON_BA]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt von BA (Bescheid wurde versendet)",
+  },
+  [Status.ABLEHNUNGSBESCHEID_ERSTELLT]: {
+    shortText: "Zurückgewiesen",
+    longText: "Ablehnungsbescheid erstellt",
+  },
+  [Status.VOLLSTAENDIG]: {
+    shortText: "Vorbereitung",
+    longText: "Antrag vollständig",
+  },
+  [Status.SITZUNGSVORLAGE_ERSTELLT]: {
+    shortText: "Vorbereitung",
+    longText: "Sitzungsvorlage erstellt",
+  },
+  [Status.SITZUNGSVORLAGE_UEBERMITTELT]: {
+    shortText: "Vorbereitung",
+    longText: "Sitzungsvorlage an BA/Geschäftsstelle übermittelt",
+  },
+  [Status.BESCHLUSS_ERHALTEN]: {
+    shortText: "Angenommen",
+    longText: "Beschluss Erhalten",
+  },
+  [Status.ABLEHNUNGSBESCHLUSS_ERHALTEN]: {
+    shortText: "Zurückgewiesen",
+    longText: "Ablehnungsbeschluss erhalten",
+  },
+  [Status.ZUWENDUNGSBESCHEID_ERSTELLT]: {
+    shortText: "Bewilligt",
+    longText: "Zuwendungsbescheid erstellt",
+  },
+  [Status.ZUWENDUNGSBESCHEID_VERSENDET]: {
+    shortText: "Nachricht an Bürger",
+    longText: "Zuwendungsbescheid versendet",
+  },
+  [Status.VERWENDUNGSNACHWEISE_GEPRUEFT]: {
+    shortText: "Finanzierung",
+    longText: "Verwendungsnachweise geprüft",
+  },
+  [Status.AUSZAHLUNG]: {
+    shortText: "Finanzierung",
+    longText: "An die Stelle ausgezahlt",
+  },
+  [Status.RUECKZAHLUNG]: {
+    shortText: "Rückzahlung",
+    longText: "Rückzahlung angefordert",
+  },
+  [Status.ABGESCHLOSSEN]: {
+    shortText: "Abgeschlossen",
+    longText: "Abrechnungsschreiben erstellt",
+  },
 };

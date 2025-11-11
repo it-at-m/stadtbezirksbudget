@@ -20,8 +20,8 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
 
   const status = ref<Status>(initialValue);
   const statusOptions = Object.values(Status).map((status) => ({
-    title: StatusText[status],
     value: status,
+    ...StatusText[status],
   }));
 
   /**
