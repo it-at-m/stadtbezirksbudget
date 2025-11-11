@@ -4,7 +4,7 @@ import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
-import { Status } from "@/types/Status.ts";
+import { Status, StatusText } from "@/types/Status.ts";
 
 vi.mock("@/api/update-antragStatus.ts");
 vi.mock("@/stores/snackbar.ts");
@@ -76,22 +76,22 @@ describe("useAntragStatusSelect", () => {
     });
   });
 
-  test("testResetStatusSetsOldStatusWhenFocusFalse", () => {
-    const { status, resetStatus } = useAntragStatusSelect(
+  test("testResetStatusWhenUnfocus", () => {
+    const { status, resetStatus, search } = useAntragStatusSelect(
       "1",
       Status.EINGEGANGEN
     );
 
-    // simuliere Änderung ohne erfolgreiche API-Antwort (oldStatus bleibt initial)
     status.value = Status.ABGELEHNT_KEINE_RUECKMELDUNG;
 
     resetStatus(false);
 
     expect(status.value).toBe(Status.EINGEGANGEN);
+    expect(search.value).toBe("");
   });
 
-  test("testResetStatusKeepsNewStatusWhenFocusTrue", () => {
-    const { status, resetStatus } = useAntragStatusSelect(
+  test("testResetStatusWhenFocus", () => {
+    const { status, resetStatus, search } = useAntragStatusSelect(
       "1",
       Status.EINGEGANGEN
     );
@@ -100,7 +100,8 @@ describe("useAntragStatusSelect", () => {
 
     resetStatus(true);
 
-    expect(status.value).toBe(Status.ABGELEHNT_NICHT_ZUSTAENDIG);
+    expect(status.value).toBeUndefined();
+    expect(search.value).toBe(StatusText[Status.EINGEGANGEN].shortText);
   });
 
   test("testUpdateStatusReturnsEarlyWhenNewStatusIsFalsy", () => {
@@ -112,10 +113,23 @@ describe("useAntragStatusSelect", () => {
     (updateAntragStatus as vi.Mock).mockClear();
     (updateAntragStatus as vi.Mock).mockResolvedValue(undefined);
 
-    updateStatus(undefined);
+    updateStatus(undefined as unknown as Status);
 
     expect(updateAntragStatus).not.toHaveBeenCalled();
     expect(status.value).toBe(Status.EINGEGANGEN);
     expect(snackbarStoreMock.showMessage).not.toHaveBeenCalled();
+  });
+
+  test("testStatusOptionsContainExpectedEntries", () => {
+    const { statusOptions } = useAntragStatusSelect("1", Status.EINGEGANGEN);
+
+    const eingegangenOption = statusOptions.find(
+      (o) => (o as { value: Status }).value === Status.EINGEGANGEN
+    );
+    expect(eingegangenOption).toBeDefined();
+    expect(eingegangenOption).toMatchObject({
+      value: Status.EINGEGANGEN,
+      ...StatusText[Status.EINGEGANGEN],
+    });
   });
 });

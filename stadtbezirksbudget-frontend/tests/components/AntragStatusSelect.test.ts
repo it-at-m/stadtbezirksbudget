@@ -77,4 +77,14 @@ describe("AntragStatusSelect", () => {
 
     expect(mockUseAntragStatusSelect.resetStatus).toHaveBeenCalledWith(true);
   });
+
+  test("testCallsResetStatusWhenUnfocused", async () => {
+    const wrapper = createWrapper();
+
+    const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
+
+    await autocomplete.vm.$emit("update:focused", false);
+
+    expect(mockUseAntragStatusSelect.resetStatus).toHaveBeenCalledWith(false);
+  });
 });
