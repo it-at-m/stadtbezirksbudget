@@ -1,9 +1,9 @@
 # Application list
 
-The application list is the main interface on the home page the project. It provides an overview of all applications submitted by citizens, allowing caseworkers
-to efficiently manage and process them. It displays key information about each application, such as the applicant's name, submission date, current status, and
-any relevant actions that need to be taken. The list is designed to be user-friendly, enabling caseworkers to quickly identify applications that require
-attention and to navigate through the applications with ease.
+The application list is the main interface on the home page of the project. It provides an overview of all applications submitted by citizens, allowing
+caseworkers to efficiently manage and process them. It displays key information about each application, such as the applicant's name, submission date, current
+status, and any relevant actions that need to be taken. The list is designed to be user-friendly, enabling caseworkers to quickly identify applications that
+require attention and to navigate through the applications with ease.
 
 ![Application list showing multiple applications with their details and status](./application-list.png)
 
