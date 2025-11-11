@@ -29,6 +29,10 @@ describe("useAntragStatusSelect", () => {
 
     updateStatus(Status.ABGELEHNT_KEINE_RUECKMELDUNG);
 
+    expect(updateAntragStatus).toHaveBeenCalledWith(
+      "1",
+      Status.ABGELEHNT_KEINE_RUECKMELDUNG
+    );
     await vi.waitFor(() => {
       expect(status.value).toBe(Status.ABGELEHNT_KEINE_RUECKMELDUNG);
       expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
@@ -48,6 +52,10 @@ describe("useAntragStatusSelect", () => {
 
     updateStatus(Status.ABGELEHNT_NICHT_ZUSTAENDIG);
 
+    expect(updateAntragStatus).toHaveBeenCalledWith(
+      "1",
+      Status.ABGELEHNT_NICHT_ZUSTAENDIG
+    );
     await vi.waitFor(() => {
       expect(status.value).toBe(Status.EINGEGANGEN);
       expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
@@ -67,6 +75,10 @@ describe("useAntragStatusSelect", () => {
 
     updateStatus(Status.ABGELEHNT_VON_BA);
 
+    expect(updateAntragStatus).toHaveBeenCalledWith(
+      "1",
+      Status.ABGELEHNT_VON_BA
+    );
     await vi.waitFor(() => {
       expect(status.value).toBe(Status.EINGEGANGEN);
       expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
