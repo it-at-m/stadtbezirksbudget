@@ -2,6 +2,7 @@
   <v-autocomplete
     v-model="status"
     :items="statusOptions"
+    data-test="antrag-status-select"
     density="compact"
     hide-details="auto"
     variant="plain"
