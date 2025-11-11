@@ -7,8 +7,9 @@ APIs, while inline comments are desired only in complex or misleading cases.
 
 ## Decision
 
-Javadoc comments are written above all public methods and classes. Code is to be written as readable as possible, therefore inline comments are only to be used
-in complex or misleading cases.
+Backend: Javadoc comments are written above all public methods and classes. Code is to be written as readable as possible, therefore inline comments are only to be used in complex or misleading cases. Test classes and methods are excluded from this rule.
+
+Frontend: JSDoc comments are written above all exposed methods and variables. Code is to be written as readable as possible, therefore inline comments are only to be used in complex or misleading cases. Test classes and methods are excluded from this rule.
 
 ## Consequences
 
