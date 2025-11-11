@@ -43,6 +43,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class AntragsdatenControllerIntegrationTest {
 
     @Container
