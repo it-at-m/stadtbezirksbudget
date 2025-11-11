@@ -27,7 +27,8 @@ public class ZammadTicketService {
     /**
      * Creates a ticket in Zammad. Either {@code lhmextid} or {@code userid} must be provided.
      * <p>
-     * Required fields in {@code createTicketDTOV2} are: {@code title}, {@code anliegenart}, {@code vertrauensniveau}, {@code group}.
+     * Required fields in {@code createTicketDTOV2} are: {@code title}, {@code anliegenart},
+     * {@code vertrauensniveau}, {@code group}.
      *
      * @param createTicketDTOV2 DTO carrying the ticket details; required fields: title, anliegenart,
      *            vertrauensniveau
@@ -56,7 +57,7 @@ public class ZammadTicketService {
             log.error("Error creating ticket in Zammad: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
             throw new ZammadEAIException(e, "Failed to create ticket in Zammad");
         }
-        if (ticket != null){
+        if (ticket != null) {
             log.info("Ticket created with id {}", ticket.getId());
         }
 
