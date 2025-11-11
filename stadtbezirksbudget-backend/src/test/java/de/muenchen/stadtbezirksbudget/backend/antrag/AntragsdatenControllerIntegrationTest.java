@@ -150,5 +150,39 @@ class AntragsdatenControllerIntegrationTest {
                             .content(objectMapper.writeValueAsString(dto)))
                     .andExpect(status().isNotFound());
         }
+
+        @Test
+        void testUpdateAntragStatusNoBody() throws Exception {
+            final UUID antragId = antrag.getId();
+
+            mockMvc
+                    .perform(patch("/antrag/" + antragId + "/status")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void testUpdateAntragStatusInvalidStatus() throws Exception {
+            final UUID antragId = antrag.getId();
+            final String invalidDto = "{\"status\":\"INVALID_STATUS\"}";
+
+            mockMvc
+                    .perform(patch("/antrag/" + antragId + "/status")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(invalidDto))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void testUpdateAntragStatusNullStatus() throws Exception {
+            final UUID antragId = antrag.getId();
+            final String nullStatusDto = "{\"status\":null}";
+
+            mockMvc
+                    .perform(patch("/antrag/" + antragId + "/status")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(nullStatusDto))
+                    .andExpect(status().isBadRequest());
+        }
     }
 }
