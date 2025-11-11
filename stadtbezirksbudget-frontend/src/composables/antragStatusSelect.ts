@@ -1,3 +1,5 @@
+import type { StatusOption } from "@/types/Status.ts";
+
 import { readonly, ref } from "vue";
 
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
@@ -21,7 +23,7 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
   const status = ref<Status | undefined>(initialValue);
   const oldStatus = ref<Status>(initialValue);
   const search = ref<string>("");
-  const statusOptions = Object.values(Status).map((status) => ({
+  const statusOptions: StatusOption[] = Object.values(Status).map((status) => ({
     value: status,
     ...StatusText[status],
   }));

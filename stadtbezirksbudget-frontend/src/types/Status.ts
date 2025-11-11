@@ -19,10 +19,7 @@ export enum Status {
   ABGESCHLOSSEN = "ABGESCHLOSSEN",
 }
 
-export const StatusText: Record<
-  Status,
-  { shortText: string; longText: string }
-> = {
+export const StatusText: Record<Status, Omit<StatusOption, "value">> = {
   [Status.EINGEGANGEN]: {
     shortText: "Offen",
     longText: "Antrag eingegangen",
@@ -96,3 +93,9 @@ export const StatusText: Record<
     longText: "Abrechnungsschreiben erstellt",
   },
 };
+
+export interface StatusOption {
+  value: Status;
+  shortText: string;
+  longText: string;
+}

@@ -4,7 +4,7 @@ import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
-import { Status, StatusText } from "@/types/Status.ts";
+import { Status, StatusOption, StatusText } from "@/types/Status.ts";
 
 vi.mock("@/api/update-antragStatus.ts");
 vi.mock("@/stores/snackbar.ts");
@@ -124,7 +124,7 @@ describe("useAntragStatusSelect", () => {
     const { statusOptions } = useAntragStatusSelect("1", Status.EINGEGANGEN);
 
     const eingegangenOption = statusOptions.find(
-      (o) => (o as { value: Status }).value === Status.EINGEGANGEN
+      (o: StatusOption) => o.value === Status.EINGEGANGEN
     );
     expect(eingegangenOption).toBeDefined();
     expect(eingegangenOption).toMatchObject({
