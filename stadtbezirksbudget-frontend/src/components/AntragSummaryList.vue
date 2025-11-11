@@ -30,6 +30,7 @@
       <antrag-status-select
         :antrag-id="item.id"
         :status="item.status"
+        data-test="item-status"
       />
     </template>
     <template v-slot:[`item.eingangDatum`]="{ item }">

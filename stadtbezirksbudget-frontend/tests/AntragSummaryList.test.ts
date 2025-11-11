@@ -1,4 +1,5 @@
 import { mount } from "@vue/test-utils";
+import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 import { createVuetify } from "vuetify";
@@ -18,7 +19,7 @@ global.ResizeObserver = class {
     // Mock implementation: No action needed
   }
 };
-
+const pinia = createPinia();
 const vuetify = createVuetify({
   components,
   directives,
@@ -57,7 +58,7 @@ describe("AntragSummaryList", () => {
 
     wrapper = mount(AntragSummaryList, {
       global: {
-        plugins: [vuetify],
+        plugins: [pinia, vuetify],
       },
     });
   });
