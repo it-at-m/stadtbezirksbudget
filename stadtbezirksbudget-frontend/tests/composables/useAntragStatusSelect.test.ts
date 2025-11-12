@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
+import { ref } from "vue";
 
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect";
@@ -21,8 +22,8 @@ describe("useAntragStatusSelect", () => {
     (updateAntragStatus as vi.Mock).mockResolvedValue(undefined);
 
     const { status, updateStatus } = useAntragStatusSelect(
-      "1",
-      Status.EINGEGANGEN
+      ref("1"),
+      ref(Status.EINGEGANGEN)
     );
 
     expect(status.value).toBe(Status.EINGEGANGEN);
@@ -46,8 +47,8 @@ describe("useAntragStatusSelect", () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue(new Error("API Error"));
 
     const { status, updateStatus } = useAntragStatusSelect(
-      "1",
-      Status.EINGEGANGEN
+      ref("1"),
+      ref(Status.EINGEGANGEN)
     );
 
     updateStatus(Status.ABGELEHNT_NICHT_ZUSTAENDIG);
@@ -69,8 +70,8 @@ describe("useAntragStatusSelect", () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue({});
 
     const { status, updateStatus } = useAntragStatusSelect(
-      "1",
-      Status.EINGEGANGEN
+      ref("1"),
+      ref(Status.EINGEGANGEN)
     );
 
     updateStatus(Status.ABGELEHNT_VON_BA);
@@ -90,8 +91,8 @@ describe("useAntragStatusSelect", () => {
 
   test("testResetStatusWhenUnfocus", () => {
     const { status, resetStatus, search } = useAntragStatusSelect(
-      "1",
-      Status.EINGEGANGEN
+      ref("1"),
+      ref(Status.EINGEGANGEN)
     );
 
     status.value = Status.ABGELEHNT_KEINE_RUECKMELDUNG;
@@ -104,8 +105,8 @@ describe("useAntragStatusSelect", () => {
 
   test("testResetStatusWhenFocus", () => {
     const { status, resetStatus, search } = useAntragStatusSelect(
-      "1",
-      Status.EINGEGANGEN
+      ref("1"),
+      ref(Status.EINGEGANGEN)
     );
 
     status.value = Status.ABGELEHNT_NICHT_ZUSTAENDIG;
@@ -118,8 +119,8 @@ describe("useAntragStatusSelect", () => {
 
   test("testUpdateStatusReturnsEarlyWhenNewStatusIsFalsy", () => {
     const { status, updateStatus } = useAntragStatusSelect(
-      "1",
-      Status.EINGEGANGEN
+      ref("1"),
+      ref(Status.EINGEGANGEN)
     );
 
     (updateAntragStatus as vi.Mock).mockClear();
@@ -133,7 +134,10 @@ describe("useAntragStatusSelect", () => {
   });
 
   test("testStatusOptionsContainExpectedEntries", () => {
-    const { statusOptions } = useAntragStatusSelect("1", Status.EINGEGANGEN);
+    const { statusOptions } = useAntragStatusSelect(
+      ref("1"),
+      ref(Status.EINGEGANGEN)
+    );
 
     const eingegangenOption = statusOptions.find(
       (o: StatusOption) => o.value === Status.EINGEGANGEN
@@ -142,6 +146,17 @@ describe("useAntragStatusSelect", () => {
     expect(eingegangenOption).toMatchObject({
       value: Status.EINGEGANGEN,
       ...StatusText[Status.EINGEGANGEN],
+    });
+  });
+
+  test("testUpdatesStatusOnInitialStatusChange", async () => {
+    const initialStatus = ref(Status.EINGEGANGEN);
+    const { status } = useAntragStatusSelect(ref("1"), initialStatus);
+
+    expect(status.value).toBe(Status.EINGEGANGEN);
+    initialStatus.value = Status.VOLLSTAENDIG;
+    await vi.waitFor(() => {
+      expect(status.value).toBe(Status.VOLLSTAENDIG);
     });
   });
 });

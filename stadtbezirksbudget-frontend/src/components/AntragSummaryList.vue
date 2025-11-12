@@ -29,7 +29,7 @@
     <template v-slot:[`item.status`]="{ item }">
       <antrag-status-select
         :antrag-id="item.id"
-        :status="item.status"
+        :initial-status="item.status"
         data-test="item-status"
       />
     </template>

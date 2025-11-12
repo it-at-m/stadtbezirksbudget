@@ -29,11 +29,14 @@
 <script lang="ts" setup>
 import type { Status } from "@/types/Status.ts";
 
+import { toRefs } from "vue";
+
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect.ts";
 
-const props = defineProps<{ antragId: string; status: Status }>();
+const props = defineProps<{ antragId: string; initialStatus: Status }>();
+const { antragId, initialStatus } = toRefs(props);
 const { updateStatus, resetStatus, status, search, statusOptions } =
-  useAntragStatusSelect(props.antragId, props.status);
+  useAntragStatusSelect(antragId, initialStatus);
 </script>
 
 <style scoped>

@@ -1,6 +1,7 @@
 import type { StatusOption } from "@/types/Status.ts";
+import type { Ref } from "vue";
 
-import { readonly, ref } from "vue";
+import { readonly, ref, watch } from "vue";
 
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
@@ -13,15 +14,18 @@ import { Status, StatusText } from "@/types/Status.ts";
  * to update the status both locally and in the backend.
  *
  * @param antragId - The ID of the Antrag whose status is being managed.
- * @param initialValue - The initial status value of the Antrag.
+ * @param initialStatus - The initial status value of the Antrag.
  * @returns {Object} An object exposing the current status, available
  * status options, and a method to update the status.
  */
-export function useAntragStatusSelect(antragId: string, initialValue: Status) {
+export function useAntragStatusSelect(
+  antragId: Ref<string>,
+  initialStatus: Ref<Status>
+) {
   const snackbarStore = useSnackbarStore();
 
-  const status = ref<Status | undefined>(initialValue);
-  const oldStatus = ref<Status>(initialValue);
+  const status = ref<Status | undefined>(initialStatus.value);
+  const oldStatus = ref<Status>(initialStatus.value);
   const search = ref<string>("");
   const statusOptions: StatusOption[] = Object.values(Status).map((status) => ({
     value: status,
@@ -34,7 +38,7 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
    */
   function updateStatus(newStatus: Status) {
     if (!newStatus) return;
-    updateAntragStatus(antragId, newStatus)
+    updateAntragStatus(antragId.value, newStatus)
       .then(() => {
         status.value = newStatus;
         oldStatus.value = newStatus;
@@ -69,6 +73,11 @@ export function useAntragStatusSelect(antragId: string, initialValue: Status) {
       search.value = "";
     }
   }
+
+  watch(
+    () => initialStatus.value,
+    (initial) => (status.value = initial)
+  );
 
   return {
     updateStatus,

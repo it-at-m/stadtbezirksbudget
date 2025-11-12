@@ -17,7 +17,7 @@ const vuetify = createVuetify({ components, directives });
 const createWrapper = () =>
   mount(AntragStatusSelect, {
     global: { plugins: [pinia, vuetify] },
-    props: { antragId: "1", status: "EINGEGANGEN" },
+    props: { antragId: "1", initialStatus: "EINGEGANGEN" },
   });
 
 describe("AntragStatusSelect", () => {
