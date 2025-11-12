@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
+import java.math.BigDecimal;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,7 @@ public class VoraussichtlicheAusgabe extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @NotBlank private String kategorie;
-    @PositiveOrZero private double betrag;
+    @NotNull @PositiveOrZero private BigDecimal betrag;
     @NotNull private String direktoriumNotiz;
 
     @NotNull @ManyToOne

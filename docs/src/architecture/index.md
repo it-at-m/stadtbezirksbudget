@@ -1,6 +1,8 @@
 # Architecture
 
-The following section presents the architecture diagram, illustrating the core systems and their interactions within the Stadtbezirksbudget application. This visual overview highlights how the form server, communication tools, documentation systems, and the specialized application work together to streamline the application process.
+The following section presents the architecture diagram, illustrating the core systems and their interactions within the Stadtbezirksbudget application. This
+visual overview highlights how the form server, communication tools, documentation systems, and the specialized application work together to streamline the
+application process.
 
 ## Architecture Diagram
 
@@ -8,15 +10,7 @@ The following section presents the architecture diagram, illustrating the core s
 The architecture diagram contains dashed boxes and lines that are not part of the MVP (Minimum Viable Product) and will not be implemented in the first version.
 :::
 
-<script setup>
-// noinspection ES6UnusedImports
-import architectureUrl from "./architecture.png";
-</script>
-
-<a :href="architectureUrl" target="_blank" rel="noopener noreferrer">
-    <img :src="architectureUrl" alt="Architecture diagram showing all system components and their interactions" />
-</a>
-<a :href="architectureUrl" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+![Architecture diagram showing all system components and their interactions](./architecture.png)
 
 ## Components
 
@@ -32,15 +26,18 @@ Application data, except for attachments, is stored in a PostgreSQL database.
 
 ### CIT Form Server
 
-The Form Server is the platform where citizens enter their application data. It serves as the initial point of contact for users, providing a user-friendly interface for submitting requests.
+The Form Server is the platform where citizens enter their application data. It serves as the initial point of contact for users, providing a user-friendly
+interface for submitting requests.
 
 ### SBB-CIT-EAI
 
-The SBB-CIT-EAI component acts as an intermediary, managing the flow of data between the Form Server and the Stadtbezirksbudget application. It ensures that information is accurately transmitted via the event bus and an S3 storage.
+The SBB-CIT-EAI component acts as an intermediary, managing the flow of data between the Form Server and the Stadtbezirksbudget application. It ensures that
+information is accurately transmitted via the event bus and an S3 storage.
 
 ### DBS (Zammad)
 
-Zammad is the communication tool that connects citizens with caseworkers. It facilitates seamless interactions, allowing for inquiries, updates, and notifications throughout the application process.
+Zammad is the communication tool that connects citizens with caseworkers. It facilitates seamless interactions, allowing for inquiries, updates, and
+notifications throughout the application process.
 
 ### Event Bus (Kafka)
 
@@ -52,7 +49,8 @@ S3 Storage is used to centrally store all attachments, making them reliably acce
 
 ### E-Akte
 
-E-Akte is the documentation system that tracks the entire application process. It maintains a comprehensive record of actions taken, decisions made, and communications exchanged, ensuring auditability and accountability.
+E-Akte is the documentation system that tracks the entire application process. It maintains a comprehensive record of actions taken, decisions made, and
+communications exchanged, ensuring auditability and accountability.
 
 ### SSO (Keycloak)
 
