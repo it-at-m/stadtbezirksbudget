@@ -38,7 +38,7 @@ public class ZammadTicketService {
      * @return the created {@link TicketInternal}
      * @throws IllegalArgumentException if both {@code lhmextid} and {@code userid} are {@code null} or
      *             if required fields in {@code createTicketDTOV2} are missing
-     * @throws WebClientResponseException if the remote Zammad API responds with an error
+     * @throws ZammadEAIException if the remote Zammad API responds with an error
      */
     public TicketInternal createTicket(final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
             final List<AbstractResource> attachments) {
