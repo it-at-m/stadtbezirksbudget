@@ -376,9 +376,9 @@
                             <inputSpec>${project.basedir}/src/main/resources/openapi-spec.json</inputSpec>
                             <library>webclient</library>
                             <generatorName>java</generatorName>
-                            <apiPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.api</apiPackage>
-                            <modelPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.model</modelPackage>
-                            <invokerPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad</invokerPackage>
+                            <apiPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api</apiPackage>
+                            <modelPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model</modelPackage>
+                            <invokerPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated</invokerPackage>
                             <serverVariableOverrides />
                             <configOptions>
                                 <useAbstractionForFiles>true</useAbstractionForFiles>

@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 
-import de.muenchen.stadtbezirksbudget.cit_eai.zammad.api.TicketsApi;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.ApiClient;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api.TicketsApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;

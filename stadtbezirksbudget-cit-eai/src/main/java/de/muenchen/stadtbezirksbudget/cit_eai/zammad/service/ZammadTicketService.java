@@ -1,9 +1,9 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.zammad.service;
 
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.ZammadEAIException;
-import de.muenchen.stadtbezirksbudget.cit_eai.zammad.api.TicketsApi;
-import de.muenchen.stadtbezirksbudget.cit_eai.zammad.model.CreateTicketDTOV2;
-import de.muenchen.stadtbezirksbudget.cit_eai.zammad.model.TicketInternal;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api.TicketsApi;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicketDTOV2;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.TicketInternal;
 import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
