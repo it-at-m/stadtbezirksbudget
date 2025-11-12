@@ -11,7 +11,7 @@
     item-value="value"
     variant="plain"
     @update:model-value="updateStatus"
-    @update:focused="resetStatus"
+    @update:focused="toggleStatusAndSearch"
   >
     <template #item="{ props, item }">
       <v-list-item
@@ -35,7 +35,7 @@ import { useAntragStatusSelect } from "@/composables/antragStatusSelect.ts";
 
 const props = defineProps<{ antragId: string; initialStatus: Status }>();
 const { antragId, initialStatus } = toRefs(props);
-const { updateStatus, resetStatus, status, search, statusOptions } =
+const { updateStatus, toggleStatusAndSearch, status, search, statusOptions } =
   useAntragStatusSelect(antragId, initialStatus);
 </script>
 

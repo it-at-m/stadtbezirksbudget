@@ -31,7 +31,7 @@ describe("AntragStatusSelect", () => {
         { title: "Abgelehnt", value: "ABGELEHNT" },
       ]),
       updateStatus: vi.fn(),
-      resetStatus: vi.fn(),
+      toggleStatusAndSearch: vi.fn(),
     };
 
     vi.mocked(useAntragStatusSelect).mockReturnValue(mockUseAntragStatusSelect);
@@ -75,7 +75,9 @@ describe("AntragStatusSelect", () => {
 
     await autocomplete.vm.$emit("update:focused", true);
 
-    expect(mockUseAntragStatusSelect.resetStatus).toHaveBeenCalledWith(true);
+    expect(
+      mockUseAntragStatusSelect.toggleStatusAndSearch
+    ).toHaveBeenCalledWith(true);
   });
 
   test("testCallsResetStatusWhenUnfocused", async () => {
@@ -85,6 +87,8 @@ describe("AntragStatusSelect", () => {
 
     await autocomplete.vm.$emit("update:focused", false);
 
-    expect(mockUseAntragStatusSelect.resetStatus).toHaveBeenCalledWith(false);
+    expect(
+      mockUseAntragStatusSelect.toggleStatusAndSearch
+    ).toHaveBeenCalledWith(false);
   });
 });

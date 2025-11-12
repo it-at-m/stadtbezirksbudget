@@ -89,29 +89,29 @@ describe("useAntragStatusSelect", () => {
     });
   });
 
-  test("testResetStatusWhenUnfocus", () => {
-    const { status, resetStatus, search } = useAntragStatusSelect(
+  test("testToggleStatusAndSearchWhenUnfocus", () => {
+    const { status, toggleStatusAndSearch, search } = useAntragStatusSelect(
       ref("1"),
       ref(Status.EINGEGANGEN)
     );
 
     status.value = Status.ABGELEHNT_KEINE_RUECKMELDUNG;
 
-    resetStatus(false);
+    toggleStatusAndSearch(false);
 
     expect(status.value).toBe(Status.EINGEGANGEN);
     expect(search.value).toBe("");
   });
 
-  test("testResetStatusWhenFocus", () => {
-    const { status, resetStatus, search } = useAntragStatusSelect(
+  test("testToggleStatusAndSearchWhenFocus", () => {
+    const { status, toggleStatusAndSearch, search } = useAntragStatusSelect(
       ref("1"),
       ref(Status.EINGEGANGEN)
     );
 
     status.value = Status.ABGELEHNT_NICHT_ZUSTAENDIG;
 
-    resetStatus(true);
+    toggleStatusAndSearch(true);
 
     expect(status.value).toBeUndefined();
     expect(search.value).toBe(StatusText[Status.EINGEGANGEN].shortText);

@@ -61,10 +61,12 @@ export function useAntragStatusSelect(
   }
 
   /**
-   * Resets the status to the old value if focus is lost without a change.
-   * @param focus
+   * Toggles status and search based on focus state.
+   *
+   * @param {boolean} focus - If focused updates search and clears status,
+   *                          If not focused restores status and clears search.
    */
-  function resetStatus(focus: boolean) {
+  function toggleStatusAndSearch(focus: boolean) {
     if (focus) {
       search.value = StatusText[oldStatus.value].shortText;
       status.value = undefined;
@@ -81,7 +83,7 @@ export function useAntragStatusSelect(
 
   return {
     updateStatus,
-    resetStatus,
+    toggleStatusAndSearch,
     // Current status of the Antrag
     status,
     // Search term for filtering status options
