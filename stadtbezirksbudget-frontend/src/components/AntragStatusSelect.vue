@@ -7,15 +7,15 @@
     data-test="antrag-status-select"
     density="compact"
     hide-details="auto"
-    item-title="longText"
+    item-title="shortText"
     variant="plain"
     @update:model-value="updateStatus"
     @update:focused="resetStatus"
   >
     <template #item="{ props, item }">
       <v-list-item
-        :subtitle="item.raw.shortText"
-        :title="item.raw.longText"
+        :subtitle="item.raw.longText"
+        :title="item.raw.shortText"
         v-bind="props"
       />
     </template>
