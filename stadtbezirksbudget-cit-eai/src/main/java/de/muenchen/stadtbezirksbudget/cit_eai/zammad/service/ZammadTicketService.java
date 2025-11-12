@@ -32,13 +32,13 @@ public class ZammadTicketService {
      *
      * @param createTicketDTOV2 DTO carrying the ticket details; required fields: title, anliegenart,
      *            vertrauensniveau
-     * @param lhmextid external identifier of the ticket creator, may be {@code null}
-     * @param userid internal user id of the ticket creator, may be {@code null}
-     * @param attachments optional list of attachments to add to the ticket
-     * @return the created {@link TicketInternal}
-     * @throws IllegalArgumentException if both {@code lhmextid} and {@code userid} are {@code null} or
+     * @param lhmextid External identifier of the ticket creator, may be {@code null}
+     * @param userid Internal user id of the ticket creator, may be {@code null}
+     * @param attachments List of attachments to add to the ticket, maybe empty
+     * @return The created {@link TicketInternal}
+     * @throws IllegalArgumentException If both {@code lhmextid} and {@code userid} are {@code null} or
      *             if required fields in {@code createTicketDTOV2} are missing
-     * @throws ZammadEAIException if the remote Zammad API responds with an error
+     * @throws ZammadEAIException If the remote Zammad API responds with an error
      */
     public TicketInternal createTicket(final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
             final List<AbstractResource> attachments) {
