@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+// TODO: Has to be removed as soon as UnicodeFilterConfigurationTest was refactored
 @Service
 @Slf4j
 @RequiredArgsConstructor

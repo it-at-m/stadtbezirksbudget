@@ -5,7 +5,6 @@ import de.muenchen.stadtbezirksbudget.backend.theentity.dto.TheEntityRequestDTO;
 import de.muenchen.stadtbezirksbudget.backend.theentity.dto.TheEntityResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+// TODO: Has to be removed as soon as UnicodeFilterConfigurationTest was refactored
 @RestController
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/theEntity")
 public class TheEntityController {
