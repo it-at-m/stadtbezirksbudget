@@ -68,7 +68,7 @@ export function useAntragSummaryList() {
 
   return {
     // List of AntragSummary items.
-    items: items,
+    items: readonly(items),
     // Total number of AntragSummary items available.
     totalItems: readonly(totalItems),
     // Current page number.
