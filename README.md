@@ -39,6 +39,10 @@ The Project is based on [Spring][spring-documentation] and [Vue.js][vuejs-docume
 
 To learn more about the used reference architecture of IT@M, checkout its [documentation][refarch-documentation] or [code][refarch-code].
 
+> [!NOTE]
+> **Gender disclaimer:**
+> For the sole purpose of improved readability, the generic masculine form is used, which is intended to be gender-neutral in all cases.
+
 ## Usage
 
 To get set up and learn more about how to setup the project, please check out the [Getting Started][getting-started-documentation] page.
