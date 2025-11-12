@@ -3,10 +3,13 @@ package de.muenchen.stadtbezirksbudget.cit_eai.zammad.service;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.ZammadEAIException;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api.TicketsApi;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicketDTOV2;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateUserAndTicketDTOV2;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.TicketInternal;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTicketResponseDTO;
 import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.AbstractResource;
@@ -62,6 +65,35 @@ public class ZammadTicketService {
         }
 
         return ticket;
+    }
+
+    /**
+     * Creates a ticket and a user in zammad.
+     * <p>
+     * Required fields in {@link CreateUserAndTicketDTOV2} are: {@code createTicketDTO.title},
+     * {@code createTicketDTO.anliegenart},
+     * {@code createTicketDTO.vertrauensniveau}, {@code createTicketDTO.group}.
+     *
+     * @param createUserAndTicketDTOV2 DTO carrying the ticket and user details
+     * @param attachments List of attachments to add to the ticket, maybe empty
+     * @return The created ticket and user as {@link UserAndTicketResponseDTO}
+     * @throws NullPointerException If createUserAndTicketDTOV2 or attachment list is null
+     * @throws ZammadEAIException If request failed
+     */
+    public UserAndTicketResponseDTO createUserAndTicket(final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2, final List<AbstractResource> attachments) {
+        Objects.requireNonNull(createUserAndTicketDTOV2);
+        Objects.requireNonNull(attachments);
+        validateCreateTicketDTO(createUserAndTicketDTOV2.getCreateTicketDTO());
+
+        log.info("Attempting to create ticket and user in Zammad");
+        final Optional<UserAndTicketResponseDTO> userAndTicketResponse;
+        try {
+            userAndTicketResponse = ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments).blockOptional();
+        } catch (final WebClientResponseException e) {
+            throw new ZammadEAIException(e, "Failed to create ticket and user");
+        }
+
+        return userAndTicketResponse.orElseThrow(() -> new ZammadEAIException("Unable to create ticket and user"));
     }
 
     private void validateCreateTicketDTO(final CreateTicketDTOV2 createTicketDTOV2) {
