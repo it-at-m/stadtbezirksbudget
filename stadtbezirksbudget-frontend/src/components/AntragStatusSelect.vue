@@ -8,6 +8,7 @@
     density="compact"
     hide-details="auto"
     item-title="shortText"
+    item-value="value"
     variant="plain"
     @update:model-value="updateStatus"
     @update:focused="resetStatus"
