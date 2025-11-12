@@ -17,7 +17,7 @@ import lombok.ToString;
  * The entity's content will be loaded according to the reference variable.
  * </p>
  */
-// TODO: Has to be removed as soon as UnicodeFilterConfigurationTest was refactored
+// TODO (#317): Has to be removed as soon as UnicodeFilterConfigurationTest was refactored
 @Entity
 // Definition of getter, setter, ...
 @Getter
