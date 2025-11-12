@@ -66,11 +66,11 @@ const vitepressConfig = defineConfig({
           text: "Features",
           link: "/features/",
           items: [
+            { text: "Data model", link: "/features/data-model" },
             {
               text: "Application list",
               link: "/features/application-list/",
             },
-            { text: "Data model", link: "/features/data-model" },
             {
               text: "Reliable communication",
               link: "/features/reliable-communication",
