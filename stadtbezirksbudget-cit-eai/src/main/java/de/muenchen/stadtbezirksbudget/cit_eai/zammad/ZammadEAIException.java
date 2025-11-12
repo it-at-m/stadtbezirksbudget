@@ -13,4 +13,8 @@ public class ZammadEAIException extends WebClientResponseException {
         super(e.getStatusCode().value(), message, e.getHeaders(), e.getResponseBodyAsByteArray(), Charset.defaultCharset(), e.getRequest());
     }
 
+    public ZammadEAIException(final String message){
+        super(0, message, null, null, null, null);
+    }
+
 }
