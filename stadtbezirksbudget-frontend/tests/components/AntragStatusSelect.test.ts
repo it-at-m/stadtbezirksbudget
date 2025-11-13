@@ -28,8 +28,8 @@ describe("AntragStatusSelect", () => {
       status: ref("EINGEGANGEN"),
       search: ref(""),
       statusOptions: [
-        { title: "Offen", value: "EINGEGANGEN" },
-        { title: "Abgelehnt", value: "ABGELEHNT" },
+        { value: "EINGEGANGEN", shortText: "Offen", longText: "Eingegangen" },
+        { value: "ABGELEHNT", shortText: "Abgelehnt", longText: "Abgelehnt" },
       ],
       updateStatus: vi.fn(),
       toggleStatusAndSearch: vi.fn(),
