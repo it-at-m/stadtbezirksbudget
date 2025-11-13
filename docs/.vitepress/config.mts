@@ -20,11 +20,17 @@ const vitepressConfig = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "About", link: "/about/" },
+      {
+        text: "About",
+        items: [
+          { text: "About", link: "/about/" },
+          { text: "Status values", link: "/about/status-values" },
+          { text: "Target process", link: "/about/target-process" },
+        ],
+      },
       {
         text: "Features",
         items: [
-          { text: "Features", link: "/features/" },
           {
             text: "Reliable communication",
             link: "/features/reliable-communication",
@@ -57,10 +63,16 @@ const vitepressConfig = defineConfig({
     ],
     sidebar: {
       "/": [
-        { text: "About", link: "/about/" },
+        {
+          text: "About",
+          items: [
+            { text: "About", link: "/about/" },
+            { text: "Status values", link: "/about/status-values" },
+            { text: "Target process", link: "/about/target-process" },
+          ],
+        },
         {
           text: "Features",
-          link: "/features/",
           items: [
             {
               text: "Reliable communication",
