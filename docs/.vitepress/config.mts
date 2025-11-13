@@ -24,8 +24,8 @@ const vitepressConfig = defineConfig({
         text: "About",
         items: [
           { text: "About", link: "/about/" },
-          { text: "Status Values", link: "/about/status-values" },
-          { text: "Target Process", link: "/about/target-process" },
+          { text: "Status values", link: "/about/status-values" },
+          { text: "Target process", link: "/about/target-process" },
         ],
       },
       {
@@ -67,8 +67,8 @@ const vitepressConfig = defineConfig({
           text: "About",
           items: [
             { text: "About", link: "/about/" },
-            { text: "Status Values", link: "/about/status-values" },
-            { text: "Target Process", link: "/about/target-process" },
+            { text: "Status values", link: "/about/status-values" },
+            { text: "Target process", link: "/about/target-process" },
           ],
         },
         {
