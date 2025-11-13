@@ -158,4 +158,38 @@ describe("useAntragStatusSelect", () => {
       expect(status.value).toBe("VOLLSTAENDIG");
     });
   });
+
+  test("testHandlesConcurrentStatusUpdates", async () => {
+    let resolveFirst: (value?: unknown) => void;
+    let resolveSecond: (value?: unknown) => void;
+
+    (updateAntragStatus as vi.Mock)
+      .mockReturnValueOnce(
+        new Promise((resolve) => {
+          resolveFirst = resolve;
+        })
+      )
+      .mockReturnValueOnce(
+        new Promise((resolve) => {
+          resolveSecond = resolve;
+        })
+      );
+
+    const { status, updateStatus } = useAntragStatusSelect(
+      ref("1"),
+      ref("EINGEGANGEN")
+    );
+
+    updateStatus("VOLLSTAENDIG");
+    updateStatus("ABGELEHNT_VON_BA");
+    resolveSecond();
+    await vi.waitFor(() => {
+      expect(status.value).toBe("ABGELEHNT_VON_BA");
+    });
+
+    resolveFirst();
+    await vi.waitFor(() => {
+      expect(status.value).toBe("ABGELEHNT_VON_BA");
+    });
+  });
 });
