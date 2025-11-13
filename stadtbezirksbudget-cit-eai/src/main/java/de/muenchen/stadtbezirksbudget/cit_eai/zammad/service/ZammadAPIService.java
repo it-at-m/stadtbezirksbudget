@@ -23,7 +23,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ZammadTicketService {
+public class ZammadAPIService {
 
     private final TicketsApi ticketsApi;
 
