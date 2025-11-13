@@ -26,6 +26,7 @@ const vitepressConfig = defineConfig({
           { text: "About", link: "/about/" },
           { text: "Status values", link: "/about/status-values" },
           { text: "Target process", link: "/about/target-process" },
+          { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
         ],
       },
       {
@@ -73,6 +74,7 @@ const vitepressConfig = defineConfig({
             { text: "About", link: "/about/" },
             { text: "Status values", link: "/about/status-values" },
             { text: "Target process", link: "/about/target-process" },
+            { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
           ],
         },
         {
