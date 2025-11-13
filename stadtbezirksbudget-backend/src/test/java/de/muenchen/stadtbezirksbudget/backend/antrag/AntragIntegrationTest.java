@@ -163,6 +163,30 @@ class AntragIntegrationTest {
         }
 
         @Test
+        void testUpdateAntragStatusIdempotency() throws Exception {
+            final UUID antragId = antrag.getId();
+            final AntragStatusUpdateDTO dto = new AntragStatusUpdateDTO(Status.VOLLSTAENDIG);
+
+            mockMvc
+                    .perform(patch("/antrag/" + antragId + "/status")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(dto)))
+                    .andExpect(status().isNoContent());
+
+            final Antrag firstUpdate = antragRepository.findById(antragId).orElseThrow();
+            assertThat(firstUpdate.getBearbeitungsstand().getStatus()).isEqualTo(Status.VOLLSTAENDIG);
+
+            mockMvc
+                    .perform(patch("/antrag/" + antragId + "/status")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(dto)))
+                    .andExpect(status().isNoContent());
+
+            final Antrag secondUpdate = antragRepository.findById(antragId).orElseThrow();
+            assertThat(secondUpdate.getBearbeitungsstand().getStatus()).isEqualTo(Status.VOLLSTAENDIG);
+        }
+
+        @Test
         void testUpdateAntragStatusInvalidStatus() throws Exception {
             final UUID antragId = antrag.getId();
             final String invalidDto = "{\"status\":\"INVALID_STATUS\"}";
