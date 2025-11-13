@@ -87,14 +87,17 @@ const STATUS_DEFINITIONS = [
   },
 ] as const;
 
+// Type representing all possible status values
 export type Status = (typeof STATUS_DEFINITIONS)[number]["value"];
 
+// Interface for status options used in dropdowns or selectors
 export interface StatusOption {
   value: Status;
   shortText: string;
   longText: string;
 }
 
+// Mapping of status values to their corresponding short and long texts
 export const StatusText: Record<
   Status,
   Omit<StatusOption, "value">
@@ -105,6 +108,7 @@ export const StatusText: Record<
   ])
 ) as Record<Status, Omit<StatusOption, "value">>;
 
+// Array of all status options for use in UI components
 export const statusOptions: StatusOption[] = STATUS_DEFINITIONS.map((s) => ({
   value: s.value,
   shortText: s.shortText,
