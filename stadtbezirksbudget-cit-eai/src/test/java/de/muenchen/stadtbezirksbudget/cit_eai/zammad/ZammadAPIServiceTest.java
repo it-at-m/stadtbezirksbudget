@@ -46,6 +46,7 @@ class ZammadAPIServiceTest {
 
             assertThat(result).isNotNull();
             assertThat(result.getId()).isEqualTo("42");
+            assertThat(result).isSameAs(ticket);
         }
 
         @Test
