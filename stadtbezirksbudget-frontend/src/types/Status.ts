@@ -23,7 +23,7 @@ const STATUS_DEFINITIONS = [
   {
     value: "BESCHLUSS_ERHALTEN",
     shortText: "Angenommen",
-    longText: "Beschluss Erhalten",
+    longText: "Beschluss erhalten",
   },
   {
     value: "ZUWENDUNGSBESCHEID_ERSTELLT",
