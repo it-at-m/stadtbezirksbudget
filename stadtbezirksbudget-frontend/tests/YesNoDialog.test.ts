@@ -49,8 +49,8 @@ describe("YesNoDialog", () => {
 
     await wrapper.vm.$nextTick();
 
-    const yes = wrapper.find("#yesnodialog-btn-yes");
-    const no = wrapper.find("#yesnodialog-btn-no");
+    const yes = wrapper.find("[data-test='yes-button']");
+    const no = wrapper.find("[data-test='no-button']");
 
     expect(yes.exists()).toBe(true);
     expect(no.exists()).toBe(true);
