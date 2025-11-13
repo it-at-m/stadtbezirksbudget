@@ -44,4 +44,10 @@ const { updateStatus, toggleStatusAndSearch, status, search, statusOptions } =
 :deep(.v-field__input) {
   flex-wrap: nowrap;
 }
+/*noinspection CssUnusedSymbol*/
+:deep(.v-autocomplete__selection) {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>
