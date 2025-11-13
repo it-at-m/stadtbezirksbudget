@@ -191,5 +191,14 @@ describe("useAntragStatusSelect", () => {
     await vi.waitFor(() => {
       expect(status.value).toBe("ABGELEHNT_VON_BA");
     });
+
+    expect(updateAntragStatus).toHaveBeenCalledTimes(2);
+    expect(updateAntragStatus).toHaveBeenNthCalledWith(1, "1", "VOLLSTAENDIG");
+    expect(updateAntragStatus).toHaveBeenNthCalledWith(
+      2,
+      "1",
+      "ABGELEHNT_VON_BA"
+    );
+    expect(snackbarStoreMock.showMessage).toHaveBeenCalled();
   });
 });
