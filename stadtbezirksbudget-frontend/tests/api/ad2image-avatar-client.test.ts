@@ -1,4 +1,4 @@
-import { describe, expect, test, vi, afterEach } from "vitest";
+import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { Ad2imageAvatarClient } from "@/api/ad2image-avatar-client";
 
@@ -31,4 +31,3 @@ describe("Ad2imageAvatarClient", () => {
     expect(href).toContain("size=128");
   });
 });
-
