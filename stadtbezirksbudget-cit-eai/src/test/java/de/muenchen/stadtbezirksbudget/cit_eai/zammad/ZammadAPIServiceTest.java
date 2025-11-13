@@ -14,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 class ZammadAPIServiceTest {
@@ -52,6 +53,16 @@ class ZammadAPIServiceTest {
             final CreateTicketDTOV2 dto = new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g");
 
             assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, null, null, Collections.emptyList()));
+        }
+
+        @Test
+        void testCreateTicketWithApiErrorThrowsZammadEAIException() {
+            final CreateTicketDTOV2 dto = new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g");
+
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq("ext-1"), eq(null), any()))
+                    .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
+
+            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, "ext-1", null, Collections.emptyList()));
         }
 
     }
