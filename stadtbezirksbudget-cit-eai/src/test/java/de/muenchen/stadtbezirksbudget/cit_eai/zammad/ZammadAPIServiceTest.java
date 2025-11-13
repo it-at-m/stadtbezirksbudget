@@ -7,7 +7,9 @@ import static org.mockito.ArgumentMatchers.eq;
 
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api.TicketsApi;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicketDTOV2;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateUserAndTicketDTOV2;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.TicketInternal;
+import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTicketResponseDTO;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.service.ZammadAPIService;
 import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
@@ -65,6 +67,24 @@ class ZammadAPIServiceTest {
 
             assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, "ext-1", null, Collections.emptyList()));
         }
+    }
 
+    @Nested
+    class CreateUserAndTicket{
+        @Test
+        void testCreateUserAndTicketReturnsResponse() {
+            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
+
+            final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
+
+            Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
+                    .thenReturn(Mono.just(resp));
+
+            final UserAndTicketResponseDTO result = service.createUserAndTicket(dto, Collections.emptyList());
+
+            assertThat(result).isNotNull();
+            assertThat(result).isSameAs(resp);
+        }
     }
 }
