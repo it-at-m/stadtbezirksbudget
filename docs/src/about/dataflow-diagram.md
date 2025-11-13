@@ -40,7 +40,7 @@ The colors used in the diagram (blue and orange) correspond to those in the stat
 
 ### Abgeschlossen
 
-![Dataflow-diagram showing all data-flows and related information of state "Abgeschlossen/Abgelehnt"](./dataflow-diagram/Abgelehnt-state.png)
+![Dataflow-diagram showing all data-flows and related information of state "Abgeschlossen"](./dataflow-diagram/Abgeschlossen-state.png)
 
 ## Further states
 
@@ -58,4 +58,4 @@ The colors used in the diagram (blue and orange) correspond to those in the stat
 
 ### Abgelehnt
 
-![Dataflow-diagram showing all data-flows and related information of state "Abgeschlossen/Abgelehnt"](./dataflow-diagram/Abgelehnt-state.png)
+![Dataflow-diagram showing all data-flows and related information of state "Abgelehnt"](./dataflow-diagram/Abgelehnt-state.png)
