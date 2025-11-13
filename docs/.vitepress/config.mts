@@ -31,7 +31,6 @@ const vitepressConfig = defineConfig({
       {
         text: "Features",
         items: [
-          { text: "Features", link: "/features/" },
           {
             text: "Reliable communication",
             link: "/features/reliable-communication",
@@ -74,7 +73,6 @@ const vitepressConfig = defineConfig({
         },
         {
           text: "Features",
-          link: "/features/",
           items: [
             {
               text: "Reliable communication",
