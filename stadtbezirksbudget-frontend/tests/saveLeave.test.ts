@@ -30,4 +30,19 @@ describe("useSaveLeave", () => {
     expect(nextMock).toHaveBeenCalled();
     expect(saveLeaveDialog.value).toBe(false);
   });
+
+  it("testShowsDialogAndSaves", async () => {
+    const nextMock = vi.fn();
+    const { saveLeaveDialog, leave } = useSaveLeave(() => true);
+
+    expect(registeredGuard).not.toBeNull();
+
+    (registeredGuard as (to: object, from: object, next: () => void) => void)({}, {}, nextMock);
+
+    expect(saveLeaveDialog.value).toBe(true);
+    expect(nextMock).not.toHaveBeenCalled();
+
+    leave();
+    expect(nextMock).toHaveBeenCalled();
+  });
 });
