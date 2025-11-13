@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { useSaveLeave } from "@/src/composables/saveLeave";
+import { useSaveLeave } from "@/composables/saveLeave";
 
 
 let registeredGuard: null | ((to: object, from: object, next: () => void) => void) = null;
