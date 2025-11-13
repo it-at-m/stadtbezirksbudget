@@ -1,11 +1,13 @@
 # Dataflow diagram
 
-## Description and legend
-
 The data flow diagram illustrates the various data flows within different status stages of the application.
 It categorizes the flows based on whether they occur automatically or manually, indicating the responsible actor, the target system, the specific data involved, and any manual steps required in the process.
+
 Notably, it does not display all non-automatic status transitions that must be manually set by the user (caseworker).
-For a comprehensive view of all status transitions, one should refer to the [Status Values page](./status-values).
+For a comprehensive view of all status transitions, one should refer to the [status values page](./status-values).
+
+## Legend
+
 The colors used in the diagram (blue and orange) correspond to those in the status diagram and are further clarified in the legend, which includes explanations of all symbols used.
 
 ![Legend-diagram showing all symbols and explaining them](./dataflow-diagram/diagram-legend.png)
@@ -36,11 +38,11 @@ The colors used in the diagram (blue and orange) correspond to those in the stat
 
 ![Dataflow-diagram showing all data-flows and related information of state "Finanzierung"](./dataflow-diagram/Finanzierung-state.png)
 
-### Abgeschlossen/Abgelehnt
+### Abgeschlossen
 
-![Dataflow-diagram showing all data-flows and related information of state "Abgeschlossen/Abgelehnt"](./dataflow-diagram/Endzustaende-state.png)
+![Dataflow-diagram showing all data-flows and related information of state "Abgeschlossen/Abgelehnt"](./dataflow-diagram/Abgelehnt-state.png)
 
-## Special states
+## Further states
 
 ### Rückzahlung
 
@@ -53,3 +55,7 @@ The colors used in the diagram (blue and orange) correspond to those in the stat
 ### Zurückgewiesen
 
 ![Dataflow-diagram showing all data-flows and related information of state "Zurückgewiesen"](./dataflow-diagram/Zurueckgewiesen-state.png)
+
+### Abgelehnt
+
+![Dataflow-diagram showing all data-flows and related information of state "Abgeschlossen/Abgelehnt"](./dataflow-diagram/Abgelehnt-state.png)
