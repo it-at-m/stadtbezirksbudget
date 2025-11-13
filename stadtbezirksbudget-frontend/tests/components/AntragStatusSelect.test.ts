@@ -26,10 +26,11 @@ describe("AntragStatusSelect", () => {
   beforeEach(() => {
     mockUseAntragStatusSelect = {
       status: ref("EINGEGANGEN"),
-      statusOptions: ref([
+      search: ref(""),
+      statusOptions: [
         { title: "Offen", value: "EINGEGANGEN" },
         { title: "Abgelehnt", value: "ABGELEHNT" },
-      ]),
+      ],
       updateStatus: vi.fn(),
       toggleStatusAndSearch: vi.fn(),
     };
@@ -51,7 +52,7 @@ describe("AntragStatusSelect", () => {
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
     expect(autocomplete.exists()).toBe(true);
     expect(autocomplete.props("items")).toEqual(
-      mockUseAntragStatusSelect.statusOptions.value
+      mockUseAntragStatusSelect.statusOptions
     );
   });
 
