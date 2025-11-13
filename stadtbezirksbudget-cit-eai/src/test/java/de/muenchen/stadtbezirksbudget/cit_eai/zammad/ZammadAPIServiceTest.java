@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
@@ -45,5 +46,13 @@ class ZammadAPIServiceTest {
             assertThat(result).isNotNull();
             assertThat(result.getId()).isEqualTo("42");
         }
+
+        @Test
+        void testCreateTicketWithMissingIdsThrowsIllegalArgumentException() {
+            final CreateTicketDTOV2 dto = new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g");
+
+            assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, null, null, Collections.emptyList()));
+        }
+
     }
 }
