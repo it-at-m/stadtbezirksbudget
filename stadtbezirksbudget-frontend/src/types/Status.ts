@@ -1,22 +1,22 @@
 export enum Status {
   EINGEGANGEN = "EINGEGANGEN",
   WARTEN_AUF_BUERGERRUECKMELDUNG = "WARTEN_AUF_BUERGERRUECKMELDUNG",
-  ABGELEHNT_KEINE_RUECKMELDUNG = "ABGELEHNT_KEINE_RUECKMELDUNG",
-  ABGELEHNT_NICHT_ZUSTAENDIG = "ABGELEHNT_NICHT_ZUSTAENDIG",
-  ABGELEHNT_NICHT_FOERDERFAEHIG = "ABGELEHNT_NICHT_FOERDERFAEHIG",
-  ABGELEHNT_VON_BA = "ABGELEHNT_VON_BA",
-  ABLEHNUNGSBESCHEID_ERSTELLT = "ABLEHNUNGSBESCHEID_ERSTELLT",
   VOLLSTAENDIG = "VOLLSTAENDIG",
   SITZUNGSVORLAGE_ERSTELLT = "SITZUNGSVORLAGE_ERSTELLT",
   SITZUNGSVORLAGE_UEBERMITTELT = "SITZUNGSVORLAGE_UEBERMITTELT",
   BESCHLUSS_ERHALTEN = "BESCHLUSS_ERHALTEN",
-  ABLEHNUNGSBESCHLUSS_ERHALTEN = "ABLEHNUNGSBESCHLUSS_ERHALTEN",
   ZUWENDUNGSBESCHEID_ERSTELLT = "ZUWENDUNGSBESCHEID_ERSTELLT",
   ZUWENDUNGSBESCHEID_VERSENDET = "ZUWENDUNGSBESCHEID_VERSENDET",
   VERWENDUNGSNACHWEISE_GEPRUEFT = "VERWENDUNGSNACHWEISE_GEPRUEFT",
   AUSZAHLUNG = "AUSZAHLUNG",
   RUECKZAHLUNG = "RUECKZAHLUNG",
   ABGESCHLOSSEN = "ABGESCHLOSSEN",
+  ABLEHNUNGSBESCHEID_ERSTELLT = "ABLEHNUNGSBESCHEID_ERSTELLT",
+  ABLEHNUNGSBESCHLUSS_ERHALTEN = "ABLEHNUNGSBESCHLUSS_ERHALTEN",
+  ABGELEHNT_VON_BA = "ABGELEHNT_VON_BA",
+  ABGELEHNT_KEINE_RUECKMELDUNG = "ABGELEHNT_KEINE_RUECKMELDUNG",
+  ABGELEHNT_NICHT_ZUSTAENDIG = "ABGELEHNT_NICHT_ZUSTAENDIG",
+  ABGELEHNT_NICHT_FOERDERFAEHIG = "ABGELEHNT_NICHT_FOERDERFAEHIG",
 }
 
 export const StatusText: Record<Status, Omit<StatusOption, "value">> = {
@@ -27,26 +27,6 @@ export const StatusText: Record<Status, Omit<StatusOption, "value">> = {
   [Status.WARTEN_AUF_BUERGERRUECKMELDUNG]: {
     shortText: "Warten",
     longText: "Warten auf Bürgerrückmeldung",
-  },
-  [Status.ABGELEHNT_KEINE_RUECKMELDUNG]: {
-    shortText: "Abgelehnt",
-    longText: "Abgelehnt - Keine Rückmeldung",
-  },
-  [Status.ABGELEHNT_NICHT_ZUSTAENDIG]: {
-    shortText: "Abgelehnt",
-    longText: "Abgelehnt - Nicht zuständig",
-  },
-  [Status.ABGELEHNT_NICHT_FOERDERFAEHIG]: {
-    shortText: "Abgelehnt",
-    longText: "Abgelehnt - Nicht förderfähig",
-  },
-  [Status.ABGELEHNT_VON_BA]: {
-    shortText: "Abgelehnt",
-    longText: "Abgelehnt von BA (Bescheid wurde versendet)",
-  },
-  [Status.ABLEHNUNGSBESCHEID_ERSTELLT]: {
-    shortText: "Zurückgewiesen",
-    longText: "Ablehnungsbescheid erstellt",
   },
   [Status.VOLLSTAENDIG]: {
     shortText: "Vorbereitung",
@@ -63,10 +43,6 @@ export const StatusText: Record<Status, Omit<StatusOption, "value">> = {
   [Status.BESCHLUSS_ERHALTEN]: {
     shortText: "Angenommen",
     longText: "Beschluss Erhalten",
-  },
-  [Status.ABLEHNUNGSBESCHLUSS_ERHALTEN]: {
-    shortText: "Zurückgewiesen",
-    longText: "Ablehnungsbeschluss erhalten",
   },
   [Status.ZUWENDUNGSBESCHEID_ERSTELLT]: {
     shortText: "Bewilligt",
@@ -91,6 +67,31 @@ export const StatusText: Record<Status, Omit<StatusOption, "value">> = {
   [Status.ABGESCHLOSSEN]: {
     shortText: "Abgeschlossen",
     longText: "Abrechnungsschreiben erstellt",
+  },
+  [Status.ABLEHNUNGSBESCHEID_ERSTELLT]: {
+    shortText: "Zurückgewiesen",
+    longText: "Ablehnungsbescheid erstellt",
+  },
+
+  [Status.ABLEHNUNGSBESCHLUSS_ERHALTEN]: {
+    shortText: "Zurückgewiesen",
+    longText: "Ablehnungsbeschluss erhalten",
+  },
+  [Status.ABGELEHNT_VON_BA]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt von BA (Bescheid wurde versendet)",
+  },
+  [Status.ABGELEHNT_KEINE_RUECKMELDUNG]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Keine Rückmeldung",
+  },
+  [Status.ABGELEHNT_NICHT_ZUSTAENDIG]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Nicht zuständig",
+  },
+  [Status.ABGELEHNT_NICHT_FOERDERFAEHIG]: {
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Nicht förderfähig",
   },
 };
 
