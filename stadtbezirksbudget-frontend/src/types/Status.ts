@@ -109,8 +109,4 @@ export const StatusText: Record<
 ) as Record<Status, Omit<StatusOption, "value">>;
 
 // Array of all status options for use in UI components
-export const statusOptions: StatusOption[] = STATUS_DEFINITIONS.map((s) => ({
-  value: s.value,
-  shortText: s.shortText,
-  longText: s.longText,
-}));
+export const statusOptions: readonly StatusOption[] = STATUS_DEFINITIONS;
