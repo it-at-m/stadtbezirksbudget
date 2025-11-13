@@ -17,10 +17,7 @@ export function updateAntragStatus(
       status: newStatus,
     })
   )
-    .then((response) => {
-      defaultResponseHandler(response);
-      return;
-    })
+    .then(defaultResponseHandler)
     .catch((err) => {
       return defaultCatchHandler(
         err,
