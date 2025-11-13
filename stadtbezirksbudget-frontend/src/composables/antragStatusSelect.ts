@@ -74,7 +74,10 @@ export function useAntragStatusSelect(
 
   watch(
     () => initialStatus.value,
-    (initial) => (status.value = initial)
+    (initial) => {
+      status.value = initial;
+      oldStatus.value = initial;
+    }
   );
 
   return {
