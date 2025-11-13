@@ -1,4 +1,4 @@
-import type { StatusOption } from "@/types/Status.ts";
+import type { Status } from "@/types/Status.ts";
 import type { Ref } from "vue";
 
 import { readonly, ref, watch } from "vue";
@@ -6,7 +6,7 @@ import { readonly, ref, watch } from "vue";
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
-import { Status, StatusText } from "@/types/Status.ts";
+import { statusOptions, StatusText } from "@/types/Status.ts";
 
 /**
  * Composable function that manages the status selection for an Antrag.
@@ -27,10 +27,6 @@ export function useAntragStatusSelect(
   const status = ref<Status | undefined>(initialStatus.value);
   const oldStatus = ref<Status>(initialStatus.value);
   const search = ref<string>("");
-  const statusOptions: StatusOption[] = Object.values(Status).map((status) => ({
-    value: status,
-    ...StatusText[status],
-  }));
 
   /**
    * Updates the status of the Antrag both locally and in the backend.

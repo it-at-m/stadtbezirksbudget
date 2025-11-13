@@ -23,19 +23,19 @@ describe("useAntragStatusSelect", () => {
 
     const { status, updateStatus } = useAntragStatusSelect(
       ref("1"),
-      ref(Status.EINGEGANGEN)
+      ref("EINGEGANGEN")
     );
 
-    expect(status.value).toBe(Status.EINGEGANGEN);
+    expect(status.value).toBe("EINGEGANGEN");
 
-    updateStatus(Status.ABGELEHNT_KEINE_RUECKMELDUNG);
+    updateStatus("ABGELEHNT_KEINE_RUECKMELDUNG");
 
     expect(updateAntragStatus).toHaveBeenCalledWith(
       "1",
-      Status.ABGELEHNT_KEINE_RUECKMELDUNG
+      "ABGELEHNT_KEINE_RUECKMELDUNG"
     );
     await vi.waitFor(() => {
-      expect(status.value).toBe(Status.ABGELEHNT_KEINE_RUECKMELDUNG);
+      expect(status.value).toBe("ABGELEHNT_KEINE_RUECKMELDUNG");
       expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
         message: `Antragsstatus aktualisiert`,
         level: STATUS_INDICATORS.SUCCESS,
@@ -48,17 +48,17 @@ describe("useAntragStatusSelect", () => {
 
     const { status, updateStatus } = useAntragStatusSelect(
       ref("1"),
-      ref(Status.EINGEGANGEN)
+      ref("EINGEGANGEN")
     );
 
-    updateStatus(Status.ABGELEHNT_NICHT_ZUSTAENDIG);
+    updateStatus("ABGELEHNT_NICHT_ZUSTAENDIG");
 
     expect(updateAntragStatus).toHaveBeenCalledWith(
       "1",
-      Status.ABGELEHNT_NICHT_ZUSTAENDIG
+      "ABGELEHNT_NICHT_ZUSTAENDIG"
     );
     await vi.waitFor(() => {
-      expect(status.value).toBe(Status.EINGEGANGEN);
+      expect(status.value).toBe("EINGEGANGEN");
       expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
         message: "API Error",
         level: STATUS_INDICATORS.WARNING,
@@ -71,17 +71,14 @@ describe("useAntragStatusSelect", () => {
 
     const { status, updateStatus } = useAntragStatusSelect(
       ref("1"),
-      ref(Status.EINGEGANGEN)
+      ref("EINGEGANGEN")
     );
 
-    updateStatus(Status.ABGELEHNT_VON_BA);
+    updateStatus("ABGELEHNT_VON_BA");
 
-    expect(updateAntragStatus).toHaveBeenCalledWith(
-      "1",
-      Status.ABGELEHNT_VON_BA
-    );
+    expect(updateAntragStatus).toHaveBeenCalledWith("1", "ABGELEHNT_VON_BA");
     await vi.waitFor(() => {
-      expect(status.value).toBe(Status.EINGEGANGEN);
+      expect(status.value).toBe("EINGEGANGEN");
       expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
         message: "Fehler beim Aktualisieren des Antragsstatus",
         level: STATUS_INDICATORS.WARNING,
@@ -92,35 +89,35 @@ describe("useAntragStatusSelect", () => {
   test("testToggleStatusAndSearchWhenUnfocus", () => {
     const { status, toggleStatusAndSearch, search } = useAntragStatusSelect(
       ref("1"),
-      ref(Status.EINGEGANGEN)
+      ref("EINGEGANGEN")
     );
 
-    status.value = Status.ABGELEHNT_KEINE_RUECKMELDUNG;
+    status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
 
     toggleStatusAndSearch(false);
 
-    expect(status.value).toBe(Status.EINGEGANGEN);
+    expect(status.value).toBe("EINGEGANGEN");
     expect(search.value).toBe("");
   });
 
   test("testToggleStatusAndSearchWhenFocus", () => {
     const { status, toggleStatusAndSearch, search } = useAntragStatusSelect(
       ref("1"),
-      ref(Status.EINGEGANGEN)
+      ref("EINGEGANGEN")
     );
 
-    status.value = Status.ABGELEHNT_NICHT_ZUSTAENDIG;
+    status.value = "ABGELEHNT_NICHT_ZUSTAENDIG";
 
     toggleStatusAndSearch(true);
 
     expect(status.value).toBeUndefined();
-    expect(search.value).toBe(StatusText[Status.EINGEGANGEN].shortText);
+    expect(search.value).toBe(StatusText["EINGEGANGEN"].shortText);
   });
 
   test("testUpdateStatusReturnsEarlyWhenNewStatusIsFalsy", () => {
     const { status, updateStatus } = useAntragStatusSelect(
       ref("1"),
-      ref(Status.EINGEGANGEN)
+      ref("EINGEGANGEN")
     );
 
     (updateAntragStatus as vi.Mock).mockClear();
@@ -129,34 +126,34 @@ describe("useAntragStatusSelect", () => {
     updateStatus(undefined as unknown as Status);
 
     expect(updateAntragStatus).not.toHaveBeenCalled();
-    expect(status.value).toBe(Status.EINGEGANGEN);
+    expect(status.value).toBe("EINGEGANGEN");
     expect(snackbarStoreMock.showMessage).not.toHaveBeenCalled();
   });
 
   test("testStatusOptionsContainExpectedEntries", () => {
     const { statusOptions } = useAntragStatusSelect(
       ref("1"),
-      ref(Status.EINGEGANGEN)
+      ref("EINGEGANGEN")
     );
 
     const eingegangenOption = statusOptions.find(
-      (o: StatusOption) => o.value === Status.EINGEGANGEN
+      (o: StatusOption) => o.value === "EINGEGANGEN"
     );
     expect(eingegangenOption).toBeDefined();
     expect(eingegangenOption).toMatchObject({
-      value: Status.EINGEGANGEN,
-      ...StatusText[Status.EINGEGANGEN],
+      value: "EINGEGANGEN",
+      ...StatusText["EINGEGANGEN"],
     });
   });
 
   test("testUpdatesStatusOnInitialStatusChange", async () => {
-    const initialStatus = ref(Status.EINGEGANGEN);
+    const initialStatus = ref("EINGEGANGEN");
     const { status } = useAntragStatusSelect(ref("1"), initialStatus);
 
-    expect(status.value).toBe(Status.EINGEGANGEN);
-    initialStatus.value = Status.VOLLSTAENDIG;
+    expect(status.value).toBe("EINGEGANGEN");
+    initialStatus.value = "VOLLSTAENDIG";
     await vi.waitFor(() => {
-      expect(status.value).toBe(Status.VOLLSTAENDIG);
+      expect(status.value).toBe("VOLLSTAENDIG");
     });
   });
 });
