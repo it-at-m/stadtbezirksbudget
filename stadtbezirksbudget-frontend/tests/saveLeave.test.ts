@@ -45,4 +45,51 @@ describe("useSaveLeave", () => {
     leave();
     expect(nextMock).toHaveBeenCalled();
   });
+
+  it("testCancelCallsNextAndClosesDialog", async () => {
+    const nextMock = vi.fn();
+    const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
+
+    (registeredGuard as (to: object, from: object, next: () => void) => void)({}, {}, nextMock);
+
+    expect(saveLeaveDialog.value).toBe(true);
+
+    cancel();
+
+    expect(nextMock).toHaveBeenCalledWith(false);
+    expect(saveLeaveDialog.value).toBe(false);
+  });
+
+  it("testCancelCallsNextAndClosesDialog", async () => {
+    const nextMock = vi.fn();
+    const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
+
+    (registeredGuard as (to: object, from: object, next: () => void) => void)({}, {}, nextMock);
+
+    expect(saveLeaveDialog.value).toBe(true);
+
+    cancel();
+
+    expect(nextMock).toHaveBeenCalledWith(false);
+    expect(saveLeaveDialog.value).toBe(false);
+  });
+
+  it("testBypassesDialogIfSave", async () => {
+    const nextMock = vi.fn();
+    const instance = useSaveLeave(() => true);
+    instance.isSave.value = true;
+
+    (
+      registeredGuard as (to: object, from: object, next: () => void) => void
+    )({}, {}, nextMock);
+
+    expect(nextMock).toHaveBeenCalled();
+    expect(instance.saveLeaveDialog.value).toBe(false);
+  });
+
+  it("testLeaveWithoutNextDoesNotThrow", () => {
+    const instance = useSaveLeave(() => true);
+    expect(() => instance.leave()).not.toThrow();
+    expect(() => instance.cancel()).not.toThrow();
+  });
 });
