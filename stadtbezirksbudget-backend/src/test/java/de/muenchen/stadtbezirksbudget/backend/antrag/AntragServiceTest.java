@@ -7,6 +7,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -77,7 +78,7 @@ class AntragServiceTest {
 
     @SuppressWarnings("PMD.CommentDefaultAccessModifier")
     abstract static class FinanzierungMixIn {
-        @com.fasterxml.jackson.annotation.JsonIgnore
+        @JsonIgnore
         abstract boolean istFehlbetrag();
     }
 
