@@ -2,12 +2,15 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { useSaveLeave } from "@/composables/saveLeave";
 
-
-let registeredGuard: null | ((to: object, from: object, next: () => void) => void) = null;
+let registeredGuard:
+  | null
+  | ((to: object, from: object, next: () => void) => void) = null;
 
 vi.mock("vue-router", () => {
   return {
-    onBeforeRouteLeave: (guard: (to: object, from: object, next: () => void) => void) => {
+    onBeforeRouteLeave: (
+      guard: (to: object, from: object, next: () => void) => void
+    ) => {
       registeredGuard = guard;
     },
   };
@@ -25,7 +28,11 @@ describe("useSaveLeave", () => {
 
     expect(registeredGuard).not.toBeNull();
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)({}, {}, nextMock);
+    (registeredGuard as (to: object, from: object, next: () => void) => void)(
+      {},
+      {},
+      nextMock
+    );
 
     expect(nextMock).toHaveBeenCalled();
     expect(saveLeaveDialog.value).toBe(false);
@@ -37,7 +44,11 @@ describe("useSaveLeave", () => {
 
     expect(registeredGuard).not.toBeNull();
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)({}, {}, nextMock);
+    (registeredGuard as (to: object, from: object, next: () => void) => void)(
+      {},
+      {},
+      nextMock
+    );
 
     expect(saveLeaveDialog.value).toBe(true);
     expect(nextMock).not.toHaveBeenCalled();
@@ -50,7 +61,11 @@ describe("useSaveLeave", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)({}, {}, nextMock);
+    (registeredGuard as (to: object, from: object, next: () => void) => void)(
+      {},
+      {},
+      nextMock
+    );
 
     expect(saveLeaveDialog.value).toBe(true);
 
@@ -64,7 +79,11 @@ describe("useSaveLeave", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)({}, {}, nextMock);
+    (registeredGuard as (to: object, from: object, next: () => void) => void)(
+      {},
+      {},
+      nextMock
+    );
 
     expect(saveLeaveDialog.value).toBe(true);
 
@@ -79,9 +98,11 @@ describe("useSaveLeave", () => {
     const instance = useSaveLeave(() => true);
     instance.isSave.value = true;
 
-    (
-      registeredGuard as (to: object, from: object, next: () => void) => void
-    )({}, {}, nextMock);
+    (registeredGuard as (to: object, from: object, next: () => void) => void)(
+      {},
+      {},
+      nextMock
+    );
 
     expect(nextMock).toHaveBeenCalled();
     expect(instance.saveLeaveDialog.value).toBe(false);

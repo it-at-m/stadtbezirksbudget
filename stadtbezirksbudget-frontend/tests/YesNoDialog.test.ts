@@ -44,9 +44,12 @@ describe("YesNoDialog", () => {
         dialogtitle: "Titel",
         dialogtext: "Text",
       },
-      global: { plugins: [vuetify], stubs:{
-        "v-dialog": {template: "<div><slot /> </div>"}
-        }},
+      global: {
+        plugins: [vuetify],
+        stubs: {
+          "v-dialog": { template: "<div><slot /> </div>" },
+        },
+      },
     });
 
     await wrapper.vm.$nextTick();
