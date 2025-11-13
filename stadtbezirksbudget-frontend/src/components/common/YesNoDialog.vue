@@ -35,6 +35,7 @@
         <v-spacer />
         <v-btn
           id="yesnodialog-btn-no"
+          data-test="no-button"
           variant="text"
           @click="no"
         >
@@ -42,6 +43,7 @@
         </v-btn>
         <v-btn
           id="yesnodialog-btn-yes"
+          data-test="yes-button"
           color="primary"
           @click="yes"
         >
