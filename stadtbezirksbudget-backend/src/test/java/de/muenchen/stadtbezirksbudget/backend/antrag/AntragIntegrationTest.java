@@ -44,7 +44,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class AntragsdatenControllerIntegrationTest {
+class AntragIntegrationTest {
 
     @Container
     @ServiceConnection
@@ -74,9 +74,9 @@ class AntragsdatenControllerIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        final AntragsdatenTestDataBuilder antragsdatenTestDataBuilder = new AntragsdatenTestDataBuilder(antragRepository, adresseRepository,
+        final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository);
-        antrag = antragsdatenTestDataBuilder.initializeAntrag();
+        antrag = antragTestDataBuilder.initializeAntrag();
     }
 
     @AfterEach
