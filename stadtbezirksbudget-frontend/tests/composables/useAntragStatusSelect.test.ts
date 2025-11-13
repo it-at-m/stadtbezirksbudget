@@ -1,3 +1,5 @@
+import type { Status } from "@/types/Status.ts";
+
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 
@@ -5,7 +7,7 @@ import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { useAntragStatusSelect } from "@/composables/antragStatusSelect";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
-import { Status, StatusOption, StatusText } from "@/types/Status.ts";
+import { StatusOption, StatusText } from "@/types/Status.ts";
 
 vi.mock("@/api/update-antragStatus.ts");
 vi.mock("@/stores/snackbar.ts");
