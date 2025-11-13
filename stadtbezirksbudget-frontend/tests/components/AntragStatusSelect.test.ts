@@ -68,7 +68,7 @@ describe("AntragStatusSelect", () => {
     );
   });
 
-  test("testCallsResetStatusWhenFocused", async () => {
+  test("testCallsToggleStatusAndSearchsWhenFocused", async () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
@@ -80,7 +80,7 @@ describe("AntragStatusSelect", () => {
     ).toHaveBeenCalledWith(true);
   });
 
-  test("testCallsResetStatusWhenUnfocused", async () => {
+  test("testCallsToggleStatusAndSearchWhenUnfocused", async () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
