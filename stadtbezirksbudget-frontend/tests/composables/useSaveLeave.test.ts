@@ -22,17 +22,18 @@ describe("useSaveLeave", () => {
     vi.clearAllMocks();
   });
 
+  function invokeGuard(nextMock: ReturnType<typeof vi.fn>) {
+    if (!registeredGuard) throw new Error("Guard not registered");
+    registeredGuard({}, {}, nextMock as unknown as () => void);
+  }
+
   it("testCallsNextIfNotDirty", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog } = useSaveLeave(() => false);
 
     expect(registeredGuard).not.toBeNull();
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)(
-      {},
-      {},
-      nextMock
-    );
+    invokeGuard(nextMock);
 
     expect(nextMock).toHaveBeenCalled();
     expect(saveLeaveDialog.value).toBe(false);
@@ -44,11 +45,7 @@ describe("useSaveLeave", () => {
 
     expect(registeredGuard).not.toBeNull();
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)(
-      {},
-      {},
-      nextMock
-    );
+    invokeGuard(nextMock);
 
     expect(saveLeaveDialog.value).toBe(true);
     expect(nextMock).not.toHaveBeenCalled();
@@ -63,11 +60,7 @@ describe("useSaveLeave", () => {
 
     expect(registeredGuard).not.toBeNull();
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)(
-      {},
-      {},
-      nextMock
-    );
+    invokeGuard(nextMock);
 
     expect(saveLeaveDialog.value).toBe(true);
 
@@ -82,11 +75,7 @@ describe("useSaveLeave", () => {
     const instance = useSaveLeave(() => true);
     instance.isSave.value = true;
 
-    (registeredGuard as (to: object, from: object, next: () => void) => void)(
-      {},
-      {},
-      nextMock
-    );
+    invokeGuard(nextMock);
 
     expect(nextMock).toHaveBeenCalled();
     expect(instance.saveLeaveDialog.value).toBe(false);
