@@ -42,8 +42,7 @@ describe("fetch-utils", () => {
 
   test("testPutConfigAppendsIfMatchWhenVersionPresent", () => {
     const body = { id: 1, version: "v1" };
-    // eslint-disable-next-line
-    const cfg = putConfig(body as any);
+    const cfg = putConfig(body);
     expect(cfg.method).toBe("PUT");
     expect(cfg.body).toBe(JSON.stringify(body));
     expect((cfg.headers as Headers).get("If-Match")).toBe("v1");
@@ -51,8 +50,7 @@ describe("fetch-utils", () => {
 
   test("testPatchConfigAppendsIfMatchWhenVersionNotUndefined", () => {
     const body = { id: 1, version: 0 };
-    // eslint-disable-next-line
-    const cfg = patchConfig(body as any);
+    const cfg = patchConfig(body);
     expect(cfg.method).toBe("PATCH");
     expect(cfg.body).toBe(JSON.stringify(body));
     expect((cfg.headers as Headers).get("If-Match")).toBe("0");
@@ -79,8 +77,7 @@ describe("fetch-utils", () => {
 
   test("testPutConfigOmitsIfMatchWhenNoVersion", () => {
     const body = { id: 1 };
-    // eslint-disable-next-line
-    const cfg = putConfig(body as any);
+    const cfg = putConfig(body);
     expect(cfg.method).toBe("PUT");
     expect(cfg.body).toBe(JSON.stringify(body));
     expect((cfg.headers as Headers).get("If-Match")).toBeNull();
@@ -88,23 +85,20 @@ describe("fetch-utils", () => {
 
   test("testPatchConfigOmitsIfMatchWhenVersionUndefined", () => {
     const body = { id: 1, version: undefined };
-    // eslint-disable-next-line
-    const cfg = patchConfig(body as any);
+    const cfg = patchConfig(body);
     expect(cfg.method).toBe("PATCH");
     expect(cfg.body).toBe(JSON.stringify(body));
     expect((cfg.headers as Headers).get("If-Match")).toBeNull();
   });
 
   test("testPostConfigHandlesNullOrUndefinedBody", () => {
-    // eslint-disable-next-line
-    const cfgNull = postConfig(null as any);
+    const cfgNull = postConfig(null);
     expect(cfgNull.method).toBe("POST");
     expect(cfgNull.body).toBeUndefined();
     expect((cfgNull.headers as Headers).get("Content-Type")).toBe(
       "application/json"
     );
-    // eslint-disable-next-line
-    const cfgUndef = postConfig(undefined as any);
+    const cfgUndef = postConfig(undefined);
     expect(cfgUndef.method).toBe("POST");
     expect(cfgUndef.body).toBeUndefined();
     expect((cfgUndef.headers as Headers).get("Content-Type")).toBe(
