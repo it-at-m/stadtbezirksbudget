@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from "pinia";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 
 import { STATUS_INDICATORS } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
@@ -9,14 +9,14 @@ describe("snackbar store", () => {
     setActivePinia(createPinia());
   });
 
-  it("testInitialState", () => {
+  test("testInitialState", () => {
     const store = useSnackbarStore();
     expect(store.message).toBeUndefined();
     expect(store.level).toBe(STATUS_INDICATORS.INFO);
     expect(store.show).toBe(false);
   });
 
-  it("testShowMessageSetsMessageLevelAndShowTrue", () => {
+  test("testShowMessageSetsMessageLevelAndShowTrue", () => {
     const store = useSnackbarStore();
     store.showMessage({
       message: "Hallo Welt",
@@ -27,7 +27,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  it("testShowMessageDefaultsLevelToInfo", () => {
+  test("testShowMessageDefaultsLevelToInfo", () => {
     const store = useSnackbarStore();
     store.showMessage({ message: "Nur Info" });
     expect(store.message).toBe("Nur Info");
@@ -35,7 +35,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  it("testUpdateShowChangesShowFlag", () => {
+  test("testUpdateShowChangesShowFlag", () => {
     const store = useSnackbarStore();
     store.showMessage({ message: "X" });
     expect(store.show).toBe(true);
@@ -45,7 +45,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  it("testMultipleShowMessageCallsOverwritePrevious", () => {
+  test("testMultipleShowMessageCallsOverwritePrevious", () => {
     const store = useSnackbarStore();
     store.showMessage({ message: "erste" });
     expect(store.message).toBe("erste");
@@ -55,7 +55,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  it("testShowMessageWithEmptyPayloadShowsUndefinedMessage", () => {
+  test("testShowMessageWithEmptyPayloadShowsUndefinedMessage", () => {
     const store = useSnackbarStore();
     store.showMessage({});
     expect(store.message).toBeUndefined();

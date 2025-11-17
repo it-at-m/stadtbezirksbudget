@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import { useSaveLeave } from "@/composables/saveLeave";
 
@@ -32,7 +32,7 @@ describe("useSaveLeave", () => {
     registeredGuard({}, {}, nextMock as (to?: false | object) => void);
   }
 
-  it("testCallsNextIfNotDirty", () => {
+  test("testCallsNextIfNotDirty", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog } = useSaveLeave(() => false);
 
@@ -44,7 +44,7 @@ describe("useSaveLeave", () => {
     expect(saveLeaveDialog.value).toBe(false);
   });
 
-  it("testShowsDialogAndSaves", () => {
+  test("testShowsDialogAndSaves", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog, leave } = useSaveLeave(() => true);
 
@@ -59,7 +59,7 @@ describe("useSaveLeave", () => {
     expect(nextMock).toHaveBeenCalled();
   });
 
-  it("testCancelCallsNextAndClosesDialog", () => {
+  test("testCancelCallsNextAndClosesDialog", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
 
@@ -75,7 +75,7 @@ describe("useSaveLeave", () => {
     expect(saveLeaveDialog.value).toBe(false);
   });
 
-  it("testBypassesDialogIfSave", () => {
+  test("testBypassesDialogIfSave", () => {
     const nextMock = vi.fn();
     const instance = useSaveLeave(() => true);
     instance.isSave.value = true;
@@ -88,12 +88,12 @@ describe("useSaveLeave", () => {
     expect(instance.saveLeaveDialog.value).toBe(false);
   });
 
-  it("testLeaveWithoutNextDoesNotThrow", () => {
+  test("testLeaveWithoutNextDoesNotThrow", () => {
     const instance = useSaveLeave(() => true);
     expect(() => instance.leave()).not.toThrow();
   });
 
-  it("testCancelWithoutNextDoesNotThrow", () => {
+  test("testCancelWithoutNextDoesNotThrow", () => {
     const instance = useSaveLeave(() => true);
     expect(() => instance.cancel()).not.toThrow();
   });

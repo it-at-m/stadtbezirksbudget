@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from "pinia";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
@@ -9,12 +9,12 @@ describe("user store", () => {
     setActivePinia(createPinia());
   });
 
-  it("testInitiallyNullUser", () => {
+  test("testInitiallyNullUser", () => {
     const store = useUserStore();
     expect(store.getUser).toBeNull();
   });
 
-  it("testSetUserStoresUser", () => {
+  test("testSetUserStoresUser", () => {
     const store = useUserStore();
     const user = new User();
     user.username = "testuser";
@@ -23,7 +23,7 @@ describe("user store", () => {
     expect(store.getUser?.username).toBe("testuser");
   });
 
-  it("testClearUser", () => {
+  test("testClearUser", () => {
     const store = useUserStore();
     store.setUser(UserLocalDevelopment());
     expect(store.getUser).not.toBeNull();
