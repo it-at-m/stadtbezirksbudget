@@ -22,7 +22,7 @@ describe("useSaveLeave", () => {
     vi.clearAllMocks();
   });
 
-  it("testCallsNextIfNotDirty", async () => {
+  it("testCallsNextIfNotDirty", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog } = useSaveLeave(() => false);
 
@@ -38,7 +38,7 @@ describe("useSaveLeave", () => {
     expect(saveLeaveDialog.value).toBe(false);
   });
 
-  it("testShowsDialogAndSaves", async () => {
+  it("testShowsDialogAndSaves", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog, leave } = useSaveLeave(() => true);
 
@@ -57,7 +57,7 @@ describe("useSaveLeave", () => {
     expect(nextMock).toHaveBeenCalled();
   });
 
-  it("testCancelCallsNextAndClosesDialog", async () => {
+  it("testCancelCallsNextAndClosesDialog", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
 
@@ -75,7 +75,7 @@ describe("useSaveLeave", () => {
     expect(saveLeaveDialog.value).toBe(false);
   });
 
-  it("testBypassesDialogIfSave", async () => {
+  it("testBypassesDialogIfSave", () => {
     const nextMock = vi.fn();
     const instance = useSaveLeave(() => true);
     instance.isSave.value = true;
