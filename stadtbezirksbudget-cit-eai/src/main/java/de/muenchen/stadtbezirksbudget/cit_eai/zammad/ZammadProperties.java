@@ -2,8 +2,9 @@ package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -11,13 +12,14 @@ import org.springframework.validation.annotation.Validated;
  * <p>
  * Bound from properties with the prefix "spring.zammad" (e.g. spring.zammad.base-path).
  */
-@Component
+
 @ConfigurationProperties(prefix = "spring.zammad")
 @Validated
 @Getter
+@RequiredArgsConstructor(onConstructor_ = @ConstructorBinding)
 public class ZammadProperties {
 
-    @NotBlank private String basePath;
+    @NotBlank private final String basePath;
 
-    @NotBlank private String clientId;
+    @NotBlank private final String clientId;
 }
