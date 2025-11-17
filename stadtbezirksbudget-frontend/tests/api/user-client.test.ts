@@ -1,4 +1,4 @@
-import { beforeEach, afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 import * as fetchUtils from "@/api/fetch-utils";
 import { getUser } from "@/api/user-client";
@@ -7,14 +7,13 @@ import User from "@/types/User";
 global.fetch = vi.fn();
 
 describe("getUser", () => {
-
-  beforeEach(()=>{
+  beforeEach(() => {
     vi.spyOn(fetchUtils, "getConfig").mockImplementation(() => {
       return {
         headers: new Headers({ "Content-Type": "application/json" }),
       } as RequestInit;
     });
-  })
+  });
 
   afterEach(() => {
     vi.restoreAllMocks();
