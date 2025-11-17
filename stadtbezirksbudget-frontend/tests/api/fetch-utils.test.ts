@@ -113,9 +113,9 @@ describe("fetch-utils", () => {
 
   test("testDefaultResponseHandlerThrowsApiErrorOn403", () => {
     const resp = { ok: false, status: 403 } as Response;
-    expect(() => defaultResponseHandler(resp)).toThrow(ApiError);
     try {
       defaultResponseHandler(resp);
+      expect.fail("Expected ApiError to be thrown");
     } catch (e) {
       if (e instanceof ApiError) {
         expect(e.level).toBe(STATUS_INDICATORS.ERROR);
