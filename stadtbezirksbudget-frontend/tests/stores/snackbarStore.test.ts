@@ -1,0 +1,65 @@
+import { createPinia, setActivePinia } from "pinia";
+import { beforeEach, describe, expect, it } from "vitest";
+
+import { STATUS_INDICATORS } from "@/constants";
+import { useSnackbarStore } from "@/stores/snackbar";
+
+describe("snackbar store", () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+  });
+
+  it("testInitialState", () => {
+    const store = useSnackbarStore();
+    expect(store.message).toBeUndefined();
+    expect(store.level).toBe(STATUS_INDICATORS.INFO);
+    expect(store.show).toBe(false);
+  });
+
+  it("testShowMessageSetsMessageLevelAndShowTrue", () => {
+    const store = useSnackbarStore();
+    store.showMessage({
+      message: "Hallo Welt",
+      level: STATUS_INDICATORS.SUCCESS,
+    });
+    expect(store.message).toBe("Hallo Welt");
+    expect(store.level).toBe(STATUS_INDICATORS.SUCCESS);
+    expect(store.show).toBe(true);
+  });
+
+  it("testShowMessageDefaultsLevelToInfo", () => {
+    const store = useSnackbarStore();
+    store.showMessage({ message: "Nur Info" });
+    expect(store.message).toBe("Nur Info");
+    expect(store.level).toBe(STATUS_INDICATORS.INFO);
+    expect(store.show).toBe(true);
+  });
+
+  it("testUpdateShowChangesShowFlag", () => {
+    const store = useSnackbarStore();
+    store.showMessage({ message: "X" });
+    expect(store.show).toBe(true);
+    store.updateShow(false);
+    expect(store.show).toBe(false);
+    store.updateShow(true);
+    expect(store.show).toBe(true);
+  });
+
+  it("testMultipleShowMessageCallsOverwritePrevious", () => {
+    const store = useSnackbarStore();
+    store.showMessage({ message: "erste" });
+    expect(store.message).toBe("erste");
+    store.showMessage({ message: "zweite", level: STATUS_INDICATORS.ERROR });
+    expect(store.message).toBe("zweite");
+    expect(store.level).toBe(STATUS_INDICATORS.ERROR);
+    expect(store.show).toBe(true);
+  });
+
+  it("testShowMessageWithEmptyPayloadShowsUndefinedMessage", () => {
+    const store = useSnackbarStore();
+    store.showMessage({});
+    expect(store.message).toBeUndefined();
+    expect(store.level).toBe(STATUS_INDICATORS.INFO);
+    expect(store.show).toBe(true);
+  });
+});
