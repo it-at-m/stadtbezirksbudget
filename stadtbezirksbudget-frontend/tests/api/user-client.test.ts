@@ -14,7 +14,6 @@ vi.spyOn(fetchUtils, "getConfig").mockImplementation(() => {
 
 describe("getUser", () => {
   afterEach(() => {
-    vi.clearAllMocks();
     vi.restoreAllMocks();
   });
 
@@ -76,9 +75,19 @@ describe("getUser", () => {
     expect(user).toBeInstanceOf(User);
     expect(user.sub).toBe("");
     expect(user.displayName).toBe("");
+    expect(user.surname).toBe("");
+    expect(user.telephoneNumber).toBe("");
+    expect(user.email).toBe("");
     expect(user.username).toBe("");
+    expect(user.givenname).toBe("");
+    expect(user.department).toBe("");
+    expect(user.lhmObjectID).toBe("");
+    expect(user.preferred_username).toBe("");
+
+
     expect(user.user_roles).toEqual([]);
     expect(user.memberof).toEqual([]);
+    expect(user.authorities).toEqual([]);
   });
 
   test("testThrowsWhenFetchRejected", async () => {
