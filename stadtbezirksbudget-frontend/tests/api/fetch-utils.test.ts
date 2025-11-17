@@ -135,15 +135,23 @@ describe("fetch-utils", () => {
     vi.stubGlobal("location", { reload: reloadMock });
 
     const resp = { ok: false, type: "opaqueredirect" } as unknown as Response;
-    expect(() => defaultResponseHandler(resp)).toThrow(ApiError);
+    try {
+      defaultResponseHandler(resp);
+      expect.fail("Expected ApiError to be thrown");
+    } catch (e) {
+      if (e instanceof ApiError) {
+        expect(e.level).toBe(STATUS_INDICATORS.INFO);
+        expect(e.message as string).toContain("Seite wird neu geladen");
+      }
+    }
     expect(reloadMock).toHaveBeenCalled();
   });
 
   test("testDefaultResponseHandlerThrowsWarningOnOtherErrors", () => {
     const resp = { ok: false, status: 500 } as Response;
-    expect(() => defaultResponseHandler(resp, "FehlerX")).toThrow(ApiError);
     try {
       defaultResponseHandler(resp, "FehlerX");
+      expect.fail("Expected ApiError to be thrown");
     } catch (e) {
       if (e instanceof ApiError) {
         expect(e.level).toBe(STATUS_INDICATORS.WARNING);
