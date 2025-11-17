@@ -24,6 +24,7 @@ describe("snackbar store", () => {
     });
     expect(store.message).toBe("Hallo Welt");
     expect(store.level).toBe(STATUS_INDICATORS.SUCCESS);
+    expect(store.show).toBe(true);
   });
 
   it("testShowMessageDefaultsLevelToInfo", () => {
@@ -31,6 +32,7 @@ describe("snackbar store", () => {
     store.showMessage({ message: "Nur Info" });
     expect(store.message).toBe("Nur Info");
     expect(store.level).toBe(STATUS_INDICATORS.INFO);
+    expect(store.show).toBe(true);
   });
 
   it("testUpdateShowChangesShowFlag", () => {
@@ -50,6 +52,7 @@ describe("snackbar store", () => {
     store.showMessage({ message: "zweite", level: STATUS_INDICATORS.ERROR });
     expect(store.message).toBe("zweite");
     expect(store.level).toBe(STATUS_INDICATORS.ERROR);
+    expect(store.show).toBe(true);
   });
 
   it("testShowMessageWithEmptyPayloadShowsUndefinedMessage", () => {
@@ -57,5 +60,6 @@ describe("snackbar store", () => {
     store.showMessage({});
     expect(store.message).toBeUndefined();
     expect(store.level).toBe(STATUS_INDICATORS.INFO);
+    expect(store.show).toBe(true);
   });
 });
