@@ -35,6 +35,12 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBeNull();
   });
 
+  test("testGetHeadersIncludeXSRFTokenWhenCookiePresent", () => {
+    vi.stubGlobal("document", { cookie: "XSRF-TOKEN=abc123; other=1" });
+    const cfg = getConfig();
+    expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBe("abc123");
+  });
+
   test("testPostConfigIncludesBodyAndHeaders", () => {
     const body = { a: 1 };
     const cfg = postConfig(body);
@@ -98,12 +104,6 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("Content-Type")).toBe(
       "application/json"
     );
-  });
-
-  test("testGetHeadersIncludeXSRFTokenWhenCookiePresent", () => {
-    vi.stubGlobal("document", { cookie: "XSRF-TOKEN=abc123; other=1" });
-    const cfg = getConfig();
-    expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBe("abc123");
   });
 
   test("testDefaultResponseHandlerDoesNothingOnOk", () => {
