@@ -58,12 +58,7 @@ describe("getUser", () => {
     expect(user.memberof).toEqual(["testm1"]);
     expect(user.authorities).toEqual(["testa1"]);
 
-    // ensure fetch was called with the expected endpoint and some init
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    expect((globalThis as any).fetch).toHaveBeenCalledWith(
-      "api/sso/userinfo",
-      expect.anything()
-    );
+    expect(fetch).toHaveBeenCalledWith("api/sso/userinfo", expect.anything());
   });
 
   test("testParsesEmptyResponse", async () => {
