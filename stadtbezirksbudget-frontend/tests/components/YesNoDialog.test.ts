@@ -32,12 +32,14 @@ describe("YesNoDialog", () => {
         dialogtitle: "Titel",
         dialogtext: "Text",
       },
-      global: { plugins: [vuetify] },
+      global: {
+        plugins: [vuetify],
+      },
     });
 
     const icon = wrapper.find(".v-icon");
     expect(icon.exists()).toBe(true);
-    expect(icon.text()).toBe("mdi-delete");
+    expect(icon.classes()).toContain("mdi-delete");
   });
 
   test("testEmitsOnClicks", async () => {
