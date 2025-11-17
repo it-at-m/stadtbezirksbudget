@@ -61,6 +61,8 @@ describe("useSaveLeave", () => {
     const nextMock = vi.fn();
     const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
 
+    expect(registeredGuard).not.toBeNull();
+
     (registeredGuard as (to: object, from: object, next: () => void) => void)(
       {},
       {},
@@ -93,6 +95,10 @@ describe("useSaveLeave", () => {
   it("testLeaveWithoutNextDoesNotThrow", () => {
     const instance = useSaveLeave(() => true);
     expect(() => instance.leave()).not.toThrow();
+  });
+
+  it("testCancelWithoutNextDoesNotThrow", () => {
+    const instance = useSaveLeave(() => true);
     expect(() => instance.cancel()).not.toThrow();
   });
 });
