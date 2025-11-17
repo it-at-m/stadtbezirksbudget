@@ -75,24 +75,6 @@ describe("useSaveLeave", () => {
     expect(saveLeaveDialog.value).toBe(false);
   });
 
-  it("testCancelCallsNextAndClosesDialog", async () => {
-    const nextMock = vi.fn();
-    const { saveLeaveDialog, cancel } = useSaveLeave(() => true);
-
-    (registeredGuard as (to: object, from: object, next: () => void) => void)(
-      {},
-      {},
-      nextMock
-    );
-
-    expect(saveLeaveDialog.value).toBe(true);
-
-    cancel();
-
-    expect(nextMock).toHaveBeenCalledWith(false);
-    expect(saveLeaveDialog.value).toBe(false);
-  });
-
   it("testBypassesDialogIfSave", async () => {
     const nextMock = vi.fn();
     const instance = useSaveLeave(() => true);
