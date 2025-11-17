@@ -24,4 +24,13 @@ describe("Ad2imageAvatarClient", () => {
       "https://ad2image.example.com/avatar?uid=test.test&m=letterAvatar&size=128"
     );
   });
+
+  test("testSpecialCharacters", () => {
+    const client = new Ad2imageAvatarClient("https://ad2image.example.com");
+
+    const href = client.avatarHref("test user@domain");
+
+    const url = new URL(href);
+    expect(url.searchParams.get("uid")).toBe("test user@domain");
+  });
 });
