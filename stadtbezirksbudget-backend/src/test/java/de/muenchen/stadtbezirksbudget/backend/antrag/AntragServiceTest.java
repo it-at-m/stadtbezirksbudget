@@ -1,9 +1,17 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand;
@@ -11,9 +19,11 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,12 +38,20 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 class AntragServiceTest {
+    private final ObjectMapper objectMapper = createObjectMapper();
 
     @Mock
     private AntragRepository antragRepository;
-
     @InjectMocks
     private AntragService antragService;
+
+    private ObjectMapper createObjectMapper() {
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        mapper.addMixIn(Finanzierung.class, FinanzierungMixIn.class);
+        return mapper;
+    }
 
     private Antrag createAntrag(final Bearbeitungsstand bearbeitungsstand, final Antragsteller antragsteller, final Finanzierung finanzierung,
             final String titel, final String beschreibung,
@@ -56,6 +74,12 @@ class AntragServiceTest {
         antrag.setFinanzierung(finanzierung);
 
         return antrag;
+    }
+
+    @SuppressWarnings("PMD.CommentDefaultAccessModifier")
+    abstract static class FinanzierungMixIn {
+        @JsonIgnore
+        abstract boolean istFehlbetrag();
     }
 
     @Nested
@@ -122,6 +146,44 @@ class AntragServiceTest {
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(2);
             verify(antragRepository).findAll(pageable);
+        }
+    }
+
+    @Nested
+    class UpdateAntragStatus {
+        @Test
+        void testUpdateAntragStatusSuccessfully() throws Exception {
+            final Bearbeitungsstand bearbeitungsstand = new Bearbeitungsstand();
+            bearbeitungsstand.setStatus(Status.VOLLSTAENDIG);
+
+            final Finanzierung finanzierung = new Finanzierung();
+            final Antragsteller antragsteller = new Antragsteller();
+
+            final Antrag antrag = createAntrag(bearbeitungsstand, antragsteller, finanzierung, "T", "B", Status.VOLLSTAENDIG);
+            final UUID id = antrag.getId();
+
+            final Antrag originalCopy = objectMapper.readValue(objectMapper.writeValueAsString(antrag), Antrag.class);
+
+            when(antragRepository.findById(id)).thenReturn(Optional.of(antrag));
+
+            antragService.updateAntragStatus(id, new AntragStatusUpdateDTO(Status.AUSZAHLUNG));
+
+            verify(antragRepository).findById(id);
+            verify(antragRepository).save(antrag);
+            assertThat(antrag.getBearbeitungsstand().getStatus()).isEqualTo(Status.AUSZAHLUNG);
+            assertThat(antrag).usingRecursiveComparison()
+                    .ignoringFields("bearbeitungsstand.status")
+                    .isEqualTo(originalCopy);
+        }
+
+        @Test
+        void testUpdateAntragStatusNotFoundThrows() {
+            final UUID randomId = UUID.randomUUID();
+            when(antragRepository.findById(randomId)).thenReturn(Optional.empty());
+
+            assertThrows(NotFoundException.class, () -> antragService.updateAntragStatus(randomId, new AntragStatusUpdateDTO(Status.AUSZAHLUNG)));
+            verify(antragRepository).findById(randomId);
+            verify(antragRepository, never()).save(any());
         }
     }
 }

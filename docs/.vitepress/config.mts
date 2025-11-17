@@ -26,16 +26,21 @@ const vitepressConfig = defineConfig({
           { text: "About", link: "/about/" },
           { text: "Status values", link: "/about/status-values" },
           { text: "Target process", link: "/about/target-process" },
+          { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
         ],
       },
       {
         text: "Features",
         items: [
+          { text: "Data model", link: "/features/data-model" },
+          {
+            text: "Application list",
+            link: "/features/application-list/",
+          },
           {
             text: "Reliable communication",
             link: "/features/reliable-communication",
           },
-          { text: "Data model", link: "/features/data-model" },
         ],
       },
       {
@@ -69,16 +74,21 @@ const vitepressConfig = defineConfig({
             { text: "About", link: "/about/" },
             { text: "Status values", link: "/about/status-values" },
             { text: "Target process", link: "/about/target-process" },
+            { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
           ],
         },
         {
           text: "Features",
           items: [
+            { text: "Data model", link: "/features/data-model" },
+            {
+              text: "Application list",
+              link: "/features/application-list/",
+            },
             {
               text: "Reliable communication",
               link: "/features/reliable-communication",
             },
-            { text: "Data model", link: "/features/data-model" },
           ],
         },
         {

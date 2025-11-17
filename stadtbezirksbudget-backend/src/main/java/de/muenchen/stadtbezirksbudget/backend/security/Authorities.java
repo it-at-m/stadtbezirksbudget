@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
  */
 public final class Authorities {
     public static final String ANTRAG_GET_SUMMARYPAGE = "hasAnyRole('reader', 'writer')";
+    public static final String ANTRAG_UPDATE_STATUS = "hasAnyRole('writer')";
 
     private Authorities() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
