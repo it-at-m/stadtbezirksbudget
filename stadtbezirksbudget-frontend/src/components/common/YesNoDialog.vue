@@ -9,6 +9,7 @@
         <v-btn
           color="primary"
           v-bind="open"
+          data-test="activator-button"
         >
           {{ buttontext }}
         </v-btn>
