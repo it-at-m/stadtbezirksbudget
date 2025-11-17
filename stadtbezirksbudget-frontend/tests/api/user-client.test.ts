@@ -84,7 +84,6 @@ describe("getUser", () => {
     expect(user.lhmObjectID).toBe("");
     expect(user.preferred_username).toBe("");
 
-
     expect(user.user_roles).toEqual([]);
     expect(user.memberof).toEqual([]);
     expect(user.authorities).toEqual([]);
