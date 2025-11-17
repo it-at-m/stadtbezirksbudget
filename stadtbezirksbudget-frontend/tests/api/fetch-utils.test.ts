@@ -13,13 +13,11 @@ import {
 import { STATUS_INDICATORS } from "@/constants";
 
 describe("fetch-utils", () => {
-  const originalCookie = globalThis.document?.cookie;
   beforeEach(() => {
-    if (globalThis.document) globalThis.document.cookie = "";
+    vi.stubGlobal("document", { cookie: "" });
   });
 
   afterEach(() => {
-    if (globalThis.document) globalThis.document.cookie = originalCookie || "";
     vi.restoreAllMocks();
   });
 
@@ -69,10 +67,49 @@ describe("fetch-utils", () => {
   });
 
   test("testGetHeadersIncludeXSRFTokenWhenCookiePresent", () => {
-    if (globalThis.document)
-      globalThis.document.cookie = "XSRF-TOKEN=abc123; other=1";
+    vi.stubGlobal("document", { cookie: "XSRF-TOKEN=abc123; other=1" });
     const cfg = getConfig();
     expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBe("abc123");
+  });
+
+  test("testGetHeadersOmitXSRFTokenWhenCookieAbsent", () => {
+    const cfg = getConfig();
+    expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBeNull();
+  });
+
+  test("testPutConfigOmitsIfMatchWhenNoVersion", () => {
+    const body = { id: 1 };
+    // eslint-disable-next-line
+    const cfg = putConfig(body as any);
+    expect(cfg.method).toBe("PUT");
+    expect(cfg.body).toBe(JSON.stringify(body));
+    expect((cfg.headers as Headers).get("If-Match")).toBeNull();
+  });
+
+  test("testPatchConfigOmitsIfMatchWhenVersionUndefined", () => {
+    const body = { id: 1, version: undefined };
+    // eslint-disable-next-line
+    const cfg = patchConfig(body as any);
+    expect(cfg.method).toBe("PATCH");
+    expect(cfg.body).toBe(JSON.stringify(body));
+    expect((cfg.headers as Headers).get("If-Match")).toBeNull();
+  });
+
+  test("testPostConfigHandlesNullOrUndefinedBody", () => {
+    // eslint-disable-next-line
+    const cfgNull = postConfig(null as any);
+    expect(cfgNull.method).toBe("POST");
+    expect(cfgNull.body).toBeUndefined();
+    expect((cfgNull.headers as Headers).get("Content-Type")).toBe(
+      "application/json"
+    );
+    // eslint-disable-next-line
+    const cfgUndef = postConfig(undefined as any);
+    expect(cfgUndef.method).toBe("POST");
+    expect(cfgUndef.body).toBeUndefined();
+    expect((cfgUndef.headers as Headers).get("Content-Type")).toBe(
+      "application/json"
+    );
   });
 
   test("testDefaultResponseHandlerDoesNothingOnOk", () => {
