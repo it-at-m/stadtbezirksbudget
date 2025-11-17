@@ -96,7 +96,7 @@ describe("getUser", () => {
       new Error("Network")
     );
 
-    await expect(getUser()).rejects.toThrow();
+    await expect(getUser()).rejects.toThrow("unbekannter Fehler");
   });
 
   test("testThrowsOnWrongResponse", async () => {
@@ -106,6 +106,6 @@ describe("getUser", () => {
       statusText: "Unauthorized",
     });
 
-    await expect(getUser()).rejects.toThrow();
+    await expect(getUser()).rejects.toThrow("Beim Laden des Users ist ein Fehler aufgetreten.");
   });
 });
