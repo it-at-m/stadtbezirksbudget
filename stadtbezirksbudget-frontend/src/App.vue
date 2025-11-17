@@ -55,13 +55,7 @@
         </v-col>
       </v-row>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer">
-      <v-list>
-        <v-list-item :to="{ name: ROUTES_GETSTARTED }">
-          <v-list-item-title> Erste Schritte </v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+    <v-navigation-drawer v-model="drawer"></v-navigation-drawer>
     <v-main>
       <v-container fluid>
         <router-view v-slot="{ Component }">
@@ -83,7 +77,7 @@ import { onMounted, ref } from "vue";
 import { getUser } from "@/api/user-client";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import { APPSWITCHER_URL, ROUTES_GETSTARTED } from "@/constants";
+import { APPSWITCHER_URL } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";

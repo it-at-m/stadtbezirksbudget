@@ -20,16 +20,27 @@ const vitepressConfig = defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "About", link: "/about/" },
+      {
+        text: "About",
+        items: [
+          { text: "About", link: "/about/" },
+          { text: "Status values", link: "/about/status-values" },
+          { text: "Target process", link: "/about/target-process" },
+          { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
+        ],
+      },
       {
         text: "Features",
         items: [
-          { text: "Features", link: "/features/" },
+          { text: "Data model", link: "/features/data-model" },
+          {
+            text: "Application list",
+            link: "/features/application-list/",
+          },
           {
             text: "Reliable communication",
             link: "/features/reliable-communication",
           },
-          { text: "Data model", link: "/features/data-model" },
         ],
       },
       {
@@ -57,16 +68,27 @@ const vitepressConfig = defineConfig({
     ],
     sidebar: {
       "/": [
-        { text: "About", link: "/about/" },
+        {
+          text: "About",
+          items: [
+            { text: "About", link: "/about/" },
+            { text: "Status values", link: "/about/status-values" },
+            { text: "Target process", link: "/about/target-process" },
+            { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
+          ],
+        },
         {
           text: "Features",
-          link: "/features/",
           items: [
+            { text: "Data model", link: "/features/data-model" },
+            {
+              text: "Application list",
+              link: "/features/application-list/",
+            },
             {
               text: "Reliable communication",
               link: "/features/reliable-communication",
             },
-            { text: "Data model", link: "/features/data-model" },
           ],
         },
         {

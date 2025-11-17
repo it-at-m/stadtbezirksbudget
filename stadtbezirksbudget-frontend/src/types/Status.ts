@@ -1,41 +1,112 @@
-export enum Status {
-  EINGEGANGEN = "EINGEGANGEN",
-  WARTEN_AUF_BUERGERRUECKMELDUNG = "WARTEN_AUF_BUERGERRUECKMELDUNG",
-  ABGELEHNT_KEINE_RUECKMELDUNG = "ABGELEHNT_KEINE_RUECKMELDUNG",
-  ABGELEHNT_NICHT_ZUSTAENDIG = "ABGELEHNT_NICHT_ZUSTAENDIG",
-  ABGELEHNT_NICHT_FOERDERFAEHIG = "ABGELEHNT_NICHT_FOERDERFAEHIG",
-  ABGELEHNT_VON_BA = "ABGELEHNT_VON_BA",
-  ABLEHNUNGSBESCHEID_ERSTELLT = "ABLEHNUNGSBESCHEID_ERSTELLT",
-  VOLLSTAENDIG = "VOLLSTAENDIG",
-  SITZUNGSVORLAGE_ERSTELLT = "SITZUNGSVORLAGE_ERSTELLT",
-  SITZUNGSVORLAGE_UEBERMITTELT = "SITZUNGSVORLAGE_UEBERMITTELT",
-  BESCHLUSS_ERHALTEN = "BESCHLUSS_ERHALTEN",
-  ABLEHNUNGSBESCHLUSS_ERHALTEN = "ABLEHNUNGSBESCHLUSS_ERHALTEN",
-  ZUWENDUNGSBESCHEID_ERSTELLT = "ZUWENDUNGSBESCHEID_ERSTELLT",
-  ZUWENDUNGSBESCHEID_VERSENDET = "ZUWENDUNGSBESCHEID_VERSENDET",
-  VERWENDUNGSNACHWEISE_GEPRUEFT = "VERWENDUNGSNACHWEISE_GEPRUEFT",
-  AUSZAHLUNG = "AUSZAHLUNG",
-  RUECKZAHLUNG = "RUECKZAHLUNG",
-  ABGESCHLOSSEN = "ABGESCHLOSSEN",
+const STATUS_DEFINITIONS = [
+  { value: "EINGEGANGEN", shortText: "Offen", longText: "Antrag eingegangen" },
+  {
+    value: "WARTEN_AUF_BUERGERRUECKMELDUNG",
+    shortText: "Warten",
+    longText: "Warten auf Bürgerrückmeldung",
+  },
+  {
+    value: "VOLLSTAENDIG",
+    shortText: "Vorbereitung",
+    longText: "Antrag vollständig",
+  },
+  {
+    value: "SITZUNGSVORLAGE_ERSTELLT",
+    shortText: "Vorbereitung",
+    longText: "Sitzungsvorlage erstellt",
+  },
+  {
+    value: "SITZUNGSVORLAGE_UEBERMITTELT",
+    shortText: "Vorbereitung",
+    longText: "Sitzungsvorlage an BA/Geschäftsstelle übermittelt",
+  },
+  {
+    value: "BESCHLUSS_ERHALTEN",
+    shortText: "Angenommen",
+    longText: "Beschluss erhalten",
+  },
+  {
+    value: "ZUWENDUNGSBESCHEID_ERSTELLT",
+    shortText: "Bewilligt",
+    longText: "Zuwendungsbescheid erstellt",
+  },
+  {
+    value: "ZUWENDUNGSBESCHEID_VERSENDET",
+    shortText: "Nachricht an Bürger",
+    longText: "Zuwendungsbescheid versendet",
+  },
+  {
+    value: "VERWENDUNGSNACHWEISE_GEPRUEFT",
+    shortText: "Finanzierung",
+    longText: "Verwendungsnachweise geprüft",
+  },
+  {
+    value: "AUSZAHLUNG",
+    shortText: "Finanzierung",
+    longText: "An die Stelle ausgezahlt",
+  },
+  {
+    value: "RUECKZAHLUNG",
+    shortText: "Rückzahlung",
+    longText: "Rückzahlung angefordert",
+  },
+  {
+    value: "ABGESCHLOSSEN",
+    shortText: "Abgeschlossen",
+    longText: "Abrechnungsschreiben erstellt",
+  },
+  {
+    value: "ABLEHNUNGSBESCHEID_ERSTELLT",
+    shortText: "Zurückgewiesen",
+    longText: "Ablehnungsbescheid erstellt",
+  },
+  {
+    value: "ABLEHNUNGSBESCHLUSS_ERHALTEN",
+    shortText: "Zurückgewiesen",
+    longText: "Ablehnungsbeschluss erhalten",
+  },
+  {
+    value: "ABGELEHNT_VON_BA",
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt von BA (Bescheid wurde versendet)",
+  },
+  {
+    value: "ABGELEHNT_KEINE_RUECKMELDUNG",
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Keine Rückmeldung",
+  },
+  {
+    value: "ABGELEHNT_NICHT_ZUSTAENDIG",
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Nicht zuständig",
+  },
+  {
+    value: "ABGELEHNT_NICHT_FOERDERFAEHIG",
+    shortText: "Abgelehnt",
+    longText: "Abgelehnt - Nicht förderfähig",
+  },
+] as const;
+
+// Type representing all possible status values
+export type Status = (typeof STATUS_DEFINITIONS)[number]["value"];
+
+// Interface for status options used in dropdowns or selectors
+export interface StatusOption {
+  value: Status;
+  shortText: string;
+  longText: string;
 }
 
-export const StatusText: Record<Status, string> = {
-  [Status.EINGEGANGEN]: "Offen",
-  [Status.WARTEN_AUF_BUERGERRUECKMELDUNG]: "Warten",
-  [Status.ABGELEHNT_KEINE_RUECKMELDUNG]: "Abgelehnt",
-  [Status.ABGELEHNT_NICHT_ZUSTAENDIG]: "Abgelehnt",
-  [Status.ABGELEHNT_NICHT_FOERDERFAEHIG]: "Abgelehnt",
-  [Status.ABGELEHNT_VON_BA]: "Abgelehnt",
-  [Status.ABLEHNUNGSBESCHEID_ERSTELLT]: "Zurückgewiesen",
-  [Status.VOLLSTAENDIG]: "Vorbereitung",
-  [Status.SITZUNGSVORLAGE_ERSTELLT]: "Vorbereitung",
-  [Status.SITZUNGSVORLAGE_UEBERMITTELT]: "Vorbereitung",
-  [Status.ZUWENDUNGSBESCHEID_VERSENDET]: "Nachricht an Bürger",
-  [Status.BESCHLUSS_ERHALTEN]: "Angenommen",
-  [Status.ABLEHNUNGSBESCHLUSS_ERHALTEN]: "Zurückgewiesen",
-  [Status.ZUWENDUNGSBESCHEID_ERSTELLT]: "Bewilligt",
-  [Status.VERWENDUNGSNACHWEISE_GEPRUEFT]: "Finanzierung",
-  [Status.AUSZAHLUNG]: "Finanzierung",
-  [Status.RUECKZAHLUNG]: "Rückzahlung",
-  [Status.ABGESCHLOSSEN]: "Abgeschlossen",
-};
+// Mapping of status values to their corresponding short and long texts
+export const StatusText: Record<
+  Status,
+  Omit<StatusOption, "value">
+> = Object.fromEntries(
+  STATUS_DEFINITIONS.map((s) => [
+    s.value,
+    { shortText: s.shortText, longText: s.longText },
+  ])
+) as Record<Status, Omit<StatusOption, "value">>;
+
+// Array of all status options for use in UI components
+export const statusOptions: readonly StatusOption[] = STATUS_DEFINITIONS;
