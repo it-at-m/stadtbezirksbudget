@@ -48,6 +48,7 @@
         <!-- OpenAPI -->
         <openapi-generator-maven-plugin.version>7.14.0</openapi-generator-maven-plugin.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+        <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
@@ -384,6 +385,25 @@
                                 <useAbstractionForFiles>true</useAbstractionForFiles>
                                 <useJakartaEe>true</useJakartaEe>
                             </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/openapi/src/test/java</source>
+                            </sources>
                         </configuration>
                     </execution>
                 </executions>
