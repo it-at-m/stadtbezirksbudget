@@ -80,6 +80,8 @@ describe("useSaveLeave", () => {
     const instance = useSaveLeave(() => true);
     instance.isSave.value = true;
 
+    expect(registeredGuard).not.toBeNull();
+
     invokeGuard(nextMock);
 
     expect(nextMock).toHaveBeenCalled();
