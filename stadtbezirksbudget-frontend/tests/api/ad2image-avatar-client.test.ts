@@ -1,12 +1,8 @@
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import { Ad2imageAvatarClient } from "@/api/ad2image-avatar-client";
 
 describe("Ad2imageAvatarClient", () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
   test("testBuildsCorrectUrl", () => {
     const base = "https://ad2image.example.com";
     const client = new Ad2imageAvatarClient(base);
