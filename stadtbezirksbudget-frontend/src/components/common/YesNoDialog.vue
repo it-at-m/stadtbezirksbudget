@@ -9,6 +9,7 @@
         <v-btn
           color="primary"
           v-bind="open"
+          data-test="activator-button"
         >
           {{ buttontext }}
         </v-btn>
@@ -34,14 +35,14 @@
       <v-card-actions>
         <v-spacer />
         <v-btn
-          id="yesnodialog-btn-no"
+          data-test="no-button"
           variant="text"
           @click="no"
         >
           Nein
         </v-btn>
         <v-btn
-          id="yesnodialog-btn-yes"
+          data-test="yes-button"
           color="primary"
           @click="yes"
         >
