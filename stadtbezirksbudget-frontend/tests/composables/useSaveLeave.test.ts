@@ -4,12 +4,17 @@ import { useSaveLeave } from "@/composables/saveLeave";
 
 let registeredGuard:
   | null
-  | ((to: object, from: object, next: (to?: false | object) => void) => void) = null;
+  | ((to: object, from: object, next: (to?: false | object) => void) => void) =
+  null;
 
 vi.mock("vue-router", () => {
   return {
     onBeforeRouteLeave: (
-      guard: ((to: object, from: object, next: (to?: false | object) => void) => void)
+      guard: (
+        to: object,
+        from: object,
+        next: (to?: false | object) => void
+      ) => void
     ) => {
       registeredGuard = guard;
     },
