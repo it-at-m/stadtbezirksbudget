@@ -70,6 +70,8 @@ describe("YesNoDialog", () => {
     const emitted = wrapper.emitted();
     expect(emitted).toBeTruthy();
     expect(emitted?.yes).toBeTruthy();
+    expect(emitted?.yes.length).toBe(1);
     expect(emitted?.no).toBeTruthy();
+    expect(emitted?.no.length).toBe(1);
   });
 });
