@@ -13,9 +13,10 @@ hero:
       text: Architecture
       link: /architecture/
 features:
-  - icon: 1️⃣
-    title: Title 1
-    details: Add some interesting information here
+  - icon: 📋
+    title: Application list
+    details: The application list on the homepage provides a summary of all applications submitted by citizens, enabling caseworkers to manage and process them efficiently.
+    link: /features/application-list/
   - icon: 2️⃣
     title: Title 2
     details: Add some interesting information here

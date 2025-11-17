@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public record AntragsdatenTestDataBuilder(
+public record AntragTestDataBuilder(
         AntragRepository antragRepository,
         AdresseRepository adresseRepository,
         FinanzierungRepository finanzierungRepository,
