@@ -48,6 +48,22 @@ describe("getUser", () => {
     expect(user.displayName).toBe("Test");
     expect(user.username).toBe("test");
     expect(user.user_roles).toEqual(["testu1"]);
+    expect(user.surname).toBe("Test");
+    expect(user.telephoneNumber).toBe("01234");
+    expect(user.email).toBe("test@example.com");
+    expect(user.givenname).toBe("Test");
+    expect(user.department).toBe("test");
+    expect(user.lhmObjectID).toBe("TEST-1");
+    expect(user.preferred_username).toBe("test");
+    expect(user.memberof).toEqual(["testm1"]);
+    expect(user.authorities).toEqual(["testa1"]);
+
+    // ensure fetch was called with the expected endpoint and some init
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((globalThis as any).fetch).toHaveBeenCalledWith(
+      "api/sso/userinfo",
+      expect.anything()
+    );
   });
 
   test("testParsesEmptyResponse", async () => {
@@ -106,6 +122,8 @@ describe("getUser", () => {
       statusText: "Unauthorized",
     });
 
-    await expect(getUser()).rejects.toThrow("Beim Laden des Users ist ein Fehler aufgetreten.");
+    await expect(getUser()).rejects.toThrow(
+      "Beim Laden des Users ist ein Fehler aufgetreten."
+    );
   });
 });
