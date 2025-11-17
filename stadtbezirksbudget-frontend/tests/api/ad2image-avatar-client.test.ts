@@ -9,10 +9,9 @@ describe("Ad2imageAvatarClient", () => {
 
     const href = client.avatarHref("test.test");
 
-    expect(href).toContain("https://ad2image.example.com/avatar");
-    expect(href).toContain("uid=test.test");
-    expect(href).toContain("m=fallbackGeneric");
-    expect(href).toContain("size=64");
+    expect(href).toBe(
+      "https://ad2image.example.com/avatar?uid=test.test&m=fallbackGeneric&size=64"
+    );
   });
 
   test("testCustomModeAndSize", () => {
@@ -21,9 +20,8 @@ describe("Ad2imageAvatarClient", () => {
 
     const href = client.avatarHref("test.test", "letterAvatar", "128");
 
-    expect(href).toContain("https://ad2image.example.com/avatar");
-    expect(href).toContain("uid=test.test");
-    expect(href).toContain("m=letterAvatar");
-    expect(href).toContain("size=128");
+    expect(href).toBe(
+      "https://ad2image.example.com/avatar?uid=test.test&m=letterAvatar&size=128"
+    );
   });
 });
