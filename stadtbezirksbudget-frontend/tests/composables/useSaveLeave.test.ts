@@ -29,7 +29,7 @@ describe("useSaveLeave", () => {
 
   function invokeGuard(nextMock: ReturnType<typeof vi.fn>) {
     if (!registeredGuard) throw new Error("Guard not registered");
-    registeredGuard({}, {}, nextMock as unknown as () => void);
+    registeredGuard({}, {}, nextMock as (to?: false | object) => void);
   }
 
   it("testCallsNextIfNotDirty", () => {
