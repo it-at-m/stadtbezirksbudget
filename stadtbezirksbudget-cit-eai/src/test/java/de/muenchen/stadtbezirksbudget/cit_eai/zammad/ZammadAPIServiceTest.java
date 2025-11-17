@@ -52,7 +52,7 @@ class ZammadAPIServiceTest {
         }
 
         @Test
-        void testCreateTicketWithIdReturnsCorrectTicket(){
+        void testCreateTicketWithIdReturnsCorrectTicket() {
             final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
                     .title("T")
                     .anliegenart("a")
@@ -104,7 +104,7 @@ class ZammadAPIServiceTest {
     }
 
     @Nested
-    class CreateUserAndTicket{
+    class CreateUserAndTicket {
         @Test
         void testCreateUserAndTicketReturnsResponse() {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
