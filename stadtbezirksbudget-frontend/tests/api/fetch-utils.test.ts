@@ -30,6 +30,11 @@ describe("fetch-utils", () => {
     );
   });
 
+  test("testGetHeadersOmitXSRFTokenWhenCookieAbsent", () => {
+    const cfg = getConfig();
+    expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBeNull();
+  });
+
   test("testPostConfigIncludesBodyAndHeaders", () => {
     const body = { a: 1 };
     const cfg = postConfig(body);
@@ -38,6 +43,29 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("Content-Type")).toBe(
       "application/json"
     );
+  });
+
+  test("testPostConfigHandlesNullOrUndefinedBody", () => {
+    const cfgNull = postConfig(null);
+    expect(cfgNull.method).toBe("POST");
+    expect(cfgNull.body).toBeUndefined();
+    expect((cfgNull.headers as Headers).get("Content-Type")).toBe(
+      "application/json"
+    );
+    const cfgUndef = postConfig(undefined);
+    expect(cfgUndef.method).toBe("POST");
+    expect(cfgUndef.body).toBeUndefined();
+    expect((cfgUndef.headers as Headers).get("Content-Type")).toBe(
+      "application/json"
+    );
+  });
+
+  test("testPutConfigOmitsIfMatchWhenNoVersion", () => {
+    const body = { id: 1 };
+    const cfg = putConfig(body);
+    expect(cfg.method).toBe("PUT");
+    expect(cfg.body).toBe(JSON.stringify(body));
+    expect((cfg.headers as Headers).get("If-Match")).toBeNull();
   });
 
   test("testPutConfigAppendsIfMatchWhenVersionPresent", () => {
@@ -56,6 +84,14 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("If-Match")).toBe("0");
   });
 
+  test("testPatchConfigOmitsIfMatchWhenVersionUndefined", () => {
+    const body = { id: 1, version: undefined };
+    const cfg = patchConfig(body);
+    expect(cfg.method).toBe("PATCH");
+    expect(cfg.body).toBe(JSON.stringify(body));
+    expect((cfg.headers as Headers).get("If-Match")).toBeNull();
+  });
+
   test("testDeleteConfigHasDeleteMethod", () => {
     const cfg = deleteConfig();
     expect(cfg.method).toBe("DELETE");
@@ -68,42 +104,6 @@ describe("fetch-utils", () => {
     vi.stubGlobal("document", { cookie: "XSRF-TOKEN=abc123; other=1" });
     const cfg = getConfig();
     expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBe("abc123");
-  });
-
-  test("testGetHeadersOmitXSRFTokenWhenCookieAbsent", () => {
-    const cfg = getConfig();
-    expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBeNull();
-  });
-
-  test("testPutConfigOmitsIfMatchWhenNoVersion", () => {
-    const body = { id: 1 };
-    const cfg = putConfig(body);
-    expect(cfg.method).toBe("PUT");
-    expect(cfg.body).toBe(JSON.stringify(body));
-    expect((cfg.headers as Headers).get("If-Match")).toBeNull();
-  });
-
-  test("testPatchConfigOmitsIfMatchWhenVersionUndefined", () => {
-    const body = { id: 1, version: undefined };
-    const cfg = patchConfig(body);
-    expect(cfg.method).toBe("PATCH");
-    expect(cfg.body).toBe(JSON.stringify(body));
-    expect((cfg.headers as Headers).get("If-Match")).toBeNull();
-  });
-
-  test("testPostConfigHandlesNullOrUndefinedBody", () => {
-    const cfgNull = postConfig(null);
-    expect(cfgNull.method).toBe("POST");
-    expect(cfgNull.body).toBeUndefined();
-    expect((cfgNull.headers as Headers).get("Content-Type")).toBe(
-      "application/json"
-    );
-    const cfgUndef = postConfig(undefined);
-    expect(cfgUndef.method).toBe("POST");
-    expect(cfgUndef.body).toBeUndefined();
-    expect((cfgUndef.headers as Headers).get("Content-Type")).toBe(
-      "application/json"
-    );
   });
 
   test("testDefaultResponseHandlerDoesNothingOnOk", () => {
