@@ -140,8 +140,10 @@ describe("fetch-utils", () => {
       expect.fail("Expected ApiError to be thrown");
     } catch (e) {
       if (e instanceof ApiError) {
-        expect(e.level).toBe(STATUS_INDICATORS.INFO);
-        expect(e.message as string).toContain("Seite wird neu geladen");
+        expect(e.level).toBe(STATUS_INDICATORS.WARNING);
+        expect(e.message as string).toBe(
+          "Es ist ein unbekannter Fehler aufgetreten."
+        );
       }
     }
     expect(reloadMock).toHaveBeenCalled();
