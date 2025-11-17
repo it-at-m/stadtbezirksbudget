@@ -52,6 +52,40 @@ class ZammadAPIServiceTest {
         }
 
         @Test
+        void testCreateTicketWithIdReturnsCorrectTicket(){
+            final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
+                    .title("T")
+                    .anliegenart("a")
+                    .vertrauensniveau("1")
+                    .group("g");
+
+            final TicketInternal ticket = new TicketInternal().id("42").title("T");
+
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(null), eq("user-1"), any()))
+                    .thenReturn(Mono.just(ticket));
+
+            final TicketInternal result = service.createTicket(dto, null, "user-1", Collections.emptyList());
+
+            assertThat(result).isNotNull();
+            assertThat(result.getId()).isEqualTo("42");
+            assertThat(result).isSameAs(ticket);
+        }
+
+        @Test
+        void testCreateTicketWithAPIExceptionThrowsZammadEAIException() {
+            final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
+                    .title("T")
+                    .anliegenart("a")
+                    .vertrauensniveau("1")
+                    .group("g");
+
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq("ext-1"), eq(null), any()))
+                    .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
+
+            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, "ext-1", null, Collections.emptyList()));
+        }
+
+        @Test
         void testCreateTicketWithMissingIdsThrowsIllegalArgumentException() {
             final CreateTicketDTOV2 dto = new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g");
 
@@ -85,6 +119,36 @@ class ZammadAPIServiceTest {
 
             assertThat(result).isNotNull();
             assertThat(result).isSameAs(resp);
+        }
+
+        @Test
+        void testCreateUserAndTicketWithMissingRequiredFieldsThrowsIllegalArgumentException() {
+            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            dto.setCreateTicketDTO(new CreateTicketDTOV2().anliegenart("a").vertrauensniveau("1").group("g"));
+
+            assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()));
+        }
+
+        @Test
+        void testCreateUserAndTicketWithNullDtoThrowsNullPointerException() {
+            assertThrows(NullPointerException.class, () -> service.createUserAndTicket(null, Collections.emptyList()));
+        }
+
+        @Test
+        void testCreateUserAndTicketWithNullAttachmentsThrowsNullPointerException() {
+            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            assertThrows(NullPointerException.class, () -> service.createUserAndTicket(dto, null));
+        }
+
+        @Test
+        void testCreateUserAndTicketWithApiErrorThrowsZammadEAIException() {
+            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
+
+            Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
+                    .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
+
+            assertThrows(ZammadEAIException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()));
         }
     }
 }
