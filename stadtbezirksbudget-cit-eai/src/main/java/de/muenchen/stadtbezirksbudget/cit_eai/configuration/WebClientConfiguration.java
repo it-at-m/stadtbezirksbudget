@@ -18,9 +18,6 @@ import reactor.netty.http.client.HttpClient;
 @Profile("!test")
 public class WebClientConfiguration {
 
-    @Value("${oauth.registrationId}")
-    private String registrationId;
-
     @Bean
     @Profile("!local")
     public OAuth2AuthorizedClientManager authorizedClientManager(
@@ -30,7 +27,8 @@ public class WebClientConfiguration {
 
     @Bean
     @Profile("!local")
-    public WebClient authorizedWebClient(final OAuth2AuthorizedClientManager authorizedClientManager) {
+    public WebClient authorizedWebClient(final OAuth2AuthorizedClientManager authorizedClientManager,
+            @Value("${oauth.registrationId}") final String registrationId) {
         final ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
                 authorizedClientManager);
         oauth2.setDefaultClientRegistrationId(registrationId);
