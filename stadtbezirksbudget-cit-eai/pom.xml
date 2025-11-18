@@ -52,7 +52,6 @@
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
-        <spring-boot-starter-webflux.version>3.5.7</spring-boot-starter-webflux.version>
         <!-- Logging -->
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
 
@@ -111,7 +110,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>${spring-boot-starter-webflux.version}</version>
         </dependency>
 
         <!-- Security -->
