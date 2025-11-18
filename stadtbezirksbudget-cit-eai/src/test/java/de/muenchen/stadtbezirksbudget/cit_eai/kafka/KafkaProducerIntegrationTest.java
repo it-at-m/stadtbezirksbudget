@@ -3,7 +3,6 @@ package de.muenchen.stadtbezirksbudget.cit_eai.kafka;
 import static de.muenchen.stadtbezirksbudget.cit_eai.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.cit_eai.TestConstants.SPRING_TEST_PROFILE;
 import static org.mockito.Mockito.verify;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -44,8 +43,7 @@ class KafkaProducerIntegrationTest {
             mockMvc
                     .perform(post("/kafka/publish")
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(message))
-                            .with(csrf()))
+                            .content(objectMapper.writeValueAsString(message)))
                     .andExpect(status().isOk());
             verify(kafkaProducerService).publishMessage(message);
         }
