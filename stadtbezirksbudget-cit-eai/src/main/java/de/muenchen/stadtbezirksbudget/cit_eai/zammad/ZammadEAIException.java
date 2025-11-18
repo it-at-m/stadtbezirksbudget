@@ -35,9 +35,9 @@ public class ZammadEAIException extends RuntimeException {
     @Override
     public String toString() {
         return "ZammadEAIException{" +
-                "statusCode=" + getStatusCode() +
+                "statusCode=" + statusCode +
                 ", message='" + getMessage() + '\'' +
-                ", responseBody='" + getResponseBody() + '\'' +
+                ", responseBody='" + responseBody + '\'' +
                 "} " + super.toString();
     }
 }
