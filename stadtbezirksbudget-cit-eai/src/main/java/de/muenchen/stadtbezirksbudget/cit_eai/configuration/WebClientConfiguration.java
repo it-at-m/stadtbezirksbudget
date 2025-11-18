@@ -43,7 +43,7 @@ public class WebClientConfiguration {
     @Bean
     @Profile("local")
     public WebClient localWebClient() {
-        HttpClient httpClient = HttpClient.create().responseTimeout(Duration.ofSeconds(30));
+        final HttpClient httpClient = HttpClient.create().responseTimeout(Duration.ofSeconds(30));
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
