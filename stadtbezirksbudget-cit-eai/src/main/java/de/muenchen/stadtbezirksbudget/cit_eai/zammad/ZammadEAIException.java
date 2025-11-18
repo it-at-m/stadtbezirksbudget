@@ -1,9 +1,13 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 
+import java.io.Serial;
 import java.nio.charset.Charset;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 public class ZammadEAIException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private final int statusCode;
     private final String message;
