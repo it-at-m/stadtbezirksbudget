@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.reactive.function.client.WebClient;
 
+@SuppressWarnings("PMD.TestClassWithoutTestCases")
 @TestConfiguration
 public class TestWebClientConfig {
     @Bean

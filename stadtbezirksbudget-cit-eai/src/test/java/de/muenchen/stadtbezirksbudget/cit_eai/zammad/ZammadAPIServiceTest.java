@@ -23,6 +23,8 @@ class ZammadAPIServiceTest {
     private TicketsApi ticketsApi;
     private ZammadAPIService service;
 
+    private static final String EXTERNAL_ID = "ext-1";
+
     @BeforeEach
     void setUp() {
         ticketsApi = Mockito.mock(TicketsApi.class);
@@ -41,10 +43,10 @@ class ZammadAPIServiceTest {
 
             final TicketInternal ticket = new TicketInternal().id("42").title("Test");
 
-            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq("ext-1"), eq(null), any()))
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.just(ticket));
 
-            final TicketInternal result = service.createTicket(dto, "ext-1", null, Collections.emptyList());
+            final TicketInternal result = service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList());
 
             assertThat(result).isNotNull();
             assertThat(result.getId()).isEqualTo("42");
@@ -79,10 +81,10 @@ class ZammadAPIServiceTest {
                     .vertrauensniveau("1")
                     .group("g");
 
-            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq("ext-1"), eq(null), any()))
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, "ext-1", null, Collections.emptyList()));
+            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()));
         }
 
         @Test
@@ -96,10 +98,10 @@ class ZammadAPIServiceTest {
         void testCreateTicketWithApiErrorThrowsZammadEAIException() {
             final CreateTicketDTOV2 dto = new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g");
 
-            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq("ext-1"), eq(null), any()))
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, "ext-1", null, Collections.emptyList()));
+            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()));
         }
     }
 

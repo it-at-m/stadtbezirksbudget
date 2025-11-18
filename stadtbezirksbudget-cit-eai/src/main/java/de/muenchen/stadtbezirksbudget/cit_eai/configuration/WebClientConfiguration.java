@@ -21,13 +21,13 @@ public class WebClientConfiguration {
     @Bean
     @Profile("!local")
     public OAuth2AuthorizedClientManager authorizedClientManager(
-            ClientRegistrationRepository clientRegistrationRepository, OAuth2AuthorizedClientService authorizedClientService) {
+            final ClientRegistrationRepository clientRegistrationRepository, final OAuth2AuthorizedClientService authorizedClientService) {
         return new AuthorizedClientServiceOAuth2AuthorizedClientManager(clientRegistrationRepository, authorizedClientService);
     }
 
     @Bean
     @Profile("!local")
-    public WebClient authorizedWebClient(OAuth2AuthorizedClientManager authorizedClientManager) {
+    public WebClient authorizedWebClient(final OAuth2AuthorizedClientManager authorizedClientManager) {
         final ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
                 authorizedClientManager);
         oauth2.setDefaultClientRegistrationId(registrationId);
