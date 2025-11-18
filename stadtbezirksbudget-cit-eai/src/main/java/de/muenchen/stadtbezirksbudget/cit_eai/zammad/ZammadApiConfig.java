@@ -6,10 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServletOAuth2AuthorizedClientExchangeFilterFunction;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
@@ -18,20 +14,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ZammadApiConfig {
 
     private final ZammadProperties zammadProperties;
+    private final WebClient webClient;
 
     @Bean
-    public ApiClient apiClient(final ClientRegistrationRepository clientRegistrationRepository,
-            final OAuth2AuthorizedClientService auth2AuthorizedClientService) {
-        final ServletOAuth2AuthorizedClientExchangeFilterFunction oauth = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
-                new AuthorizedClientServiceOAuth2AuthorizedClientManager(
-                        clientRegistrationRepository, auth2AuthorizedClientService));
-
-        oauth.setDefaultClientRegistrationId(zammadProperties.getClientId());
-        final WebClient webClient = ApiClient.buildWebClientBuilder().apply(oauth.oauth2Configuration()).build();
+    public ApiClient apiClient() {
         final ApiClient apiClient = new ApiClient(webClient);
-
         apiClient.setBasePath(zammadProperties.getBasePath());
-
         return apiClient;
     }
 
