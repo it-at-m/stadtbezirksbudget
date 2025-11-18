@@ -10,16 +10,13 @@ import org.springframework.validation.annotation.Validated;
 /**
  * Configuration properties for the Zammad integration.
  * <p>
- * Bound from properties with the prefix "spring.zammad" (e.g. spring.zammad.base-path).
+ * Bound from properties with the prefix "zammad" (e.g. zammad.base-path).
  */
 
-@ConfigurationProperties(prefix = "spring.zammad")
+@ConfigurationProperties(prefix = "zammad")
 @Validated
 @Getter
 @RequiredArgsConstructor(onConstructor_ = @ConstructorBinding)
 public class ZammadProperties {
-
     @NotBlank private final String basePath;
-
-    @NotBlank private final String clientId;
 }
