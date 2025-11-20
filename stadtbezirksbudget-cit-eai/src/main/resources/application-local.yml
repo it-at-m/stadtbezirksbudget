@@ -10,4 +10,4 @@ spring:
     template:
       default-topic: stadtbezirksbudget-cit-backend-local
 zammad:
-  base-path: localhost:8090
+  base-path: "http://localhost:8090"
