@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import java.time.Duration;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,42 +18,37 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 @Configuration
-@Profile("!test")
-public class WebClientConfiguration {
+@Profile("!no-security")
+@RequiredArgsConstructor
+public class SecurityConfiguration {
+
+    private final WebClientTimeoutProperties webClientTimeoutProperties;
 
     @Bean
-    @Profile("!local")
     public OAuth2AuthorizedClientManager authorizedClientManager(
             final ClientRegistrationRepository clientRegistrationRepository, final OAuth2AuthorizedClientService authorizedClientService) {
         return new AuthorizedClientServiceOAuth2AuthorizedClientManager(clientRegistrationRepository, authorizedClientService);
     }
 
     @Bean
-    @Profile("!local")
-    public WebClient authorizedWebClient(final OAuth2AuthorizedClientManager authorizedClientManager,
-            @Value("${oauth.registrationId}") final String registrationId) {
+    public WebClient authorizedWebClient(
+            final OAuth2AuthorizedClientManager authorizedClientManager,
+            @Value("${oauth.registrationId}") final String registrationId,
+            @Value("${webclient.codec.maxInMemorySize:1048576}") final int maxInMemorySize) {
         final ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
                 authorizedClientManager);
         oauth2.setDefaultClientRegistrationId(registrationId);
 
-        HttpClient httpClient = HttpClient.create()
-                .responseTimeout(Duration.ofSeconds(30))
+        final HttpClient httpClient = HttpClient.create()
+                .responseTimeout(Duration.ofSeconds(webClientTimeoutProperties.responseTimeout()))
                 .doOnConnected(conn -> conn
-                        .addHandlerLast(new ReadTimeoutHandler(30))
-                        .addHandlerLast(new WriteTimeoutHandler(30)));
+                        .addHandlerLast(new ReadTimeoutHandler(webClientTimeoutProperties.readTimeout()))
+                        .addHandlerLast(new WriteTimeoutHandler(webClientTimeoutProperties.writeTimeout())));
 
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
+                .codecs(clientCodecs -> clientCodecs.defaultCodecs().maxInMemorySize(maxInMemorySize))
                 .apply(oauth2.oauth2Configuration())
-                .build();
-    }
-
-    @Bean
-    @Profile("local")
-    public WebClient localWebClient() {
-        final HttpClient httpClient = HttpClient.create().responseTimeout(Duration.ofSeconds(30));
-        return WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();
     }
 }
