@@ -17,7 +17,7 @@ public class ZammadEAIException extends RuntimeException {
     public ZammadEAIException(final WebClientResponseException e, final String message) {
         super(message, e);
         this.statusCode = e.getStatusCode().value();
-        this.responseBody = e.getResponseBodyAsString();
+        this.responseBody = e.getResponseBodyAsString(StandardCharsets.UTF_8);
     }
 
     public ZammadEAIException(final WebClientResponseException e) {
