@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -16,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
 @ConfigurationProperties(prefix = "zammad")
 @Validated
 @Getter
-@RequiredArgsConstructor(onConstructor_ = @ConstructorBinding)
+@RequiredArgsConstructor
 public class ZammadProperties {
     @NotBlank private final String basePath;
 }
