@@ -48,10 +48,10 @@
         <!-- OpenAPI -->
         <openapi-generator-maven-plugin.version>7.14.0</openapi-generator-maven-plugin.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
-        <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
+
         <!-- Logging -->
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
 
