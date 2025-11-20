@@ -382,30 +382,13 @@
                             <apiPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api</apiPackage>
                             <modelPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model</modelPackage>
                             <invokerPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated</invokerPackage>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
                             <serverVariableOverrides />
                             <configOptions>
                                 <useAbstractionForFiles>true</useAbstractionForFiles>
                                 <useJakartaEe>true</useJakartaEe>
                             </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>${build-helper-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>add-test-source</id>
-                        <phase>generate-test-sources</phase>
-                        <goals>
-                            <goal>add-test-source</goal>
-                        </goals>
-                        <configuration>
-                            <sources>
-                                <source>${project.build.directory}/generated-sources/openapi/src/test/java</source>
-                            </sources>
                         </configuration>
                     </execution>
                 </executions>
