@@ -1,5 +1,7 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 
+import io.netty.handler.timeout.ReadTimeoutHandler;
+import io.netty.handler.timeout.WriteTimeoutHandler;
 import java.time.Duration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +35,14 @@ public class WebClientConfiguration {
                 authorizedClientManager);
         oauth2.setDefaultClientRegistrationId(registrationId);
 
+        HttpClient httpClient = HttpClient.create()
+                .responseTimeout(Duration.ofSeconds(30))
+                .doOnConnected(conn -> conn
+                        .addHandlerLast(new ReadTimeoutHandler(30))
+                        .addHandlerLast(new WriteTimeoutHandler(30)));
+
         return WebClient.builder()
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .apply(oauth2.oauth2Configuration())
                 .build();
     }
