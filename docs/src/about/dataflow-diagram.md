@@ -30,10 +30,6 @@ The colors used in the diagram (blue and orange) correspond to those in the stat
 
 ![Dataflow-diagram showing all data-flows and related information of state "Bewilligt"](./dataflow-diagram/Bewilligt-state.png)
 
-### Nachricht an Bürger
-
-![Dataflow-diagram showing all data-flows and related information of state "Nachricht an Bürger"](./dataflow-diagram/NachrichtAnBuerger-state.png)
-
 ### Finanzierung
 
 ![Dataflow-diagram showing all data-flows and related information of state "Finanzierung"](./dataflow-diagram/Finanzierung-state.png)
