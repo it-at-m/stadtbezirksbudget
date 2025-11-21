@@ -1,11 +1,12 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.kafka;
 
+import static de.muenchen.stadtbezirksbudget.cit_eai.TestConstants.SPRING_NO_SECURITY_PROFILE;
+import static de.muenchen.stadtbezirksbudget.cit_eai.TestConstants.SPRING_TEST_PROFILE;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.muenchen.stadtbezirksbudget.cit_eai.TestConstants;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 @EmbeddedKafka(partitions = 1, topics = "${spring.kafka.template.default-topic}")
-@ActiveProfiles(TestConstants.SPRING_TEST_PROFILE)
+@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class KafkaProducerIntegrationTest {
 
     @Autowired

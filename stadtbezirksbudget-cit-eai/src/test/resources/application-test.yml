@@ -13,6 +13,8 @@ spring:
   kafka:
     template:
       default-topic: stadtbezirksbudget-cit-backend-local
+zammad:
+  base-path: "test-basepath"
 
 # Custom properties
 output: mock:output
