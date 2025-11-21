@@ -3,11 +3,34 @@ server:
 
 logging:
   include-application-group: false
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+
+oauth:
+  registrationId: local
 
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          local:
+            provider: keycloak
+            client-id: local
+            client-secret: client_secret
+            authorization-grant-type: client_credentials
+            scope:
+              - openid
+        provider:
+          keycloak:
+            token-uri: http://localhost:8100/auth/realms/local_realm/protocol/openid-connect/token
   kafka:
     bootstrap-servers: localhost:29092
     template:
       default-topic: stadtbezirksbudget-cit-backend-local
+
 zammad:
   base-path: "http://localhost:8090"
