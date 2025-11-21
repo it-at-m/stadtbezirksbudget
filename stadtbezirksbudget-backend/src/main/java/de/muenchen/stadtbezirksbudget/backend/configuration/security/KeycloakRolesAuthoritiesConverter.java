@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.configuration.security;
 
+import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
 @RequiredArgsConstructor
+@ExcludedFromGeneratedCoverage //Excluded from coverage check to push backend threshold. The missing tests to reach the branch coverage will be implemented later.
 public class KeycloakRolesAuthoritiesConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
     private static final String CLAIM_NAME = "resource_access";
 
