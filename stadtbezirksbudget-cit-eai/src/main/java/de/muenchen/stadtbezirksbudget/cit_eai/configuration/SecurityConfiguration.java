@@ -1,8 +1,5 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 
-import io.netty.handler.timeout.ReadTimeoutHandler;
-import io.netty.handler.timeout.WriteTimeoutHandler;
-import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +19,6 @@ import reactor.netty.http.client.HttpClient;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final WebClientTimeoutProperties webClientTimeoutProperties;
-
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(
             final ClientRegistrationRepository clientRegistrationRepository, final OAuth2AuthorizedClientService authorizedClientService) {
@@ -34,16 +29,11 @@ public class SecurityConfiguration {
     public WebClient authorizedWebClient(
             final OAuth2AuthorizedClientManager authorizedClientManager,
             @Value("${oauth.registrationId}") final String registrationId,
-            @Value("${webclient.codec.maxInMemorySize:1048576}") final int maxInMemorySize) {
+            @Value("${webclient.codec.maxInMemorySize:1048576}") final int maxInMemorySize,
+            final HttpClient httpClient) {
         final ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
                 authorizedClientManager);
         oauth2.setDefaultClientRegistrationId(registrationId);
-
-        final HttpClient httpClient = HttpClient.create()
-                .responseTimeout(Duration.ofSeconds(webClientTimeoutProperties.responseTimeout()))
-                .doOnConnected(conn -> conn
-                        .addHandlerLast(new ReadTimeoutHandler(webClientTimeoutProperties.readTimeout()))
-                        .addHandlerLast(new WriteTimeoutHandler(webClientTimeoutProperties.writeTimeout())));
 
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))

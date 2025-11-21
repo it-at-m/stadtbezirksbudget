@@ -1,8 +1,5 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 
-import io.netty.handler.timeout.ReadTimeoutHandler;
-import io.netty.handler.timeout.WriteTimeoutHandler;
-import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +22,6 @@ import reactor.netty.http.client.HttpClient;
 @RequiredArgsConstructor
 public class NoSecurityConfiguration {
 
-    private final WebClientTimeoutProperties webClientTimeoutProperties;
-
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http
@@ -40,12 +35,7 @@ public class NoSecurityConfiguration {
     }
 
     @Bean
-    public WebClient webClient() {
-        final HttpClient httpClient = HttpClient.create()
-                .responseTimeout(Duration.ofSeconds(webClientTimeoutProperties.responseTimeout()))
-                .doOnConnected(conn -> conn
-                        .addHandlerLast(new ReadTimeoutHandler(webClientTimeoutProperties.readTimeout()))
-                        .addHandlerLast(new WriteTimeoutHandler(webClientTimeoutProperties.writeTimeout())));
+    public WebClient webClient(final HttpClient httpClient) {
 
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
