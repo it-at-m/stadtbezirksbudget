@@ -11,8 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,19 +32,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/antrag")
 public class AntragController {
+    private static final int UNPAGED_SIZE = -1;
+
     private final AntragService antragService;
     private final AntragMapper antragMapper;
 
     /**
      * Retrieves a paginated list of Antrag summaries.
      *
-     * @param pageable pagination information
+     * @param page number of the page
+     * @param size amount of items in each page
      * @return a page of AntragSummaryDTOs
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize(Authorities.ANTRAG_GET_SUMMARYPAGE)
-    public Page<AntragSummaryDTO> getAntragSummaryPage(@PageableDefault final Pageable pageable) {
+    public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size) {
+        final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged() : PageRequest.of(page, size);
         final Page<Antrag> antragPage = antragService.getAntragPage(pageable);
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
                 .map(antragMapper::toAntragSummaryDTO)
