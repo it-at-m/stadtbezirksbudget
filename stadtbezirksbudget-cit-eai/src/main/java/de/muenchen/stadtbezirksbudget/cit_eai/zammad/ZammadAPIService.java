@@ -1,6 +1,5 @@
-package de.muenchen.stadtbezirksbudget.cit_eai.zammad.service;
+package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 
-import de.muenchen.stadtbezirksbudget.cit_eai.zammad.ZammadEAIException;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api.TicketsApi;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicketDTOV2;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateUserAndTicketDTOV2;

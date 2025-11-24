@@ -10,7 +10,6 @@ import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicke
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateUserAndTicketDTOV2;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.TicketInternal;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTicketResponseDTO;
-import de.muenchen.stadtbezirksbudget.cit_eai.zammad.service.ZammadAPIService;
 import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
