@@ -46,7 +46,7 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.just(ticket));
 
-            final TicketInternal result = service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList());
+            final TicketInternal result = service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block();
 
             assertThat(result).isNotNull();
             assertThat(result.getId()).isEqualTo("42");
@@ -66,7 +66,7 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(null), eq("user-1"), any()))
                     .thenReturn(Mono.just(ticket));
 
-            final TicketInternal result = service.createTicket(dto, null, "user-1", Collections.emptyList());
+            final TicketInternal result = service.createTicket(dto, null, "user-1", Collections.emptyList()).block();
 
             assertThat(result).isNotNull();
             assertThat(result.getId()).isEqualTo("42");
@@ -84,14 +84,15 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()));
+            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
         }
 
         @Test
         void testCreateTicketWithMissingIdsThrowsIllegalArgumentException() {
             final CreateTicketDTOV2 dto = new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g");
 
-            assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, null, null, Collections.emptyList()));
+            assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, null, null, Collections.emptyList()).block());
         }
     }
 
@@ -107,7 +108,7 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
                     .thenReturn(Mono.just(resp));
 
-            final UserAndTicketResponseDTO result = service.createUserAndTicket(dto, Collections.emptyList());
+            final UserAndTicketResponseDTO result = service.createUserAndTicket(dto, Collections.emptyList()).block();
 
             assertThat(result).isNotNull();
             assertThat(result).isSameAs(resp);
@@ -118,18 +119,18 @@ class ZammadAPIServiceTest {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
             dto.setCreateTicketDTO(new CreateTicketDTOV2().anliegenart("a").vertrauensniveau("1").group("g"));
 
-            assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()));
+            assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
 
         @Test
         void testCreateUserAndTicketWithNullDtoThrowsNullPointerException() {
-            assertThrows(NullPointerException.class, () -> service.createUserAndTicket(null, Collections.emptyList()));
+            assertThrows(NullPointerException.class, () -> service.createUserAndTicket(null, Collections.emptyList()).block());
         }
 
         @Test
         void testCreateUserAndTicketWithNullAttachmentsThrowsNullPointerException() {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
-            assertThrows(NullPointerException.class, () -> service.createUserAndTicket(dto, null));
+            assertThrows(NullPointerException.class, () -> service.createUserAndTicket(dto, null).block());
         }
 
         @Test
@@ -140,7 +141,7 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadEAIException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()));
+            assertThrows(ZammadEAIException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
     }
 }
