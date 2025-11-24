@@ -3,7 +3,6 @@
 The data flow diagram illustrates the various data flows within different status stages of the application.
 It categorizes the flows based on whether they occur automatically or manually, indicating the responsible actor, the target system, the specific data involved, and any manual steps required in the process.
 
-Notably, it does not display all non-automatic status transitions that must be manually set by the user (caseworker).
 For a comprehensive view of all status transitions, one should refer to the [status values page](./status-values).
 
 ## Legend
