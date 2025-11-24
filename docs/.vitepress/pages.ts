@@ -1,11 +1,11 @@
-type Page = PageItem | PageGroup;
+export type Page = PageItem | PageGroup;
 
-interface PageItem {
+export interface PageItem {
   text: string;
   link: string;
 }
 
-interface PageGroup {
+export interface PageGroup {
   text: string;
   items: PageItem[];
 }
