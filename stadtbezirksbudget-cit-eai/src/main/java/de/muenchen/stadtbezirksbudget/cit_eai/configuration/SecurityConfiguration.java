@@ -29,7 +29,6 @@ public class SecurityConfiguration {
     public WebClient authorizedWebClient(
             final OAuth2AuthorizedClientManager authorizedClientManager,
             @Value("${oauth.registrationId}") final String registrationId,
-            @Value("${webclient.codec.maxInMemorySize:1048576}") final int maxInMemorySize,
             final HttpClient httpClient) {
         final ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2 = new ServletOAuth2AuthorizedClientExchangeFilterFunction(
                 authorizedClientManager);
@@ -37,7 +36,6 @@ public class SecurityConfiguration {
 
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
-                .codecs(clientCodecs -> clientCodecs.defaultCodecs().maxInMemorySize(maxInMemorySize))
                 .apply(oauth2.oauth2Configuration())
                 .build();
     }
