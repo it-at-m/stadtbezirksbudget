@@ -13,6 +13,9 @@ import reactor.netty.http.client.HttpClient;
 public class WebClientConfiguration {
 
     private String sanitizePath(final String path) {
+        if (path == null) {
+            return "";
+        }
         final int idx = path.indexOf('/', 1);
         return (idx >= 0) ? path.substring(0, idx) : path;
     }
