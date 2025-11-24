@@ -52,7 +52,7 @@ public class ZammadAPIService {
             throw new IllegalArgumentException("Either lhmextid or userid must be provided");
         }
 
-        log.info("Attempting to create ticket in Zammad with title: {}", createTicketDTOV2.getTitle());
+        log.info("Attempting to create ticket in Zammad");
 
         return ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments)
                 .switchIfEmpty(Mono.error(new ZammadEAIException("Could not create ticket in Zammad")))
