@@ -23,6 +23,8 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.Bearbeitungsstan
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,12 +47,14 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class AntragIntegrationTest {
-
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
+
+    private final List<Antrag> antragList = new ArrayList<>();
+
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
@@ -70,37 +74,52 @@ class AntragIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private Antrag antrag;
-
     @BeforeEach
     public void setUp() {
         final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository);
-        antrag = antragTestDataBuilder.initializeAntrag();
+        for (int i = 0; i < 100; i++) {
+            antragList.add(antragTestDataBuilder.initializeAntrag());
+        }
     }
 
     @AfterEach
     public void tearDown() {
-        antragRepository.delete(antrag);
+        antragRepository.deleteAll();
+        antragList.clear();
     }
 
     @Nested
-    class GetAntragsdatenSubsetByPageAndSize {
+    class GetAntragSummaryPage {
 
         @Test
-        void testGivenPageableThenReturnPageOfAntragsdaten() throws Exception {
+        void testGivenPageAndSizeThenReturnPageOfAntragsdaten() throws Exception {
             mockMvc
                     .perform(get("/antrag")
-                            .param("page", "0")
-                            .param("size", "10")
+                            .param("page", "3")
+                            .param("size", "20")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.content", hasSize(1)))
-                    .andExpect(jsonPath("$.page.totalElements", is(1)))
+                    .andExpect(jsonPath("$.content", hasSize(20)))
+                    .andExpect(jsonPath("$.page.totalElements", is(100)))
+                    .andExpect(jsonPath("$.page.size", is(20)))
+                    .andExpect(jsonPath("$.page.number", is(3)))
+                    .andExpect(jsonPath("$.page.totalPages", is(5)));
+        }
+
+        @Test
+        void testGivenNoParamsThenReturnDefaultPage() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content", hasSize(10)))
+                    .andExpect(jsonPath("$.page.totalElements", is(100)))
                     .andExpect(jsonPath("$.page.size", is(10)))
                     .andExpect(jsonPath("$.page.number", is(0)))
-                    .andExpect(jsonPath("$.page.totalPages", is(1)));
+                    .andExpect(jsonPath("$.page.totalPages", is(10)));
         }
 
         @Test
@@ -120,6 +139,21 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(0)));
         }
+
+        @Test
+        void testGivenAllSizeThenReturnUnpaged() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("size", "-1")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content", hasSize(100)))
+                    .andExpect(jsonPath("$.page.totalElements", is(100)))
+                    .andExpect(jsonPath("$.page.size", is(100)))
+                    .andExpect(jsonPath("$.page.number", is(0)))
+                    .andExpect(jsonPath("$.page.totalPages", is(1)));
+        }
     }
 
     @Nested
@@ -127,7 +161,7 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusSuccessfully() throws Exception {
-            final UUID antragId = antrag.getId();
+            final UUID antragId = antragList.getFirst().getId();
             final AntragStatusUpdateDTO dto = new AntragStatusUpdateDTO(Status.AUSZAHLUNG);
 
             mockMvc
@@ -154,7 +188,7 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusNoBody() throws Exception {
-            final UUID antragId = antrag.getId();
+            final UUID antragId = antragList.getFirst().getId();
 
             mockMvc
                     .perform(patch("/antrag/" + antragId + "/status")
@@ -164,7 +198,7 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusIdempotency() throws Exception {
-            final UUID antragId = antrag.getId();
+            final UUID antragId = antragList.getFirst().getId();
             final AntragStatusUpdateDTO dto = new AntragStatusUpdateDTO(Status.VOLLSTAENDIG);
 
             mockMvc
@@ -188,7 +222,7 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusInvalidStatus() throws Exception {
-            final UUID antragId = antrag.getId();
+            final UUID antragId = antragList.getFirst().getId();
             final String invalidDto = "{\"status\":\"INVALID_STATUS\"}";
 
             mockMvc
@@ -200,7 +234,7 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusNullStatus() throws Exception {
-            final UUID antragId = antrag.getId();
+            final UUID antragId = antragList.getFirst().getId();
             final String nullStatusDto = "{\"status\":null}";
 
             mockMvc
