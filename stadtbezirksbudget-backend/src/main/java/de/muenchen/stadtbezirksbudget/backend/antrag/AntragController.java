@@ -46,7 +46,7 @@ public class AntragController {
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize(Authorities.ANTRAG_GET_SUMMARYPAGE)
+    @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
     public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size) {
         final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged() : PageRequest.of(page, size);
         final Page<Antrag> antragPage = antragService.getAntragPage(pageable);
