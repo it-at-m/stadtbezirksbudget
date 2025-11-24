@@ -201,6 +201,14 @@ services:
       kafka-topics --bootstrap-server kafka:9092 --list
       "
 
+  imposter:
+    image: outofcoffee/imposter-openapi
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./imposter-openapi/imposter-config.yaml:/opt/imposter/config/imposter-config.yaml:ro
+      - ../stadtbezirksbudget-cit-eai/src/main/resources/openapi-spec.json:/opt/imposter/config/openapi-spec.json:ro
+
 networks:
   keycloak:
   kafka:
