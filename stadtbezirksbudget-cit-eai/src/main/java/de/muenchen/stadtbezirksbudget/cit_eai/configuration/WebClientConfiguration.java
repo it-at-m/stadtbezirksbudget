@@ -14,7 +14,7 @@ public class WebClientConfiguration {
         return HttpClient.create()
                 .responseTimeout(timeoutProperties.responseTimeout())
                 .doOnConnected(conn -> conn
-                        .addHandlerLast(new ReadTimeoutHandler(timeoutProperties.readTimeout().getSeconds(), TimeUnit.SECONDS))
-                        .addHandlerLast(new WriteTimeoutHandler(timeoutProperties.writeTimeout().getSeconds(), TimeUnit.SECONDS)));
+                        .addHandlerLast(new ReadTimeoutHandler(timeoutProperties.readTimeout().toMillis(), TimeUnit.MILLISECONDS))
+                        .addHandlerLast(new WriteTimeoutHandler(timeoutProperties.writeTimeout().toMillis(), TimeUnit.MILLISECONDS)));
     }
 }
