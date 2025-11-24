@@ -42,7 +42,7 @@ public class AntragController {
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize(Authorities.ANTRAG_GET_SUMMARYPAGE)
+    @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
     public Page<AntragSummaryDTO> getAntragSummaryPage(@PageableDefault final Pageable pageable) {
         final Page<Antrag> antragPage = antragService.getAntragPage(pageable);
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
