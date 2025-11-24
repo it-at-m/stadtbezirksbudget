@@ -27,7 +27,7 @@
       </div>
     </template>
     <template v-slot:[`item.status`]="{ item }">
-      <antrag-status-select
+      <antrag-status-update
         :antrag-id="item.id"
         :initial-status="item.status"
         data-test="item-status"
@@ -67,7 +67,7 @@ import type { DataTableHeader } from "vuetify";
 import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
-import AntragStatusSelect from "@/components/AntragStatusSelect.vue";
+import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 import { AktualisierungsArtText } from "@/types/AktualisierungsArt.ts";
 import {
