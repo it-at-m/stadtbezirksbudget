@@ -6,11 +6,11 @@ corresponding roles are automatically configured using keycloak migration.
 ## Roles
 
 | Role                 | Description                                                                                                        |
-|----------------------|--------------------------------------------------------------------------------------------------------------------|
+| -------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | `sbb-sachbearbeiter` | Processes applications by reviewing them, ensuring compliance and communicating with applicants for clarification. |
 
 ## Local users
 
 | Username | Password | Roles                |
-|----------|----------|----------------------|
+| -------- | -------- | -------------------- |
 | `sbbsb`  | `sbbsb`  | `sbb-sachbearbeiter` |
