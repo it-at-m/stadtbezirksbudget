@@ -202,7 +202,7 @@ services:
       "
 
   imposter:
-    image: outofcoffee/imposter-openapi@sha256:71e2c9533293791294741208b97748d8440894b939e0bd434648e46bef4b3b5d
+    image: outofcoffee/imposter:4.7.0@sha256:2a2f964e6ee7bea2f9a54eac6d976441351d0805833117fc2e45c541b8d58ae9
     ports:
       - "8090:8080"
     healthcheck:
