@@ -34,11 +34,11 @@ public class ZammadAPIService {
      * {@code vertrauensniveau}, {@code group}.
      *
      * @param createTicketDTOV2 DTO carrying the ticket details; required fields: title, anliegenart,
-     *            vertrauensniveau
+     *            vertrauensniveau, group
      * @param lhmextid External identifier of the ticket creator, may be {@code null}
      * @param userid Internal user id of the ticket creator, may be {@code null}
      * @param attachments List of attachments to add to the ticket, maybe empty
-     * @return The created {@link TicketInternal}
+     * @return A Mono emitting the created {@link TicketInternal}
      * @throws IllegalArgumentException If both {@code lhmextid} and {@code userid} are {@code null} or
      *             if required fields in {@code createTicketDTOV2} are missing
      * @throws ZammadEAIException If the remote Zammad API responds with an error
@@ -57,9 +57,7 @@ public class ZammadAPIService {
 
         return ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments)
                 .switchIfEmpty(Mono.error(new ZammadEAIException("Could not create ticket in Zammad")))
-                .doOnSuccess(ticket -> {
-                    log.info("Successfully created ticket in Zammad with ID: {}", ticket.getId());
-                })
+                .doOnSuccess(ticket -> log.info("Successfully created ticket in Zammad with ID: {}", ticket.getId()))
                 .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket in Zammad"));
     }
 
@@ -72,7 +70,7 @@ public class ZammadAPIService {
      *
      * @param createUserAndTicketDTOV2 DTO carrying the ticket and user details
      * @param attachments List of attachments to add to the ticket, maybe empty
-     * @return The created ticket and user as {@link UserAndTicketResponseDTO}
+     * @return A Mono emitting the created ticket and user as {@link UserAndTicketResponseDTO}
      * @throws NullPointerException If createUserAndTicketDTOV2 or attachment list is null
      * @throws IllegalArgumentException If required fields in
      *             createUserAndTicketDTOV2.getCreateTicketDTO() are null or blank
