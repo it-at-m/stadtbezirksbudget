@@ -84,6 +84,7 @@ public class ZammadAPIService {
         log.info("Attempting to create ticket and user in Zammad");
         return ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments)
                 .switchIfEmpty(Mono.error(new ZammadEAIException("Unable to create ticket and user")))
+                .doOnSuccess(response -> log.info("Successfully created ticket and user in Zammad"))
                 .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket and user"));
     }
 
