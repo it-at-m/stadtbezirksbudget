@@ -42,10 +42,12 @@ public class ZammadAPIService {
      * @throws IllegalArgumentException If both {@code lhmextid} and {@code userid} are {@code null} or
      *             if required fields in {@code createTicketDTOV2} are missing
      * @throws ZammadEAIException If the remote Zammad API responds with an error
+     * @throws NullPointerException If {@code createTicketDTOV2} or {@code attachments} is {@code null}
      */
     public Mono<TicketInternal> createTicket(final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
             final List<AbstractResource> attachments) {
         validateCreateTicketDTO(createTicketDTOV2);
+        Objects.requireNonNull(attachments);
 
         if (lhmextid == null && userid == null) {
             return Mono.error(new IllegalArgumentException("Either lhmextid or userid must be provided"));
@@ -54,6 +56,7 @@ public class ZammadAPIService {
         log.info("Attempting to create ticket in Zammad with title: {}", createTicketDTOV2.getTitle());
 
         return ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments)
+                .switchIfEmpty(Mono.error(new ZammadEAIException("Could not create ticket in Zammad")))
                 .doOnSuccess(ticket -> {
                     log.info("Successfully created ticket in Zammad with ID: {}", ticket.getId());
                 })
@@ -71,6 +74,8 @@ public class ZammadAPIService {
      * @param attachments List of attachments to add to the ticket, maybe empty
      * @return The created ticket and user as {@link UserAndTicketResponseDTO}
      * @throws NullPointerException If createUserAndTicketDTOV2 or attachment list is null
+     * @throws IllegalArgumentException If required fields in
+     *             createUserAndTicketDTOV2.getCreateTicketDTO() are null or blank
      * @throws ZammadEAIException If request failed
      */
     public Mono<UserAndTicketResponseDTO> createUserAndTicket(final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2,
