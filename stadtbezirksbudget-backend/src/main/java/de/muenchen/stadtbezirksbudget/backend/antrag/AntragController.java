@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.security.Authorities;
 import jakarta.validation.Valid;
@@ -54,6 +55,18 @@ public class AntragController {
                 .map(antragMapper::toAntragSummaryDTO)
                 .toList();
         return new PageImpl<>(summaryList, antragPage.getPageable(), antragPage.getTotalElements());
+    }
+
+    /**
+     * Retrieves all Antragsteller names and Projekt titles.
+     *
+     * @return a FilterOptionsDTO containing lists of Antragsteller names and Projekt titles
+     */
+    @GetMapping("filterOptions")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
+    public FilterOptionsDTO getFilterOptions() {
+        return antragService.getFilterOptions();
     }
 
     /**
