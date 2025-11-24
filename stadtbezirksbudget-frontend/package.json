@@ -1,7 +1,7 @@
 {
   "name": "stadtbezirksbudget-frontend",
   "description": "In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more efficient. An online form is being introduced for citizens to submit their applications, along with a clear digital representation of the application for processing by administrative staff.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "private": true,
   "license": "MIT",
@@ -12,7 +12,7 @@
     "dev": "vite",
     "test": "vitest run",
     "build": "vue-tsc --build --noCheck && vite build && npm run post-build",
-    "post-build": "cyclonedx-npm --omit dev --omit optional --output-reproducible -o dist/application.cdx.json  --validate",
+    "post-build": "cyclonedx-npm --omit dev --omit optional --output-reproducible -o dist/application.cdx.json",
     "lint": "prettier . --check && eslint . && vue-tsc --build --noEmit",
     "fix": "prettier . --write && eslint . --fix"
   },
