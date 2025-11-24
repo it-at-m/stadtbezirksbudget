@@ -49,7 +49,7 @@ public class ZammadAPIService {
         Objects.requireNonNull(attachments);
 
         if (lhmextid == null && userid == null) {
-            return Mono.error(new IllegalArgumentException("Either lhmextid or userid must be provided"));
+            throw new IllegalArgumentException("Either lhmextid or userid must be provided");
         }
 
         log.info("Attempting to create ticket in Zammad with title: {}", createTicketDTOV2.getTitle());
