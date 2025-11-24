@@ -9,12 +9,12 @@ import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTick
 import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
 
 /**
  * Service that creates tickets in Zammad using the generated {@link TicketsApi} client.
@@ -43,28 +43,21 @@ public class ZammadAPIService {
      *             if required fields in {@code createTicketDTOV2} are missing
      * @throws ZammadEAIException If the remote Zammad API responds with an error
      */
-    public TicketInternal createTicket(final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
+    public Mono<TicketInternal> createTicket(final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
             final List<AbstractResource> attachments) {
         validateCreateTicketDTO(createTicketDTOV2);
 
         if (lhmextid == null && userid == null) {
-            throw new IllegalArgumentException("Either lhmextid or userid must be provided");
+            return Mono.error(new IllegalArgumentException("Either lhmextid or userid must be provided"));
         }
 
         log.info("Attempting to create ticket in Zammad with title: {}", createTicketDTOV2.getTitle());
 
-        final TicketInternal ticket;
-        try {
-            ticket = ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments).block();
-        } catch (final WebClientResponseException e) {
-            log.error("Error creating ticket in Zammad: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
-            throw new ZammadEAIException(e, "Failed to create ticket in Zammad");
-        }
-        if (ticket != null) {
-            log.info("Ticket created with id {}", ticket.getId());
-        }
-
-        return ticket;
+        return ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments)
+                .doOnSuccess(ticket -> {
+                    log.info("Successfully created ticket in Zammad with ID: {}", ticket.getId());
+                })
+                .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket in Zammad"));
     }
 
     /**
@@ -80,20 +73,16 @@ public class ZammadAPIService {
      * @throws NullPointerException If createUserAndTicketDTOV2 or attachment list is null
      * @throws ZammadEAIException If request failed
      */
-    public UserAndTicketResponseDTO createUserAndTicket(final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2, final List<AbstractResource> attachments) {
+    public Mono<UserAndTicketResponseDTO> createUserAndTicket(final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2,
+            final List<AbstractResource> attachments) {
         Objects.requireNonNull(createUserAndTicketDTOV2);
         Objects.requireNonNull(attachments);
         validateCreateTicketDTO(createUserAndTicketDTOV2.getCreateTicketDTO());
 
         log.info("Attempting to create ticket and user in Zammad");
-        final Optional<UserAndTicketResponseDTO> userAndTicketResponse;
-        try {
-            userAndTicketResponse = ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments).blockOptional();
-        } catch (final WebClientResponseException e) {
-            throw new ZammadEAIException(e, "Failed to create ticket and user");
-        }
-
-        return userAndTicketResponse.orElseThrow(() -> new ZammadEAIException("Unable to create ticket and user"));
+        return ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments)
+                .switchIfEmpty(Mono.error(new ZammadEAIException("Unable to create ticket and user")))
+                .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket and user"));
     }
 
     private void validateCreateTicketDTO(final CreateTicketDTOV2 createTicketDTOV2) {
