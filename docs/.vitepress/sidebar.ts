@@ -1,0 +1,80 @@
+import type { DefaultTheme } from "vitepress";
+
+import pages from "./pages";
+
+const sidebar: DefaultTheme.SidebarMulti = {
+  "/": [...pages],
+  "/architecture/adr/": [
+    {
+      text: "Architecture Decision Records",
+      items: [
+        {
+          text: "Overview",
+          link: "/architecture/adr",
+        },
+        {
+          text: "ADR-00 Is-Template",
+          link: "/architecture/adr/00-is-template",
+        },
+        {
+          text: "ADR-01 Use-Immutable-Variables",
+          link: "/architecture/adr/01-use-immutable-variables",
+        },
+        {
+          text: "ADR-02 No-Column-Annotation",
+          link: "/architecture/adr/02-no-column-annotation",
+        },
+        {
+          text: "ADR-03 Use-Test-File-Suffix",
+          link: "/architecture/adr/03-use-test-file-suffix",
+        },
+        {
+          text: "ADR-04 Use-Test-Nested-Class",
+          link: "/architecture/adr/04-use-test-nested-class",
+        },
+        {
+          text: "ADR-05 Use-Test-Method-Prefix",
+          link: "/architecture/adr/05-use-test-method-prefix",
+        },
+        {
+          text: "ADR-06 Use-Test-Data-Attribute",
+          link: "/architecture/adr/06-use-test-data-attribute",
+        },
+        {
+          text: "ADR-07 Reduce-Testing-Of-Mapping",
+          link: "/architecture/adr/07-reduce-testing-of-mapping",
+        },
+        {
+          text: "ADR-08 Enforce-Branch-Coverage",
+          link: "/architecture/adr/08-enforce-branch-coverage",
+        },
+        {
+          text: "ADR-09 Define-Dtos-As-Records",
+          link: "/architecture/adr/09-define-dtos-as-records",
+        },
+        {
+          text: "ADR-10 No-Complex-Frontend-Components",
+          link: "/architecture/adr/10-no-complex-frontend-components",
+        },
+        {
+          text: "ADR-11 Send-Api-Error-Message",
+          link: "/architecture/adr/11-send-api-error-message",
+        },
+        {
+          text: "ADR-12 Use-Directory-Structure",
+          link: "/architecture/adr/12-use-directory-structure",
+        },
+        {
+          text: "ADR-13 Use-Comments",
+          link: "/architecture/adr/13-use-comments",
+        },
+        {
+          text: "ADR-14 Use-Consistent-Code-Language",
+          link: "/architecture/adr/14-use-consistent-code-language",
+        },
+      ],
+    },
+  ],
+};
+
+export default sidebar;
