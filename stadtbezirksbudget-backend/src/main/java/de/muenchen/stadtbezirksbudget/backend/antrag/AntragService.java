@@ -1,9 +1,11 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
+    private final AntragMapper antragMapper;
 
     /**
      * Retrieves a paginated list of Antrag entities.
@@ -29,6 +32,18 @@ public class AntragService {
     public Page<Antrag> getAntragPage(final Pageable pageable) {
         log.info("Get antrag page with pageable {}", pageable);
         return antragRepository.findAll(pageable);
+    }
+
+    /**
+     * Retrieves all Antragsteller names and Projekt titles.
+     *
+     * @return a FilterOptionsDTO containing lists of Antragsteller names and Projekt titles
+     */
+    public FilterOptionsDTO getFilterOptions() {
+        List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames();
+        List<String> projektTitelList = antragRepository.findDistinctProjektTitles();
+
+        return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
     /**
