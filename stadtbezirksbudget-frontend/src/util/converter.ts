@@ -24,12 +24,13 @@ export function appendSearchParams(
 export function antragListFilterToDTO(
   filters: AntragListFilter
 ): AntragListFilterDTO {
+  const { eingangDatum, art, aktualisierungDatum, ...rest } = filters;
   return {
-    ...filters,
-    eingangDatumVon: filters.eingangDatum?.at(0),
-    eingangDatumBis: filters.eingangDatum?.at(-1),
-    istFehlbetrag: filters.art ? filters.art === "Fehl" : undefined,
-    aktualisierungDatumVon: filters.aktualisierungDatum?.at(0),
-    aktualisierungDatumBis: filters.aktualisierungDatum?.at(-1),
+    ...rest,
+    eingangDatumVon: eingangDatum?.at(0),
+    eingangDatumBis: eingangDatum?.at(-1),
+    istFehlbetrag: art ? art === "Fehl" : undefined,
+    aktualisierungDatumVon: aktualisierungDatum?.at(0),
+    aktualisierungDatumBis: aktualisierungDatum?.at(-1),
   };
 }
