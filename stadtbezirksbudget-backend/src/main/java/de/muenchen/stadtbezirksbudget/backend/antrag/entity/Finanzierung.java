@@ -10,9 +10,9 @@ import java.io.Serial;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Formula;
 
 /**
  * Represents the financing of a project.
@@ -43,29 +43,24 @@ public class Finanzierung extends BaseEntity {
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
     private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
+    //TODO: Rewriting calculation for istFehlbetrag as it is currently wrong #356
+    //Ignored For Testing, as current calculation is wrong and will be changed.
     /**
-     * Calculates the requested budget by subtracting the total financing amounts
-     * from the total anticipated expenses.
-     *
-     * @return the requested budget amount
+     * This field represents whether there is a discrepancy (shortfall) between the calculated budget
+     * and the requested budget.
+     * The calculation is performed using SQL and checks if the sum of anticipated expenses
+     * (`voraussichtlicheAusgabe`) minus
+     * the sum of funding sources (`finanzierungsmittel`) equals the requested budget
+     * (`beantragtesBudget`).
+     * If the calculated shortfall is zero, it means there is no discrepancy, and the field is set to
+     * true.
+     * Otherwise, it is set to false.
      */
-    public BigDecimal computeBeantragtesBudget() {
-        final BigDecimal ausgaben = voraussichtlicheAusgaben.stream()
-                .map(VoraussichtlicheAusgabe::getBetrag).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
-        final BigDecimal mittel = finanzierungsmittel.stream()
-                .map(Finanzierungsmittel::getBetrag).filter(Objects::nonNull).reduce(BigDecimal.ZERO, BigDecimal::add);
-        return ausgaben.subtract(mittel);
-    }
-
-    /**
-     * Returns whether the stored {@code beantragtesBudget} represents the full
-     * computed shortfall (a "Fehlbetrag").
-     *
-     * @return {@code true} when the requested budget equals the full computed shortfall; {@code false}
-     *         otherwise
-     */
-    public boolean istFehlbetrag() {
-        final BigDecimal fehlbetragDiff = computeBeantragtesBudget().subtract(getBeantragtesBudget());
-        return fehlbetragDiff.compareTo(BigDecimal.ZERO) == 0;
-    }
+    @Formula(
+        "(case when " +
+                "(select coalesce(sum(a.betrag), 0) from voraussichtliche_ausgabe a where a.finanzierung_id = id) - " +
+                "(select coalesce(sum(m.betrag), 0) from finanzierungsmittel m where m.finanzierung_id = id) = beantragtes_budget " +
+                "then true else false end)"
+    )
+    private boolean istFehlbetrag;
 }

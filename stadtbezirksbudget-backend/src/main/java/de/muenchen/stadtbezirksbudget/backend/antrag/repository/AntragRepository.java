@@ -3,7 +3,6 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.repository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

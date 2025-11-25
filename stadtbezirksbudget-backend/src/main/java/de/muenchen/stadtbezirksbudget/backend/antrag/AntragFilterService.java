@@ -7,11 +7,10 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AntragFilterService {
@@ -26,10 +25,10 @@ public class AntragFilterService {
                 filterProjektTitel(filter.projektTitel(), root, criteriaBuilder),
                 filterBeantragtesBudgetVon(filter.beantragtesBudgetVon(), root, criteriaBuilder),
                 filterBeantragtesBudgetBis(filter.beantragtesBudgetBis(), root, criteriaBuilder),
+                filterIstFehlbetrag(filter.istFehlbetrag(), root, criteriaBuilder),
                 filterAktualisierungArt(filter.aktualisierungArt(), root, criteriaBuilder),
                 filterAktualisierungDatumVon(filter.aktualisierungDatumVon(), root, criteriaBuilder),
-                filterAktualisierungDatumBis(filter.aktualisierungDatumBis(), root, criteriaBuilder)
-        );
+                filterAktualisierungDatumBis(filter.aktualisierungDatumBis(), root, criteriaBuilder));
     }
 
     private Predicate filterStatus(final List<Status> statusList, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
@@ -80,7 +79,14 @@ public class AntragFilterService {
                 : criteriaBuilder.conjunction();
     }
 
-    private Predicate filterAktualisierungArt(final List<AktualisierungArt> aktualisierungArtList, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    private Predicate filterIstFehlbetrag(final Boolean istFehlbetrag, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+        return (istFehlbetrag != null)
+                ? criteriaBuilder.equal(root.get("finanzierung").get("istFehlbetrag"), istFehlbetrag)
+                : criteriaBuilder.conjunction();
+    }
+
+    private Predicate filterAktualisierungArt(final List<AktualisierungArt> aktualisierungArtList, final Root<Antrag> root,
+            final CriteriaBuilder criteriaBuilder) {
         return (aktualisierungArtList != null && !aktualisierungArtList.isEmpty())
                 ? root.get("aktualisierungArt").in(aktualisierungArtList)
                 : criteriaBuilder.conjunction();
