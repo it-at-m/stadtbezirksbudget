@@ -37,7 +37,7 @@ public class ZammadEAIException extends RuntimeException {
     }
 
     /**
-     * Creates a new ZammadEAIException with the given message.
+     * Creates a new ZammadEAIException with the given message. The status code is set to -1.
      *
      * @param message the detail message
      */
