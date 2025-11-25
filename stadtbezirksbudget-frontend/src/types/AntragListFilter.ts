@@ -1,3 +1,4 @@
+import type { AktualisierungArt } from "@/types/AktualisierungArt.ts";
 import type { Status } from "@/types/Status.ts";
 
 export interface AntragListFilter {
@@ -9,7 +10,7 @@ export interface AntragListFilter {
   beantragtesBudgetVon?: number;
   beantragtesBudgetBis?: number;
   art?: string;
-  aktualisierungArt: string[];
+  aktualisierungArt: AktualisierungArt[];
   aktualisierungDatum: string[];
 }
 
