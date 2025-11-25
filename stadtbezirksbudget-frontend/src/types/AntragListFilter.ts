@@ -26,7 +26,7 @@ export interface AntragListFilterDTO
   aktualisierungDatumBis?: string;
 }
 
-export const emptyAntragListFilter = () => ({
+export const emptyAntragListFilter = (): AntragListFilter => ({
   status: [],
   bezirksausschussNr: [],
   eingangDatum: [],

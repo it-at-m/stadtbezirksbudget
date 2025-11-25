@@ -39,6 +39,7 @@
           <v-col>
             <v-autocomplete
               v-model="filters.bezirksausschussNr"
+              :items="bezirksausschussNrOptions"
               clearable
               density="compact"
               hide-details="auto"
@@ -181,6 +182,7 @@ import { mdiFilter } from "@mdi/js";
 import StatusSelect from "@/components/StatusSelect.vue";
 import { useAntragListFilter } from "@/composables/antragListFilter.ts";
 import { aktualisierungArtOptions } from "@/types/AktualisierungArt.ts";
+import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
 
 const { updateFilters, resetFilters, filters } = useAntragListFilter();
 </script>
