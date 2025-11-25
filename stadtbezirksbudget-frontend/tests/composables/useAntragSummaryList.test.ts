@@ -144,4 +144,29 @@ describe("useAntragSummaryList", () => {
     expect(page.value).toBe(3);
     expect(itemsPerPage.value).toBe(15);
   });
+
+  test("testHandlesFilterStoreSubscription", async () => {
+    let capturedSubscribe: (() => void) | undefined;
+    filterStoreMock.$subscribe = vi.fn((cb: () => void) => {
+      capturedSubscribe = cb;
+    });
+
+    const mockResponse: Page<AntragSummary> = {
+      content: [],
+      page: { size: 10, number: 0, totalElements: 0, totalPages: 0 },
+    };
+    (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
+
+    const { page, updateOptions } = useAntragSummaryList();
+
+    updateOptions({ page: 5, itemsPerPage: 10 });
+    expect(page.value).toBe(5);
+
+    capturedSubscribe?.();
+
+    await vi.waitFor(() => {
+      expect(page.value).toBe(1);
+      expect(getAntragsSummaryList).toHaveBeenCalled();
+    });
+  });
 });
