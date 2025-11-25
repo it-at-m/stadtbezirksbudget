@@ -3,22 +3,23 @@ import type { AntragListFilter } from "@/types/AntragListFilter.ts";
 import { ref } from "vue";
 
 import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
+import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
 
 export function useAntragListFilter() {
   const filterStore = useAntragListFilterStore();
 
-  const filters = ref<AntragListFilter>({});
+  const filters = ref<AntragListFilter>({ ...emptyAntragListFilter });
 
   function updateFilters() {
     if (
-      JSON.stringify(filterStore.getFilters) === JSON.stringify(filters.value)
-    )
-      return;
-    filterStore.setFilters({ ...filters.value });
+      JSON.stringify(filterStore.getFilters) !== JSON.stringify(filters.value)
+    ) {
+      filterStore.setFilters({ ...filters.value });
+    }
   }
 
   function resetFilters() {
-    filters.value = {};
+    filters.value = emptyAntragListFilter;
     updateFilters();
   }
 

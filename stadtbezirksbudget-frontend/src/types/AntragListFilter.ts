@@ -1,16 +1,16 @@
 import type { Status } from "@/types/Status.ts";
 
 export interface AntragListFilter {
-  status?: Status[];
-  bezirksausschussNr?: number[];
-  eingangDatum?: string[];
+  status: Status[];
+  bezirksausschussNr: number[];
+  eingangDatum: string[];
   antragstellerName?: string;
   projektTitel?: string;
   beantragtesBudgetVon?: number;
   beantragtesBudgetBis?: number;
   art?: string;
-  aktualisierungArt?: string[];
-  aktualisierungDatum?: string[];
+  aktualisierungArt: string[];
+  aktualisierungDatum: string[];
 }
 
 export interface AntragListFilterDTO
@@ -24,3 +24,16 @@ export interface AntragListFilterDTO
   aktualisierungDatumVon?: string;
   aktualisierungDatumBis?: string;
 }
+
+export const emptyAntragListFilter: AntragListFilter = {
+  status: [],
+  bezirksausschussNr: [],
+  eingangDatum: [],
+  antragstellerName: undefined,
+  projektTitel: undefined,
+  beantragtesBudgetVon: undefined,
+  beantragtesBudgetBis: undefined,
+  art: undefined,
+  aktualisierungArt: [],
+  aktualisierungDatum: [],
+};
