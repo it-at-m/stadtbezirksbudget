@@ -1,6 +1,5 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -19,7 +18,6 @@ import reactor.netty.http.client.HttpClient;
 @Configuration
 @Profile("no-security")
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class NoSecurityConfiguration {
 
     /**
