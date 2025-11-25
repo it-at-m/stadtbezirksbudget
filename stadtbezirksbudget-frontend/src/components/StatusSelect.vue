@@ -11,11 +11,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { Status, StatusOption } from "@/types/Status.ts";
+import type { StatusOption } from "@/types/Status.ts";
 
 import { statusOptions } from "@/types/Status.ts";
 
-const model = defineModel<Status | Status[]>();
+const model = defineModel();
 
 const itemProps = (item: StatusOption) => ({
   subtitle: item.longText,
