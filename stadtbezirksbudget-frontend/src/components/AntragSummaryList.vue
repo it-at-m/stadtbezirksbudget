@@ -40,7 +40,7 @@
     </template>
     <template v-slot:[`item.aktualisierung`]="{ item }">
       <span data-test="item-aktualisierung-art">{{
-        AktualisierungsArtText[item.aktualisierung]
+        AktualisierungArtText[item.aktualisierung]?.shortText
       }}</span>
     </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
@@ -69,7 +69,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
-import { AktualisierungsArtText } from "@/types/AktualisierungsArt.ts";
+import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
 import {
   booleanToFestOrFehl,
   toDateString,

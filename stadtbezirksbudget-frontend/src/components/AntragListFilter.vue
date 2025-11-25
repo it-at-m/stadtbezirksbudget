@@ -142,11 +142,7 @@
           <v-col>
             <v-select
               v-model="filters.aktualisierungArt"
-              :items="[
-                'Aktualisierung E-Akte',
-                'Aktualisierung in Zammad',
-                'Aktualisierung Datensatz',
-              ]"
+              :items="aktualisierungArtOptions"
               clearable
               density="compact"
               hide-details="auto"
@@ -182,6 +178,7 @@ import { mdiFilter } from "@mdi/js";
 
 import StatusSelect from "@/components/StatusSelect.vue";
 import { useAntragListFilter } from "@/composables/antragListFilter.ts";
+import { aktualisierungArtOptions } from "@/types/AktualisierungArt.ts";
 
 const { updateFilters, resetFilters, filters } = useAntragListFilter();
 </script>
