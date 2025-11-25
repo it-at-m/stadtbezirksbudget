@@ -76,13 +76,13 @@ import { useToggle } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 
 import { getUser } from "@/api/user-client";
+import AntragListFilter from "@/components/AntragListFilter.vue";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { APPSWITCHER_URL } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
-import AntragListFilter from "@/components/AntragListFilter.vue";
 
 const query = ref<string>("");
 const appswitcherBaseUrl = APPSWITCHER_URL;

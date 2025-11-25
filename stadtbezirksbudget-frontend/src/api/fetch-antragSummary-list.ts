@@ -1,3 +1,4 @@
+import type { AntragListFilter } from "@/types/AntragListFilter.ts";
 import type AntragSummary from "@/types/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
@@ -7,15 +8,19 @@ import {
   getConfig,
 } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
+import { antragListFilterToDTO, appendSearchParams } from "@/util/converter.ts";
 
 export function getAntragsSummaryList(
   page: number,
-  size: number
+  size: number,
+  filters: AntragListFilter
 ): Promise<Page<AntragSummary>> {
+  const filtersDto = antragListFilterToDTO(filters);
   const params = new URLSearchParams({
     page: String(page),
     size: String(size),
   });
+  appendSearchParams(filtersDto, params);
   return fetch(`${BACKEND}/antrag?${params}`, getConfig())
     .then((response) => {
       defaultResponseHandler(response);
