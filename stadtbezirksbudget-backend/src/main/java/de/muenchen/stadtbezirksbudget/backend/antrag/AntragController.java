@@ -44,12 +44,14 @@ public class AntragController {
      *
      * @param page number of the page
      * @param size amount of items in each page
+     * @param antragFilterDTO contains filter data
      * @return a page of AntragSummaryDTOs
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
-    public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size, final AntragFilterDTO antragFilterDTO) {
+    public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
+            final AntragFilterDTO antragFilterDTO) {
         final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged() : PageRequest.of(page, size);
         final Page<Antrag> antragPage = antragService.getAntragPage(pageable, antragFilterDTO);
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
