@@ -1,10 +1,12 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 
+import de.muenchen.stadtbezirksbudget.cit_eai.security.Authorities;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicketDTOV2;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ public class ZammadController {
      * @param userid optional user ID
      * @return a confirmation message with the created ticket ID
      */
+    @PreAuthorize(Authorities.ZAMMAD_CREATE_TICKET)
     @PostMapping("/createTicket")
     public Mono<ResponseEntity<String>> createTicket(@RequestBody final CreateTicketDTOV2 createTicketDTOV2,
             @RequestParam(required = false) final String lhmextid,
