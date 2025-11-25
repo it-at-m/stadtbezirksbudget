@@ -22,7 +22,6 @@ describe("useAntragSummaryList", () => {
   let filterStoreMock: {
     filters: AntragListFilter;
     setFilters: ReturnType<typeof vi.fn>;
-    getFilters: AntragListFilter;
     $subscribe: ReturnType<typeof vi.fn>;
   };
   const filtersValue = getEmptyAntragListFilter();
@@ -34,7 +33,6 @@ describe("useAntragSummaryList", () => {
     filterStoreMock = {
       filters: filtersValue,
       setFilters: vi.fn(),
-      getFilters: filtersValue,
       $subscribe: vi.fn(),
     };
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);

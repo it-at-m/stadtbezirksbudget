@@ -12,7 +12,7 @@ export function useAntragListFilter() {
 
   function updateFilters() {
     if (
-      JSON.stringify(filterStore.getFilters) !== JSON.stringify(filters.value)
+      JSON.stringify(filterStore.filters) !== JSON.stringify(filters.value)
     ) {
       filterStore.setFilters({ ...filters.value });
     }

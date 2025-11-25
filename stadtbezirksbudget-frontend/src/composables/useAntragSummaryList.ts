@@ -36,7 +36,7 @@ export function useAntragSummaryList() {
     getAntragsSummaryList(
       page.value - 1,
       itemsPerPage.value,
-      filterStore.getFilters
+      filterStore.filters
     )
       .then((content: Page<AntragSummary>) => {
         items.value = content.content;
