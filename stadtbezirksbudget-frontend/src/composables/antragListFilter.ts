@@ -3,12 +3,12 @@ import type { AntragListFilter } from "@/types/AntragListFilter.ts";
 import { ref } from "vue";
 
 import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
-import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
+import { getEmptyAntragListFilter } from "@/types/AntragListFilter.ts";
 
 export function useAntragListFilter() {
   const filterStore = useAntragListFilterStore();
 
-  const filters = ref<AntragListFilter>({ ...emptyAntragListFilter });
+  const filters = ref<AntragListFilter>(getEmptyAntragListFilter());
 
   function updateFilters() {
     if (
@@ -19,7 +19,7 @@ export function useAntragListFilter() {
   }
 
   function resetFilters() {
-    filters.value = emptyAntragListFilter;
+    filters.value = getEmptyAntragListFilter();
     updateFilters();
   }
 

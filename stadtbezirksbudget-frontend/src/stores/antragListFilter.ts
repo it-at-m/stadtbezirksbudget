@@ -3,10 +3,10 @@ import type { AntragListFilter } from "@/types/AntragListFilter.ts";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
-import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
+import { getEmptyAntragListFilter } from "@/types/AntragListFilter.ts";
 
 export const useAntragListFilterStore = defineStore("antragListFilter", () => {
-  const filters = ref<AntragListFilter>({ ...emptyAntragListFilter });
+  const filters = ref<AntragListFilter>(getEmptyAntragListFilter());
 
   const getFilters = computed((): AntragListFilter => {
     return filters.value;

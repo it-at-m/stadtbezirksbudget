@@ -25,7 +25,7 @@ export interface AntragListFilterDTO
   aktualisierungDatumBis?: string;
 }
 
-export const emptyAntragListFilter: AntragListFilter = {
+const emptyAntragListFilter: AntragListFilter = {
   status: [],
   bezirksausschussNr: [],
   eingangDatum: [],
@@ -36,4 +36,8 @@ export const emptyAntragListFilter: AntragListFilter = {
   art: undefined,
   aktualisierungArt: [],
   aktualisierungDatum: [],
-};
+} as const;
+
+export function getEmptyAntragListFilter(): AntragListFilter {
+  return JSON.parse(JSON.stringify(emptyAntragListFilter));
+}
