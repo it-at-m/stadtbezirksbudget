@@ -1,17 +1,21 @@
 <template>
   <v-autocomplete
+    v-model="model"
     :filterKeys="['raw.shortText', 'raw.longText']"
     :item-props="itemProps"
     :items="statusOptions"
     itemTitle="shortText"
     itemValue="value"
+    v-bind="$attrs"
   />
 </template>
 
 <script lang="ts" setup>
-import type { StatusOption } from "@/types/Status.ts";
+import type { Status, StatusOption } from "@/types/Status.ts";
 
 import { statusOptions } from "@/types/Status.ts";
+
+const model = defineModel<Status | Status[]>();
 
 const itemProps = (item: StatusOption) => ({
   subtitle: item.longText,
