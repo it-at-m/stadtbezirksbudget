@@ -2,12 +2,12 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
-import { getEmptyAntragListFilter } from "../../src/types/AntragListFilter";
+import { emptyAntragListFilter } from "@/types/AntragListFilter";
 
 global.fetch = vi.fn();
 
 describe("getAntragsSummaryList", () => {
-  const emptyFilters = getEmptyAntragListFilter();
+  const emptyFilters = emptyAntragListFilter();
 
   afterEach(() => {
     vi.clearAllMocks();
