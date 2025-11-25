@@ -40,6 +40,7 @@ public class AntragService {
      * @return a FilterOptionsDTO containing lists of Antragsteller names and Projekt titles
      */
     public FilterOptionsDTO getFilterOptions() {
+        log.info("Get FilterOptions");
         List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames();
         List<String> projektTitelList = antragRepository.findDistinctProjektTitles();
 
