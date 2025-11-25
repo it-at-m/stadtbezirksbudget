@@ -3,6 +3,7 @@
     <template #activator="{ props }">
       <v-btn
         :icon="mdiFilter"
+        aria-label="Anträge filtern"
         v-bind="props"
       />
     </template>
