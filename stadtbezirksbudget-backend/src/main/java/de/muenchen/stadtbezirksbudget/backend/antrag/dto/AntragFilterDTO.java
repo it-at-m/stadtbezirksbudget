@@ -22,7 +22,7 @@ public record AntragFilterDTO(
         String projektTitel,
         BigDecimal beantragtesBudgetVon,
         BigDecimal beantragtesBudgetBis,
-        boolean istFehlbetrag,
+        Boolean istFehlbetrag,
         List<AktualisierungArt> aktualisierungArt,
         LocalDateTime aktualisierungDatumVon,
         LocalDateTime aktualisierungDatumBis) {
