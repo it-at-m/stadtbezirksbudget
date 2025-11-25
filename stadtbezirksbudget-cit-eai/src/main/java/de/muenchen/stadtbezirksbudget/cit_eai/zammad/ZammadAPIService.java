@@ -56,7 +56,13 @@ public class ZammadAPIService {
 
         return ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments)
                 .switchIfEmpty(Mono.error(new ZammadEAIException("Could not create ticket in Zammad")))
-                .doOnSuccess(ticket -> log.info("Successfully created ticket in Zammad with ID: {}", ticket.getId()))
+                .doOnSuccess(response -> {
+                    if (response == null || response.getId() == null) {
+                        log.warn("Ticket created in Zammad but ticket or ticket id is null in response");
+                        return;
+                    }
+                    log.info("Successfully created ticket in Zammad with ID: {}", response.getId());
+                })
                 .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket in Zammad"));
     }
 
@@ -79,6 +85,9 @@ public class ZammadAPIService {
             final List<AbstractResource> attachments) {
         Objects.requireNonNull(createUserAndTicketDTOV2);
         Objects.requireNonNull(attachments);
+        if(createUserAndTicketDTOV2.getCreateTicketDTO() == null) {
+            throw new IllegalArgumentException("createTicketDTO must not be null");
+        }
         validateCreateTicketDTO(createUserAndTicketDTOV2.getCreateTicketDTO());
 
         log.info("Attempting to create ticket and user in Zammad");
