@@ -24,7 +24,7 @@ export function appendSearchParams(
 export function antragListFilterToDTO(
   filters: AntragListFilter
 ): AntragListFilterDTO {
-  const dto = {
+  return {
     ...filters,
     eingangDatumVon: filters.eingangDatum?.[0],
     eingangDatumBis: filters.eingangDatum?.[filters.eingangDatum.length - 1],
@@ -33,8 +33,4 @@ export function antragListFilterToDTO(
     aktualisierungDatumBis:
       filters.aktualisierungDatum?.[filters.aktualisierungDatum.length - 1],
   };
-  delete dto.eingangDatum;
-  delete dto.aktualisierungDatum;
-  delete dto.art;
-  return dto;
 }
