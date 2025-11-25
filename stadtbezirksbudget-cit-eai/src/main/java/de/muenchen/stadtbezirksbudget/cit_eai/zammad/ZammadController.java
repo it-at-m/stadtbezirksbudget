@@ -31,7 +31,8 @@ public class ZammadController {
      * @return a confirmation message with the created ticket ID
      */
     @PostMapping("/createTicket")
-    public Mono<ResponseEntity<String>> createTicket(@RequestBody final CreateTicketDTOV2 createTicketDTOV2, @RequestParam(required = false) final String lhmextid,
+    public Mono<ResponseEntity<String>> createTicket(@RequestBody final CreateTicketDTOV2 createTicketDTOV2,
+            @RequestParam(required = false) final String lhmextid,
             @RequestParam(required = false) final String userid) {
         return zammadAPIService.createTicket(createTicketDTOV2, lhmextid, userid, List.of())
                 .map(ticket -> ResponseEntity.status(HttpStatus.CREATED).body("Ticket created with ID: " + ticket.getId()));
