@@ -41,8 +41,8 @@ public class AntragService {
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames();
-        List<String> projektTitelList = antragRepository.findDistinctProjektTitles();
+        final List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames();
+        final  List<String> projektTitelList = antragRepository.findDistinctProjektTitles();
 
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
