@@ -4,15 +4,17 @@
       <v-btn
         :icon="mdiFilter"
         aria-label="Anträge filtern"
+        data-test="antrag-list-filter-open-btn"
         v-bind="props"
       />
     </template>
-    <v-card>
+    <v-card data-test="antrag-list-filter-menu-content">
       <v-card-title>
         <v-row>
           <v-col class="d-flex align-center">Filtern nach</v-col>
           <v-col cols="auto">
             <v-btn
+              data-test="antrag-list-filter-reset-btn"
               variant="outlined"
               @click="resetFilters"
               >Alle Filter löschen
@@ -26,6 +28,7 @@
             <status-select
               v-model="filters.status"
               clearable
+              data-test="antrag-list-filter-status"
               density="compact"
               hide-details="auto"
               label="Status"
@@ -41,6 +44,7 @@
               v-model="filters.bezirksausschussNr"
               :items="bezirksausschussNrOptions"
               clearable
+              data-test="antrag-list-filter-bezirksausschuss"
               density="compact"
               hide-details="auto"
               label="Bezirk"
@@ -55,6 +59,7 @@
             <v-date-input
               v-model="filters.eingangDatum"
               clearable
+              data-test="antrag-list-filter-eingang-datum"
               density="compact"
               hide-details="auto"
               label="Antragsdatum"
@@ -70,6 +75,7 @@
             <v-autocomplete
               v-model="filters.antragstellerName"
               clearable
+              data-test="antrag-list-filter-antragsteller-name"
               density="compact"
               hide-details="auto"
               label="Antragsteller/in"
@@ -83,6 +89,7 @@
             <v-autocomplete
               v-model="filters.projektTitel"
               clearable
+              data-test="antrag-list-filter-projekt-titel"
               density="compact"
               hide-details="auto"
               label="Projekt"
@@ -102,6 +109,7 @@
                   v-model="filters.beantragtesBudgetVon"
                   clearable
                   control-variant="hidden"
+                  data-test="antrag-list-filter-beantragtes-budget-von"
                   density="compact"
                   hide-details="auto"
                   label="von"
@@ -115,6 +123,7 @@
                   v-model="filters.beantragtesBudgetBis"
                   clearable
                   control-variant="hidden"
+                  data-test="antrag-list-filter-beantragtes-budget-bis"
                   density="compact"
                   hide-details="auto"
                   label="bis"
@@ -132,6 +141,7 @@
               v-model="filters.art"
               :items="['Fest', 'Fehl']"
               clearable
+              data-test="antrag-list-filter-art"
               density="compact"
               hide-details="auto"
               label="Art"
@@ -146,6 +156,7 @@
               v-model="filters.aktualisierungArt"
               :items="aktualisierungArtOptions"
               clearable
+              data-test="antrag-list-filter-aktualisierung-art"
               density="compact"
               hide-details="auto"
               item-title="longText"
@@ -161,6 +172,7 @@
             <v-date-input
               v-model="filters.aktualisierungDatum"
               clearable
+              data-test="antrag-list-filter-aktualisierung-datum"
               density="compact"
               hide-details="auto"
               label="Datum Aktualisierung"
