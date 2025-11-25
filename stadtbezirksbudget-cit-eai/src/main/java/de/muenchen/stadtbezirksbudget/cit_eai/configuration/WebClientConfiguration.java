@@ -3,7 +3,6 @@ package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import java.util.concurrent.TimeUnit;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.netty.http.client.HttpClient;
@@ -12,11 +11,10 @@ import reactor.netty.http.client.HttpClient;
  * Configuration class for WebClient with custom timeout settings.
  */
 @Configuration
-@Slf4j
 public class WebClientConfiguration {
 
     /**
-     * Configures the HttpClient with timeouts and logging.
+     * Configures the HttpClient with timeouts.
      *
      * @param timeoutProperties the timeout properties
      * @return the configured HttpClient
