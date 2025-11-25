@@ -6,19 +6,39 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
 import { STATUS_INDICATORS } from "@/constants.ts";
+import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
+import {
+  AntragListFilter,
+  getEmptyAntragListFilter,
+} from "@/types/AntragListFilter.ts";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/snackbar.ts");
+vi.mock("@/stores/antragListFilter.ts");
 
 describe("useAntragSummaryList", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
+  let filterStoreMock: {
+    filters: AntragListFilter;
+    setFilters: ReturnType<typeof vi.fn>;
+    getFilters: AntragListFilter;
+    $subscribe: ReturnType<typeof vi.fn>;
+  };
+  const filtersValue = getEmptyAntragListFilter();
 
   beforeEach(() => {
     snackbarStoreMock = {
       showMessage: vi.fn(),
     };
+    filterStoreMock = {
+      filters: filtersValue,
+      setFilters: vi.fn(),
+      getFilters: filtersValue,
+      $subscribe: vi.fn(),
+    };
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
+    (useAntragListFilterStore as vi.Mock).mockReturnValue(filterStoreMock);
   });
 
   test("testFetchItemsSuccessfully", async () => {
@@ -45,11 +65,13 @@ describe("useAntragSummaryList", () => {
     (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
     const { items, totalItems, fetchItems, loading } = useAntragSummaryList();
 
-    await fetchItems();
+    fetchItems();
 
-    expect(items.value).toEqual(mockResponse.content);
-    expect(totalItems.value).toBe(mockResponse.page.totalElements);
-    expect(loading.value).toBe(false);
+    await vi.waitFor(() => {
+      expect(items.value).toEqual(mockResponse.content);
+      expect(totalItems.value).toBe(mockResponse.page.totalElements);
+      expect(loading.value).toBe(false);
+    });
   });
 
   test("testHandleErrorsWhenFetchingItems", async () => {
@@ -59,24 +81,28 @@ describe("useAntragSummaryList", () => {
     );
 
     const { fetchItems, loading } = useAntragSummaryList();
-    await fetchItems();
+    fetchItems();
 
-    expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-      message: errorMessage,
-      level: STATUS_INDICATORS.WARNING,
+    await vi.waitFor(() => {
+      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+        message: errorMessage,
+        level: STATUS_INDICATORS.WARNING,
+      });
+      expect(loading.value).toBe(false);
     });
-    expect(loading.value).toBe(false);
   });
 
   test("testHandleGenericErrorsWhenFetchingItems", async () => {
     (getAntragsSummaryList as vi.Mock).mockRejectedValue(new Error());
 
     const { fetchItems } = useAntragSummaryList();
-    await fetchItems();
+    fetchItems();
 
-    expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-      message: "Fehler beim Laden der Anträge",
-      level: STATUS_INDICATORS.WARNING,
+    await vi.waitFor(() => {
+      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+        message: "Fehler beim Laden der Anträge",
+        level: STATUS_INDICATORS.WARNING,
+      });
     });
   });
 
@@ -106,11 +132,10 @@ describe("useAntragSummaryList", () => {
 
     updateOptions({ page: 2, itemsPerPage: 5 });
 
-    // Wait for the fetchItems promise to resolve
-    await new Promise((resolve) => setTimeout(resolve, 0));
-
-    expect(getAntragsSummaryList).toHaveBeenCalledWith(1, 5);
-    expect(items.value).toEqual(mockResponse.content);
+    await vi.waitFor(() => {
+      expect(getAntragsSummaryList).toHaveBeenCalledWith(1, 5, filtersValue);
+      expect(items.value).toEqual(mockResponse.content);
+    });
   });
 
   test("testUpdateOptionsCorrectly", () => {

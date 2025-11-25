@@ -2,19 +2,20 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
+import { getEmptyAntragListFilter } from "../../src/types/AntragListFilter";
 
 global.fetch = vi.fn();
 
 describe("getAntragsSummaryList", () => {
+  const emptyFilters = getEmptyAntragListFilter();
+
   afterEach(() => {
     vi.clearAllMocks();
   });
 
   test("testFetchSuccessful", async () => {
     const mockResponse = {
-      content: [
-        /*...*/
-      ],
+      content: [],
       page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
     };
 
@@ -23,7 +24,7 @@ describe("getAntragsSummaryList", () => {
       json: async () => mockResponse,
     });
 
-    const result = await getAntragsSummaryList(1, 5);
+    const result = await getAntragsSummaryList(1, 5, emptyFilters);
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5`,
@@ -38,7 +39,7 @@ describe("getAntragsSummaryList", () => {
       new Error(errorMessage)
     );
 
-    await expect(getAntragsSummaryList(1, 5)).rejects.toThrow(
+    await expect(getAntragsSummaryList(1, 5, emptyFilters)).rejects.toThrow(
       "Fehler beim Laden der Antragsliste."
     );
   });
@@ -50,6 +51,6 @@ describe("getAntragsSummaryList", () => {
       statusText: "Not Found",
     });
 
-    await expect(getAntragsSummaryList(1, 5)).rejects.toThrow();
+    await expect(getAntragsSummaryList(1, 5, emptyFilters)).rejects.toThrow();
   });
 });
