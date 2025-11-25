@@ -1,22 +1,22 @@
 <template>
   <v-autocomplete
     :filterKeys="['raw.shortText', 'raw.longText']"
+    :item-props="itemProps"
     :items="statusOptions"
     itemTitle="shortText"
     itemValue="value"
-  >
-    <template #item="{ props, item }">
-      <v-list-item
-        :subtitle="item.raw.longText"
-        :title="item.raw.shortText"
-        v-bind="props"
-      />
-    </template>
-  </v-autocomplete>
+  />
 </template>
 
 <script lang="ts" setup>
+import type { StatusOption } from "@/types/Status.ts";
+
 import { statusOptions } from "@/types/Status.ts";
+
+const itemProps = (item: StatusOption) => ({
+  subtitle: item.longText,
+  title: item.shortText,
+});
 </script>
 
 <style scoped>
