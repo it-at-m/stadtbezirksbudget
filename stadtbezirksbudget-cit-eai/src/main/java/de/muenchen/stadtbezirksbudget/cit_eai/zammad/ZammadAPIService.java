@@ -85,7 +85,7 @@ public class ZammadAPIService {
             final List<AbstractResource> attachments) {
         Objects.requireNonNull(createUserAndTicketDTOV2);
         Objects.requireNonNull(attachments);
-        if(createUserAndTicketDTOV2.getCreateTicketDTO() == null) {
+        if (createUserAndTicketDTOV2.getCreateTicketDTO() == null) {
             throw new IllegalArgumentException("createTicketDTO must not be null");
         }
         validateCreateTicketDTO(createUserAndTicketDTOV2.getCreateTicketDTO());
