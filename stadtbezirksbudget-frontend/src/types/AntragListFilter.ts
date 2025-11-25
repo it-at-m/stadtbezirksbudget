@@ -4,14 +4,14 @@ import type { Status } from "@/types/Status.ts";
 export interface AntragListFilter {
   status: Status[];
   bezirksausschussNr: number[];
-  eingangDatum: string[];
+  eingangDatum: Date[];
   antragstellerName?: string;
   projektTitel?: string;
   beantragtesBudgetVon?: number;
   beantragtesBudgetBis?: number;
   art?: string;
   aktualisierungArt: AktualisierungArt[];
-  aktualisierungDatum: string[];
+  aktualisierungDatum: Date[];
 }
 
 export interface AntragListFilterDTO

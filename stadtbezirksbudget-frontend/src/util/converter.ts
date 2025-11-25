@@ -27,10 +27,10 @@ export function antragListFilterToDTO(
   const { eingangDatum, art, aktualisierungDatum, ...rest } = filters;
   return {
     ...rest,
-    eingangDatumVon: eingangDatum?.at(0),
-    eingangDatumBis: eingangDatum?.at(-1),
+    eingangDatumVon: eingangDatum.at(0)?.toISOString(),
+    eingangDatumBis: eingangDatum.at(-1)?.toISOString(),
     istFehlbetrag: art ? art === "Fehl" : undefined,
-    aktualisierungDatumVon: aktualisierungDatum?.at(0),
-    aktualisierungDatumBis: aktualisierungDatum?.at(-1),
+    aktualisierungDatumVon: aktualisierungDatum.at(0)?.toISOString(),
+    aktualisierungDatumBis: aktualisierungDatum.at(-1)?.toISOString(),
   };
 }
