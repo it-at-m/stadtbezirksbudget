@@ -22,6 +22,15 @@ import reactor.netty.http.client.HttpClient;
 @RequiredArgsConstructor
 public class NoSecurityConfiguration {
 
+    /**
+     * Configures the security filter chain to disable frame options, permit all requests, and disable
+     * CSRF protection.
+     *
+     * @param http the HttpSecurity object used to configure web-based security for specific HTTP
+     *            requests
+     * @return the configured SecurityFilterChain
+     * @throws Exception if an error occurs during configuration
+     */
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http
@@ -34,6 +43,12 @@ public class NoSecurityConfiguration {
         return http.build();
     }
 
+    /**
+     * Creates a WebClient bean without any authorization configuration.
+     *
+     * @param httpClient the HttpClient to be used by the WebClient
+     * @return the WebClient
+     */
     @Bean
     public WebClient webClient(final HttpClient httpClient) {
 
