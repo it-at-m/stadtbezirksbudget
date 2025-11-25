@@ -3,6 +3,8 @@ package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicketDTOV2;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +30,10 @@ public class ZammadController {
      * @return a confirmation message with the created ticket ID
      */
     @PostMapping("/createTicket")
-    public String createTicket(@RequestBody final CreateTicketDTOV2 createTicketDTOV2, @RequestParam(required = false) final String lhmextid,
+    public ResponseEntity<String> createTicket(@RequestBody final CreateTicketDTOV2 createTicketDTOV2, @RequestParam(required = false) final String lhmextid,
             @RequestParam(required = false) final String userid) {
         return zammadAPIService.createTicket(createTicketDTOV2, lhmextid, userid, List.of())
-                .map(ticket -> "Ticket created with ID: " + ticket.getId())
+                .map(ticket -> ResponseEntity.status(HttpStatus.CREATED).body("Ticket created with ID: " + ticket.getId()))
                 .block();
     }
 
