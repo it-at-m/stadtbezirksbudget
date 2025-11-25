@@ -8,7 +8,7 @@ import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
 export function useAntragListFilter() {
   const filterStore = useAntragListFilterStore();
 
-  const filters = ref<AntragListFilter>(emptyAntragListFilter());
+  const filters = ref<AntragListFilter>({ ...filterStore.filters });
 
   function updateFilters() {
     if (JSON.stringify(filterStore.filters) !== JSON.stringify(filters.value)) {
