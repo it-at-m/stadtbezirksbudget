@@ -26,11 +26,10 @@ export function antragListFilterToDTO(
 ): AntragListFilterDTO {
   return {
     ...filters,
-    eingangDatumVon: filters.eingangDatum?.[0],
-    eingangDatumBis: filters.eingangDatum?.[filters.eingangDatum.length - 1],
+    eingangDatumVon: filters.eingangDatum?.at(0),
+    eingangDatumBis: filters.eingangDatum?.at(-1),
     istFehlbetrag: filters.art ? filters.art === "Fehl" : undefined,
-    aktualisierungDatumVon: filters.aktualisierungDatum?.[0],
-    aktualisierungDatumBis:
-      filters.aktualisierungDatum?.[filters.aktualisierungDatum.length - 1],
+    aktualisierungDatumVon: filters.aktualisierungDatum?.at(0),
+    aktualisierungDatumBis: filters.aktualisierungDatum?.at(-1),
   };
 }
