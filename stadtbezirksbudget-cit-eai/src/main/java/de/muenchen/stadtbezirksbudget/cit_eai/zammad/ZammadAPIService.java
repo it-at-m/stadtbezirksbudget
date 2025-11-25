@@ -84,7 +84,13 @@ public class ZammadAPIService {
         log.info("Attempting to create ticket and user in Zammad");
         return ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments)
                 .switchIfEmpty(Mono.error(new ZammadEAIException("Unable to create ticket and user")))
-                .doOnSuccess(response -> log.info("Successfully created ticket and user in Zammad"))
+                .doOnSuccess(response -> {
+                    if (response.getTicket() == null || response.getTicket().getId() == null) {
+                        log.warn("Created ticket and user but ticket or ticket id is null in response");
+                        return;
+                    }
+                    log.info("Successfully created ticket with id {} and user in Zammad", response.getTicket().getId());
+                })
                 .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket and user"));
     }
 
