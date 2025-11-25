@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
-    private final AntragMapper antragMapper;
 
     /**
      * Retrieves a paginated list of Antrag entities.
@@ -42,7 +41,7 @@ public class AntragService {
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
         final List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames();
-        final  List<String> projektTitelList = antragRepository.findDistinctProjektTitles();
+        final List<String> projektTitelList = antragRepository.findDistinctProjektTitles();
 
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
