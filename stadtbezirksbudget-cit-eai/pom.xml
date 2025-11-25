@@ -47,7 +47,7 @@
 
         <!-- OpenAPI -->
         <openapi-generator-maven-plugin.version>7.14.0</openapi-generator-maven-plugin.version>
-        <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
+        <jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
