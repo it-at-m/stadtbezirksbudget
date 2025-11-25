@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
@@ -21,16 +22,20 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
+    private final AntragFilterService antragFilterService;
 
     /**
-     * Retrieves a paginated list of Antrag entities.
+     * Retrieves a paginated filtered list of Antrag entities.
      *
+     * @param antragFilterDTO filter information
      * @param pageable pagination information
      * @return a page of Antrag entities
      */
-    public Page<Antrag> getAntragPage(final Pageable pageable) {
-        log.info("Get antrag page with pageable {}", pageable);
-        return antragRepository.findAll(pageable);
+    public Page<Antrag> getAntragPage(final Pageable pageable, final AntragFilterDTO antragFilterDTO) {
+        log.info("Get antrag page with pageable {} and filterDTO {}", pageable, antragFilterDTO);
+        return antragRepository.findAll(
+                    (root, query, criteriaBuilder) -> antragFilterService.filterIssues(antragFilterDTO, root, criteriaBuilder),
+                    pageable);
     }
 
     /**

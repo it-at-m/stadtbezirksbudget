@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
@@ -48,9 +49,9 @@ public class AntragController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
-    public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size) {
+    public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size, final AntragFilterDTO antragFilterDTO) {
         final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged() : PageRequest.of(page, size);
-        final Page<Antrag> antragPage = antragService.getAntragPage(pageable);
+        final Page<Antrag> antragPage = antragService.getAntragPage(pageable, antragFilterDTO);
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
                 .map(antragMapper::toAntragSummaryDTO)
                 .toList();
