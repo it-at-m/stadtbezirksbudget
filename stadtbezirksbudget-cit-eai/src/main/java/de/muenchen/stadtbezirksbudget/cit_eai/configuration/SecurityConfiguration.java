@@ -1,6 +1,5 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.configuration;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +22,6 @@ import reactor.netty.http.client.HttpClient;
  */
 @Configuration
 @Profile("!no-security")
-@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     /**
