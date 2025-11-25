@@ -78,6 +78,7 @@ public class SecurityConfiguration {
 
     /**
      * Security filter chain configuration.
+     *
      * @param http the HttpSecurity to configure
      * @return the security filter chain
      * @throws Exception if an error occurs during configuration

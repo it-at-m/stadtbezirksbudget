@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import reactor.netty.http.client.HttpClient;
 
+/**
+ * Configuration class for WebClient with custom timeout settings.
+ */
 @Configuration
 @Slf4j
 public class WebClientConfiguration {
