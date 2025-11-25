@@ -146,6 +146,7 @@
               clearable
               density="compact"
               hide-details="auto"
+              item-title="longText"
               label="Aktualisierung"
               multiple
               variant="underlined"
