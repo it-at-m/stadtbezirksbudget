@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
@@ -35,6 +37,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
 class AntragServiceTest {
@@ -87,18 +90,22 @@ class AntragServiceTest {
         @Test
         void testEmptyAntragList() {
             final Pageable pageable = PageRequest.of(0, 10);
-            when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class); // Mocking AntragFilterDTO
 
-            final Page<Antrag> result = antragService.getAntragPage(pageable);
+            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+                    .thenReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
+
+            final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).isEmpty();
-            verify(antragRepository).findAll(pageable);
+            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
         }
 
         @Test
         void testGetAllEntitiesWithDifferentStatus() {
             final Pageable pageable = PageRequest.of(0, 10);
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class); // Mocking AntragFilterDTO
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());
 
@@ -113,18 +120,20 @@ class AntragServiceTest {
             final Antrag antrag = createAntrag(bearbeitungsstand, antragsteller, finanzierung, "Projekt Titel", "Projekt Beschreibung",
                     Status.ABGELEHNT_VON_BA);
 
-            when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(Collections.singletonList(antrag), pageable, 1));
+            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+                    .thenReturn(new PageImpl<>(Collections.singletonList(antrag), pageable, 1));
 
-            final Page<Antrag> result = antragService.getAntragPage(pageable);
+            final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(1);
-            verify(antragRepository).findAll(pageable);
+            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
         }
 
         @Test
         void testGetAllEntitiesWithMultipleItems() {
             final Pageable pageable = PageRequest.of(0, 5);
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class); // Mocking AntragFilterDTO
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());
 
@@ -139,13 +148,14 @@ class AntragServiceTest {
 
             final Antrag antrag2 = createAntrag(new Bearbeitungsstand(), antragsteller2, finanzierung, "Projekt 2", "Beschreibung 2", Status.ABGESCHLOSSEN);
 
-            when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(List.of(antrag1, antrag2), pageable, 2));
+            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+                    .thenReturn(new PageImpl<>(List.of(antrag1, antrag2), pageable, 2));
 
-            final Page<Antrag> result = antragService.getAntragPage(pageable);
+            final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(2);
-            verify(antragRepository).findAll(pageable);
+            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
         }
     }
 
