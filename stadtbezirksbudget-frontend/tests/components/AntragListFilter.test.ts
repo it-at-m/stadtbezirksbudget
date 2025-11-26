@@ -1,19 +1,63 @@
 import { mount } from "@vue/test-utils";
 import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { ref } from "vue";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import { VDateInput } from "vuetify/labs/components";
 
 import AntragListFilter from "@/components/AntragListFilter.vue";
 import { useAntragListFilter } from "@/composables/antragListFilter.ts";
 import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
 
 vi.mock("@/composables/antragListFilter.ts");
+global.ResizeObserver = class {
+  observe() {
+    // Mock implementation: No action needed
+  }
+  disconnect() {
+    // Mock implementation: No action needed
+  }
+};
 
 const pinia = createPinia();
-const vuetify = createVuetify({ components, directives });
+const vuetify = createVuetify({
+  components: { ...components, VDateInput },
+  directives,
+});
+
+const inputFields = [
+  {
+    dataTest: "antrag-list-filter-status",
+  },
+  {
+    dataTest: "antrag-list-filter-bezirksausschuss",
+  },
+  {
+    dataTest: "antrag-list-filter-eingang-datum",
+  },
+  {
+    dataTest: "antrag-list-filter-antragsteller-name",
+  },
+  {
+    dataTest: "antrag-list-filter-projekt-titel",
+  },
+  {
+    dataTest: "antrag-list-filter-beantragtes-budget-von",
+  },
+  {
+    dataTest: "antrag-list-filter-beantragtes-budget-bis",
+  },
+  {
+    dataTest: "antrag-list-filter-art",
+  },
+  {
+    dataTest: "antrag-list-filter-aktualisierung-art",
+  },
+  {
+    dataTest: "antrag-list-filter-aktualisierung-datum",
+  },
+];
 
 describe("AntragStatusUpdate", () => {
   let wrapper;
@@ -21,10 +65,6 @@ describe("AntragStatusUpdate", () => {
 
   beforeEach(() => {
     mockUseAntragListFilter = {
-      status: ref("EINGEGANGEN"),
-      search: ref(""),
-      updateStatus: vi.fn(),
-      toggleStatusAndSearch: vi.fn(),
       updateFilters: vi.fn(),
       resetFilters: vi.fn(),
       filters: emptyAntragListFilter(),
@@ -33,65 +73,34 @@ describe("AntragStatusUpdate", () => {
     vi.mocked(useAntragListFilter).mockReturnValue(mockUseAntragListFilter);
 
     wrapper = mount(AntragListFilter, {
-      attachTo: document.body,
       global: {
         plugins: [pinia, vuetify],
       },
     });
   });
 
-  async function openMenu() {
-    const menu = wrapper.findComponent({ name: "VMenu" });
-    menu.vm.$emit("update:modelValue", true);
-    // await wrapper.vm.$nextTick();
-  }
+  test("renders card", async () => {
+    const content = wrapper.findComponent({ name: "v-card" });
 
-  test("renders menu and open button", () => {
-    const menu = wrapper.findComponent({ name: "VMenu" });
-    const button = wrapper.find('[data-test="antrag-list-filter-open-btn"]');
-    const content = wrapper.find(
-      '[data-test="antrag-list-filter-menu-content"]'
-    );
-
-    expect(menu.exists()).toBe(true);
-    expect(button.exists()).toBe(true);
-    expect(content.exists()).toBe(false);
-
-    button.trigger("click");
-    wrapper.vm.$nextTick().then(() => {
-      expect(content.exists()).toBe(true);
-    });
+    expect(content.exists()).toBe(true);
   });
 
-  // test("renders reset button", () => {
-  //   openMenu();
-  //   wrapper.vm.$nextTick().then(() => {
-  //     const button = wrapper.find('[data-test="antrag-list-filter-reset-btn"]');
-  //     expect(button.exists()).toBe(true);
-  //
-  //     button.trigger("click");
-  //     expect(mockUseAntragListFilter.resetFilters).toHaveBeenCalled();
-  //   });
-  // });
+  test("reset button triggers resetFilters", async () => {
+    const button = wrapper.findComponent(
+      '[data-test="antrag-list-filter-reset-btn"]'
+    );
 
-  // const inputFields = [
-  //   {
-  //     dataTest: "antrag-list-filter-status",
-  //   },
-  //   {
-  //     dataTest: "antrag-list-filter-bezirksausschuss",
-  //   },
-  // ];
+    expect(button.exists()).toBe(true);
+    expect(button.classes()).toContain("v-btn");
+    await button.trigger("click");
+    expect(mockUseAntragListFilter.resetFilters).toHaveBeenCalled();
+  });
 
-  // test.each(inputFields)("renders input field $dataTest", ({ dataTest }) => {
-  //   openMenu().then(() => {
-  //     const input = wrapper.find(`[data-test="${dataTest}"]`);
-  //     expect(input.exists()).toBe(true);
-  //
-  //     // input.vm.$emit("update:modelValue", "TEST_VALUE");
-  //     // wrapper.vm.$nextTick().then(() => {
-  //     //   expect(mockUseAntragListFilter.updateFilters).toHaveBeenCalled();
-  //     // });
-  //   });
-  // });
+  test.each(inputFields)("renders input field $dataTest", ({ dataTest }) => {
+    const input = wrapper.findComponent(`[data-test="${dataTest}"]`);
+    expect(input.exists()).toBe(true);
+
+    input.trigger("focusout");
+    expect(mockUseAntragListFilter.updateFilters).toHaveBeenCalled();
+  });
 });
