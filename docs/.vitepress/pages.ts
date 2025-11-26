@@ -59,6 +59,10 @@ const pages: Page[] = [
         text: "Database Migration",
         link: "/development/database-migration",
       },
+      {
+        text: "API Mocking",
+        link: "/development/api-mocking",
+      },
     ],
   },
 ];
