@@ -28,16 +28,16 @@ public record AntragFilterDTO(
 
     @Override
     public List<Status> status() {
-        return List.copyOf(status);
+        return status != null ? List.copyOf(status) : null;
     }
 
     @Override
     public List<Integer> bezirksausschussNr() {
-        return List.copyOf(bezirksausschussNr);
+        return bezirksausschussNr != null ? List.copyOf(bezirksausschussNr) : null;
     }
 
     @Override
     public List<AktualisierungArt> aktualisierungArt() {
-        return List.copyOf(aktualisierungArt);
+        return aktualisierungArt != null ? List.copyOf(aktualisierungArt) : null;
     }
 }

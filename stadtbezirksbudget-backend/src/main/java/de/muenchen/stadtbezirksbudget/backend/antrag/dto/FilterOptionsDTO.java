@@ -11,11 +11,11 @@ import java.util.List;
 public record FilterOptionsDTO(List<String> antragstellerNameList, List<String> projektTitelList) {
     @Override
     public List<String> antragstellerNameList() {
-        return List.copyOf(antragstellerNameList);
+        return antragstellerNameList != null ? List.copyOf(antragstellerNameList) : null;
     }
 
     @Override
     public List<String> projektTitelList() {
-        return List.copyOf(projektTitelList);
+        return projektTitelList != null ? List.copyOf(projektTitelList) : null;
     }
 }
