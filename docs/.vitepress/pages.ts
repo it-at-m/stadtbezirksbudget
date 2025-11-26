@@ -29,6 +29,10 @@ const pages: Page[] = [
         link: "/features/application-list/",
       },
       {
+        text: "Zammad integration",
+        link: "/features/zammad-integration/",
+      },
+      {
         text: "Reliable communication",
         link: "/features/reliable-communication",
       },
