@@ -100,7 +100,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-row>
+            <v-row class="text-grey-darken-1">
               <v-col>Beantragtes Budget</v-col>
             </v-row>
             <v-row no-gutters>
