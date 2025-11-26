@@ -5,7 +5,8 @@
 - [Prism](https://github.com/stoplightio/prism)
 - [Imposter](https://www.imposter.sh/)
 - [Mock Server](https://www.mock-server.com/)
-- [Soap UI](https://www.soapui.org/tools/soapui/)
+- [SoapUI](https://www.soapui.org/tools/soapui/)
+- [WireMock](https://github.com/wiremock/wiremock)
 
 ## Criteria
 
@@ -24,7 +25,7 @@
 | Multipart Requests                    | ❌    | ✅       | ✅          | ✅     | ✅       |
 | Dummy Data Response                   | ✅    | ✅       | ✅          | ✅     | ✅       |
 | Open Source                           | ✅    | ✅       | ✅          | ❌     | ✅       |
-| Validation                            | ✅    | ✅       | ✅          | ❔     | ✅       |
+| Validation                            | ✅    | ✅       | ✅          | ✅     | ✅       |
 | Docker Container with OpenAPI Support | ✅    | ✅       | ✅          | ❌     | ❌       |
 
 :::info
