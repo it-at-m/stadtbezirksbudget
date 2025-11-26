@@ -107,6 +107,7 @@
               <v-col>
                 <v-number-input
                   v-model="filters.beantragtesBudgetVon"
+                  :precision="2"
                   clearable
                   control-variant="hidden"
                   data-test="antrag-list-filter-beantragtes-budget-von"
@@ -121,6 +122,7 @@
               <v-col>
                 <v-number-input
                   v-model="filters.beantragtesBudgetBis"
+                  :precision="2"
                   clearable
                   control-variant="hidden"
                   data-test="antrag-list-filter-beantragtes-budget-bis"
