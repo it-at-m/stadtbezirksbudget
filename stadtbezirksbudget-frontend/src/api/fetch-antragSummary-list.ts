@@ -8,7 +8,10 @@ import {
   getConfig,
 } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
-import { antragListFilterToDTO, appendSearchParams } from "@/util/converter.ts";
+import {
+  antragListFilterToDTO,
+  objectToSearchParams,
+} from "@/util/converter.ts";
 
 export function getAntragsSummaryList(
   page: number,
@@ -20,7 +23,7 @@ export function getAntragsSummaryList(
     page: String(page),
     size: String(size),
   });
-  appendSearchParams(filtersDto, params);
+  objectToSearchParams(filtersDto, params);
   return fetch(`${BACKEND}/antrag?${params}`, getConfig())
     .then((response) => {
       defaultResponseHandler(response);

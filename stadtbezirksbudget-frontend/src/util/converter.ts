@@ -3,7 +3,7 @@ import type {
   AntragListFilterDTO,
 } from "@/types/AntragListFilter.ts";
 
-export function appendSearchParams(
+export function objectToSearchParams(
   object: object,
   params: URLSearchParams = new URLSearchParams()
 ): URLSearchParams {
@@ -17,7 +17,6 @@ export function appendSearchParams(
       params.append(key, String(value));
     }
   });
-
   return params;
 }
 

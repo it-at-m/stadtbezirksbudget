@@ -6,7 +6,7 @@ import {
   AntragListFilter,
   emptyAntragListFilter,
 } from "@/types/AntragListFilter";
-import { antragListFilterToDTO, appendSearchParams } from "@/util/converter";
+import { antragListFilterToDTO, objectToSearchParams } from "@/util/converter";
 
 global.fetch = vi.fn();
 
@@ -26,7 +26,7 @@ const testFilters: AntragListFilter = {
   aktualisierungArt: ["E_AKTE"],
   aktualisierungDatum: [new Date("2025-11-25T00:00:00Z")],
 };
-const testFiltersString = appendSearchParams(
+const testFiltersString = objectToSearchParams(
   antragListFilterToDTO(testFilters)
 ).toString();
 
