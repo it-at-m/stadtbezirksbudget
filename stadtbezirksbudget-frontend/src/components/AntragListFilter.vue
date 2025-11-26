@@ -152,7 +152,6 @@
             data-test="antrag-list-filter-aktualisierung-art"
             density="compact"
             hide-details="auto"
-            item-title="longText"
             label="Aktualisierung"
             multiple
             variant="underlined"

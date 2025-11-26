@@ -40,7 +40,7 @@
     </template>
     <template v-slot:[`item.aktualisierung`]="{ item }">
       <span data-test="item-aktualisierung-art">{{
-        AktualisierungArtText[item.aktualisierung]?.shortText
+        AktualisierungArtText[item.aktualisierung]
       }}</span>
     </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
