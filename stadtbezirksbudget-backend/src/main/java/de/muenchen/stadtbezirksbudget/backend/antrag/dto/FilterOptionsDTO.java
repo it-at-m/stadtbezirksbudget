@@ -9,4 +9,13 @@ import java.util.List;
  * which can be used for filtering purposes.
  */
 public record FilterOptionsDTO(List<String> antragstellerNameList, List<String> projektTitelList) {
+    @Override
+    public List<String> antragstellerNameList() {
+        return List.copyOf(antragstellerNameList);
+    }
+
+    @Override
+    public List<String> projektTitelList() {
+        return List.copyOf(projektTitelList);
+    }
 }
