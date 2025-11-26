@@ -34,7 +34,7 @@ public class AntragService {
     public Page<Antrag> getAntragPage(final Pageable pageable, final AntragFilterDTO antragFilterDTO) {
         log.info("Get antrag page with pageable {} and filterDTO {}", pageable, antragFilterDTO);
         return antragRepository.findAll(
-                (root, query, criteriaBuilder) -> antragFilterService.filterIssues(antragFilterDTO, root, criteriaBuilder),
+                (root, query, criteriaBuilder) -> antragFilterService.filterAntrag(antragFilterDTO, root, criteriaBuilder),
                 pageable);
     }
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AntragFilterService {
 
-    public Predicate filterIssues(final AntragFilterDTO filter, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    public Predicate filterAntrag(final AntragFilterDTO filter, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return criteriaBuilder.and(
                 filterBezirksausschussNr(filter.bezirksausschussNr(), root, criteriaBuilder),
                 filterStatus(filter.status(), root, criteriaBuilder),
