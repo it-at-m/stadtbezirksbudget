@@ -37,7 +37,7 @@
           class="d-flex align-center justify-end"
           cols="3"
         >
-          <antrag-list-filter />
+          <antrag-list-filter-menu />
           <app-switcher
             v-if="appswitcherBaseUrl"
             :base-url="appswitcherBaseUrl"
@@ -76,7 +76,7 @@ import { useToggle } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 
 import { getUser } from "@/api/user-client";
-import AntragListFilter from "@/components/AntragListFilter.vue";
+import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { APPSWITCHER_URL } from "@/constants";
