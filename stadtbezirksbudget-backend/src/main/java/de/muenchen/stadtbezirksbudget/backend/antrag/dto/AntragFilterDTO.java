@@ -26,18 +26,9 @@ public record AntragFilterDTO(
         LocalDateTime aktualisierungDatumVon,
         LocalDateTime aktualisierungDatumBis) {
 
-    @Override
-    public List<Status> status() {
-        return status != null ? List.copyOf(status) : null;
-    }
-
-    @Override
-    public List<Integer> bezirksausschussNr() {
-        return bezirksausschussNr != null ? List.copyOf(bezirksausschussNr) : null;
-    }
-
-    @Override
-    public List<AktualisierungArt> aktualisierungArt() {
-        return aktualisierungArt != null ? List.copyOf(aktualisierungArt) : null;
+    public AntragFilterDTO {
+        status = status != null ? List.copyOf(status) : List.of();
+        bezirksausschussNr = bezirksausschussNr != null ? List.copyOf(bezirksausschussNr) : List.of();
+        aktualisierungArt = aktualisierungArt != null ? List.copyOf(aktualisierungArt) : List.of();
     }
 }

@@ -1,7 +1,9 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.repository;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Zahlungsempfaenger;
+import java.util.List;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ZahlungsempfaengerRepository extends CrudRepository<Zahlungsempfaenger, UUID> {
+    /**
+     * Repository interface for querying distinct Antragsteller names.
+     */
+    @Query("SELECT DISTINCT z.name FROM Antragsteller z")
+    List<String> findDistinctAntragstellerNames();
 
 }

@@ -1,7 +1,9 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.repository;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
+import java.util.List;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProjektRepository extends CrudRepository<Projekt, UUID> {
-
+    /**
+     * Repository interface for querying distinct Projekt titles.
+     */
+    @Query("SELECT DISTINCT p.titel FROM Projekt p")
+    List<String> findDistinctProjektTitles();
 }

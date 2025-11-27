@@ -5,10 +5,11 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
+    private final ProjektRepository projektRepository;
+    private final ZahlungsempfaengerRepository zahlungsempfaengerRepository;
     private final AntragFilterService antragFilterService;
 
     /**
@@ -46,14 +49,14 @@ public class AntragService {
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        final List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames()
+        final List<String> antragstellerNameList = zahlungsempfaengerRepository.findDistinctAntragstellerNames()
                 .stream()
                 .sorted()
-                .collect(Collectors.toList());
-        final List<String> projektTitelList = antragRepository.findDistinctProjektTitles()
+                .toList();
+        final List<String> projektTitelList = projektRepository.findDistinctProjektTitles()
                 .stream()
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 

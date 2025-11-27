@@ -9,13 +9,9 @@ import java.util.List;
  * which can be used for filtering purposes.
  */
 public record FilterOptionsDTO(List<String> antragstellerNamen, List<String> projektTitel) {
-    @Override
-    public List<String> antragstellerNamen() {
-        return antragstellerNamen != null ? List.copyOf(antragstellerNamen) : null;
-    }
 
-    @Override
-    public List<String> projektTitel() {
-        return projektTitel != null ? List.copyOf(projektTitel) : null;
+    public FilterOptionsDTO {
+        antragstellerNamen = antragstellerNamen != null ? List.copyOf(antragstellerNamen) : List.of();
+        projektTitel = projektTitel != null ? List.copyOf(projektTitel) : List.of();
     }
 }
