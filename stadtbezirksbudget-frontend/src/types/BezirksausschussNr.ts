@@ -9,7 +9,7 @@ const bezirksausschussNrDefinitions = Array.from(
 );
 
 // Array of all bezirksausschuss nr options
-export const bezirksausschussNrOptions: BezirksausschussNrOption[] = [
+export const bezirksausschussNrOptions: readonly BezirksausschussNrOption[] = [
   ...bezirksausschussNrDefinitions,
 ] as const;
 
