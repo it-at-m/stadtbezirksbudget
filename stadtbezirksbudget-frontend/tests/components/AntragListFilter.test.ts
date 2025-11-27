@@ -1,6 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
+import { ref } from "vue";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
@@ -67,7 +68,7 @@ describe("AntragListFilter", () => {
     mockUseAntragListFilter = {
       updateFilters: vi.fn(),
       resetFilters: vi.fn(),
-      filters: emptyAntragListFilter(),
+      filters: ref(emptyAntragListFilter()),
     };
 
     vi.mocked(useAntragListFilter).mockReturnValue(mockUseAntragListFilter);
