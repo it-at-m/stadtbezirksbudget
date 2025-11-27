@@ -59,7 +59,7 @@ const inputFields = [
   },
 ];
 
-describe("AntragStatusUpdate", () => {
+describe("AntragListFilter", () => {
   let wrapper;
   let mockUseAntragListFilter;
 
@@ -80,7 +80,7 @@ describe("AntragStatusUpdate", () => {
   });
 
   test("renders card", async () => {
-    const content = wrapper.findComponent({ name: "v-card" });
+    const content = wrapper.findComponent({ name: "VCard" });
 
     expect(content.exists()).toBe(true);
   });
@@ -96,11 +96,14 @@ describe("AntragStatusUpdate", () => {
     expect(mockUseAntragListFilter.resetFilters).toHaveBeenCalled();
   });
 
-  test.each(inputFields)("renders input field $dataTest", ({ dataTest }) => {
-    const input = wrapper.findComponent(`[data-test="${dataTest}"]`);
-    expect(input.exists()).toBe(true);
+  test.each(inputFields)(
+    "renders input field $dataTest",
+    async ({ dataTest }) => {
+      const input = wrapper.findComponent(`[data-test="${dataTest}"]`);
+      expect(input.exists()).toBe(true);
 
-    input.trigger("focusout");
-    expect(mockUseAntragListFilter.updateFilters).toHaveBeenCalled();
-  });
+      await input.trigger("focusout");
+      expect(mockUseAntragListFilter.updateFilters).toHaveBeenCalled();
+    }
+  );
 });
