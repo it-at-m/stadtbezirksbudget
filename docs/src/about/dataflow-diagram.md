@@ -3,7 +3,6 @@
 The data flow diagram illustrates the various data flows within different status stages of the application.
 It categorizes the flows based on whether they occur automatically or manually, indicating the responsible actor, the target system, the specific data involved, and any manual steps required in the process.
 
-Notably, it does not display all non-automatic status transitions that must be manually set by the user (caseworker).
 For a comprehensive view of all status transitions, one should refer to the [status values page](./status-values).
 
 ## Legend
@@ -29,10 +28,6 @@ The colors used in the diagram (blue and orange) correspond to those in the stat
 ### Bewilligt
 
 ![Dataflow-diagram showing all data-flows and related information of state "Bewilligt"](./dataflow-diagram/Bewilligt-state.png)
-
-### Nachricht an Bürger
-
-![Dataflow-diagram showing all data-flows and related information of state "Nachricht an Bürger"](./dataflow-diagram/NachrichtAnBuerger-state.png)
 
 ### Finanzierung
 
