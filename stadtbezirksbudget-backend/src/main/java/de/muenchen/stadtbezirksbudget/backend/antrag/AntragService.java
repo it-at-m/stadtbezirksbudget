@@ -8,6 +8,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -45,9 +46,14 @@ public class AntragService {
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        final List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames();
-        final List<String> projektTitelList = antragRepository.findDistinctProjektTitles();
-
+        final List<String> antragstellerNameList = antragRepository.findDistinctAntragstellerNames()
+                .stream()
+                .sorted()
+                .collect(Collectors.toList());
+        final List<String> projektTitelList = antragRepository.findDistinctProjektTitles()
+                .stream()
+                .sorted()
+                .collect(Collectors.toList());
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
