@@ -1,11 +1,10 @@
+import type { AntragListFilter } from "@/types/AntragListFilter";
+
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
-import {
-  AntragListFilter,
-  emptyAntragListFilter,
-} from "@/types/AntragListFilter";
+import { emptyAntragListFilter } from "@/types/AntragListFilter";
 import { antragListFilterToDTO, objectToSearchParams } from "@/util/converter";
 
 global.fetch = vi.fn();

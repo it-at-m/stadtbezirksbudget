@@ -1,8 +1,9 @@
+import type { AntragListFilterOptions } from "@/types/AntragListFilter";
+
 import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getAntragListFilterOptions } from "@/api/fetch-antragListFilterOptions.ts";
 import { BACKEND } from "@/constants.ts";
-import { AntragListFilterOptions } from "@/types/AntragListFilter";
 
 global.fetch = vi.fn();
 
