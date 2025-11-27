@@ -10,7 +10,9 @@ import {
 describe("AktualisierungArt type", () => {
   test("AktualisierungArtText maps each option value to its title", () => {
     aktualisierungArtOptions.forEach((opt: AktualisierungArtOption) => {
-      expect(AktualisierungArtText[opt.value as unknown]).toBe(opt.title);
+      expect(
+        AktualisierungArtText[opt.value as keyof typeof AktualisierungArtText]
+      ).toBe(opt.title);
     });
   });
 
