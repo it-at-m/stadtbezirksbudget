@@ -1,3 +1,5 @@
+import type { VueWrapper } from "@vue/test-utils";
+
 import { mount } from "@vue/test-utils";
 import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
@@ -61,8 +63,8 @@ const inputFields = [
 ];
 
 describe("AntragListFilter", () => {
-  let wrapper;
-  let mockUseAntragListFilter;
+  let wrapper: VueWrapper<InstanceType<typeof AntragListFilter>>;
+  let mockUseAntragListFilter: ReturnType<typeof useAntragListFilter>;
 
   beforeEach(() => {
     mockUseAntragListFilter = {
