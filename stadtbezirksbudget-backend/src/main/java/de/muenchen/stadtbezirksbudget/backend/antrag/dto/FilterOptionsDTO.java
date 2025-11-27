@@ -8,14 +8,14 @@ import java.util.List;
  * This DTO encapsulates lists of distinct Antragsteller names and Projekt titles,
  * which can be used for filtering purposes.
  */
-public record FilterOptionsDTO(List<String> antragstellerNameList, List<String> projektTitelList) {
+public record FilterOptionsDTO(List<String> antragstellerNamen, List<String> projektTitel) {
     @Override
-    public List<String> antragstellerNameList() {
-        return antragstellerNameList != null ? List.copyOf(antragstellerNameList) : null;
+    public List<String> antragstellerNamen() {
+        return antragstellerNamen != null ? List.copyOf(antragstellerNamen) : null;
     }
 
     @Override
-    public List<String> projektTitelList() {
-        return projektTitelList != null ? List.copyOf(projektTitelList) : null;
+    public List<String> projektTitel() {
+        return projektTitel != null ? List.copyOf(projektTitel) : null;
     }
 }
