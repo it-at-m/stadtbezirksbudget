@@ -1,6 +1,10 @@
 import { describe, expect, test } from "vitest";
 
-import { objectToSearchParams } from "@/util/converter.ts";
+import { AntragListFilter } from "@/types/AntragListFilter.ts";
+import {
+  antragListFilterToDTO,
+  objectToSearchParams,
+} from "@/util/converter.ts";
 
 describe("converter util", () => {
   describe("objectToSearchParams", () => {
@@ -68,6 +72,93 @@ describe("converter util", () => {
     test("creates new URLSearchParams", () => {
       const params = objectToSearchParams({});
       expect(params).toBeInstanceOf(URLSearchParams);
+    });
+  });
+
+  describe("antragListFilterToDTO", () => {
+    const testFilters: AntragListFilter = {
+      status: ["EINGEGANGEN", "ABGESCHLOSSEN"],
+      bezirksausschussNr: [1, 5],
+      eingangDatum: [
+        new Date("2025-11-26T00:00:00Z"),
+        new Date("2025-11-27T00:00:00Z"),
+        new Date("2025-11-28T00:00:00Z"),
+      ],
+      antragstellerName: "TEST_NAME",
+      projektTitel: "TEST_TITEL",
+      beantragtesBudgetVon: 537.25,
+      beantragtesBudgetBis: 1098.98,
+      art: "Fest",
+      aktualisierungArt: ["E_AKTE"],
+      aktualisierungDatum: [
+        new Date("2025-11-24T00:00:00Z"),
+        new Date("2025-11-25T00:00:00Z"),
+      ],
+    };
+
+    test("keeps unchanged fields", () => {
+      const dto = antragListFilterToDTO(testFilters);
+
+      expect(dto.status).toBe(testFilters.status);
+      expect(dto.bezirksausschussNr).toBe(testFilters.bezirksausschussNr);
+      expect(dto.antragstellerName).toBe(testFilters.antragstellerName);
+      expect(dto.projektTitel).toBe(testFilters.projektTitel);
+      expect(dto.beantragtesBudgetVon).toBe(testFilters.beantragtesBudgetVon);
+      expect(dto.beantragtesBudgetBis).toBe(testFilters.beantragtesBudgetBis);
+      expect(dto.aktualisierungArt).toBe(testFilters.aktualisierungArt);
+    });
+
+    test("converts eingangsDatum array to von and bis iso strings", () => {
+      const dto = antragListFilterToDTO(testFilters);
+
+      expect(dto.eingangDatumVon).toBe(
+        new Date("2025-11-26T00:00:00Z").toISOString()
+      );
+      expect(dto.eingangDatumBis).toBe(
+        new Date("2025-11-28T00:00:00Z").toISOString()
+      );
+      expect(dto.eingangDatum).toBeUndefined();
+    });
+
+    test("converts aktualisierungDatum array to von and bis iso strings", () => {
+      const dto = antragListFilterToDTO(testFilters);
+
+      expect(dto.aktualisierungDatumVon).toBe(
+        new Date("2025-11-24T00:00:00Z").toISOString()
+      );
+      expect(dto.aktualisierungDatumBis).toBe(
+        new Date("2025-11-25T00:00:00Z").toISOString()
+      );
+      expect(dto.aktualisierungDatum).toBeUndefined();
+    });
+
+    test("converts empty date array to undefined von and bis", () => {
+      const filters: AntragListFilter = {
+        ...testFilters,
+        eingangDatum: [],
+        aktualisierungDatum: [],
+      };
+      const dto = antragListFilterToDTO(filters);
+
+      expect(dto.eingangDatumVon).toBeUndefined();
+      expect(dto.eingangDatumBis).toBeUndefined();
+      expect(dto.aktualisierungDatumVon).toBeUndefined();
+      expect(dto.aktualisierungDatumBis).toBeUndefined();
+    });
+
+    test("converts art to istFehlbetrag", () => {
+      const filters: AntragListFilter = {
+        ...testFilters,
+      };
+
+      filters.art = "Fest";
+      expect(antragListFilterToDTO(filters).istFehlbetrag).toBe(false);
+
+      filters.art = "Fehl";
+      expect(antragListFilterToDTO(filters).istFehlbetrag).toBe(true);
+
+      filters.art = undefined;
+      expect(antragListFilterToDTO(filters).istFehlbetrag).toBeUndefined();
     });
   });
 });
