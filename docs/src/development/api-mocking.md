@@ -2,11 +2,11 @@
 
 ## Software under consideration
 
-- [Prism](https://github.com/stoplightio/prism)
+- [Prism](https://stoplight.io/open-source/prism)
 - [Imposter](https://www.imposter.sh/)
 - [Mock Server](https://www.mock-server.com/)
 - [SoapUI](https://www.soapui.org/tools/soapui/)
-- [WireMock](https://github.com/wiremock/wiremock)
+- [WireMock](https://wiremock.org/)
 
 ## Criteria
 
