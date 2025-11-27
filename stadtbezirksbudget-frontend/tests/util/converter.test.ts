@@ -5,6 +5,7 @@ import {
   antragListFilterToDTO,
   objectToSearchParams,
 } from "@/util/converter.ts";
+import { toLocalISOString } from "../../src/util/formatter";
 
 describe("converter util", () => {
   describe("objectToSearchParams", () => {
@@ -112,10 +113,10 @@ describe("converter util", () => {
       const dto = antragListFilterToDTO(testFilters);
 
       expect(dto.eingangDatumVon).toBe(
-        new Date("2025-11-26T00:00:00Z").toISOString()
+        toLocalISOString(new Date("2025-11-26T00:00:00Z"))
       );
       expect(dto.eingangDatumBis).toBe(
-        new Date("2025-11-28T00:00:00Z").toISOString()
+        toLocalISOString(new Date("2025-11-28T00:00:00Z"))
       );
       expect(dto.eingangDatum).toBeUndefined();
     });
@@ -124,10 +125,10 @@ describe("converter util", () => {
       const dto = antragListFilterToDTO(testFilters);
 
       expect(dto.aktualisierungDatumVon).toBe(
-        new Date("2025-11-24T00:00:00Z").toISOString()
+        toLocalISOString(new Date("2025-11-24T00:00:00Z"))
       );
       expect(dto.aktualisierungDatumBis).toBe(
-        new Date("2025-11-25T00:00:00Z").toISOString()
+        toLocalISOString(new Date("2025-11-25T00:00:00Z"))
       );
       expect(dto.aktualisierungDatum).toBeUndefined();
     });

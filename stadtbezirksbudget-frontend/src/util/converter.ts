@@ -3,6 +3,8 @@ import type {
   AntragListFilterDTO,
 } from "@/types/AntragListFilter.ts";
 
+import { toLocalISOString } from "@/util/formatter.ts";
+
 /**
  * Converts an object to URLSearchParams.
  * - Ignores undefined, null, and empty string values.
@@ -40,10 +42,10 @@ export function antragListFilterToDTO(
   const { eingangDatum, art, aktualisierungDatum, ...rest } = filters;
   return {
     ...rest,
-    eingangDatumVon: eingangDatum.at(0)?.toISOString(),
-    eingangDatumBis: eingangDatum.at(-1)?.toISOString(),
+    eingangDatumVon: toLocalISOString(eingangDatum.at(0)),
+    eingangDatumBis: toLocalISOString(eingangDatum.at(-1)),
     istFehlbetrag: art ? art === "Fehl" : undefined,
-    aktualisierungDatumVon: aktualisierungDatum.at(0)?.toISOString(),
-    aktualisierungDatumBis: aktualisierungDatum.at(-1)?.toISOString(),
+    aktualisierungDatumVon: toLocalISOString(aktualisierungDatum.at(0)),
+    aktualisierungDatumBis: toLocalISOString(aktualisierungDatum.at(-1)),
   };
 }
