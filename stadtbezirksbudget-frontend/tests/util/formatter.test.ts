@@ -27,7 +27,7 @@ describe("formatter.ts tests", () => {
       expect(toTimeString(date)).toBe(date.toLocaleTimeString("de-DE"));
     });
 
-    test("testInvalidDateReturnsEmptyString", () => {
+    test("testInvalidDateReturnsUndefined", () => {
       const invalidDate = new Date("Invalid Date");
       expect(toTimeString(invalidDate)).toBe("");
     });
