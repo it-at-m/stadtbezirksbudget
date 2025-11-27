@@ -26,3 +26,18 @@ The application status can be updated directly from the application list. Casewo
 of processing. This feature streamlines the workflow by allowing quick updates without needing to navigate to a separate page for each application.
 
 ![Application list with an open dropdown menu to update the application status](./application-list-update-status.png)
+
+## Filtering of the list
+
+The application list can be filtered based on various criteria to help caseworkers quickly find the applications they need to review.
+
+![Filtering of the application list](./application-list-filter.png)
+
+These filters can be combined to narrow down the list of applications and make it easier to manage them effectively, e.g. the filters of the image above show
+all applications where the all following conditions are met:
+
+- The status is "_Offen_" or "_Vorbereitung_"
+- The Bezirk is "_Bezirk 1_"
+- The application was created between 27.10.2025 and 27.11.2025
+- The amount requested is greater than or equal to 1,000 EUR
+- The type of the application is "_Fehl_"
