@@ -41,3 +41,9 @@ export const emptyAntragListFilter = (): AntragListFilter => ({
   aktualisierungArt: [],
   aktualisierungDatum: [],
 });
+
+// Interface for Antrag list filter options
+export interface AntragListFilterOptions {
+  antragstellerNamen: string[];
+  projektTitel: string[];
+}

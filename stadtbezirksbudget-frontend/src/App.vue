@@ -79,6 +79,7 @@ import { getUser } from "@/api/user-client";
 import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
+import { useInitializeStores } from "@/composables/initializeStores.ts";
 import { APPSWITCHER_URL } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
@@ -90,6 +91,8 @@ const appswitcherBaseUrl = APPSWITCHER_URL;
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 const [drawer, toggleDrawer] = useToggle();
+
+useInitializeStores();
 
 onMounted(() => {
   loadUser();

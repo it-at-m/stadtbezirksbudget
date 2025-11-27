@@ -65,6 +65,7 @@
         <v-col>
           <v-autocomplete
             v-model="filters.antragstellerName"
+            :items="filterOptions.antragstellerNamen"
             clearable
             data-test="antrag-list-filter-antragsteller-name"
             density="compact"
@@ -79,6 +80,7 @@
         <v-col>
           <v-autocomplete
             v-model="filters.projektTitel"
+            :items="filterOptions.projektTitel"
             clearable
             data-test="antrag-list-filter-projekt-titel"
             density="compact"
@@ -182,8 +184,10 @@
 <script lang="ts" setup>
 import StatusSelect from "@/components/StatusSelect.vue";
 import { useAntragListFilter } from "@/composables/antragListFilter.ts";
+import { useAntragListFilterOptionsStore } from "@/stores/antragListFilterOptions.ts";
 import { aktualisierungArtOptions } from "@/types/AktualisierungArt.ts";
 import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
 
 const { updateFilters, resetFilters, filters } = useAntragListFilter();
+const { filterOptions } = useAntragListFilterOptionsStore();
 </script>
