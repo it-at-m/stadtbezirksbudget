@@ -32,6 +32,12 @@
 For SoapUI, only the free version has been considered.
 :::
 
-## Result
+## Decision
 
-We have decided to use Imposter due to its ease of setup and its ability to seamlessly import the OpenAPI specification.
+We chose Imposter for this project. Short rationale:
+
+- Works better as a standalone mock server.
+- Easy import of OpenAPI specifications (low friction for keeping mocks in sync with the API contract).
+- Good multipart / file-upload handling which we need for certain endpoints.
+- Built-in validation and generated dummy responses for quick developer feedback.
+- Simple containerized operation which fits local development and CI workflows.
