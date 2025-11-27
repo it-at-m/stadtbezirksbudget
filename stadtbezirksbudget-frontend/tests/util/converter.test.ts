@@ -5,7 +5,7 @@ import {
   antragListFilterToDTO,
   objectToSearchParams,
 } from "@/util/converter.ts";
-import { toLocalISOString } from "../../src/util/formatter";
+import { toLocalISOString } from "@/util/formatter";
 
 describe("converter util", () => {
   describe("objectToSearchParams", () => {
