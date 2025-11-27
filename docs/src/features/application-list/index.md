@@ -12,13 +12,13 @@ require attention and to navigate through the applications with ease.
 The displayed columns represent the most important data from the citizen form, such as the applicant or project title. Additionally, a few additional columns
 provide context and facilitate the processing of applications:
 
-| Column               | Description                                                                                                      |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| Status               | The current [status](/about/#status-values) of the application, indicating its stage in the processing workflow. |
-| Nummer               | The Zammad ticket number associated with the application.                                                        |
-| Aktenzeichen         | Identifier in the E-Akte system where the application is documented.                                             |
-| Aktualisierung       | Shows in which of the involved systems (Zammad, EAkte) the last activity occurred.                               |
-| Datum Aktualisierung | The date when the last update was made to the application.                                                       |
+| Column               | Description                                                                                                     |
+| -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Status               | The current [status](/about/status-values) of the application, indicating its stage in the processing workflow. |
+| Nummer               | The Zammad ticket number associated with the application.                                                       |
+| Aktenzeichen         | Identifier in the E-Akte system where the application is documented.                                            |
+| Aktualisierung       | Shows in which of the involved systems (Zammad, EAkte) the last activity occurred.                              |
+| Datum Aktualisierung | The date when the last update was made to the application.                                                      |
 
 ## Updating application status
 
