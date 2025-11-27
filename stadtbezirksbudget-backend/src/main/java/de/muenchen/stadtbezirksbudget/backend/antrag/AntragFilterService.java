@@ -57,13 +57,13 @@ public class AntragFilterService {
 
     private Predicate filterAntragstellerName(final String antragstellerName, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (antragstellerName != null && !antragstellerName.isEmpty())
-                ? criteriaBuilder.equal(root.get("antragsteller").get("name"), "%" + antragstellerName + "%")
+                ? criteriaBuilder.equal(root.get("antragsteller").get("name"), antragstellerName)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterProjektTitel(final String projektTitel, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (projektTitel != null && !projektTitel.isEmpty())
-                ? criteriaBuilder.equal(root.get("projekt").get("titel"), "%" + projektTitel + "%")
+                ? criteriaBuilder.equal(root.get("projekt").get("titel"), projektTitel)
                 : criteriaBuilder.conjunction();
     }
 
