@@ -26,7 +26,8 @@ describe("converter util", () => {
       };
       const params = new URLSearchParams();
 
-      objectToSearchParams(object, params);
+      const result = objectToSearchParams(object, params);
+      expect(result).toBe(params);
       expect(params).toStrictEqual(params);
       expect(params.toString()).toBe("");
     });
