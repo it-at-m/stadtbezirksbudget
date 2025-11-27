@@ -17,7 +17,7 @@ describe("antragListFilterOptions store", () => {
     });
   });
 
-  test("setFilters stores filter", () => {
+  test("setFilterOptions stores filter", () => {
     const testOptions: AntragListFilterOptions = {
       antragstellerNamen: ["TEST_NAME_1", "TEST_NAME_2"],
       projektTitel: ["TEST_TITLE_1", "TEST_TITLE_2", "TEST_TITLE_3"],

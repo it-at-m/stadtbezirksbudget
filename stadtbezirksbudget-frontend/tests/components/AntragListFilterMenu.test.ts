@@ -21,7 +21,7 @@ const vuetify = createVuetify({
   directives,
 });
 
-describe("AntragStatusUpdateMenu", () => {
+describe("AntragListFilterMenu", () => {
   const wrapper = mount(AntragListFilterMenu, {
     global: {
       plugins: [vuetify],
