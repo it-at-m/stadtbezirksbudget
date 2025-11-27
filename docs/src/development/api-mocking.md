@@ -24,8 +24,8 @@
 | OpenAPI 3.1                           | ✅    | ✅       | ✅          | ❌     | ✅       |
 | Multipart Requests                    | ❌    | ✅       | ✅          | ✅     | ✅       |
 | Dummy Data Response                   | ✅    | ✅       | ✅          | ✅     | ✅       |
-| Open Source                           | ✅    | ✅       | ✅          | ❌     | ✅       |
-| Validation                            | ✅    | ✅       | ✅          | ✅     | ✅       |
+| Open Source                           | ✅    | ✅       | ✅          | ✅     | ✅       |
+| Validation                            | ✅    | ✅       | ✅          | ✅     | ❌       |
 | Docker Container with OpenAPI Support | ✅    | ✅       | ✅          | ❌     | ❌       |
 
 :::info
