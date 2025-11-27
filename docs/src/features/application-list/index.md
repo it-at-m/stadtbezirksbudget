@@ -34,7 +34,7 @@ The application list can be filtered based on various criteria to help caseworke
 ![Filtering of the application list](./application-list-filter.png)
 
 These filters can be combined to narrow down the list of applications and make it easier to manage them effectively, e.g. the filters of the image above show
-all applications where the all following conditions are met:
+all applications where all the following conditions are met:
 
 - The status is "_Offen_" or "_Vorbereitung_"
 - The Bezirk is "_Bezirk 1_"
