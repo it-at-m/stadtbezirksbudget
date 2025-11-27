@@ -13,6 +13,13 @@ import {
   objectToSearchParams,
 } from "@/util/converter.ts";
 
+/**
+ * Fetches a paginated list of Antrag summaries from the backend, applying the given filters.
+ * @param page - The page number to fetch.
+ * @param size - The number of items per page.
+ * @param filters - The filters to apply to the Antrag list.
+ * @returns A promise that resolves to a paginated list of Antrag summaries.
+ */
 export function getAntragsSummaryList(
   page: number,
   size: number,

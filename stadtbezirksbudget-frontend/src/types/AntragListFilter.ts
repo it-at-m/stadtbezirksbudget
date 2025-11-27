@@ -1,6 +1,7 @@
 import type { AktualisierungArt } from "@/types/AktualisierungArt.ts";
 import type { Status } from "@/types/Status.ts";
 
+// Interface for filtering Antrag list
 export interface AntragListFilter {
   status: Status[];
   bezirksausschussNr: number[];
@@ -14,6 +15,7 @@ export interface AntragListFilter {
   aktualisierungDatum: Date[];
 }
 
+// Data Transfer Object for AntragListFilter
 export interface AntragListFilterDTO
   extends Omit<
     AntragListFilter,
@@ -26,6 +28,7 @@ export interface AntragListFilterDTO
   aktualisierungDatumBis?: string;
 }
 
+// Creates an empty AntragListFilter object
 export const emptyAntragListFilter = (): AntragListFilter => ({
   status: [],
   bezirksausschussNr: [],

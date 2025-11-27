@@ -3,6 +3,15 @@ import type {
   AntragListFilterDTO,
 } from "@/types/AntragListFilter.ts";
 
+/**
+ * Converts an object to URLSearchParams.
+ * - Ignores undefined, null, and empty string values.
+ * - Joins array values with commas.
+ * - Does not handle nested objects.
+ * @param object - The object to convert
+ * @param params - Optional existing URLSearchParams to append to
+ * @returns The resulting URLSearchParams
+ */
 export function objectToSearchParams(
   object: object,
   params: URLSearchParams = new URLSearchParams()
@@ -20,6 +29,11 @@ export function objectToSearchParams(
   return params;
 }
 
+/**
+ * Converts AntragListFilter to AntragListFilterDTO
+ * @param filters - The AntragListFilter object to convert
+ * @returns The converted AntragListFilterDTO object
+ */
 export function antragListFilterToDTO(
   filters: AntragListFilter
 ): AntragListFilterDTO {

@@ -5,9 +5,17 @@ import { ref } from "vue";
 
 import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
 
+/**
+ * Pinia store for managing the filters applied to the Antrag list.
+ */
 export const useAntragListFilterStore = defineStore("antragListFilter", () => {
+  // State: The current filters applied to the Antrag list.
   const filters = ref<AntragListFilter>(emptyAntragListFilter());
 
+  /**
+   * Sets the filters for the Antrag list.
+   * @param payload - The new filters to apply.
+   */
   function setFilters(payload: AntragListFilter): void {
     filters.value = payload;
   }
