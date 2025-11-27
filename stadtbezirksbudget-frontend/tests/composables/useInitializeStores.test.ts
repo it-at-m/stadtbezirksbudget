@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { nextTick } from "vue";
 
 import { getAntragListFilterOptions } from "@/api/fetch-antragListFilterOptions";
@@ -34,53 +34,55 @@ describe("useInitializeStores", () => {
     vi.clearAllMocks();
   });
 
-  it("ruft API auf und setzt die Filteroptions bei Erfolg", async () => {
-    const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
-    const setFilterOptions = useAntragListFilterOptionsStore()
-      .setFilterOptions as vi.Mock;
+  describe("AntragListFilterOptionsStore initialization", () => {
+    test("calls fetch and sets store on success", async () => {
+      const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
+      const setFilterOptions = useAntragListFilterOptionsStore()
+        .setFilterOptions as vi.Mock;
 
-    const apiResult = { some: "data" } as unknown;
-    apiMock.mockResolvedValue(apiResult);
+      const apiResult = { some: "data" } as unknown;
+      apiMock.mockResolvedValue(apiResult);
 
-    mount(Comp);
+      mount(Comp);
 
-    await Promise.resolve();
-    await nextTick();
+      await Promise.resolve();
+      await nextTick();
 
-    expect(apiMock).toHaveBeenCalled();
-    expect(setFilterOptions).toHaveBeenCalledWith(apiResult);
-  });
-
-  it("zeigt snackbar mit Fehler.message wenn API einen Error mit message wirft", async () => {
-    const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
-    const showMessage = useSnackbarStore().showMessage as vi.Mock;
-    const error = new Error("network error");
-    apiMock.mockRejectedValue(error);
-
-    mount(Comp);
-
-    await Promise.resolve();
-    await nextTick();
-
-    expect(showMessage).toHaveBeenCalledWith({
-      message: error.message,
-      level: STATUS_INDICATORS.WARNING,
+      expect(apiMock).toHaveBeenCalled();
+      expect(setFilterOptions).toHaveBeenCalledWith(apiResult);
     });
-  });
 
-  it("zeigt snackbar mit Fallback-Text wenn Error keine message hat", async () => {
-    const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
-    const showMessage = useSnackbarStore().showMessage as vi.Mock;
-    apiMock.mockRejectedValue({});
+    test("shows snackbar with error.message if API throws error with message", async () => {
+      const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
+      const showMessage = useSnackbarStore().showMessage as vi.Mock;
+      const error = new Error("network error");
+      apiMock.mockRejectedValue(error);
 
-    mount(Comp);
+      mount(Comp);
 
-    await Promise.resolve();
-    await nextTick();
+      await Promise.resolve();
+      await nextTick();
 
-    expect(showMessage).toHaveBeenCalledWith({
-      message: "Fehler beim Laden der Filteroptionen",
-      level: STATUS_INDICATORS.WARNING,
+      expect(showMessage).toHaveBeenCalledWith({
+        message: error.message,
+        level: STATUS_INDICATORS.WARNING,
+      });
+    });
+
+    test("shows snackbar with fallback message if error has no message", async () => {
+      const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
+      const showMessage = useSnackbarStore().showMessage as vi.Mock;
+      apiMock.mockRejectedValue({});
+
+      mount(Comp);
+
+      await Promise.resolve();
+      await nextTick();
+
+      expect(showMessage).toHaveBeenCalledWith({
+        message: "Fehler beim Laden der Filteroptionen",
+        level: STATUS_INDICATORS.WARNING,
+      });
     });
   });
 });
