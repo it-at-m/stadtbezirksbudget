@@ -13,7 +13,10 @@ public class ZammadAPIException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static final int STATUS_CODE_UNKNOWN = -1;
+    /**
+     * Status code indicating that the status code is unknown.
+     */
+    public static final int STATUS_CODE_UNKNOWN = -1;
 
     private final int statusCode;
 
@@ -40,7 +43,8 @@ public class ZammadAPIException extends RuntimeException {
     }
 
     /**
-     * Creates a new {@link ZammadAPIException} with the given message. The status code is set to -1.
+     * Creates a new {@link ZammadAPIException} with the given message. The status code is set to
+     * {@link #STATUS_CODE_UNKNOWN}.
      *
      * @param message the detail message
      */
