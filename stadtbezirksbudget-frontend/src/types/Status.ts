@@ -58,7 +58,7 @@ const STATUS_DEFINITIONS = [
   {
     value: "ABGESCHLOSSEN",
     shortText: "Abgeschlossen",
-    longText: "Vorgang abgeschlossen",
+    longText: "Vorgang Abgeschlossen",
   },
   {
     value: "ABLEHNUNGSBESCHLUSS_ERHALTEN",
