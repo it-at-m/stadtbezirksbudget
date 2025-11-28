@@ -32,7 +32,7 @@ const STATUS_DEFINITIONS = [
   },
   {
     value: "ZUWENDUNGSBESCHEID_VERSENDET",
-    shortText: "Nachricht an Bürger",
+    shortText: "Bewilligt",
     longText: "Zuwendungsbescheid versendet",
   },
   {
@@ -43,7 +43,12 @@ const STATUS_DEFINITIONS = [
   {
     value: "AUSZAHLUNG",
     shortText: "Finanzierung",
-    longText: "An die Stelle ausgezahlt",
+    longText: "An Antragsteller ausgezahlt",
+  },
+  {
+    value: "ABRECHNUNGSSCHREIBEN_ERSTELLT",
+    shortText: "Finanzierung",
+    longText: "Abrechnungsschreiben erstellt",
   },
   {
     value: "RUECKZAHLUNG",
@@ -53,17 +58,17 @@ const STATUS_DEFINITIONS = [
   {
     value: "ABGESCHLOSSEN",
     shortText: "Abgeschlossen",
-    longText: "Abrechnungsschreiben erstellt",
-  },
-  {
-    value: "ABLEHNUNGSBESCHEID_ERSTELLT",
-    shortText: "Zurückgewiesen",
-    longText: "Ablehnungsbescheid erstellt",
+    longText: "Vorgang abgeschlossen",
   },
   {
     value: "ABLEHNUNGSBESCHLUSS_ERHALTEN",
     shortText: "Zurückgewiesen",
     longText: "Ablehnungsbeschluss erhalten",
+  },
+  {
+    value: "ABLEHNUNGSBESCHEID_ERSTELLT",
+    shortText: "Zurückgewiesen",
+    longText: "Ablehnungsbescheid erstellt",
   },
   {
     value: "ABGELEHNT_VON_BA",
@@ -73,7 +78,7 @@ const STATUS_DEFINITIONS = [
   {
     value: "ABGELEHNT_KEINE_RUECKMELDUNG",
     shortText: "Abgelehnt",
-    longText: "Abgelehnt - Keine Rückmeldung",
+    longText: "Abgelehnt - Fehlende Mitwirkung",
   },
   {
     value: "ABGELEHNT_NICHT_ZUSTAENDIG",
