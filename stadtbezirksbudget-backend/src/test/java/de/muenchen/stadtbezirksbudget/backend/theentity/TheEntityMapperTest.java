@@ -20,7 +20,7 @@ class TheEntityMapperTest {
     @Nested
     class ToDTO {
         @Test
-        void givenEntityThenReturnsCorrectDTO() {
+        void testGivenEntityThenReturnsCorrectDTO() {
             // Given
             final UUID uuid = UUID.randomUUID();
             final TheEntity theEntity = new TheEntity();
@@ -39,7 +39,7 @@ class TheEntityMapperTest {
     @Nested
     class ToEntity {
         @Test
-        void givenRequestDTOThenReturnsCorrectEntity() {
+        void testGivenRequestDTOThenReturnsCorrectEntity() {
             // Given
             final TheEntityRequestDTO requestDTO = new TheEntityRequestDTO("test");
 

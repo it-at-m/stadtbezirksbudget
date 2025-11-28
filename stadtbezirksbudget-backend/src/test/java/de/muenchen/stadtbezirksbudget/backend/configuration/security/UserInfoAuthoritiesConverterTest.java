@@ -56,7 +56,7 @@ class UserInfoAuthoritiesConverterTest {
     }
 
     @Nested
-    class ConvertAdditionalTests {
+    class Convert {
         @Test
         void testConvertWithAuthorities() {
             // Setup
@@ -189,7 +189,7 @@ class UserInfoAuthoritiesConverterTest {
         }
 
         @Test
-        void testConvert_withCollectionAuthorities() {
+        void testConvertWithCollectionAuthorities() {
             final Jwt jwt = mock(Jwt.class);
             when(jwt.getSubject()).thenReturn(TEST_SUBJECT);
             when(jwt.getTokenValue()).thenReturn(TEST_TOKEN_VALUE);

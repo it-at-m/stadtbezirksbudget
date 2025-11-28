@@ -68,7 +68,7 @@ class TheEntityIntegrationTest {
     @Nested
     class GetEntity {
         @Test
-        void givenEntityIdThenReturnEntity() throws Exception {
+        void testGivenEntityIdThenReturnEntity() throws Exception {
             mockMvc.perform(get("/theEntity/{theEntityID}", testEntityId)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
@@ -80,7 +80,7 @@ class TheEntityIntegrationTest {
     @Nested
     class GetEntitiesPage {
         @Test
-        void givenPageNumberAndPageSizeThenReturnPageOfEntities() throws Exception {
+        void testGivenPageNumberAndPageSizeThenReturnPageOfEntities() throws Exception {
             mockMvc.perform(get("/theEntity")
                     .param("pageNumber", "0")
                     .param("pageSize", "10")
@@ -94,7 +94,7 @@ class TheEntityIntegrationTest {
     @Nested
     class SaveEntity {
         @Test
-        void givenEntityThenEntityIsSaved() throws Exception {
+        void testGivenEntityThenEntityIsSaved() throws Exception {
             final TheEntityRequestDTO requestDTO = new TheEntityRequestDTO("Test1");
             final String requestBody = objectMapper.writeValueAsString(requestDTO);
 
@@ -110,7 +110,7 @@ class TheEntityIntegrationTest {
     @Nested
     class UpdateEntity {
         @Test
-        void givenEntityThenEntityIsUpdated() throws Exception {
+        void testGivenEntityThenEntityIsUpdated() throws Exception {
             final TheEntityRequestDTO requestDTO = new TheEntityRequestDTO("Test2");
             final String requestBody = objectMapper.writeValueAsString(requestDTO);
 
@@ -127,7 +127,7 @@ class TheEntityIntegrationTest {
     @Nested
     class DeleteEntity {
         @Test
-        void givenEntityIdThenEntityIsDeleted() throws Exception {
+        void testGivenEntityIdThenEntityIsDeleted() throws Exception {
             mockMvc.perform(delete("/theEntity/{theEntityId}", testEntityId)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());
