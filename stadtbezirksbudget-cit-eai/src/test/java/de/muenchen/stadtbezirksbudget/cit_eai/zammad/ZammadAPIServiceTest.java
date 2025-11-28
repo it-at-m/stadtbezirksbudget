@@ -10,11 +10,18 @@ import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicke
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateUserAndTicketDTOV2;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.TicketInternal;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTicketResponseDTO;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.List;
+import lombok.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.springframework.core.io.AbstractResource;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
@@ -130,6 +137,38 @@ class ZammadAPIServiceTest {
         void testCreateUserAndTicketWithNullAttachmentsThrowsNullPointerException() {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
             assertThrows(NullPointerException.class, () -> service.createUserAndTicket(dto, null).block());
+        }
+
+        @Test
+        void testCreateUserAndTicketWithAttachmentsReturnsResponse() {
+            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
+
+            final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
+            Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), ArgumentMatchers.<List<AbstractResource>>any()))
+                    .thenReturn(Mono.just(resp));
+
+            final AbstractResource resource = new AbstractResource() {
+                @NonNull @Override
+                public String getDescription() {
+                    return "test abstract resource";
+                }
+
+                @NonNull @Override
+                public InputStream getInputStream() {
+                    return new ByteArrayInputStream("hello".getBytes(StandardCharsets.UTF_8));
+                }
+
+                @Override
+                public String getFilename() {
+                    return "test.txt";
+                }
+            };
+
+            final UserAndTicketResponseDTO result = service.createUserAndTicket(dto, List.of(resource)).block();
+
+            assertThat(result).isNotNull();
+            assertThat(result).isSameAs(resp);
         }
 
         @Test
