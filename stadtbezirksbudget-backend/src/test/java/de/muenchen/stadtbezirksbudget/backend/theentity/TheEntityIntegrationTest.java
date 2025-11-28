@@ -68,7 +68,7 @@ class TheEntityIntegrationTest {
     @Nested
     class GetEntity {
         @Test
-        void givenEntityId_thenReturnEntity() throws Exception {
+        void givenEntityIdThenReturnEntity() throws Exception {
             mockMvc.perform(get("/theEntity/{theEntityID}", testEntityId)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
@@ -80,7 +80,7 @@ class TheEntityIntegrationTest {
     @Nested
     class GetEntitiesPage {
         @Test
-        void givenPageNumberAndPageSize_thenReturnPageOfEntities() throws Exception {
+        void givenPageNumberAndPageSizeThenReturnPageOfEntities() throws Exception {
             mockMvc.perform(get("/theEntity")
                     .param("pageNumber", "0")
                     .param("pageSize", "10")
@@ -94,7 +94,7 @@ class TheEntityIntegrationTest {
     @Nested
     class SaveEntity {
         @Test
-        void givenEntity_thenEntityIsSaved() throws Exception {
+        void givenEntityThenEntityIsSaved() throws Exception {
             final TheEntityRequestDTO requestDTO = new TheEntityRequestDTO("Test1");
             final String requestBody = objectMapper.writeValueAsString(requestDTO);
 
@@ -110,7 +110,7 @@ class TheEntityIntegrationTest {
     @Nested
     class UpdateEntity {
         @Test
-        void givenEntity_thenEntityIsUpdated() throws Exception {
+        void givenEntityThenEntityIsUpdated() throws Exception {
             final TheEntityRequestDTO requestDTO = new TheEntityRequestDTO("Test2");
             final String requestBody = objectMapper.writeValueAsString(requestDTO);
 
@@ -127,7 +127,7 @@ class TheEntityIntegrationTest {
     @Nested
     class DeleteEntity {
         @Test
-        void givenEntityId_thenEntityIsDeleted() throws Exception {
+        void givenEntityIdThenEntityIsDeleted() throws Exception {
             mockMvc.perform(delete("/theEntity/{theEntityId}", testEntityId)
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk());

@@ -26,7 +26,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @FilterRegistration(urlPatterns = "/*", order = 1)
 @Slf4j
 @RequiredArgsConstructor
-@ExcludedFromGeneratedCoverage //Excluded from coverage check to push backend threshold. The missing tests to reach the branch coverage will be implemented later.
 public class RequestResponseLoggingFilter extends OncePerRequestFilter {
 
     private static final List<String> CHANGING_METHODS = List.of(HttpMethod.POST.name(), HttpMethod.PUT.name(), HttpMethod.PATCH.name(),
@@ -39,6 +38,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
      * the kind of HTTP-Request, the targeted URI and the response http status code.
      * {@inheritDoc}
      */
+    @ExcludedFromGeneratedCoverage //Excluded from coverage due to the complexity of testing logging
     @Override
     protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {

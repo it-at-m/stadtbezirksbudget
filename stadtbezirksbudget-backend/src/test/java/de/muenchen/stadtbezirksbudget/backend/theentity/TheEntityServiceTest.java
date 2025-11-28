@@ -36,7 +36,7 @@ class TheEntityServiceTest {
     @Nested
     class GetTheEntity {
         @Test
-        void givenUUID_thenReturnEntity() {
+        void givenUUIDThenReturnEntity() {
             // Given
             final UUID id = UUID.randomUUID();
             final TheEntity theEntity = new TheEntity();
@@ -53,7 +53,7 @@ class TheEntityServiceTest {
         }
 
         @Test
-        void givenNonExistentUUID_thenThrowNotFoundException() {
+        void givenNonExistentUUIDThenThrowNotFoundException() {
             // Given
             final UUID id = UUID.randomUUID();
             when(theEntityRepository.findById(id)).thenReturn(Optional.empty());
@@ -71,7 +71,7 @@ class TheEntityServiceTest {
     @Nested
     class GetEntitiesPage {
         @Test
-        void givenPageNumberAndPageSize_thenReturnPageOfEntities() {
+        void givenPageNumberAndPageSizeThenReturnPageOfEntities() {
             // Given
             final int pageNumber = 0;
             final int pageSize = 10;
@@ -96,7 +96,7 @@ class TheEntityServiceTest {
     @Nested
     class SaveTheEntity {
         @Test
-        void givenTheEntity_thenReturnEntity() {
+        void givenTheEntityThenReturnEntity() {
             // Given
             final TheEntity entityToSave = new TheEntity();
             entityToSave.setTextAttribute(DEFAULT_TEXTATTRIBUT);
@@ -119,7 +119,7 @@ class TheEntityServiceTest {
     @Nested
     class UpdateTheEntity {
         @Test
-        void givenTheEntity_thenReturnEntity() {
+        void givenTheEntityThenReturnEntity() {
             // Given
             final TheEntity entityToUpdate = new TheEntity();
             final UUID entityToUpdateId = UUID.randomUUID();
@@ -140,7 +140,7 @@ class TheEntityServiceTest {
         }
 
         @Test
-        void givenTheEntity_thenThrowNotFoundException() {
+        void givenTheEntityThenThrowNotFoundException() {
             // Given
             final UUID entityToUpdateId = UUID.randomUUID();
             final TheEntity entityToUpdate = new TheEntity();
@@ -163,7 +163,7 @@ class TheEntityServiceTest {
     @Nested
     class DeleteTheEntity {
         @Test
-        void givenTheEntityId_thenReturnVoid() {
+        void givenTheEntityIdThenReturnVoid() {
             // Given
             final UUID entityToDeleteId = UUID.randomUUID();
             Mockito.doNothing().when(theEntityRepository).deleteById(entityToDeleteId);
