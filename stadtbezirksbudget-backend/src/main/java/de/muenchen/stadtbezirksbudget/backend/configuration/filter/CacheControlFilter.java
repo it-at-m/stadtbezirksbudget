@@ -1,6 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.configuration.filter;
 
-import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 @Component
 @FilterRegistration(urlPatterns = "/*")
-@ExcludedFromGeneratedCoverage //Excluded from coverage check to push backend threshold. The missing tests to reach the branch coverage will be implemented later.
 public class CacheControlFilter extends OncePerRequestFilter {
 
     private static final String CACHE_CONTROL_HEADER_VALUES = "no-cache, no-store, must-revalidate";

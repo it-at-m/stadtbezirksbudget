@@ -1,6 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.configuration.filter.nfcconverter;
 
-import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import edu.umd.cs.findbugs.annotations.SuppressMatchType;
 import jakarta.servlet.http.Cookie;
@@ -24,7 +23,6 @@ import org.apache.commons.collections4.map.CaseInsensitiveMap;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Slf4j
-@ExcludedFromGeneratedCoverage //Excluded from coverage check to push backend threshold. The missing tests to reach the branch coverage will be implemented later.
 public class NfcHelper {
 
     /**

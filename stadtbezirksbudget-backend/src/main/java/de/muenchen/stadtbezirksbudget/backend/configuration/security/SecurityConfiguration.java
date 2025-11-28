@@ -25,6 +25,13 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
  * Additionally it configures the use of {@link KeycloakRolesAuthoritiesConverter} or deprecated
  * {@link UserInfoAuthoritiesConverter}.
  */
+
+/*
+ * This configuration class is considered too complex to test effectively.
+ * As a result, it is excluded from unit testing to maintain focus on simpler,
+ * more testable components of the application.
+ */
+@ExcludedFromGeneratedCoverage
 @RequiredArgsConstructor
 @Configuration
 @Profile("!no-security")
@@ -32,7 +39,6 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 @EnableMethodSecurity(securedEnabled = true)
 @Import(RestTemplateAutoConfiguration.class)
 @Slf4j
-@ExcludedFromGeneratedCoverage //Excluded from coverage check to push backend threshold. The missing tests to reach the branch coverage will be implemented later.
 public class SecurityConfiguration {
     private final Optional<KeycloakRolesAuthoritiesConverter> keycloakRolesAuthoritiesConverter;
     private final Optional<UserInfoAuthoritiesConverter> userInfoAuthoritiesConverter;
