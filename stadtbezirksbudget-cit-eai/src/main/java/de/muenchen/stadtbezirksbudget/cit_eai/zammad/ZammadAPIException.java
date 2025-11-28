@@ -13,6 +13,8 @@ public class ZammadAPIException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private static final int STATUS_CODE_UNKNOWN = -1;
+
     private final int statusCode;
 
     /**
@@ -44,7 +46,7 @@ public class ZammadAPIException extends RuntimeException {
      */
     public ZammadAPIException(final String message) {
         super(message);
-        this.statusCode = -1;
+        this.statusCode = STATUS_CODE_UNKNOWN;
     }
 
     /**
