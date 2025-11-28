@@ -83,8 +83,8 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
-            assertThrows(ZammadEAIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+            assertThrows(ZammadAPIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+            assertThrows(ZammadAPIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
         }
 
         @Test
@@ -140,7 +140,7 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadEAIException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+            assertThrows(ZammadAPIException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
     }
 }

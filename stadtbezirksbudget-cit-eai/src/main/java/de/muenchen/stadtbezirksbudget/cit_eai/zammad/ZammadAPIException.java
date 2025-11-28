@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
  * Exception representing errors that occur when interacting with the Zammad EAI.
  */
 @Getter
-public class ZammadEAIException extends RuntimeException {
+public class ZammadAPIException extends RuntimeException {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -21,7 +21,7 @@ public class ZammadEAIException extends RuntimeException {
      * @param e the WebClientResponseException that caused this exception
      * @param message the detail message
      */
-    public ZammadEAIException(final WebClientResponseException e, final String message) {
+    public ZammadAPIException(final WebClientResponseException e, final String message) {
         super(message, e);
         this.statusCode = e.getStatusCode().value();
     }
@@ -31,7 +31,7 @@ public class ZammadEAIException extends RuntimeException {
      *
      * @param e the WebClientResponseException that caused this exception
      */
-    public ZammadEAIException(final WebClientResponseException e) {
+    public ZammadAPIException(final WebClientResponseException e) {
         super(e.getMessage(), e);
         this.statusCode = e.getStatusCode().value();
     }
@@ -41,7 +41,7 @@ public class ZammadEAIException extends RuntimeException {
      *
      * @param message the detail message
      */
-    public ZammadEAIException(final String message) {
+    public ZammadAPIException(final String message) {
         super(message);
         this.statusCode = -1;
     }

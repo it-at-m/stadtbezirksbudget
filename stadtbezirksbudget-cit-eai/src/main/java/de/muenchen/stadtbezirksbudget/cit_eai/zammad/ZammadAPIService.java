@@ -40,7 +40,7 @@ public class ZammadAPIService {
      * @return A Mono emitting the created {@link TicketInternal}
      * @throws IllegalArgumentException If both {@code lhmextid} and {@code userid} are {@code null} or
      *             if required fields in {@code createTicketDTOV2} are missing
-     * @throws ZammadEAIException If the remote Zammad API responds with an error
+     * @throws ZammadAPIException If the remote Zammad API responds with an error
      * @throws NullPointerException If {@code createTicketDTOV2} or {@code attachments} is {@code null}
      */
     public Mono<TicketInternal> createTicket(final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
@@ -55,7 +55,7 @@ public class ZammadAPIService {
         log.info("Attempting to create ticket in Zammad");
 
         return ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments)
-                .switchIfEmpty(Mono.error(new ZammadEAIException("Could not create ticket in Zammad")))
+                .switchIfEmpty(Mono.error(new ZammadAPIException("Could not create ticket in Zammad")))
                 .doOnSuccess(response -> {
                     if (response == null || response.getId() == null) {
                         log.warn("Ticket created in Zammad but ticket or ticket id is null in response");
@@ -63,7 +63,7 @@ public class ZammadAPIService {
                     }
                     log.info("Successfully created ticket in Zammad with ID: {}", response.getId());
                 })
-                .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket in Zammad"));
+                .onErrorMap(WebClientResponseException.class, e -> new ZammadAPIException(e, "Failed to create ticket in Zammad"));
     }
 
     /**
@@ -79,7 +79,7 @@ public class ZammadAPIService {
      * @throws NullPointerException If createUserAndTicketDTOV2 or attachment list is null
      * @throws IllegalArgumentException If required fields in
      *             createUserAndTicketDTOV2.getCreateTicketDTO() are null or blank
-     * @throws ZammadEAIException If request failed
+     * @throws ZammadAPIException If request failed
      */
     public Mono<UserAndTicketResponseDTO> createUserAndTicket(final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2,
             final List<AbstractResource> attachments) {
@@ -92,7 +92,7 @@ public class ZammadAPIService {
 
         log.info("Attempting to create ticket and user in Zammad");
         return ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments)
-                .switchIfEmpty(Mono.error(new ZammadEAIException("Unable to create ticket and user")))
+                .switchIfEmpty(Mono.error(new ZammadAPIException("Unable to create ticket and user")))
                 .doOnSuccess(response -> {
                     if (response.getTicket() == null || response.getTicket().getId() == null) {
                         log.warn("Created ticket and user but ticket or ticket id is null in response");
@@ -100,7 +100,7 @@ public class ZammadAPIService {
                     }
                     log.info("Successfully created ticket with id {} and user in Zammad", response.getTicket().getId());
                 })
-                .onErrorMap(WebClientResponseException.class, e -> new ZammadEAIException(e, "Failed to create ticket and user"));
+                .onErrorMap(WebClientResponseException.class, e -> new ZammadAPIException(e, "Failed to create ticket and user"));
     }
 
     private void validateCreateTicketDTO(final CreateTicketDTOV2 createTicketDTOV2) {
