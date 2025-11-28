@@ -85,10 +85,11 @@ public class ZammadAPIService {
             final List<AbstractResource> attachments) {
         Objects.requireNonNull(createUserAndTicketDTOV2);
         Objects.requireNonNull(attachments);
-        if (createUserAndTicketDTOV2.getCreateTicketDTO() == null) {
+        final CreateTicketDTOV2 createTicketDTO = createUserAndTicketDTOV2.getCreateTicketDTO();
+        if (createTicketDTO == null) {
             throw new IllegalArgumentException("createTicketDTO must not be null");
         }
-        validateCreateTicketDTO(createUserAndTicketDTOV2.getCreateTicketDTO());
+        validateCreateTicketDTO(createTicketDTO);
 
         log.info("Attempting to create ticket and user in Zammad");
         return ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments)
