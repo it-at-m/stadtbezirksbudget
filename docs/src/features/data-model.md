@@ -123,7 +123,7 @@ classDiagram
         zuwendungsbescheid_versendet
         verwendungsnachweise_geprueft
         auszahlung
-        ablehnungsbescheid_erstellt
+        abrechnungsschreiben_erstellt
         rueckzahlung
         abgeschlossen
         ablehnungsbeschluss_erhalten
