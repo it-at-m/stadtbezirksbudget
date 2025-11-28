@@ -1,7 +1,14 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.*;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
