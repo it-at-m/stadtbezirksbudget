@@ -73,7 +73,7 @@ class ZammadAPIServiceTest {
         }
 
         @Test
-        void testCreateTicketWithAPIExceptionThrowsZammadEAIException() {
+        void testCreateTicketWithAPIExceptionThrowsZammadAPIException() {
             final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
                     .title("T")
                     .anliegenart("a")
@@ -133,7 +133,7 @@ class ZammadAPIServiceTest {
         }
 
         @Test
-        void testCreateUserAndTicketWithApiErrorThrowsZammadEAIException() {
+        void testCreateUserAndTicketWithApiErrorThrowsZammadAPIException() {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
             dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
 
