@@ -31,6 +31,23 @@ class ZammadAPIServiceTest {
 
     private static final String EXTERNAL_ID = "ext-1";
 
+    private final AbstractResource resource = new AbstractResource() {
+        @NonNull @Override
+        public String getDescription() {
+            return "test abstract resource";
+        }
+
+        @NonNull @Override
+        public InputStream getInputStream() {
+            return new ByteArrayInputStream("hello".getBytes(StandardCharsets.UTF_8));
+        }
+
+        @Override
+        public String getFilename() {
+            return "test.txt";
+        }
+    };
+
     @BeforeEach
     void setUp() {
         ticketsApi = Mockito.mock(TicketsApi.class);
@@ -73,6 +90,26 @@ class ZammadAPIServiceTest {
                     .thenReturn(Mono.just(ticket));
 
             final TicketInternal result = service.createTicket(dto, null, "user-1", Collections.emptyList()).block();
+
+            assertThat(result).isNotNull();
+            assertThat(result.getId()).isEqualTo("42");
+            assertThat(result).isSameAs(ticket);
+        }
+
+        @Test
+        void testCreateTicketWithAttachmentsReturnsCorrectResponse() {
+            final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
+                    .title("T")
+                    .anliegenart("a")
+                    .vertrauensniveau("1")
+                    .group("g");
+
+            final TicketInternal ticket = new TicketInternal().id("42").title("T");
+
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), ArgumentMatchers.<List<AbstractResource>>any()))
+                    .thenReturn(Mono.just(ticket));
+
+            final TicketInternal result = service.createTicket(dto, EXTERNAL_ID, null, List.of(resource)).block();
 
             assertThat(result).isNotNull();
             assertThat(result.getId()).isEqualTo("42");
@@ -147,23 +184,6 @@ class ZammadAPIServiceTest {
             final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), ArgumentMatchers.<List<AbstractResource>>any()))
                     .thenReturn(Mono.just(resp));
-
-            final AbstractResource resource = new AbstractResource() {
-                @NonNull @Override
-                public String getDescription() {
-                    return "test abstract resource";
-                }
-
-                @NonNull @Override
-                public InputStream getInputStream() {
-                    return new ByteArrayInputStream("hello".getBytes(StandardCharsets.UTF_8));
-                }
-
-                @Override
-                public String getFilename() {
-                    return "test.txt";
-                }
-            };
 
             final UserAndTicketResponseDTO result = service.createUserAndTicket(dto, List.of(resource)).block();
 
