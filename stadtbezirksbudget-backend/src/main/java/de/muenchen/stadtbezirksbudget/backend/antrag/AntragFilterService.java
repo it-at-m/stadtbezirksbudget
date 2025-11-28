@@ -1,9 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
@@ -33,74 +31,74 @@ public class AntragFilterService {
 
     private Predicate filterStatus(final List<Status> statusList, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (statusList != null && !statusList.isEmpty())
-                ? root.get("bearbeitungsstand").get("status").in(statusList)
+                ? root.get(Antrag_.bearbeitungsstand).get(Bearbeitungsstand_.status).in(statusList)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterBezirksausschussNr(final List<Integer> bezirksausschussNrList, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (bezirksausschussNrList != null && !bezirksausschussNrList.isEmpty())
-                ? root.get("bezirksausschussNr").in(bezirksausschussNrList)
+                ? root.get(Antrag_.bezirksausschussNr).in(bezirksausschussNrList)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterEingangsdatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (vonDatum != null)
-                ? criteriaBuilder.greaterThanOrEqualTo(root.get("eingangDatum"), vonDatum)
+                ? criteriaBuilder.greaterThanOrEqualTo(root.get(Antrag_.eingangDatum), vonDatum)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterEingangsdatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (bisDatum != null)
-                ? criteriaBuilder.lessThanOrEqualTo(root.get("eingangDatum"), bisDatum)
+                ? criteriaBuilder.lessThanOrEqualTo(root.get(Antrag_.eingangDatum), bisDatum)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterAntragstellerName(final String antragstellerName, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (antragstellerName != null && !antragstellerName.isEmpty())
-                ? criteriaBuilder.equal(root.get("antragsteller").get("name"), antragstellerName)
+                ? criteriaBuilder.equal(root.get(Antrag_.antragsteller).get(Antragsteller_.name), antragstellerName)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterProjektTitel(final String projektTitel, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (projektTitel != null && !projektTitel.isEmpty())
-                ? criteriaBuilder.equal(root.get("projekt").get("titel"), projektTitel)
+                ? criteriaBuilder.equal(root.get(Antrag_.projekt).get(Projekt_.titel), projektTitel)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterBeantragtesBudgetVon(final BigDecimal beantragtesBudgetVon, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (beantragtesBudgetVon != null)
-                ? criteriaBuilder.greaterThanOrEqualTo(root.get("finanzierung").get("beantragtesBudget"), beantragtesBudgetVon)
+                ? criteriaBuilder.greaterThanOrEqualTo(root.get(Antrag_.finanzierung).get(Finanzierung_.beantragtesBudget), beantragtesBudgetVon)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterBeantragtesBudgetBis(final BigDecimal beantragtesBudgetBis, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (beantragtesBudgetBis != null)
-                ? criteriaBuilder.lessThanOrEqualTo(root.get("finanzierung").get("beantragtesBudget"), beantragtesBudgetBis)
+                ? criteriaBuilder.lessThanOrEqualTo(root.get(Antrag_.finanzierung).get(Finanzierung_.beantragtesBudget), beantragtesBudgetBis)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterIstFehlbetrag(final Boolean istFehlbetrag, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (istFehlbetrag != null)
-                ? criteriaBuilder.equal(root.get("finanzierung").get("istFehlbetrag"), istFehlbetrag)
+                ? criteriaBuilder.equal(root.get(Antrag_.finanzierung).get(Finanzierung_.istFehlbetrag), istFehlbetrag)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterAktualisierungArt(final List<AktualisierungArt> aktualisierungArtList, final Root<Antrag> root,
             final CriteriaBuilder criteriaBuilder) {
         return (aktualisierungArtList != null && !aktualisierungArtList.isEmpty())
-                ? root.get("aktualisierungArt").in(aktualisierungArtList)
+                ? root.get(Antrag_.aktualisierungArt).in(aktualisierungArtList)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterAktualisierungDatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (vonDatum != null)
-                ? criteriaBuilder.greaterThanOrEqualTo(root.get("aktualisierungDatum"), vonDatum)
+                ? criteriaBuilder.greaterThanOrEqualTo(root.get(Antrag_.aktualisierungDatum), vonDatum)
                 : criteriaBuilder.conjunction();
     }
 
     private Predicate filterAktualisierungDatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (bisDatum != null)
-                ? criteriaBuilder.lessThanOrEqualTo(root.get("aktualisierungDatum"), bisDatum)
+                ? criteriaBuilder.lessThanOrEqualTo(root.get(Antrag_.aktualisierungDatum), bisDatum)
                 : criteriaBuilder.conjunction();
     }
 }
