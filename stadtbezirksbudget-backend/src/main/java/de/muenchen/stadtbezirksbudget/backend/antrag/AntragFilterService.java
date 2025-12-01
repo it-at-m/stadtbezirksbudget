@@ -12,6 +12,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.persistence.metamodel.SingularAttribute;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,16 +49,34 @@ public class AntragFilterService {
                 : criteriaBuilder.conjunction();
     }
 
-    private Predicate filterEingangsdatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    private Predicate filterDatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder,
+            final SingularAttribute<Antrag, LocalDateTime> attribute) {
         return (vonDatum != null)
-                ? criteriaBuilder.greaterThanOrEqualTo(root.get(Antrag_.eingangDatum), vonDatum)
+                ? criteriaBuilder.greaterThanOrEqualTo(root.get(attribute), vonDatum)
                 : criteriaBuilder.conjunction();
     }
 
-    private Predicate filterEingangsdatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    private Predicate filterDatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder,
+            final SingularAttribute<Antrag, LocalDateTime> attribute) {
         return (bisDatum != null)
-                ? criteriaBuilder.lessThanOrEqualTo(root.get(Antrag_.eingangDatum), bisDatum)
+                ? criteriaBuilder.lessThanOrEqualTo(root.get(attribute), bisDatum)
                 : criteriaBuilder.conjunction();
+    }
+
+    public Predicate filterEingangsdatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+        return filterDatumVon(vonDatum, root, criteriaBuilder, Antrag_.eingangDatum);
+    }
+
+    public Predicate filterEingangsdatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+        return filterDatumBis(bisDatum, root, criteriaBuilder, Antrag_.eingangDatum);
+    }
+
+    public Predicate filterAktualisierungDatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+        return filterDatumVon(vonDatum, root, criteriaBuilder, Antrag_.aktualisierungDatum);
+    }
+
+    public Predicate filterAktualisierungDatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+        return filterDatumBis(bisDatum, root, criteriaBuilder, Antrag_.aktualisierungDatum);
     }
 
     private Predicate filterAntragstellerName(final String antragstellerName, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
@@ -94,18 +113,6 @@ public class AntragFilterService {
             final CriteriaBuilder criteriaBuilder) {
         return (aktualisierungArtList != null && !aktualisierungArtList.isEmpty())
                 ? root.get(Antrag_.aktualisierungArt).in(aktualisierungArtList)
-                : criteriaBuilder.conjunction();
-    }
-
-    private Predicate filterAktualisierungDatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
-        return (vonDatum != null)
-                ? criteriaBuilder.greaterThanOrEqualTo(root.get(Antrag_.aktualisierungDatum), vonDatum)
-                : criteriaBuilder.conjunction();
-    }
-
-    private Predicate filterAktualisierungDatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
-        return (bisDatum != null)
-                ? criteriaBuilder.lessThanOrEqualTo(root.get(Antrag_.aktualisierungDatum), bisDatum)
                 : criteriaBuilder.conjunction();
     }
 }
