@@ -52,15 +52,19 @@ public class Finanzierung extends BaseEntity {
      * (`voraussichtlicheAusgabe`) minus
      * the sum of funding sources (`finanzierungsmittel`) equals the requested budget
      * (`beantragtesBudget`).
-     * If the calculated shortfall is zero, it means there is no discrepancy, and the field is set to
+     * If the calculated shortfall is near zero, it means there is no discrepancy, and the field is set
+     * to
      * true.
      * Otherwise, it is set to false.
      */
     @Formula(
-        "(case when " +
-                "(select coalesce(sum(a.betrag), 0) from voraussichtliche_ausgabe a where a.finanzierung_id = id) - " +
-                "(select coalesce(sum(m.betrag), 0) from finanzierungsmittel m where m.finanzierung_id = id) = beantragtes_budget " +
-                "then true else false end)"
+        "(CASE WHEN " +
+                "ABS(" +
+                "(SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) - " +
+                "(SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) - " +
+                "beantragtes_budget" +
+                ") < 0.001 " +
+                "THEN true ELSE false END)"
     )
     private boolean istFehlbetrag;
 }
