@@ -11,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
  * <p>
  * Bound from properties with the prefix "zammad" (e.g. zammad.base-path).
  */
-
 @ConfigurationProperties(prefix = "zammad")
 @Validated
 @Getter
