@@ -1,12 +1,12 @@
 import type { Status } from "@/types/Status.ts";
 import type { Ref } from "vue";
 
-import { readonly, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
-import { statusOptions, StatusText } from "@/types/Status.ts";
+import { StatusText } from "@/types/Status.ts";
 
 /**
  * Composable function that manages the status selection for an Antrag.
@@ -18,7 +18,7 @@ import { statusOptions, StatusText } from "@/types/Status.ts";
  * @returns {Object} An object exposing the current status, available
  * status options, and a method to update the status.
  */
-export function useAntragStatusSelect(
+export function useAntragStatusUpdate(
   antragId: Ref<string>,
   initialStatus: Ref<Status>
 ) {
@@ -87,7 +87,5 @@ export function useAntragStatusSelect(
     status,
     // Search term for filtering status options
     search,
-    // Available status options
-    statusOptions: readonly(statusOptions),
   };
 }
