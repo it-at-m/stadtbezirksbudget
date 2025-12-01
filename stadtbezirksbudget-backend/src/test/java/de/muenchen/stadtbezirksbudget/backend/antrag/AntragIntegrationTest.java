@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
@@ -21,8 +22,12 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -57,6 +62,9 @@ class AntragIntegrationTest {
     private final List<Antrag> antragList = new ArrayList<>();
 
     @Autowired
+    @PersistenceContext
+    private EntityManager em;
+    @Autowired
     private AntragRepository antragRepository;
     @Autowired
     private AdresseRepository adresseRepository;
@@ -71,6 +79,10 @@ class AntragIntegrationTest {
     @Autowired
     private BankverbindungRepository bankverbindungRepository;
     @Autowired
+    private FinanzierungsmittelRepository finanzierungsmittelRepository;
+    @Autowired
+    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
+    @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
@@ -78,8 +90,10 @@ class AntragIntegrationTest {
     @BeforeEach
     public void setUp() {
         final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
-                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository);
+                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
+                finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
         antragList.addAll(antragTestDataBuilder.initializeAntragList(100));
+        em.flush();
     }
 
     @Nested
@@ -146,6 +160,280 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.page.size", is(100)))
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(1)));
+        }
+
+        @Test
+        void testFilterByStatus() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("status", Status.EINGEGANGEN.name())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // 18 status values, i = 100, EINGEGANGEN is the first value in the enum -> ceil(100/18)=6
+                    .andExpect(jsonPath("$.content", hasSize(6)))
+                    .andExpect(jsonPath("$.content[0].status", is(Status.EINGEGANGEN.name())));
+        }
+
+        @Test
+        void testFilterByMultipleStatus() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "20")
+                            .param("status", Status.ABGELEHNT_NICHT_FOERDERFAEHIG.name() + "," + Status.ABGELEHNT_NICHT_ZUSTAENDIG.name())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // 18 status values, i = 100, ABGELEHNT-values are the last ones in the enum -> 2*floor(100/18)=10
+                    .andExpect(jsonPath("$.content", hasSize(10)));
+        }
+
+        @Test
+        void testFilterByBezirksausschussNr() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("bezirksausschussNr", "1")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // 25 district committee numbers, i = 100 -> 100/25=4
+                    .andExpect(jsonPath("$.content", hasSize(4)))
+                    .andExpect(jsonPath("$.content[0].bezirksausschussNr", is(1)));
+        }
+
+        @Test
+        void testFilterByMultipleBezirksausschussNr() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("bezirksausschussNr", "16, 25")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // 25 district committee numbers, i = 100 -> 2*100/25=8
+                    .andExpect(jsonPath("$.content", hasSize(8)));
+        }
+
+        @Test
+        void testFilterByEingangDatumVonBisBounds() throws Exception {
+            // AktualisierungsDaten are identical to Eingangsdaten (including implementation), which is why it is not explicitly tested again (avoiding redundant code).
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("eingangDatumVon", "2009-12-31T00:01:01")
+                            .param("eingangDatumBis", "2010-01-10T00:00:00")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Exactly the boundaries of two dates
+                    .andExpect(jsonPath("$.content", hasSize(2)))
+                    .andExpect(jsonPath("$.content[0].eingangDatum", is("2010-01-01T00:00:00")));
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("eingangDatumVon", "2009-12-30T02:02:00")
+                            .param("eingangDatumBis", "2009-12-31T00:01:00")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Only 1 item in this time period: eingangDatumVon-boundary
+                    .andExpect(jsonPath("$.content", hasSize(1)))
+                    .andExpect(jsonPath("$.content[0].eingangDatum", is("2009-12-30T02:02:00")));
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("eingangDatumVon", "2009-12-31T01:02:00")
+                            .param("eingangDatumBis", "2010-01-01T00:00:00")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Only 1 item in this time period: eingangDatumBis-boundary
+                    .andExpect(jsonPath("$.content", hasSize(1)))
+                    .andExpect(jsonPath("$.content[0].eingangDatum", is("2010-01-01T00:00:00")));
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("eingangDatumVon", "2009-12-30T02:03:00")
+                            .param("eingangDatumBis", "2009-12-31T00:01:00")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // No data in the specified period
+                    .andExpect(jsonPath("$.content", hasSize(0)));
+        }
+
+        @Test
+        void testFilterByFirstAntragstellerName() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "20")
+                            .param("antragstellerName", "Max Mustermann 0")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Antragsteller-name repeats every 10 names -> 100/10=10
+                    .andExpect(jsonPath("$.content", hasSize(10)))
+                    .andExpect(jsonPath("$.content[0].antragstellerName", is("Max Mustermann 0")));
+        }
+
+        @Test
+        void testFilterByLastAntragstellerName() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "20")
+                            .param("antragstellerName", "Max Mustermann 9")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Antragsteller-name repeats every 10 names -> 100/10=10
+                    .andExpect(jsonPath("$.content", hasSize(10)))
+                    .andExpect(jsonPath("$.content[0].antragstellerName", is("Max Mustermann 9")));
+        }
+
+        @Test
+        void testFilterByProjektTitel() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("projektTitel", "Projekt XYZ 0")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Project title repeats every 10 names -> 100/10=10
+                    .andExpect(jsonPath("$.content", hasSize(10)))
+                    .andExpect(jsonPath("$.content[0].projektTitel", is("Projekt XYZ 0")));
+        }
+
+        @Test
+        void testFilterByBeantragtesBudgetVonBis() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("beantragtesBudgetVon", "1000")
+                            .param("beantragtesBudgetBis", "5000")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Values of requested budget: 1000, 2000, ..., 10_0000, i.e. 5 elements up to 5000.
+                    .andExpect(jsonPath("$.content", hasSize(5)));
+        }
+
+        @Test
+        void testFilterByIstFehlbetrag() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "100")
+                            .param("istFehlbetrag", "true")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // Exactly half of the elments have istFehlbetrag=true
+                    .andExpect(jsonPath("$.content", hasSize(50)));
+        }
+
+        @Test
+        void testFilterByAktualisierungArt() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "40")
+                            .param("aktualisierungArt", AktualisierungArt.FACHANWENDUNG.name())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    // 3 Aktualisierungsdaten, i = 100 -> 100/3=33 remainder 1, because FACHANWENDUNG is first value -> 34
+                    .andExpect(jsonPath("$.content", hasSize(34)))
+                    .andExpect(jsonPath("$.content[0].aktualisierung", is(AktualisierungArt.FACHANWENDUNG.name())));
+        }
+
+        @Test
+        void testFilterWithAllOptions() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("status", Status.EINGEGANGEN.name())
+                            .param("bezirksausschussNr", "1")
+                            .param("eingangDatumVon", "2010-01-01T00:00:00")
+                            .param("eingangDatumBis", "2010-01-10T23:59:59")
+                            .param("antragstellerName", "Max Mustermann 0")
+                            .param("projektTitel", "Projekt XYZ 0")
+                            .param("beantragtesBudgetVon", "1000")
+                            .param("beantragtesBudgetBis", "5000")
+                            .param("istFehlbetrag", "true")
+                            .param("aktualisierungArt", AktualisierungArt.FACHANWENDUNG.name())
+                            .param("aktualisierungDatumVon", "2010-01-01T00:00:00")
+                            .param("aktualisierungDatumBis", "2010-01-10T23:59:59")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content", hasSize(1)));
+        }
+
+        @Test
+        void testFilterWithHalfOptionsSet1() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "100")
+                            .param("status", Status.EINGEGANGEN.name() + ", " + Status.RUECKZAHLUNG.name())
+                            .param("bezirksausschussNr", "1, 11, 22")
+                            .param("eingangDatumVon", "2009-01-01T00:00:00")
+                            .param("eingangDatumBis", "2010-01-10T23:59:59")
+                            .param("antragstellerName", "Max Mustermann 0")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content", hasSize(2)));
+        }
+
+        @Test
+        void testFilterWithHalfOptionsSet2() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "100")
+                            .param("projektTitel", "Projekt XYZ 0")
+                            .param("beantragtesBudgetVon", "1000")
+                            .param("beantragtesBudgetBis", "90000")
+                            .param("istFehlbetrag", "true")
+                            .param("aktualisierungArt", AktualisierungArt.FACHANWENDUNG.name() + "," + AktualisierungArt.ZAMMAD.name())
+                            .param("aktualisierungDatumVon", "2009-01-01T00:00:00")
+                            .param("aktualisierungDatumBis", "2010-01-10T23:59:59")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content", hasSize(6)));
+        }
+
+        @Test
+        void testFilterWithEmptyListsReturnsDefaultPage() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "100")
+                            .param("status", "")
+                            .param("bezirksausschussNr", "")
+                            .param("aktualisierungArt", "")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content", hasSize(100)));
         }
     }
 
