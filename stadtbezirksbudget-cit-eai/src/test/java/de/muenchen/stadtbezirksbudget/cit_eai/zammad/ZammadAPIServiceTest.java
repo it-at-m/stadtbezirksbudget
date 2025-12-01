@@ -117,12 +117,14 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadAPIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+            final ZammadAPIException exception = assertThrows(ZammadAPIException.class,
+                    () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+            assertThat(exception.getStatusCode()).isEqualTo(500);
         }
 
         @Test
         void testCreateTicketWithMissingIdsThrowsIllegalArgumentException() {
-            final CreateTicketDTOV2 dto = new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g");
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
 
             assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, null, null, Collections.emptyList()).block());
         }
@@ -130,10 +132,20 @@ class ZammadAPIServiceTest {
 
     @Nested
     class CreateUserAndTicket {
+
+        private CreateUserAndTicketDTOV2 generateCreateUserAndTicketDTOV2() {
+            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            dto.setCreateTicketDTO(new CreateTicketDTOV2()
+                    .title("T")
+                    .anliegenart("a")
+                    .vertrauensniveau("1")
+                    .group("g"));
+            return dto;
+        }
+
         @Test
         void testCreateUserAndTicketReturnsResponse() {
-            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
-            dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
 
             final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
             final TicketInternal ticket = new TicketInternal().id("42").title("T");
@@ -150,8 +162,8 @@ class ZammadAPIServiceTest {
 
         @Test
         void testCreateUserAndTicketWithMissingRequiredFieldsThrowsIllegalArgumentException() {
-            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
-            dto.setCreateTicketDTO(new CreateTicketDTOV2().anliegenart("a").vertrauensniveau("1").group("g"));
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
+            dto.setCreateTicketDTO(null);
 
             assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
@@ -177,8 +189,7 @@ class ZammadAPIServiceTest {
 
         @Test
         void testCreateUserAndTicketWithAttachmentsReturnsResponse() {
-            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
-            dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
 
             final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), ArgumentMatchers.<List<AbstractResource>>any()))
@@ -192,13 +203,14 @@ class ZammadAPIServiceTest {
 
         @Test
         void testCreateUserAndTicketWithApiErrorThrowsZammadAPIException() {
-            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
-            dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
 
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadAPIException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+            final ZammadAPIException exception = assertThrows(ZammadAPIException.class,
+                    () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+            assertThat(exception.getStatusCode()).isEqualTo(500);
         }
     }
 }
