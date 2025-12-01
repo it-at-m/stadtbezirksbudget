@@ -72,7 +72,6 @@ class ZammadAPIServiceTest {
             final TicketInternal result = service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block();
 
             assertThat(result).isNotNull();
-            assertThat(result.getId()).isEqualTo("42");
             assertThat(result).isSameAs(ticket);
         }
 
@@ -92,7 +91,6 @@ class ZammadAPIServiceTest {
             final TicketInternal result = service.createTicket(dto, null, "user-1", Collections.emptyList()).block();
 
             assertThat(result).isNotNull();
-            assertThat(result.getId()).isEqualTo("42");
             assertThat(result).isSameAs(ticket);
         }
 
@@ -112,7 +110,6 @@ class ZammadAPIServiceTest {
             final TicketInternal result = service.createTicket(dto, EXTERNAL_ID, null, List.of(resource)).block();
 
             assertThat(result).isNotNull();
-            assertThat(result.getId()).isEqualTo("42");
             assertThat(result).isSameAs(ticket);
         }
 
@@ -127,7 +124,6 @@ class ZammadAPIServiceTest {
             Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
 
-            assertThrows(ZammadAPIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
             assertThrows(ZammadAPIException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
         }
 
@@ -147,6 +143,8 @@ class ZammadAPIServiceTest {
             dto.setCreateTicketDTO(new CreateTicketDTOV2().title("T").anliegenart("a").vertrauensniveau("1").group("g"));
 
             final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
+            final TicketInternal ticket = new TicketInternal().id("42").title("T");
+            resp.setTicket(ticket);
 
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
                     .thenReturn(Mono.just(resp));
