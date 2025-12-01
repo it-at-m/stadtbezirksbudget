@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
-import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
+import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
   emptyAntragListFilter,

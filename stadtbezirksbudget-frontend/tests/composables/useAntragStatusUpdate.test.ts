@@ -6,11 +6,11 @@ import { ref } from "vue";
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
-import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import { StatusText } from "@/types/Status.ts";
 
 vi.mock("@/api/update-antragStatus.ts");
-vi.mock("@/stores/snackbar.ts");
+vi.mock("@/stores/useSnackbarStore.ts");
 
 describe("useAntragStatusUpdate", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };

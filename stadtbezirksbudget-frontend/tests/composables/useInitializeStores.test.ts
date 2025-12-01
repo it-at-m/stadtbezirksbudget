@@ -5,18 +5,18 @@ import { nextTick } from "vue";
 import { getAntragListFilterOptions } from "@/api/fetch-antragListFilterOptions";
 import { useInitializeStores } from "@/composables/useInitializeStores.ts";
 import { STATUS_INDICATORS } from "@/constants";
-import { useAntragListFilterOptionsStore } from "@/stores/antragListFilterOptions";
-import { useSnackbarStore } from "@/stores/snackbar";
+import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
 vi.mock("@/api/fetch-antragListFilterOptions", () => {
   const getAntragListFilterOptions = vi.fn();
   return { getAntragListFilterOptions };
 });
-vi.mock("@/stores/antragListFilterOptions", () => {
+vi.mock("@/stores/useAntragListFilterOptionsStore.ts", () => {
   const setFilterOptions = vi.fn();
   return { useAntragListFilterOptionsStore: () => ({ setFilterOptions }) };
 });
-vi.mock("@/stores/snackbar", () => {
+vi.mock("@/stores/useSnackbarStore.ts", () => {
   const showMessage = vi.fn();
   return { useSnackbarStore: () => ({ showMessage }) };
 });

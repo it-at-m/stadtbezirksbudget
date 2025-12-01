@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/stores/useUserStore.ts";
 import User, { UserLocalDevelopment } from "@/types/User";
 
 describe("user store", () => {

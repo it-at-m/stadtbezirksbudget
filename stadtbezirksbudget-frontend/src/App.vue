@@ -81,8 +81,8 @@ import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useInitializeStores } from "@/composables/useInitializeStores.ts";
 import { APPSWITCHER_URL } from "@/constants";
-import { useSnackbarStore } from "@/stores/snackbar";
-import { useUserStore } from "@/stores/user";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
+import { useUserStore } from "@/stores/useUserStore.ts";
 import User, { UserLocalDevelopment } from "@/types/User";
 
 const query = ref<string>("");
