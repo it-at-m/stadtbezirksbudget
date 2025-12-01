@@ -93,6 +93,7 @@ class AntragIntegrationTest {
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
         antragList.addAll(antragTestDataBuilder.initializeAntragList(100));
         entityManager.flush();
+        entityManager.clear();
     }
 
     @Nested
