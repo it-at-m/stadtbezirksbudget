@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { STATUS_INDICATORS } from "@/constants";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
-describe("useSnachbarStore", () => {
+describe("useSnackbarStore", () => {
   beforeEach(() => {
     setActivePinia(createPinia());
   });
