@@ -62,7 +62,7 @@ public class ZammadAPIException extends RuntimeException {
     public String toString() {
         return "ZammadAPIException{" +
                 "statusCode=" + statusCode +
-                ", message='" + getMessage() + '\'' +
+                ", message='" + getMessage() + "'" +
                 "} " + super.toString();
     }
 }
