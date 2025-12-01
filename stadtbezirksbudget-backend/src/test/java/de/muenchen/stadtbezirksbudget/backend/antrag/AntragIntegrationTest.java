@@ -437,6 +437,43 @@ class AntragIntegrationTest {
     }
 
     @Nested
+    class GetFilterOptions {
+
+        @Test
+        void testGetFilterOptionsReturnsAlphabeticallySortedLists() throws Exception {
+            mockMvc
+                    .perform(get("/antrag/filterOptions")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.antragstellerNamen").isArray())
+                    .andExpect(jsonPath("$.projektTitel").isArray())
+                    .andExpect(jsonPath("$.antragstellerNamen", hasSize(10)))
+                    .andExpect(jsonPath("$.projektTitel", hasSize(10)))
+                    .andExpect(jsonPath("$.antragstellerNamen[0]", is("Max Mustermann 0")))
+                    .andExpect(jsonPath("$.antragstellerNamen[1]", is("Max Mustermann 1")))
+                    .andExpect(jsonPath("$.antragstellerNamen[2]", is("Max Mustermann 2")))
+                    .andExpect(jsonPath("$.antragstellerNamen[3]", is("Max Mustermann 3")))
+                    .andExpect(jsonPath("$.antragstellerNamen[4]", is("Max Mustermann 4")))
+                    .andExpect(jsonPath("$.antragstellerNamen[5]", is("Max Mustermann 5")))
+                    .andExpect(jsonPath("$.antragstellerNamen[6]", is("Max Mustermann 6")))
+                    .andExpect(jsonPath("$.antragstellerNamen[7]", is("Max Mustermann 7")))
+                    .andExpect(jsonPath("$.antragstellerNamen[8]", is("Max Mustermann 8")))
+                    .andExpect(jsonPath("$.antragstellerNamen[9]", is("Max Mustermann 9")))
+                    .andExpect(jsonPath("$.projektTitel[0]", is("Projekt XYZ 0")))
+                    .andExpect(jsonPath("$.projektTitel[1]", is("Projekt XYZ 1")))
+                    .andExpect(jsonPath("$.projektTitel[2]", is("Projekt XYZ 2")))
+                    .andExpect(jsonPath("$.projektTitel[3]", is("Projekt XYZ 3")))
+                    .andExpect(jsonPath("$.projektTitel[4]", is("Projekt XYZ 4")))
+                    .andExpect(jsonPath("$.projektTitel[5]", is("Projekt XYZ 5")))
+                    .andExpect(jsonPath("$.projektTitel[6]", is("Projekt XYZ 6")))
+                    .andExpect(jsonPath("$.projektTitel[7]", is("Projekt XYZ 7")))
+                    .andExpect(jsonPath("$.projektTitel[8]", is("Projekt XYZ 8")))
+                    .andExpect(jsonPath("$.projektTitel[9]", is("Projekt XYZ 9")));
+        }
+    }
+
+    @Nested
     class UpdateAntragStatus {
 
         @Test
