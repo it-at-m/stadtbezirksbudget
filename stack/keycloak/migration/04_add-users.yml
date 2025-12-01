@@ -9,6 +9,19 @@ changes:
       enabled: true
       emailVerified: true
       email: sachbearbeiter@stadtbezirksbudget.de
+
   - updateUserPassword:
       name: sbbsb
       password: "sbbsb"
+
+  - addUser:
+      name: sbbsys
+      lastName: System
+      firstName: Stadtbezirksbudget
+      enabled: true
+      emailVerified: true
+      email: system@stadtbezirksbudget.de
+
+  - updateUserPassword:
+      name: sbbsys
+      password: "sbbsys"
