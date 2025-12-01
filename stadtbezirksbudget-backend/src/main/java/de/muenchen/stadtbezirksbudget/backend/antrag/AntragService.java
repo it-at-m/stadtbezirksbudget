@@ -31,8 +31,8 @@ public class AntragService {
     /**
      * Retrieves a paginated filtered list of Antrag entities.
      *
-     * @param antragFilterDTO filter information
      * @param pageable pagination information
+     * @param antragFilterDTO filter information
      * @return a page of Antrag entities
      */
     public Page<Antrag> getAntragPage(final Pageable pageable, final AntragFilterDTO antragFilterDTO) {

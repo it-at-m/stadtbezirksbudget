@@ -22,6 +22,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class AntragFilterService {
 
+    /**
+     * Builds a JPA Criteria Predicate that combines all non-null/non-empty filters from the provided
+     * DTO.
+     * Each filter is combined with AND logic. Null or empty filter values are treated as "no filter"
+     * (returning conjunction/true).
+     *
+     * @param filter the filter DTO containing filter criteria; must not be null
+     * @param root the JPA Criteria root for Antrag entity
+     * @param criteriaBuilder the JPA Criteria builder
+     * @return a Predicate combining all active filters with AND logic
+     */
     public Predicate filterAntrag(@NotNull final AntragFilterDTO filter, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return criteriaBuilder.and(
                 filterBezirksausschussNr(filter.bezirksausschussNr(), root, criteriaBuilder),

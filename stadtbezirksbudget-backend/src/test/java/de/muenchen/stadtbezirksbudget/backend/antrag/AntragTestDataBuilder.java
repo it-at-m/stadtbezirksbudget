@@ -157,6 +157,8 @@ public record AntragTestDataBuilder(
             final Antrag antrag = new Antrag();
             final Adresse adresse = initializeAdresse(i);
             final Antragsteller antragsteller = initializeAntragsteller(adresse, i);
+
+            // Dates are generated in following pattern: 01.01.2010 00:00:00, 31.12.2009 01:01:00, 30.12.2009 02:02:00, 29.12.2009 03:03:00, etc. for both eingangsdatum and aktualisierungsDatum
             antrag.setEingangDatum(FIXED_DATE_TIME.minusDays(i).plusHours(i % 24).plusMinutes(i % 60));
             antrag.setBezirksausschussNr(bezirksausschussNrs[i % bezirksausschussNrs.length]);
             antrag.setBearbeitungsstand(initializeBearbeitungsstand(statuses[i % statuses.length]));
