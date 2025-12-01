@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.cit_eai.security;
+package de.muenchen.stadtbezirksbudget.cit_eai.configuration.security;
 
 import de.muenchen.stadtbezirksbudget.cit_eai.configuration.filter.RequestResponseLoggingFilter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

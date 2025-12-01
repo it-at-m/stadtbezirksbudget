@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.cit_eai.security;
+package de.muenchen.stadtbezirksbudget.cit_eai.configuration.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

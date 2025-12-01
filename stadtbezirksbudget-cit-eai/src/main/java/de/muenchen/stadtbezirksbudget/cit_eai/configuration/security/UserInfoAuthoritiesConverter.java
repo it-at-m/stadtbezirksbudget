@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.cit_eai.security;
+package de.muenchen.stadtbezirksbudget.cit_eai.configuration.security;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.github.benmanes.caffeine.cache.Ticker;

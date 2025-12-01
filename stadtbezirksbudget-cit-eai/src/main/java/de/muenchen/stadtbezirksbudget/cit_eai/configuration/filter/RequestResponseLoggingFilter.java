@@ -1,7 +1,7 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.configuration.filter;
 
+import de.muenchen.stadtbezirksbudget.cit_eai.configuration.security.SecurityProperties;
 import de.muenchen.stadtbezirksbudget.cit_eai.security.AuthUtils;
-import de.muenchen.stadtbezirksbudget.cit_eai.security.SecurityProperties;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
