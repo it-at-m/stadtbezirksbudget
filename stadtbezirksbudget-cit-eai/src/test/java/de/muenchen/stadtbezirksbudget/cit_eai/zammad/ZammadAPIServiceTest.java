@@ -56,13 +56,18 @@ class ZammadAPIServiceTest {
 
     @Nested
     class CreateTicket {
+
+        private CreateTicketDTOV2 generateCreateTicketDTOV2(){
+            return new CreateTicketDTOV2()
+                    .title("T")
+                    .anliegenart("a")
+                    .vertrauensniveau("1")
+                    .group("g");
+        }
+
         @Test
         void testCreateTicketReturnsCorrectTicket() {
-            final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
-                    .title("Test")
-                    .anliegenart("art")
-                    .vertrauensniveau("1")
-                    .group("group");
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
 
             final TicketInternal ticket = new TicketInternal().id("42").title("Test");
 
@@ -77,11 +82,7 @@ class ZammadAPIServiceTest {
 
         @Test
         void testCreateTicketWithIdReturnsCorrectTicket() {
-            final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
-                    .title("T")
-                    .anliegenart("a")
-                    .vertrauensniveau("1")
-                    .group("g");
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
 
             final TicketInternal ticket = new TicketInternal().id("42").title("T");
 
@@ -96,11 +97,7 @@ class ZammadAPIServiceTest {
 
         @Test
         void testCreateTicketWithAttachmentsReturnsCorrectResponse() {
-            final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
-                    .title("T")
-                    .anliegenart("a")
-                    .vertrauensniveau("1")
-                    .group("g");
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
 
             final TicketInternal ticket = new TicketInternal().id("42").title("T");
 
@@ -115,11 +112,7 @@ class ZammadAPIServiceTest {
 
         @Test
         void testCreateTicketWithAPIExceptionThrowsZammadAPIException() {
-            final CreateTicketDTOV2 dto = new CreateTicketDTOV2()
-                    .title("T")
-                    .anliegenart("a")
-                    .vertrauensniveau("1")
-                    .group("g");
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
 
             Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
                     .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
@@ -172,6 +165,14 @@ class ZammadAPIServiceTest {
         void testCreateUserAndTicketWithNullAttachmentsThrowsNullPointerException() {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
             assertThrows(NullPointerException.class, () -> service.createUserAndTicket(dto, null).block());
+        }
+
+        @Test
+        void testCreateUserAndTicketWithNullCreateTicketDTOThrowsIllegalArgumentException() {
+            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            dto.setCreateTicketDTO(null);
+
+            assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
 
         @Test
