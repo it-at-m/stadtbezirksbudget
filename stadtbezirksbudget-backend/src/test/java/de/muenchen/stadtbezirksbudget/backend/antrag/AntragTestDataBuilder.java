@@ -58,7 +58,7 @@ public record AntragTestDataBuilder(
         antragsteller.setZielsetzung("Förderung von Projekten " + index);
         antragsteller.setRechtsform(Rechtsform.NATUERLICHE_PERSON);
         antragsteller.setTelefonNr("0123456789");
-        antragsteller.setEmail("max_@mustermann.de");
+        antragsteller.setEmail("max@mustermann.de");
         antragsteller.setAdresse(adresse);
         return antragstellerRepository.save(antragsteller);
     }

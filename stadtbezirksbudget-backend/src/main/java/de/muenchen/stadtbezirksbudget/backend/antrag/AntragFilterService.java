@@ -13,6 +13,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.metamodel.SingularAttribute;
+import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AntragFilterService {
 
-    public Predicate filterAntrag(final AntragFilterDTO filter, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    public Predicate filterAntrag(@NotNull final AntragFilterDTO filter, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return criteriaBuilder.and(
                 filterBezirksausschussNr(filter.bezirksausschussNr(), root, criteriaBuilder),
                 filterStatus(filter.status(), root, criteriaBuilder),
@@ -63,19 +64,19 @@ public class AntragFilterService {
                 : criteriaBuilder.conjunction();
     }
 
-    public Predicate filterEingangsdatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    private Predicate filterEingangsdatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return filterDatumVon(vonDatum, root, criteriaBuilder, Antrag_.eingangDatum);
     }
 
-    public Predicate filterEingangsdatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    private Predicate filterEingangsdatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return filterDatumBis(bisDatum, root, criteriaBuilder, Antrag_.eingangDatum);
     }
 
-    public Predicate filterAktualisierungDatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    private Predicate filterAktualisierungDatumVon(final LocalDateTime vonDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return filterDatumVon(vonDatum, root, criteriaBuilder, Antrag_.aktualisierungDatum);
     }
 
-    public Predicate filterAktualisierungDatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+    private Predicate filterAktualisierungDatumBis(final LocalDateTime bisDatum, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return filterDatumBis(bisDatum, root, criteriaBuilder, Antrag_.aktualisierungDatum);
     }
 

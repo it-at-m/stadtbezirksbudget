@@ -49,14 +49,8 @@ public class AntragService {
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        final List<String> antragstellerNameList = zahlungsempfaengerRepository.findDistinctAntragstellerNames()
-                .stream()
-                .sorted()
-                .toList();
-        final List<String> projektTitelList = projektRepository.findDistinctProjektTitles()
-                .stream()
-                .sorted()
-                .toList();
+        final List<String> antragstellerNameList = zahlungsempfaengerRepository.findDistinctAntragstellerNames();
+        final List<String> projektTitelList = projektRepository.findDistinctProjektTitles();
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 

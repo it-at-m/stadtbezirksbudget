@@ -61,7 +61,6 @@ class AntragIntegrationTest {
 
     private final List<Antrag> antragList = new ArrayList<>();
 
-    @Autowired
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired

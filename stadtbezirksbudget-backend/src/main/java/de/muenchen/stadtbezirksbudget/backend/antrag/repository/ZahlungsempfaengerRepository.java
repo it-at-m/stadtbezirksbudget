@@ -15,9 +15,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ZahlungsempfaengerRepository extends CrudRepository<Zahlungsempfaenger, UUID> {
     /**
-     * Repository interface for querying distinct Antragsteller names.
+     * Retrieves all distinct Antragsteller names, sorted alphabetically.
      */
-    @Query("SELECT DISTINCT z.name FROM Antragsteller z")
+    @Query("SELECT DISTINCT z.name FROM Antragsteller z ORDER BY z.name ASC")
     List<String> findDistinctAntragstellerNames();
 
 }

@@ -15,8 +15,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProjektRepository extends CrudRepository<Projekt, UUID> {
     /**
-     * Repository interface for querying distinct Projekt titles.
+     * Retrieves all distinct Projekt titles, sorted alphabetically.
      */
-    @Query("SELECT DISTINCT p.titel FROM Projekt p")
+    @Query("SELECT DISTINCT p.titel FROM Projekt p ORDER BY p.titel ASC")
     List<String> findDistinctProjektTitles();
 }
