@@ -7,7 +7,6 @@ import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.TicketInter
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTicketResponseDTO;
 import jakarta.annotation.Nullable;
 import java.util.List;
-import java.util.Objects;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,10 +43,9 @@ public class ZammadAPIService {
      * @throws ZammadAPIException If the remote Zammad API responds with an error
      * @throws NullPointerException If {@code createTicketDTOV2} or {@code attachments} is {@code null}
      */
-    public Mono<TicketInternal> createTicket(final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
-            final List<AbstractResource> attachments) {
+    public Mono<TicketInternal> createTicket(@NonNull final CreateTicketDTOV2 createTicketDTOV2, @Nullable final String lhmextid, @Nullable final String userid,
+            @NonNull final List<AbstractResource> attachments) {
         validateCreateTicketDTO(createTicketDTOV2);
-        Objects.requireNonNull(attachments);
 
         if (lhmextid == null && userid == null) {
             throw new IllegalArgumentException("Either lhmextid or userid must be provided");
@@ -103,8 +101,7 @@ public class ZammadAPIService {
                 .onErrorMap(WebClientResponseException.class, e -> new ZammadAPIException(e, "Failed to create ticket and user"));
     }
 
-    private void validateCreateTicketDTO(final CreateTicketDTOV2 createTicketDTOV2) {
-        Objects.requireNonNull(createTicketDTOV2);
+    private void validateCreateTicketDTO(@NonNull final CreateTicketDTOV2 createTicketDTOV2) {
         requireNonBlank(createTicketDTOV2.getTitle(), "title");
         requireNonBlank(createTicketDTOV2.getAnliegenart(), "anliegenart");
         requireNonBlank(createTicketDTOV2.getVertrauensniveau(), "vertrauensniveau");
