@@ -24,7 +24,7 @@ const testFilters: AntragListFilter = {
   aktualisierungDatum: [new Date("2025-11-25T00:00:00Z")],
 };
 
-describe("antragListFilterStore store", () => {
+describe("useAntragListFilterStore", () => {
   beforeEach(() => {
     setActivePinia(createPinia());
   });
