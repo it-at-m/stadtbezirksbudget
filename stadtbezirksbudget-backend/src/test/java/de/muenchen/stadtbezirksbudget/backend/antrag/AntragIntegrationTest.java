@@ -63,7 +63,7 @@ class AntragIntegrationTest {
 
     @Autowired
     @PersistenceContext
-    private EntityManager em;
+    private EntityManager entityManager;
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
@@ -93,7 +93,7 @@ class AntragIntegrationTest {
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
         antragList.addAll(antragTestDataBuilder.initializeAntragList(100));
-        em.flush();
+        entityManager.flush();
     }
 
     @Nested
