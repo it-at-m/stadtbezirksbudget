@@ -8,6 +8,7 @@ import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTick
 import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.AbstractResource;
@@ -81,10 +82,8 @@ public class ZammadAPIService {
      *             createUserAndTicketDTOV2.getCreateTicketDTO() are null or blank
      * @throws ZammadAPIException If request failed
      */
-    public Mono<UserAndTicketResponseDTO> createUserAndTicket(final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2,
-            final List<AbstractResource> attachments) {
-        Objects.requireNonNull(createUserAndTicketDTOV2);
-        Objects.requireNonNull(attachments);
+    public Mono<UserAndTicketResponseDTO> createUserAndTicket(@NonNull final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2,
+            @NonNull final List<AbstractResource> attachments) {
         final CreateTicketDTOV2 createTicketDTO = createUserAndTicketDTOV2.getCreateTicketDTO();
         if (createTicketDTO == null) {
             throw new IllegalArgumentException("createTicketDTO must not be null");
