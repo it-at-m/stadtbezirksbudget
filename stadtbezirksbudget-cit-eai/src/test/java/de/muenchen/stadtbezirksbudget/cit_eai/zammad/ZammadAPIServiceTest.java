@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.cit_eai.zammad;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api.TicketsApi;
@@ -19,7 +20,6 @@ import lombok.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.core.io.AbstractResource;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -101,13 +101,19 @@ class ZammadAPIServiceTest {
 
             final TicketInternal ticket = new TicketInternal().id("42").title("T");
 
-            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), ArgumentMatchers.<List<AbstractResource>>any()))
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), eq(List.of(resource))))
                     .thenReturn(Mono.just(ticket));
 
             final TicketInternal result = service.createTicket(dto, EXTERNAL_ID, null, List.of(resource)).block();
 
             assertThat(result).isNotNull();
             assertThat(result).isSameAs(ticket);
+
+            Mockito.verify(ticketsApi).createNewTicket(
+                    any(CreateTicketDTOV2.class),
+                    eq(EXTERNAL_ID),
+                    eq(null),
+                    argThat((List<AbstractResource> list) -> list != null && list.equals(List.of(resource))));
         }
 
         @Test
@@ -204,13 +210,17 @@ class ZammadAPIServiceTest {
             final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
 
             final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
-            Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), ArgumentMatchers.<List<AbstractResource>>any()))
+            Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), eq(List.of(resource))))
                     .thenReturn(Mono.just(resp));
 
             final UserAndTicketResponseDTO result = service.createUserAndTicket(dto, List.of(resource)).block();
 
             assertThat(result).isNotNull();
             assertThat(result).isSameAs(resp);
+
+            Mockito.verify(ticketsApi).createNewTicketWithUser(
+                    any(CreateUserAndTicketDTOV2.class),
+                    argThat((List<AbstractResource> list) -> list != null && list.equals(List.of(resource))));
         }
 
         @Test
