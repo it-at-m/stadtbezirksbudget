@@ -5,8 +5,8 @@ import { readonly, ref } from "vue";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
-import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
-import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
 /**
  * Composable function that manages the state and operations for a list of

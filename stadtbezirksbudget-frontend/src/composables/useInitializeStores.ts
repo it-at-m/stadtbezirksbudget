@@ -4,8 +4,8 @@ import { onMounted } from "vue";
 
 import { getAntragListFilterOptions } from "@/api/fetch-antragListFilterOptions.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
-import { useAntragListFilterOptionsStore } from "@/stores/antragListFilterOptions.ts";
-import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
 /**
  * Composable to initialize stores by fetching necessary data on component mount.

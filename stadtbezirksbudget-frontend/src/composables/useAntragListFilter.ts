@@ -2,7 +2,7 @@ import type { AntragListFilter } from "@/types/AntragListFilter.ts";
 
 import { ref } from "vue";
 
-import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
+import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
 
 /**
