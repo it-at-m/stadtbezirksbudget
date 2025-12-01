@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
-import { useAntragListFilter } from "@/composables/antragListFilter";
+import { useAntragListFilter } from "@/composables/useAntragListFilter";
 import { useAntragListFilterStore } from "@/stores/antragListFilter";
 import {
   AntragListFilter,

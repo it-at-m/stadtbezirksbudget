@@ -17,7 +17,7 @@ import type { Status } from "@/types/Status.ts";
 import { toRefs } from "vue";
 
 import StatusSelect from "@/components/StatusSelect.vue";
-import { useAntragStatusUpdate } from "@/composables/antragStatusUpdate.ts";
+import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 
 const props = defineProps<{ antragId: string; initialStatus: Status }>();
 const { antragId, initialStatus } = toRefs(props);

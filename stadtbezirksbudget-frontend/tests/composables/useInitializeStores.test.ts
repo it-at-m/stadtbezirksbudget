@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { nextTick } from "vue";
 
 import { getAntragListFilterOptions } from "@/api/fetch-antragListFilterOptions";
-import { useInitializeStores } from "@/composables/initializeStores";
+import { useInitializeStores } from "@/composables/useInitializeStores.ts";
 import { STATUS_INDICATORS } from "@/constants";
 import { useAntragListFilterOptionsStore } from "@/stores/antragListFilterOptions";
 import { useSnackbarStore } from "@/stores/snackbar";

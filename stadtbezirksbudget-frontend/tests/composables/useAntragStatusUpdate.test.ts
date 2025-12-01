@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
-import { useAntragStatusUpdate } from "@/composables/antragStatusUpdate";
+import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
 import { StatusText } from "@/types/Status.ts";

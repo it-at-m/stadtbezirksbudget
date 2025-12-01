@@ -10,10 +10,10 @@ import * as directives from "vuetify/directives";
 import { VDateInput } from "vuetify/labs/components";
 
 import AntragListFilter from "@/components/AntragListFilter.vue";
-import { useAntragListFilter } from "@/composables/antragListFilter.ts";
+import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
 import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
 
-vi.mock("@/composables/antragListFilter.ts");
+vi.mock("@/composables/useAntragListFilter.ts");
 global.ResizeObserver = class {
   observe() {
     // Mock implementation: No action needed

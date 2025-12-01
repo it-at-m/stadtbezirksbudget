@@ -7,9 +7,9 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 import AntragSummaryList from "@/components/AntragSummaryList.vue";
-import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
+import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 
-vi.mock("@/composables/useAntragSummaryList");
+vi.mock("@/composables/useAntragSummaryList.ts");
 
 global.ResizeObserver = class {
   observe() {
