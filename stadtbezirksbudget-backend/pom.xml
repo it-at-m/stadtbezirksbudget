@@ -172,6 +172,7 @@
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-processor</artifactId>
             <version>${hibernate-processor.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Other -->
