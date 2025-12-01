@@ -27,6 +27,7 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 public class SecurityConfiguration {
 
     private final Optional<KeycloakRolesAuthoritiesConverter> keycloakRolesAuthoritiesConverter;
+    private final Optional<UserInfoAuthoritiesConverter> userInfoAuthoritiesConverter;
 
     /**
      * Security filter chain configuration.
@@ -71,6 +72,11 @@ public class SecurityConfiguration {
                             if (keycloakRolesAuthoritiesConverter.isPresent()) {
                                 jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(
                                         keycloakRolesAuthoritiesConverter.get());
+                            }
+                            // DEPRECATED: authorities via userinfo endpoint
+                            else if (userInfoAuthoritiesConverter.isPresent()) {
+                                jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(
+                                        userInfoAuthoritiesConverter.get());
                             } else {
                                 log.warn("No custom authority converter available, falling back to default.");
                             }
