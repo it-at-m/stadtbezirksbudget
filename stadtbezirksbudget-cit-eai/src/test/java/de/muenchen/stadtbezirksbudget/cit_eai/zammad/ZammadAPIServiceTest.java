@@ -163,7 +163,7 @@ class ZammadAPIServiceTest {
         @Test
         void testCreateUserAndTicketWithMissingRequiredFieldsThrowsIllegalArgumentException() {
             final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
-            dto.setCreateTicketDTO(null);
+            dto.setCreateTicketDTO(new CreateTicketDTOV2());
 
             assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
