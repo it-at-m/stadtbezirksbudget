@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * (e.g. {@link PreAuthorize}).
  */
 public final class Authorities {
-    public static final String KAFKA_PUBLISH_MESSAGE = "hasAnyRole('sbb-sachbearbeiter')";
+    public static final String KAFKA_PUBLISH_MESSAGE = "hasAnyRole('sbb-system')";
 
     private Authorities() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
