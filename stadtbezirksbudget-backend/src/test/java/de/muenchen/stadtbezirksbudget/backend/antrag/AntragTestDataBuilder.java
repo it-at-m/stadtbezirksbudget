@@ -18,7 +18,9 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -35,7 +37,9 @@ public record AntragTestDataBuilder(
         ZahlungsempfaengerRepository antragstellerRepository,
         ProjektRepository projektRepository,
         BearbeitungsstandRepository bearbeitungsstandRepository,
-        BankverbindungRepository bankverbindungRepository) {
+        BankverbindungRepository bankverbindungRepository,
+        FinanzierungsmittelRepository finanzierungsmittelRepository,
+        VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository) {
 
     private static final LocalDateTime FIXED_DATE_TIME = LocalDateTime.of(2010, 1, 1, 0, 0);
 
@@ -89,13 +93,18 @@ public record AntragTestDataBuilder(
         ausgabe.setKategorie("Material");
 
         if (index % 2 == 0) {
-            finanzierung.setBewilligterZuschuss(beantragtesBudget);
+            // Bei geraden Zahlen: istFehlbetrag soll true sein, daher Ausgabe-Mittel=beantragtes Budget.
+
+            // Finanzierungsmittel auf die Hälfte des beantragten Budget setzen
             finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
-            ausgabe.setBetrag(beantragtesBudget);
+
+            // VoraussichtlicheAusgabe auf Summe aus beantragtesBudget und Finanzierungsmittel setzen, damit Formel erfüllt ist.
+            final BigDecimal ausgabenBetrag = beantragtesBudget.add(finanzierungsmittel.getBetrag());
+            ausgabe.setBetrag(ausgabenBetrag);
         } else {
-            finanzierung.setBewilligterZuschuss(beantragtesBudget.add(new BigDecimal("5000.00")));
-            finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP).subtract(new BigDecimal("1000.00")));
-            ausgabe.setBetrag(beantragtesBudget.add(new BigDecimal("2000.00")));
+            // Bei ungeraden Zahlen: istFehlbetrag soll false sein, daher ziemlich alle Zahlen möglich. Hier 10_000 Mittel, Ausgaben in Höhe des beantragten Budgets
+            finanzierungsmittel.setBetrag(new BigDecimal(10_000));
+            ausgabe.setBetrag(beantragtesBudget);
         }
 
         finanzierungsmittel.setDirektoriumNotiz("Notiz zu Finanzierungsmitteln");
@@ -119,7 +128,12 @@ public record AntragTestDataBuilder(
         finanzierung.setKostenAnmerkung("KostenAnmerkung");
         finanzierung.setBegruendungEigenmittel("");
 
-        return finanzierungRepository.save(finanzierung);
+        final Finanzierung finanzierungSaved = finanzierungRepository.save(finanzierung);
+
+        voraussichtlicheAusgabeRepository.save(ausgabe);
+        finanzierungsmittelRepository.save(finanzierungsmittel);
+
+        return finanzierungSaved;
     }
 
     private Bankverbindung initializeBankverbindung(final Antragsteller antragsteller) {
