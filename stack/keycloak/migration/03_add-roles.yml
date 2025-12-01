@@ -11,7 +11,7 @@ changes:
 
   - addRole:
       name: sbb-system
-      description: Endpoint and interface access that are prohibited for other users.
+      description: Provides endpoint and interface access restricted to system accounts.
       clientRole: true
       clientId: local
       composite: false
