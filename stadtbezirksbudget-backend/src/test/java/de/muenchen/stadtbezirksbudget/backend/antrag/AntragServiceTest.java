@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand;
@@ -21,6 +22,8 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -45,6 +48,10 @@ class AntragServiceTest {
 
     @Mock
     private AntragRepository antragRepository;
+    @Mock
+    private ZahlungsempfaengerRepository zahlungsempfaengerRepository;
+    @Mock
+    private ProjektRepository projektRepository;
     @InjectMocks
     private AntragService antragService;
 
@@ -156,6 +163,51 @@ class AntragServiceTest {
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(2);
             verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
+        }
+    }
+
+    @Nested
+    class GetFilterOptions {
+        @Test
+        void testEmptyLists() {
+            when(zahlungsempfaengerRepository.findDistinctAntragstellerNames()).thenReturn(Collections.emptyList());
+            when(projektRepository.findDistinctProjektTitles()).thenReturn(Collections.emptyList());
+
+            final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
+
+            assertThat(filterOptions).isNotNull();
+            assertThat(filterOptions.antragstellerNamen()).isEmpty();
+            assertThat(filterOptions.projektTitel()).isEmpty();
+        }
+
+        @Test
+        void testNonEmptyLists() {
+            final List<String> antragstellerNames = List.of("Antragsteller1", "Antragsteller2");
+            final List<String> projektTitles = List.of("Projekt1", "Projekt2");
+
+            when(zahlungsempfaengerRepository.findDistinctAntragstellerNames()).thenReturn(antragstellerNames);
+            when(projektRepository.findDistinctProjektTitles()).thenReturn(projektTitles);
+
+            final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
+
+            assertThat(filterOptions).isNotNull();
+            assertThat(filterOptions.antragstellerNamen()).containsExactlyElementsOf(antragstellerNames);
+            assertThat(filterOptions.projektTitel()).containsExactlyElementsOf(projektTitles);
+        }
+
+        @Test
+        void testPartialEmptyLists() {
+            final List<String> antragstellerNames = List.of("Antragsteller1");
+            final List<String> projektTitles = Collections.emptyList();
+
+            when(zahlungsempfaengerRepository.findDistinctAntragstellerNames()).thenReturn(antragstellerNames);
+            when(projektRepository.findDistinctProjektTitles()).thenReturn(projektTitles);
+
+            final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
+
+            assertThat(filterOptions).isNotNull();
+            assertThat(filterOptions.antragstellerNamen()).containsExactlyElementsOf(antragstellerNames);
+            assertThat(filterOptions.projektTitel()).isEmpty();
         }
     }
 
