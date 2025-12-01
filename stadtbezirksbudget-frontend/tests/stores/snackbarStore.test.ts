@@ -9,14 +9,14 @@ describe("snackbar store", () => {
     setActivePinia(createPinia());
   });
 
-  test("testInitialState", () => {
+  test("has initial state", () => {
     const store = useSnackbarStore();
     expect(store.message).toBeUndefined();
     expect(store.level).toBe(STATUS_INDICATORS.INFO);
     expect(store.show).toBe(false);
   });
 
-  test("testShowMessageSetsMessageLevelAndShowTrue", () => {
+  test("shows message with correct level", () => {
     const store = useSnackbarStore();
     store.showMessage({
       message: "Hallo Welt",
@@ -27,7 +27,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  test("testShowMessageDefaultsLevelToInfo", () => {
+  test("shows message with default level", () => {
     const store = useSnackbarStore();
     store.showMessage({ message: "Nur Info" });
     expect(store.message).toBe("Nur Info");
@@ -35,7 +35,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  test("testUpdateShowChangesShowFlag", () => {
+  test("updates show flag", () => {
     const store = useSnackbarStore();
     store.showMessage({ message: "X" });
     expect(store.show).toBe(true);
@@ -45,7 +45,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  test("testMultipleShowMessageCallsOverwritePrevious", () => {
+  test("new message replaces previous one", () => {
     const store = useSnackbarStore();
     store.showMessage({ message: "erste" });
     expect(store.message).toBe("erste");
@@ -55,7 +55,7 @@ describe("snackbar store", () => {
     expect(store.show).toBe(true);
   });
 
-  test("testShowMessageWithEmptyPayloadShowsUndefinedMessage", () => {
+  test("shows message with empty payload", () => {
     const store = useSnackbarStore();
     store.showMessage({});
     expect(store.message).toBeUndefined();

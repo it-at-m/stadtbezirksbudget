@@ -39,7 +39,7 @@ describe("getAntragsSummaryList", () => {
     vi.clearAllMocks();
   });
 
-  test("testFetchSuccessful", async () => {
+  test("fetches with correct parameters", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       json: async () => mockResponse,
@@ -54,7 +54,7 @@ describe("getAntragsSummaryList", () => {
     expect(result).toEqual(mockResponse);
   });
 
-  test("testFetchWithFilters", async () => {
+  test("fetches with correct parameters when filters are applied", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       json: async () => mockResponse,
@@ -68,7 +68,7 @@ describe("getAntragsSummaryList", () => {
     );
   });
 
-  test("testHandleErrorsWhenFetching", async () => {
+  test("handles network errors", async () => {
     const errorMessage = "Network Error";
     (fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
       new Error(errorMessage)
@@ -79,7 +79,7 @@ describe("getAntragsSummaryList", () => {
     ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
   });
 
-  test("testHandleHttpErrorResponse", async () => {
+  test("handles http errors", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: false,
       status: 404,

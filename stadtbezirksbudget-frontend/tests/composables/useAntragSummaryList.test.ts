@@ -39,7 +39,7 @@ describe("useAntragSummaryList", () => {
     (useAntragListFilterStore as vi.Mock).mockReturnValue(filterStoreMock);
   });
 
-  test("testFetchItemsSuccessfully", async () => {
+  test("fetches items successfully", async () => {
     const mockResponse: Page<AntragSummary> = {
       content: [
         {
@@ -72,7 +72,7 @@ describe("useAntragSummaryList", () => {
     });
   });
 
-  test("testHandleErrorsWhenFetchingItems", async () => {
+  test("handles api errors when fetching items", async () => {
     const errorMessage = "API Error";
     (getAntragsSummaryList as vi.Mock).mockRejectedValue(
       new Error(errorMessage)
@@ -90,7 +90,7 @@ describe("useAntragSummaryList", () => {
     });
   });
 
-  test("testHandleGenericErrorsWhenFetchingItems", async () => {
+  test("handles generic errors when fetching items", async () => {
     (getAntragsSummaryList as vi.Mock).mockRejectedValue(new Error());
 
     const { fetchItems } = useAntragSummaryList();
@@ -104,7 +104,7 @@ describe("useAntragSummaryList", () => {
     });
   });
 
-  test("testFetchNewItemsWhenUpdateOptions", async () => {
+  test("fetches new items when update options", async () => {
     const mockResponse: Page<AntragSummary> = {
       content: [
         {
@@ -136,7 +136,7 @@ describe("useAntragSummaryList", () => {
     });
   });
 
-  test("testUpdateOptionsCorrectly", () => {
+  test("updates options correctly", () => {
     const { updateOptions, page, itemsPerPage } = useAntragSummaryList();
 
     updateOptions({ page: 3, itemsPerPage: 15 });
@@ -145,7 +145,7 @@ describe("useAntragSummaryList", () => {
     expect(itemsPerPage.value).toBe(15);
   });
 
-  test("testHandlesFilterStoreSubscription", async () => {
+  test("handles filter store subscription", async () => {
     let capturedSubscribe: (() => void) | undefined;
     filterStoreMock.$subscribe = vi.fn((cb: () => void) => {
       capturedSubscribe = cb;

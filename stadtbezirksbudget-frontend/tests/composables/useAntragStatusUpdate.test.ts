@@ -20,7 +20,7 @@ describe("useAntragStatusUpdate", () => {
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
   });
 
-  test("testUpdatesStatusOnSuccessfulApiCallAndShowsSuccessSnackbar", async () => {
+  test("updates status on successful api call and shows success snackbar", async () => {
     (updateAntragStatus as vi.Mock).mockResolvedValue(undefined);
 
     const { status, updateStatus } = useAntragStatusUpdate(
@@ -45,7 +45,7 @@ describe("useAntragStatusUpdate", () => {
     });
   });
 
-  test("testShowsApiErrorMessageInSnackbarOnRejectedPromise", async () => {
+  test("handles api errors when updating status", async () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue(new Error("API Error"));
 
     const { status, updateStatus } = useAntragStatusUpdate(
@@ -68,7 +68,7 @@ describe("useAntragStatusUpdate", () => {
     });
   });
 
-  test("testShowsGenericErrorMessageWhenRejectedWithoutMessage", async () => {
+  test("handles generic errors when updating status", async () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue({});
 
     const { status, updateStatus } = useAntragStatusUpdate(
@@ -88,7 +88,7 @@ describe("useAntragStatusUpdate", () => {
     });
   });
 
-  test("testToggleStatusAndSearchWhenUnfocus", () => {
+  test("toggles status and search when unfocused", () => {
     const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
@@ -102,7 +102,7 @@ describe("useAntragStatusUpdate", () => {
     expect(search.value).toBe("");
   });
 
-  test("testToggleStatusAndSearchWhenFocus", () => {
+  test("toggles status and search when focused", () => {
     const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
@@ -116,7 +116,7 @@ describe("useAntragStatusUpdate", () => {
     expect(search.value).toBe(StatusText["EINGEGANGEN"].shortText);
   });
 
-  test("testUpdateStatusReturnsEarlyWhenNewStatusIsFalsy", () => {
+  test("doesn't update status when new status is not set", () => {
     const { status, updateStatus } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
@@ -132,7 +132,7 @@ describe("useAntragStatusUpdate", () => {
     expect(snackbarStoreMock.showMessage).not.toHaveBeenCalled();
   });
 
-  test("testUpdatesStatusOnInitialStatusChange", async () => {
+  test("updates status on initial status change", async () => {
     const initialStatus = ref("EINGEGANGEN");
     const { status } = useAntragStatusUpdate(ref("1"), initialStatus);
 
@@ -143,7 +143,7 @@ describe("useAntragStatusUpdate", () => {
     });
   });
 
-  test("testHandlesConcurrentStatusUpdates", async () => {
+  test("handles concurrent status updates", async () => {
     let resolveFirst: (value?: unknown) => void;
     let resolveSecond: (value?: unknown) => void;
 
