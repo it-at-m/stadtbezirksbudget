@@ -26,7 +26,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.Zahlungsempfaeng
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -37,10 +36,12 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Transactional
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -78,15 +79,7 @@ class AntragIntegrationTest {
     public void setUp() {
         final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository);
-        for (int i = 0; i < 100; i++) {
-            antragList.add(antragTestDataBuilder.initializeAntrag());
-        }
-    }
-
-    @AfterEach
-    public void tearDown() {
-        antragRepository.deleteAll();
-        antragList.clear();
+        antragList.addAll(antragTestDataBuilder.initializeAntragList(100));
     }
 
     @Nested
