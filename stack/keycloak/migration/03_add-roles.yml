@@ -8,3 +8,10 @@ changes:
       clientRole: true
       clientId: local
       composite: false
+
+  - addRole:
+      name: sbb-system
+      description: Endpoint and interface access that are prohibited for other users.
+      clientRole: true
+      clientId: local
+      composite: false
