@@ -57,7 +57,7 @@ class ZammadAPIServiceTest {
     @Nested
     class CreateTicket {
 
-        private CreateTicketDTOV2 generateCreateTicketDTOV2(){
+        private CreateTicketDTOV2 generateCreateTicketDTOV2() {
             return new CreateTicketDTOV2()
                     .title("T")
                     .anliegenart("a")
