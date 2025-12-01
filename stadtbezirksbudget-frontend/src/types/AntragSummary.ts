@@ -1,4 +1,4 @@
-import type { AktualisierungsArt } from "@/types/AktualisierungsArt.ts";
+import type { AktualisierungArt } from "@/types/AktualisierungArt.ts";
 
 import type { Status } from "./Status.ts";
 
@@ -13,6 +13,6 @@ export default interface AntragSummary {
   projektTitel: string;
   beantragtesBudget: number;
   istFehlbetrag: boolean;
-  aktualisierung: AktualisierungsArt;
+  aktualisierung: AktualisierungArt;
   aktualisierungDatum: string; // ISO date string from API
 }

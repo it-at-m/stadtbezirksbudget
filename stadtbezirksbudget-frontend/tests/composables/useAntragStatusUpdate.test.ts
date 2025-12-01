@@ -4,15 +4,15 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
-import { useAntragStatusSelect } from "@/composables/antragStatusSelect";
+import { useAntragStatusUpdate } from "@/composables/antragStatusUpdate";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/snackbar.ts";
-import { StatusOption, StatusText } from "@/types/Status.ts";
+import { StatusText } from "@/types/Status.ts";
 
 vi.mock("@/api/update-antragStatus.ts");
 vi.mock("@/stores/snackbar.ts");
 
-describe("useAntragStatusSelect", () => {
+describe("useAntragStatusUpdate", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
@@ -23,7 +23,7 @@ describe("useAntragStatusSelect", () => {
   test("testUpdatesStatusOnSuccessfulApiCallAndShowsSuccessSnackbar", async () => {
     (updateAntragStatus as vi.Mock).mockResolvedValue(undefined);
 
-    const { status, updateStatus } = useAntragStatusSelect(
+    const { status, updateStatus } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
     );
@@ -48,7 +48,7 @@ describe("useAntragStatusSelect", () => {
   test("testShowsApiErrorMessageInSnackbarOnRejectedPromise", async () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue(new Error("API Error"));
 
-    const { status, updateStatus } = useAntragStatusSelect(
+    const { status, updateStatus } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
     );
@@ -71,7 +71,7 @@ describe("useAntragStatusSelect", () => {
   test("testShowsGenericErrorMessageWhenRejectedWithoutMessage", async () => {
     (updateAntragStatus as vi.Mock).mockRejectedValue({});
 
-    const { status, updateStatus } = useAntragStatusSelect(
+    const { status, updateStatus } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
     );
@@ -89,7 +89,7 @@ describe("useAntragStatusSelect", () => {
   });
 
   test("testToggleStatusAndSearchWhenUnfocus", () => {
-    const { status, toggleStatusAndSearch, search } = useAntragStatusSelect(
+    const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
     );
@@ -103,7 +103,7 @@ describe("useAntragStatusSelect", () => {
   });
 
   test("testToggleStatusAndSearchWhenFocus", () => {
-    const { status, toggleStatusAndSearch, search } = useAntragStatusSelect(
+    const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
     );
@@ -117,7 +117,7 @@ describe("useAntragStatusSelect", () => {
   });
 
   test("testUpdateStatusReturnsEarlyWhenNewStatusIsFalsy", () => {
-    const { status, updateStatus } = useAntragStatusSelect(
+    const { status, updateStatus } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
     );
@@ -132,25 +132,9 @@ describe("useAntragStatusSelect", () => {
     expect(snackbarStoreMock.showMessage).not.toHaveBeenCalled();
   });
 
-  test("testStatusOptionsContainExpectedEntries", () => {
-    const { statusOptions } = useAntragStatusSelect(
-      ref("1"),
-      ref("EINGEGANGEN")
-    );
-
-    const eingegangenOption = statusOptions.find(
-      (o: StatusOption) => o.value === "EINGEGANGEN"
-    );
-    expect(eingegangenOption).toBeDefined();
-    expect(eingegangenOption).toMatchObject({
-      value: "EINGEGANGEN",
-      ...StatusText["EINGEGANGEN"],
-    });
-  });
-
   test("testUpdatesStatusOnInitialStatusChange", async () => {
     const initialStatus = ref("EINGEGANGEN");
-    const { status } = useAntragStatusSelect(ref("1"), initialStatus);
+    const { status } = useAntragStatusUpdate(ref("1"), initialStatus);
 
     expect(status.value).toBe("EINGEGANGEN");
     initialStatus.value = "VOLLSTAENDIG";
@@ -175,7 +159,7 @@ describe("useAntragStatusSelect", () => {
         })
       );
 
-    const { status, updateStatus } = useAntragStatusSelect(
+    const { status, updateStatus } = useAntragStatusUpdate(
       ref("1"),
       ref("EINGEGANGEN")
     );
