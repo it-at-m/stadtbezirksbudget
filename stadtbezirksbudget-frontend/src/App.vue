@@ -4,8 +4,8 @@
     <v-app-bar color="primary">
       <v-row align="center">
         <v-col
-          cols="3"
           class="d-flex align-center justify-start"
+          cols="3"
         >
           <v-app-bar-nav-icon @click.stop="toggleDrawer()" />
           <router-link to="/">
@@ -17,35 +17,36 @@
           </router-link>
         </v-col>
         <v-col
-          cols="6"
           class="d-flex align-center justify-center"
+          cols="6"
         >
           <v-text-field
             id="searchField"
             v-model="query"
+            :prepend-inner-icon="mdiMagnify"
+            clearable
             flat
-            variant="solo-inverted"
             hide-details
             label="Suche"
-            clearable
-            :prepend-inner-icon="mdiMagnify"
             theme="dark"
+            variant="solo-inverted"
             @keyup.enter="search"
           />
         </v-col>
         <v-col
-          cols="3"
           class="d-flex align-center justify-end"
+          cols="3"
         >
+          <antrag-list-filter-menu />
           <app-switcher
             v-if="appswitcherBaseUrl"
             :base-url="appswitcherBaseUrl"
-            :tags="['global']"
             :icon="mdiApps"
+            :tags="['global']"
           />
           <v-btn
-            variant="text"
             icon
+            variant="text"
           >
             <ad2-image-avatar
               v-if="userStore.getUser !== null"
@@ -68,15 +69,17 @@
   </v-app>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { mdiApps, mdiMagnify } from "@mdi/js";
 import { AppSwitcher } from "@muenchen/appswitcher-vue";
 import { useToggle } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 
 import { getUser } from "@/api/user-client";
+import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
+import { useInitializeStores } from "@/composables/initializeStores.ts";
 import { APPSWITCHER_URL } from "@/constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
@@ -88,6 +91,8 @@ const appswitcherBaseUrl = APPSWITCHER_URL;
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 const [drawer, toggleDrawer] = useToggle();
+
+useInitializeStores();
 
 onMounted(() => {
   loadUser();
