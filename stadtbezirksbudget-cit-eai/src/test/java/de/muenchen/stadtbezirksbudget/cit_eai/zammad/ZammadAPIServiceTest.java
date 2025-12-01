@@ -128,6 +128,18 @@ class ZammadAPIServiceTest {
 
             assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, null, null, Collections.emptyList()).block());
         }
+
+        @Test
+        void testCreateTicketWithNullDtoThrowsNullPointerException() {
+            assertThrows(NullPointerException.class, () -> service.createTicket(null, EXTERNAL_ID, null, Collections.emptyList()).block());
+        }
+
+        @Test
+        void testCreateTicketWithNullAttachmentsThrowsNullPointerException() {
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
+            assertThrows(NullPointerException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, null).block());
+        }
+
     }
 
     @Nested
