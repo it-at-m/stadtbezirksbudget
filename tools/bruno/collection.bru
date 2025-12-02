@@ -1,9 +1,3 @@
-vars:pre-request {
-  backend: http://localhost:39146
-  cit-eai: http://localhost:8085
-  sso: http://localhost:8100/auth/realms/local_realm
-}
-
 auth {
   mode: oauth2
 }
@@ -11,12 +5,12 @@ auth {
 auth:oauth2 {
   grant_type: password
   access_token_url: {{sso}}/protocol/openid-connect/token
-  refresh_token_url:
-  username: sbbsys
-  password: sbbsys
-  client_id: local
-  client_secret: client_secret
-  scope: openid
+  refresh_token_url: 
+  username: {{sso-username}}
+  password: {{sso-password}}
+  client_id: {{sso-clientid}}
+  client_secret: {{sso-clientsecret}}
+  scope: {{sso-scope}}
   credentials_placement: basic_auth_header
   credentials_id: credentials
   token_placement: header
