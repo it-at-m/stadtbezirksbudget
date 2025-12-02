@@ -16,11 +16,10 @@ export interface AntragListFilter {
 }
 
 // Data Transfer Object for AntragListFilter
-export interface AntragListFilterDTO
-  extends Omit<
-    AntragListFilter,
-    "eingangDatum" | "art" | "aktualisierungDatum"
-  > {
+export interface AntragListFilterDTO extends Omit<
+  AntragListFilter,
+  "eingangDatum" | "art" | "aktualisierungDatum"
+> {
   eingangDatumVon?: string;
   eingangDatumBis?: string;
   istFehlbetrag?: boolean;
