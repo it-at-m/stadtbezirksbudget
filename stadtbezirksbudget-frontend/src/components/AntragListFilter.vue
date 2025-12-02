@@ -47,17 +47,20 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-date-input
-            v-model="filters.eingangDatum"
-            clearable
+          <range-input
+            v-model:from="filters.eingangDatumVon"
+            v-model:to="filters.eingangDatumBis"
+            :inputComponent="VDateInput"
+            :inputProps="{
+              clearable: true,
+              density: 'compact',
+              hideDetails: 'auto',
+              onFocusout: updateFilters,
+              prependIcon: '',
+              variant: 'underlined',
+            }"
             data-test="antrag-list-filter-eingang-datum"
-            density="compact"
-            hide-details="auto"
             label="Antragsdatum"
-            multiple="range"
-            prepend-icon=""
-            variant="underlined"
-            @focusout="updateFilters"
           />
         </v-col>
       </v-row>
@@ -145,17 +148,20 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-date-input
-            v-model="filters.aktualisierungDatum"
-            clearable
+          <range-input
+            v-model:from="filters.aktualisierungDatumVon"
+            v-model:to="filters.aktualisierungDatumBis"
+            :inputComponent="VDateInput"
+            :inputProps="{
+              clearable: true,
+              density: 'compact',
+              hideDetails: 'auto',
+              onFocusout: updateFilters,
+              prependIcon: '',
+              variant: 'underlined',
+            }"
             data-test="antrag-list-filter-aktualisierung-datum"
-            density="compact"
-            hide-details="auto"
             label="Datum Aktualisierung"
-            multiple="range"
-            prepend-icon=""
-            variant="underlined"
-            @focusout="updateFilters"
           />
         </v-col>
       </v-row>
