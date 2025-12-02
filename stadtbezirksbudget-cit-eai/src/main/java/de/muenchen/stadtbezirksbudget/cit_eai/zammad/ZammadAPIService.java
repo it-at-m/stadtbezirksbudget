@@ -54,10 +54,13 @@ public class ZammadAPIService {
 
         return ticketsApi.createNewTicket(createTicketDTOV2, lhmextid, userid, attachments)
                 .switchIfEmpty(Mono.error(new ZammadAPIException("Could not create ticket in Zammad")))
-                .doOnSuccess(response -> {
+                .flatMap(response -> {
                     if (response == null || response.getId() == null) {
-                        throw new ZammadAPIException("Success response but ticket or ticket id is null in response");
+                        return Mono.error(new ZammadAPIException("Ticket or ticket id is null in response"));
                     }
+                    return Mono.just(response);
+                })
+                .doOnSuccess(response -> {
                     log.info("Successfully created ticket in Zammad with ID: {}", response.getId());
                 })
                 .onErrorMap(WebClientResponseException.class, e -> new ZammadAPIException(e, "Failed to create ticket in Zammad"));
@@ -85,10 +88,13 @@ public class ZammadAPIService {
         log.info("Attempting to create ticket and user in Zammad");
         return ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments)
                 .switchIfEmpty(Mono.error(new ZammadAPIException("Unable to create ticket and user")))
-                .doOnSuccess(response -> {
+                .flatMap(response -> {
                     if (response == null || response.getTicket() == null || response.getTicket().getId() == null) {
-                        throw new ZammadAPIException("Success response but ticket or ticket id is null in response");
+                        return Mono.error(new ZammadAPIException("Ticket or ticket id is null in response"));
                     }
+                    return Mono.just(response);
+                })
+                .doOnSuccess(response -> {
                     log.info("Successfully created ticket with id {} and user in Zammad", response.getTicket().getId());
                 })
                 .onErrorMap(WebClientResponseException.class, e -> new ZammadAPIException(e, "Failed to create ticket and user"));
