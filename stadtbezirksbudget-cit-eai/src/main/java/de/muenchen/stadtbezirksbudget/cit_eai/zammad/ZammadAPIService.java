@@ -102,7 +102,7 @@ public class ZammadAPIService {
     }
 
     private void validateCreateUserAndTicketDTO(@NonNull final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2) {
-        CreateTicketDTOV2 createTicketDTO = createUserAndTicketDTOV2.getCreateTicketDTO();
+        final CreateTicketDTOV2 createTicketDTO = createUserAndTicketDTOV2.getCreateTicketDTO();
         if (createTicketDTO == null) {
             throw new IllegalArgumentException("createTicketDTO must not be null");
         }
