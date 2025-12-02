@@ -28,7 +28,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.Voraussichtliche
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -386,28 +385,8 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.content", hasSize(1)));
         }
 
-        @SuppressWarnings("PMD.SystemPrintln")
         @Test
         void testFilterWithHalfOptionsSet1() throws Exception {
-            // Temporary Debugging
-            final List<Antrag> antragList = new ArrayList<>();
-            antragRepository.findAll().forEach(antragList::add);
-            System.out.println("Vor Filterung: " + antragList.size());
-            List<Antrag> matching = antragList.stream().filter(a -> "Max Mustermann 0".equals(a.getAntragsteller().getName())).toList();
-            System.out.println("Nach Name-Filter: " + matching.size());
-            matching = matching.stream().filter(a -> List.of(1, 11, 22).contains(a.getBezirksausschussNr())).toList();
-            System.out.println("Nach BezirksausschussNr-Filter: " + matching.size());
-            matching = matching.stream().filter(a -> List.of(Status.EINGEGANGEN, Status.ABGESCHLOSSEN).contains(a.getBearbeitungsstand().getStatus())).toList();
-            System.out.println("Nach Status-Filter: " + matching.size());
-            matching = matching.stream().filter(a -> !a.getEingangDatum().isBefore(LocalDateTime.parse("2009-01-01T00:00:00"))
-                    && !a.getEingangDatum().isAfter(LocalDateTime.parse("2010-01-10T23:59:59"))).toList();
-            System.out.println("Nach Eingangsdatum-Filter:" + matching.size());
-            matching.forEach(a -> System.out.println(
-                    "Name: " + a.getAntragsteller().getName() +
-                            ", ba: " + a.getBezirksausschussNr() +
-                            ", status: " + a.getBearbeitungsstand().getStatus() +
-                            ", eingangsdatum: " + a.getEingangDatum()));
-            // End of Temporary Debugging
             mockMvc
                     .perform(get("/antrag")
                             .param("page", "0")
