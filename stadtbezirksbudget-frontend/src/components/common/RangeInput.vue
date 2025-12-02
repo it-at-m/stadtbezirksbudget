@@ -9,6 +9,7 @@
           :is="inputComponent"
           v-model="fromModel"
           :label="fromLabel"
+          data-test="from-input"
           v-bind="inputProps"
         />
       </v-col>
@@ -17,6 +18,7 @@
           :is="inputComponent"
           v-model="toModel"
           :label="toLabel"
+          data-test="to-input"
           v-bind="inputProps"
         />
       </v-col>
