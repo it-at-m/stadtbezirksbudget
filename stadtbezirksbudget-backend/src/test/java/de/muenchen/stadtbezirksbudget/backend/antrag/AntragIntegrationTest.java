@@ -435,6 +435,39 @@ class AntragIntegrationTest {
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.content", hasSize(100)));
         }
+
+        @Test
+        void testMalformedDateFormatInEingangDatumVon() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("eingangDatumVon", "2009-12-3100:01:00")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void testInvalidEnumValueInStatusFilter() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("status", "INVALID_STATUS")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void testInvalidEnumValueInAktualisierungArtFilter() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "10")
+                            .param("aktualisierungArt", "INVALID_ART")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+        }
     }
 
     @Nested
