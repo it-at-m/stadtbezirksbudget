@@ -6,16 +6,16 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
 import { STATUS_INDICATORS } from "@/constants.ts";
-import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
-import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import {
   AntragListFilter,
   emptyAntragListFilter,
 } from "@/types/AntragListFilter.ts";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
-vi.mock("@/stores/snackbar.ts");
-vi.mock("@/stores/antragListFilter.ts");
+vi.mock("@/stores/useSnackbarStore.ts");
+vi.mock("@/stores/useAntragListFilterStore.ts");
 
 describe("useAntragSummaryList", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };

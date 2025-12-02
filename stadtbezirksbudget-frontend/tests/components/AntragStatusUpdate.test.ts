@@ -7,10 +7,10 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
-import { useAntragStatusUpdate } from "@/composables/antragStatusUpdate";
+import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 import { statusOptions } from "../../src/types/Status";
 
-vi.mock("@/composables/antragStatusUpdate");
+vi.mock("@/composables/useAntragStatusUpdate.ts");
 
 const pinia = createPinia();
 const vuetify = createVuetify({ components, directives });

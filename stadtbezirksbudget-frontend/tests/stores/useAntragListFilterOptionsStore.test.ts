@@ -1,10 +1,10 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
-import { useAntragListFilterOptionsStore } from "@/stores/antragListFilterOptions.ts";
+import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
 import { AntragListFilterOptions } from "@/types/AntragListFilter.ts";
 
-describe("antragListFilterOptions store", () => {
+describe("useAntragListFilterOptionsStore", () => {
   beforeEach(() => {
     setActivePinia(createPinia());
   });

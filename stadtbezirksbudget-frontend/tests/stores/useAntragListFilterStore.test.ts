@@ -1,7 +1,7 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
-import { useAntragListFilterStore } from "@/stores/antragListFilter.ts";
+import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
   emptyAntragListFilter,
@@ -24,7 +24,7 @@ const testFilters: AntragListFilter = {
   aktualisierungDatum: [new Date("2025-11-25T00:00:00Z")],
 };
 
-describe("antragListFilterStore store", () => {
+describe("useAntragListFilterStore", () => {
   beforeEach(() => {
     setActivePinia(createPinia());
   });

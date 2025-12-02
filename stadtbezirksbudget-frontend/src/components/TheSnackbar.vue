@@ -17,11 +17,11 @@
   </v-snackbar>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watch } from "vue";
 
 import { SNACKBAR_DEFAULT_TIMEOUT, STATUS_INDICATORS } from "@/constants";
-import { useSnackbarStore } from "@/stores/snackbar";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
 const snackbarStore = useSnackbarStore();
 
