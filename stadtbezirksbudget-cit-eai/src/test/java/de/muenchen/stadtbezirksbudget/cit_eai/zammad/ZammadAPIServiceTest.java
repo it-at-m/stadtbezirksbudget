@@ -193,13 +193,13 @@ class ZammadAPIServiceTest {
 
         @Test
         void testCreateUserAndTicketWithNullAttachmentsThrowsNullPointerException() {
-            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
             assertThrows(NullPointerException.class, () -> service.createUserAndTicket(dto, null).block());
         }
 
         @Test
         void testCreateUserAndTicketWithNullCreateTicketDTOThrowsIllegalArgumentException() {
-            final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
             dto.setCreateTicketDTO(null);
 
             assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
