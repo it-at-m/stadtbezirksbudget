@@ -121,8 +121,8 @@ public record AntragTestDataBuilder(
         voraussichtlicheAusgabenListe.add(ausgabe);
         finanzierung.setVoraussichtlicheAusgaben(voraussichtlicheAusgabenListe);
 
-        finanzierung.setSummeAusgaben(new BigDecimal("5000.00"));
-        finanzierung.setSummeFinanzierungsmittel(new BigDecimal("2000.00"));
+        finanzierung.setSummeAusgaben(ausgabe.getBetrag());
+        finanzierung.setSummeFinanzierungsmittel(finanzierungsmittel.getBetrag());
         finanzierung.setBeantragtesBudget(beantragtesBudget);
 
         finanzierung.setKostenAnmerkung("KostenAnmerkung");
