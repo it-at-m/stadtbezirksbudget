@@ -81,11 +81,7 @@ public class ZammadAPIService {
      */
     public Mono<UserAndTicketResponseDTO> createUserAndTicket(@NonNull final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2,
             @NonNull final List<AbstractResource> attachments) {
-        final CreateTicketDTOV2 createTicketDTO = createUserAndTicketDTOV2.getCreateTicketDTO();
-        if (createTicketDTO == null) {
-            throw new IllegalArgumentException("createTicketDTO must not be null");
-        }
-        validateCreateTicketDTO(createTicketDTO);
+        validateCreateUserAndTicketDTO(createUserAndTicketDTOV2);
 
         log.info("Attempting to create ticket and user in Zammad");
         return ticketsApi.createNewTicketWithUser(createUserAndTicketDTOV2, attachments)
@@ -105,6 +101,14 @@ public class ZammadAPIService {
         requireNonBlank(createTicketDTOV2.getAnliegenart(), "anliegenart");
         requireNonBlank(createTicketDTOV2.getVertrauensniveau(), "vertrauensniveau");
         requireNonBlank(createTicketDTOV2.getGroup(), "group");
+    }
+
+    private void validateCreateUserAndTicketDTO(@NonNull final CreateUserAndTicketDTOV2 createUserAndTicketDTOV2) {
+        CreateTicketDTOV2 createTicketDTO = createUserAndTicketDTOV2.getCreateTicketDTO();
+        if (createTicketDTO == null) {
+            throw new IllegalArgumentException("createTicketDTO must not be null");
+        }
+        validateCreateTicketDTO(createTicketDTO);
     }
 
     private void requireNonBlank(final String value, final String fieldName) {
