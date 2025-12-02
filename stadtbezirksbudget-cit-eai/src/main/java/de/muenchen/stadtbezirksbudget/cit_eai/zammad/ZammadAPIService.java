@@ -56,8 +56,7 @@ public class ZammadAPIService {
                 .switchIfEmpty(Mono.error(new ZammadAPIException("Could not create ticket in Zammad")))
                 .doOnSuccess(response -> {
                     if (response == null || response.getId() == null) {
-                        log.warn("Ticket created in Zammad but ticket or ticket id is null in response");
-                        return;
+                        throw new ZammadAPIException("Success response but ticket or ticket id is null in response");
                     }
                     log.info("Successfully created ticket in Zammad with ID: {}", response.getId());
                 })
@@ -88,8 +87,7 @@ public class ZammadAPIService {
                 .switchIfEmpty(Mono.error(new ZammadAPIException("Unable to create ticket and user")))
                 .doOnSuccess(response -> {
                     if (response == null || response.getTicket() == null || response.getTicket().getId() == null) {
-                        log.warn("Created ticket and user but ticket or ticket id is null in response");
-                        return;
+                        throw new ZammadAPIException("Success response but ticket or ticket id is null in response");
                     }
                     log.info("Successfully created ticket with id {} and user in Zammad", response.getTicket().getId());
                 })
