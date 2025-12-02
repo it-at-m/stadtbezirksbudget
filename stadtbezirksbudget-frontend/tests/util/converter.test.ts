@@ -81,21 +81,16 @@ describe("converter util", () => {
     const testFilters: AntragListFilter = {
       status: ["EINGEGANGEN", "ABGESCHLOSSEN"],
       bezirksausschussNr: [1, 5],
-      eingangDatum: [
-        new Date("2025-11-26T00:00:00Z"),
-        new Date("2025-11-27T00:00:00Z"),
-        new Date("2025-11-28T00:00:00Z"),
-      ],
+      eingangDatumVon: new Date("2025-11-26T00:00:00Z"),
+      eingangDatumBis: new Date("2025-11-28T00:00:00Z"),
       antragstellerName: "TEST_NAME",
       projektTitel: "TEST_TITEL",
       beantragtesBudgetVon: 537.25,
       beantragtesBudgetBis: 1098.98,
       art: "Fest",
       aktualisierungArt: ["E_AKTE"],
-      aktualisierungDatum: [
-        new Date("2025-11-24T00:00:00Z"),
-        new Date("2025-11-25T00:00:00Z"),
-      ],
+      aktualisierungDatumVon: new Date("2025-11-24T00:00:00Z"),
+      aktualisierungDatumBis: new Date("2025-11-25T00:00:00Z"),
     };
 
     test("keeps unchanged fields", () => {
@@ -110,7 +105,7 @@ describe("converter util", () => {
       expect(dto.aktualisierungArt).toBe(testFilters.aktualisierungArt);
     });
 
-    test("converts eingangsDatum array to von and bis iso strings", () => {
+    test("converts eingangsDatum to iso strings", () => {
       const dto = antragListFilterToDTO(testFilters);
 
       expect(dto.eingangDatumVon).toBe(
@@ -122,7 +117,7 @@ describe("converter util", () => {
       expect(dto.eingangDatum).toBeUndefined();
     });
 
-    test("converts aktualisierungDatum array to von and bis iso strings", () => {
+    test("converts aktualisierungDatum to iso strings", () => {
       const dto = antragListFilterToDTO(testFilters);
 
       expect(dto.aktualisierungDatumVon).toBe(
@@ -134,11 +129,13 @@ describe("converter util", () => {
       expect(dto.aktualisierungDatum).toBeUndefined();
     });
 
-    test("converts empty date array to undefined von and bis", () => {
+    test("converts undefined dates to undefined", () => {
       const filters: AntragListFilter = {
         ...testFilters,
-        eingangDatum: [],
-        aktualisierungDatum: [],
+        eingangDatumVon: undefined,
+        eingangDatumBis: undefined,
+        aktualisierungDatumVon: undefined,
+        aktualisierungDatumBis: undefined,
       };
       const dto = antragListFilterToDTO(filters);
 
