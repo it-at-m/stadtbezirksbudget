@@ -212,7 +212,7 @@ class AntragIntegrationTest {
                     .perform(get("/antrag")
                             .param("page", "0")
                             .param("size", "10")
-                            .param("bezirksausschussNr", "16, 25")
+                            .param("bezirksausschussNr", "16,25")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
