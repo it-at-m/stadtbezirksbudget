@@ -29,6 +29,8 @@ Examples for possible commit messages:
 When creating branches for your contributions, please use one of the following prefixes to indicate the type of work being done. This helps in categorizing and
 understanding the purpose of each branch at a glance.
 
+<!-- markdownlint-disable MD060 -->
+
 | Prefix      | Gitmoji | Description                                            | Example                       | Labels             |
 | ----------- | ------- | ------------------------------------------------------ | ----------------------------- | ------------------ |
 | `feature/`  | ✨      | Implementing a new feature or major functionality      | `feature/user-authentication` | ✨ Enhancement     |
@@ -39,10 +41,14 @@ understanding the purpose of each branch at a glance.
 | `security/` | 🔒️     | Fixing or improving security-related functionality     | `security/fix-token-leak`     | 🔒️ Security       |
 | `chore/`    | 🛠️      | General maintenance, dependency updates, tooling, etc. | `chore/improve-logging`       | 🛠️ Maintenance     |
 
+<!-- markdownlint-enable MD060 -->
+
 ## Labels
 
 When creating pull requests and issues, please use the appropriate labels to categorize your changes. This helps maintainers quickly understand the nature of
 your contribution. The labels should match the prefixes used in branch naming.
+
+<!-- markdownlint-disable MD060 -->
 
 | Label            | Description                                          | Color   |
 | ---------------- | ---------------------------------------------------- | ------- |
@@ -58,3 +64,5 @@ your contribution. The labels should match the prefixes used in branch naming.
 | 🏗️ Backend       | Changes related to Backend                           | #ff7f00 |
 | 🏗️ Frontend      | Changes related to Frontend                          | #ff7f00 |
 | 🏗️ CIT-EAI       | Changes related to CIT-EAI                           | #ff7f00 |
+
+<!-- markdownlint-disable MD060 -->

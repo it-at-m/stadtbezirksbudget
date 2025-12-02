@@ -3,6 +3,7 @@ import { describe, expect, test } from "vitest";
 import {
   booleanToFestOrFehl,
   toDateString,
+  toLocalISOString,
   toNumberString,
   toTimeString,
 } from "@/util/formatter.ts";
@@ -26,9 +27,21 @@ describe("formatter.ts tests", () => {
       expect(toTimeString(date)).toBe(date.toLocaleTimeString("de-DE"));
     });
 
-    test("testInvalidDateReturnsEmptyString", () => {
+    test("testInvalidDateReturnsUndefined", () => {
       const invalidDate = new Date("Invalid Date");
       expect(toTimeString(invalidDate)).toBe("");
+    });
+  });
+
+  describe("toLocalISOString", () => {
+    test("testFormatValidDateToLocalISOString", () => {
+      const date = new Date("2025-11-27T00:00:00");
+      expect(toLocalISOString(date)).toBe("2025-11-27T00:00:00");
+    });
+
+    test("testInvalidDateReturnsEmptyString", () => {
+      const invalidDate = new Date("Invalid Date");
+      expect(toLocalISOString(invalidDate)).toBeUndefined();
     });
   });
 

@@ -21,6 +21,22 @@ export function toTimeString(date: Date): string {
 }
 
 /**
+ * Formats the date to a local ISO string (YYYY-MM-DDTHH:mm:ss).
+ * @param date - The date to format.
+ * @returns The formatted date string or undefined if the date is invalid or undefined.
+ */
+export function toLocalISOString(date: Date | undefined): string | undefined {
+  if (date === undefined || !validateDate(date)) return undefined;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+}
+
+/**
  * Formats the number to a string with specified fraction digits and optional currency.
  */
 export function toNumberString(

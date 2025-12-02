@@ -5,7 +5,8 @@ import { readonly, ref } from "vue";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
-import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
 /**
  * Composable function that manages the state and operations for a list of
@@ -17,6 +18,7 @@ import { useSnackbarStore } from "@/stores/snackbar.ts";
  */
 export function useAntragSummaryList() {
   const snackbarStore = useSnackbarStore();
+  const filterStore = useAntragListFilterStore();
 
   const items = ref<AntragSummary[]>([]);
   const totalItems = ref<number>(0);
@@ -31,7 +33,11 @@ export function useAntragSummaryList() {
    */
   function fetchItems() {
     loading.value = true;
-    return getAntragsSummaryList(page.value - 1, itemsPerPage.value)
+    getAntragsSummaryList(
+      page.value - 1,
+      itemsPerPage.value,
+      filterStore.filters
+    )
       .then((content: Page<AntragSummary>) => {
         items.value = content.content;
         totalItems.value = content.page.totalElements;
@@ -65,6 +71,11 @@ export function useAntragSummaryList() {
     itemsPerPage.value = newItemsPerPage;
     fetchItems();
   }
+
+  filterStore.$subscribe(() => {
+    page.value = 1;
+    fetchItems();
+  });
 
   return {
     // List of AntragSummary items.

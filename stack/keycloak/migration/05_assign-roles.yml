@@ -6,3 +6,8 @@ changes:
       user: sbbsb
       role: sbb-sachbearbeiter
       clientId: local
+
+  - assignRole:
+      user: sbbsys
+      role: sbb-system
+      clientId: local
