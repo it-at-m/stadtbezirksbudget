@@ -183,8 +183,8 @@
 
 <script lang="ts" setup>
 import StatusSelect from "@/components/StatusSelect.vue";
-import { useAntragListFilter } from "@/composables/antragListFilter.ts";
-import { useAntragListFilterOptionsStore } from "@/stores/antragListFilterOptions.ts";
+import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
+import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
 import { aktualisierungArtOptions } from "@/types/AktualisierungArt.ts";
 import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
 

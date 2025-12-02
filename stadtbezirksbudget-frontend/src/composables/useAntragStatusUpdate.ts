@@ -5,7 +5,7 @@ import { ref, watch } from "vue";
 
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
-import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import { StatusText } from "@/types/Status.ts";
 
 /**

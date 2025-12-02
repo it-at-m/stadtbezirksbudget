@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
-import { useAntragListFilter } from "@/composables/antragListFilter";
-import { useAntragListFilterStore } from "@/stores/antragListFilter";
+import { useAntragListFilter } from "@/composables/useAntragListFilter";
+import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
   emptyAntragListFilter,
 } from "@/types/AntragListFilter";
 
-vi.mock("@/stores/antragListFilter.ts");
+vi.mock("@/stores/useAntragListFilterStore.ts");
 
 const testFilters: AntragListFilter = {
   status: ["EINGEGANGEN", "ABGESCHLOSSEN"],
