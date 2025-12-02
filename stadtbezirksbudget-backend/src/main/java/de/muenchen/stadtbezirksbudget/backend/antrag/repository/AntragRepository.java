@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 /**
  * Repository for managing {@link Antrag} entities.
  * <p>
- * This interface provides basic CRUD operations as well as paging and sorting
- * for {@link Antrag} objects.
+ * This interface provides basic CRUD operations, paging and sorting
+ * and specification-based querying for {@link Antrag} objects.
  */
 @Repository
 public interface AntragRepository extends PagingAndSortingRepository<Antrag, UUID>, CrudRepository<Antrag, UUID>, JpaSpecificationExecutor<Antrag> {
