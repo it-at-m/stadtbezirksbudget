@@ -39,7 +39,7 @@ describe("formatter", () => {
       expect(toLocalISOString(date)).toBe("2025-11-27T00:00:00");
     });
 
-    test("invalid date returns empty string", () => {
+    test("invalid date returns undefined", () => {
       const invalidDate = new Date("Invalid Date");
       expect(toLocalISOString(invalidDate)).toBeUndefined();
     });
