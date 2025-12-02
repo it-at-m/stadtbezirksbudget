@@ -1,0 +1,193 @@
+<template>
+  <v-card data-test="antrag-list-filter-card">
+    <v-card-title>
+      <v-row>
+        <v-col class="d-flex align-center">Filtern nach</v-col>
+        <v-col cols="auto">
+          <v-btn
+            data-test="antrag-list-filter-reset-btn"
+            variant="outlined"
+            @click="resetFilters"
+            >Alle Filter löschen
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card-title>
+    <v-card-text>
+      <v-row>
+        <v-col>
+          <status-select
+            v-model="filters.status"
+            clearable
+            data-test="antrag-list-filter-status"
+            density="compact"
+            hide-details="auto"
+            label="Status"
+            multiple
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-autocomplete
+            v-model="filters.bezirksausschussNr"
+            :items="bezirksausschussNrOptions"
+            clearable
+            data-test="antrag-list-filter-bezirksausschuss"
+            density="compact"
+            hide-details="auto"
+            label="Bezirk"
+            multiple
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-date-input
+            v-model="filters.eingangDatum"
+            clearable
+            data-test="antrag-list-filter-eingang-datum"
+            density="compact"
+            hide-details="auto"
+            label="Antragsdatum"
+            multiple="range"
+            prepend-icon=""
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-autocomplete
+            v-model="filters.antragstellerName"
+            :items="filterOptions.antragstellerNamen"
+            clearable
+            data-test="antrag-list-filter-antragsteller-name"
+            density="compact"
+            hide-details="auto"
+            label="Antragsteller/in"
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-autocomplete
+            v-model="filters.projektTitel"
+            :items="filterOptions.projektTitel"
+            clearable
+            data-test="antrag-list-filter-projekt-titel"
+            density="compact"
+            hide-details="auto"
+            label="Projekt"
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-row class="text-grey-darken-1">
+            <v-col>Beantragtes Budget</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col>
+              <v-number-input
+                v-model="filters.beantragtesBudgetVon"
+                :precision="2"
+                clearable
+                control-variant="hidden"
+                data-test="antrag-list-filter-beantragtes-budget-von"
+                density="compact"
+                hide-details="auto"
+                label="von"
+                suffix="€"
+                variant="underlined"
+                @focusout="updateFilters"
+              />
+            </v-col>
+            <v-col>
+              <v-number-input
+                v-model="filters.beantragtesBudgetBis"
+                :precision="2"
+                clearable
+                control-variant="hidden"
+                data-test="antrag-list-filter-beantragtes-budget-bis"
+                density="compact"
+                hide-details="auto"
+                label="bis"
+                suffix="€"
+                variant="underlined"
+                @focusout="updateFilters"
+              />
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-select
+            v-model="filters.art"
+            :items="['Fest', 'Fehl']"
+            clearable
+            data-test="antrag-list-filter-art"
+            density="compact"
+            hide-details="auto"
+            label="Art"
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-select
+            v-model="filters.aktualisierungArt"
+            :items="aktualisierungArtOptions"
+            clearable
+            data-test="antrag-list-filter-aktualisierung-art"
+            density="compact"
+            hide-details="auto"
+            label="Aktualisierung"
+            multiple
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <v-date-input
+            v-model="filters.aktualisierungDatum"
+            clearable
+            data-test="antrag-list-filter-aktualisierung-datum"
+            density="compact"
+            hide-details="auto"
+            label="Datum Aktualisierung"
+            multiple="range"
+            prepend-icon=""
+            variant="underlined"
+            @focusout="updateFilters"
+          />
+        </v-col>
+      </v-row>
+    </v-card-text>
+  </v-card>
+</template>
+
+<script lang="ts" setup>
+import StatusSelect from "@/components/StatusSelect.vue";
+import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
+import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
+import { aktualisierungArtOptions } from "@/types/AktualisierungArt.ts";
+import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
+
+const { updateFilters, resetFilters, filters } = useAntragListFilter();
+const { filterOptions } = useAntragListFilterOptionsStore();
+</script>
