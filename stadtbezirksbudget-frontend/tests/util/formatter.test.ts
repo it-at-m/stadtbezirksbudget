@@ -43,6 +43,10 @@ describe("formatter", () => {
       const invalidDate = new Date("Invalid Date");
       expect(toLocalISOString(invalidDate)).toBeUndefined();
     });
+
+    test("undefined returns undefined", () => {
+      expect(toLocalISOString(undefined)).toBeUndefined();
+    });
   });
 
   describe("toNumberString", () => {
