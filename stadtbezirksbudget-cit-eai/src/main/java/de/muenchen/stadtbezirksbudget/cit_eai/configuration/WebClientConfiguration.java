@@ -12,7 +12,6 @@ import reactor.netty.http.client.HttpClient;
  */
 @Configuration
 public class WebClientConfiguration {
-
     /**
      * Configures the HttpClient with timeouts.
      *

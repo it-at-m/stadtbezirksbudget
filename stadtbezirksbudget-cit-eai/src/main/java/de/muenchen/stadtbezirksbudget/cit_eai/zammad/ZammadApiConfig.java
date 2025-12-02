@@ -12,7 +12,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EnableConfigurationProperties(ZammadProperties.class)
 @RequiredArgsConstructor
 public class ZammadApiConfig {
-
     private final ZammadProperties zammadProperties;
     private final WebClient webClient;
 

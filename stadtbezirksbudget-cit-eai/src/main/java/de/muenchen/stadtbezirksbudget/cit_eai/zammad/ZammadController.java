@@ -21,7 +21,6 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 public class ZammadController {
-
     private final ZammadAPIService zammadAPIService;
 
     /**
@@ -40,5 +39,4 @@ public class ZammadController {
         return zammadAPIService.createTicket(createTicketDTOV2, lhmextid, userid, List.of())
                 .map(ticket -> ResponseEntity.status(HttpStatus.CREATED).body("Ticket created with ID: " + ticket.getId()));
     }
-
 }

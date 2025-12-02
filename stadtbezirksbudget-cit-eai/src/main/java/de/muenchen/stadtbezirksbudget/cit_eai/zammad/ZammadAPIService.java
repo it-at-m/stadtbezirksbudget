@@ -23,7 +23,6 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 public class ZammadAPIService {
-
     private final TicketsApi ticketsApi;
 
     /**

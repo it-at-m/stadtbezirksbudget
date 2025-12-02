@@ -19,7 +19,6 @@ import reactor.netty.http.client.HttpClient;
 @Profile("no-security")
 @EnableWebSecurity
 public class NoSecurityConfiguration {
-
     /**
      * Configures the security filter chain to disable frame options, permit all requests, and disable
      * CSRF protection.
@@ -49,7 +48,6 @@ public class NoSecurityConfiguration {
      */
     @Bean
     public WebClient webClient(final HttpClient httpClient) {
-
         return WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .build();

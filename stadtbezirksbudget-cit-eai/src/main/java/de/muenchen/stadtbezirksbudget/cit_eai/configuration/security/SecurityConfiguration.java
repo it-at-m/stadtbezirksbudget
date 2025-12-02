@@ -34,7 +34,6 @@ import reactor.netty.http.client.HttpClient;
 @RequiredArgsConstructor
 @Slf4j
 public class SecurityConfiguration {
-
     private final Optional<KeycloakRolesAuthoritiesConverter> keycloakRolesAuthoritiesConverter;
     private final Optional<UserInfoAuthoritiesConverter> userInfoAuthoritiesConverter;
 

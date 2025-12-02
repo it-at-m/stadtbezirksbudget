@@ -9,7 +9,6 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
  */
 @Getter
 public class ZammadAPIException extends RuntimeException {
-
     @Serial
     private static final long serialVersionUID = 1L;
 
