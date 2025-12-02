@@ -210,6 +210,7 @@ class ZammadAPIServiceTest {
             final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
 
             final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
+            resp.setTicket(new TicketInternal().id("42").title("T"));
             Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), eq(List.of(resource))))
                     .thenReturn(Mono.just(resp));
 
