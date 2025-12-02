@@ -397,7 +397,7 @@ class AntragIntegrationTest {
             System.out.println("Nach Name-Filter: " + matching.size());
             matching = matching.stream().filter(a -> List.of(1, 11, 22).contains(a.getBezirksausschussNr())).toList();
             System.out.println("Nach BezirksausschussNr-Filter: " + matching.size());
-            matching = matching.stream().filter(a -> List.of(Status.EINGEGANGEN, Status.RUECKZAHLUNG).contains(a.getBearbeitungsstand().getStatus())).toList();
+            matching = matching.stream().filter(a -> List.of(Status.EINGEGANGEN, Status.ABGESCHLOSSEN).contains(a.getBearbeitungsstand().getStatus())).toList();
             System.out.println("Nach Status-Filter: " + matching.size());
             matching = matching.stream().filter(a -> !a.getEingangDatum().isBefore(LocalDateTime.parse("2009-01-01T00:00:00"))
                     && !a.getEingangDatum().isAfter(LocalDateTime.parse("2010-01-10T23:59:59"))).toList();
@@ -412,7 +412,7 @@ class AntragIntegrationTest {
                     .perform(get("/antrag")
                             .param("page", "0")
                             .param("size", "100")
-                            .param("status", Status.EINGEGANGEN.name() + "," + Status.RUECKZAHLUNG.name())
+                            .param("status", Status.EINGEGANGEN.name() + "," + Status.ABGESCHLOSSEN.name())
                             .param("bezirksausschussNr", "1,11,22")
                             .param("eingangDatumVon", "2009-01-01T00:00:00")
                             .param("eingangDatumBis", "2010-01-10T23:59:59")
