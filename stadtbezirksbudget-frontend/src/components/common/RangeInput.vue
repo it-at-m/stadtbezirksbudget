@@ -1,25 +1,27 @@
 <template>
-  <v-row class="text-grey-darken-1">
-    <v-col>{{ label }}</v-col>
-  </v-row>
-  <v-row no-gutters>
-    <v-col>
-      <component
-        :is="inputComponent"
-        v-model="fromModel"
-        :label="fromLabel"
-        v-bind="inputProps"
-      />
-    </v-col>
-    <v-col>
-      <component
-        :is="inputComponent"
-        v-model="toModel"
-        :label="toLabel"
-        v-bind="inputProps"
-      />
-    </v-col>
-  </v-row>
+  <div>
+    <v-row class="text-grey-darken-1">
+      <v-col>{{ label }}</v-col>
+    </v-row>
+    <v-row no-gutters>
+      <v-col>
+        <component
+          :is="inputComponent"
+          v-model="fromModel"
+          :label="fromLabel"
+          v-bind="inputProps"
+        />
+      </v-col>
+      <v-col>
+        <component
+          :is="inputComponent"
+          v-model="toModel"
+          :label="toLabel"
+          v-bind="inputProps"
+        />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script lang="ts" setup>
