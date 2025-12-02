@@ -69,7 +69,6 @@
         <commons-text.version>1.14.0</commons-text.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <refarch-tools.version>1.2.0</refarch-tools.version>
-        <hibernate-processor.version>7.1.10.Final</hibernate-processor.version>
 
         <!-- Additional required dependencies -->
         <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version> <!-- Needed to make MapStruct and Lombok work together -->
@@ -167,12 +166,6 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-processor</artifactId>
-            <version>${hibernate-processor.version}</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- Other -->
@@ -317,8 +310,7 @@
                         </path>
                         <path>
                             <groupId>org.hibernate.orm</groupId>
-                            <artifactId>hibernate-processor</artifactId>
-                            <version>${hibernate-processor.version}</version>
+                            <artifactId>hibernate-jpamodelgen</artifactId> <!-- Needs to be changed to hibernate-processor on hibernate v7 upgrade -->
                         </path>
                     </annotationProcessorPaths>
                     <showDeprecation>true</showDeprecation>
