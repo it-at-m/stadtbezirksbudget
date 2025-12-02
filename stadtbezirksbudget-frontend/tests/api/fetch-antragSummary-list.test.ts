@@ -34,7 +34,7 @@ const mockResponse = {
   page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
 };
 
-describe("getAntragsSummaryList", () => {
+describe("fetch-antragSummary-list", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });

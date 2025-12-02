@@ -5,7 +5,7 @@ import { BACKEND } from "@/constants.ts";
 
 global.fetch = vi.fn();
 
-describe("updateAntragStatus", () => {
+describe("update-antragStatus", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });

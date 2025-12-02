@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 
 import { Ad2imageAvatarClient } from "@/api/ad2image-avatar-client";
 
-describe("Ad2imageAvatarClient", () => {
+describe("ad2image-avatar-client", () => {
   test("builds correct URL", () => {
     const base = "https://ad2image.example.com";
     const client = new Ad2imageAvatarClient(base);

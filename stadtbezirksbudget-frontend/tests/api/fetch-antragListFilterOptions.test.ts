@@ -12,7 +12,7 @@ const mockResponse: AntragListFilterOptions = {
   projektTitel: ["TEST_TITLE_1", "TEST_TITLE_2", "TEST_TITLE_3"],
 };
 
-describe("getAntragListFilterOptions", () => {
+describe("fetch-antragListFilterOptions", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });

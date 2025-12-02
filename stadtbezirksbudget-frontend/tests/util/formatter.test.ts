@@ -8,7 +8,7 @@ import {
   toTimeString,
 } from "@/util/formatter.ts";
 
-describe("formatter.ts tests", () => {
+describe("formatter", () => {
   describe("toDateString", () => {
     test("formats valid date to 'DD.MM.YYYY'", () => {
       const date = new Date("2023-05-15");

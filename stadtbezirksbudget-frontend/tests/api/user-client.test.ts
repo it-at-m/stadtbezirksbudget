@@ -6,7 +6,7 @@ import User from "@/types/User";
 
 global.fetch = vi.fn();
 
-describe("getUser", () => {
+describe("user-client", () => {
   beforeEach(() => {
     vi.spyOn(fetchUtils, "getConfig").mockImplementation(() => {
       return {

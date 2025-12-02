@@ -7,7 +7,7 @@ import {
   AktualisierungArtText,
 } from "@/types/AktualisierungArt.ts";
 
-describe("AktualisierungArt type", () => {
+describe("AktualisierungArt", () => {
   test("AktualisierungArtText maps each option value to its title", () => {
     aktualisierungArtOptions.forEach((opt: AktualisierungArtOption) => {
       expect(
