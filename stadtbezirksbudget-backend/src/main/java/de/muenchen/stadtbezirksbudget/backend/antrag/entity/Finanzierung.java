@@ -46,13 +46,15 @@ public class Finanzierung extends BaseEntity {
     //TODO: Rewriting calculation for istFehlbetrag as it is currently wrong #356
     //Ignored For Testing, as current calculation is wrong and will be changed.
     /**
-     * This formula checks if the difference between the sum of anticipated expenditures (voraussichtliche_ausgabe)
-     * and the sum of financing means (finanzierungsmittel) equals the requested budget (beantragtes_budget).
+     * This formula checks if the difference between the sum of anticipated expenditures
+     * (voraussichtliche_ausgabe)
+     * and the sum of financing means (finanzierungsmittel) equals the requested budget
+     * (beantragtes_budget).
      * If they are equal, istFehlbetrag will be true; otherwise, it will be false.
      */
     @Formula(
-            "((SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) - " +
-                    "(SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) = beantragtes_budget)"
+        "((SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) - " +
+                "(SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) = beantragtes_budget)"
     )
     private boolean istFehlbetrag;
 }
