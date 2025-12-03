@@ -35,7 +35,7 @@ describe("AntragStatusUpdate", () => {
     vi.mocked(useAntragStatusUpdate).mockReturnValue(mockUseAntragStatusUpdate);
   });
 
-  test("testRendersAutocomplete", () => {
+  test("renders antrag status select", () => {
     const wrapper = createWrapper();
 
     expect(wrapper.find('[data-test="antrag-status-select"]').exists()).toBe(
@@ -43,7 +43,7 @@ describe("AntragStatusUpdate", () => {
     );
   });
 
-  test("testPassesStatusOptionsToAutocompleteItems", () => {
+  test("renders autocomplete with status options", () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
@@ -51,7 +51,7 @@ describe("AntragStatusUpdate", () => {
     expect(autocomplete.props("items")).toEqual(statusOptions);
   });
 
-  test("testCallsUpdateStatusWhenModelValueUpdates", async () => {
+  test("calls updateStatus when modelValue updates", async () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
@@ -64,7 +64,7 @@ describe("AntragStatusUpdate", () => {
     );
   });
 
-  test("testCallsToggleStatusAndSearchsWhenFocused", async () => {
+  test("calls toggleStatusAndSearch when focused", async () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
@@ -76,7 +76,7 @@ describe("AntragStatusUpdate", () => {
     ).toHaveBeenCalledWith(true);
   });
 
-  test("testCallsToggleStatusAndSearchWhenUnfocused", async () => {
+  test("calls toggleStatusAndSearch when unfocused", async () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
