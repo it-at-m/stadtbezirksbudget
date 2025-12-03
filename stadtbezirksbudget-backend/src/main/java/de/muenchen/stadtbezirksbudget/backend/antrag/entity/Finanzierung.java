@@ -46,25 +46,13 @@ public class Finanzierung extends BaseEntity {
     //TODO: Rewriting calculation for istFehlbetrag as it is currently wrong #356
     //Ignored For Testing, as current calculation is wrong and will be changed.
     /**
-     * This field represents whether there is a discrepancy (shortfall) between the calculated budget
-     * and the requested budget.
-     * The calculation is performed using SQL and checks if the sum of anticipated expenses
-     * (`voraussichtlicheAusgabe`) minus
-     * the sum of funding sources (`finanzierungsmittel`) equals the requested budget
-     * (`beantragtesBudget`).
-     * If the calculated shortfall is near zero, it means there is no discrepancy, and the field is set
-     * to
-     * true.
-     * Otherwise, it is set to false.
+     * This formula checks if the difference between the sum of anticipated expenditures (voraussichtliche_ausgabe)
+     * and the sum of financing means (finanzierungsmittel) equals the requested budget (beantragtes_budget).
+     * If they are equal, istFehlbetrag will be true; otherwise, it will be false.
      */
     @Formula(
-        "(CASE WHEN " +
-                "ABS(" +
-                "(SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) - " +
-                "(SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) - " +
-                "beantragtes_budget" +
-                ") < 0.001 " +
-                "THEN true ELSE false END)"
+            "((SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) - " +
+                    "(SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) = beantragtes_budget)"
     )
     private boolean istFehlbetrag;
 }
