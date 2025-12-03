@@ -21,7 +21,7 @@ describe("fetch-utils", () => {
     vi.restoreAllMocks();
   });
 
-  test("testGetConfigHasDefaultHeaders", () => {
+  test("getConfig has default headers", () => {
     const cfg = getConfig();
     expect(cfg).toBeDefined();
     expect(cfg.mode).toBe("cors");
@@ -30,18 +30,18 @@ describe("fetch-utils", () => {
     );
   });
 
-  test("testGetHeadersOmitXSRFTokenWhenCookieAbsent", () => {
+  test("getHeaders omit XSRF token when cookie absent", () => {
     const cfg = getConfig();
     expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBeNull();
   });
 
-  test("testGetHeadersIncludeXSRFTokenWhenCookiePresent", () => {
+  test("getHeaders include XSRF token when cookie present", () => {
     vi.stubGlobal("document", { cookie: "XSRF-TOKEN=abc123; other=1" });
     const cfg = getConfig();
     expect((cfg.headers as Headers).get("X-XSRF-TOKEN")).toBe("abc123");
   });
 
-  test("testPostConfigIncludesBodyAndHeaders", () => {
+  test("postConfig includes body and headers", () => {
     const body = { a: 1 };
     const cfg = postConfig(body);
     expect(cfg.method).toBe("POST");
@@ -51,7 +51,7 @@ describe("fetch-utils", () => {
     );
   });
 
-  test("testPostConfigHandlesNullOrUndefinedBody", () => {
+  test("postConfig handles null or undefined body", () => {
     const cfgNull = postConfig(null);
     expect(cfgNull.method).toBe("POST");
     expect(cfgNull.body).toBeUndefined();
@@ -66,7 +66,7 @@ describe("fetch-utils", () => {
     );
   });
 
-  test("testPutConfigOmitsIfMatchWhenNoVersion", () => {
+  test("putConfig omits If-Match when no version", () => {
     const body = { id: 1 };
     const cfg = putConfig(body);
     expect(cfg.method).toBe("PUT");
@@ -74,7 +74,7 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("If-Match")).toBeNull();
   });
 
-  test("testPutConfigAppendsIfMatchWhenVersionPresent", () => {
+  test("putConfig appends If-Match when version present", () => {
     const body = { id: 1, version: "v1" };
     const cfg = putConfig(body);
     expect(cfg.method).toBe("PUT");
@@ -82,7 +82,7 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("If-Match")).toBe("v1");
   });
 
-  test("testPatchConfigAppendsIfMatchWhenVersionNotUndefined", () => {
+  test("patchConfig appends If-Match when version present", () => {
     const body = { id: 1, version: 0 };
     const cfg = patchConfig(body);
     expect(cfg.method).toBe("PATCH");
@@ -90,7 +90,7 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("If-Match")).toBe("0");
   });
 
-  test("testPatchConfigOmitsIfMatchWhenVersionUndefined", () => {
+  test("patchConfig omits If-Match when version undefined", () => {
     const body = { id: 1, version: undefined };
     const cfg = patchConfig(body);
     expect(cfg.method).toBe("PATCH");
@@ -98,7 +98,7 @@ describe("fetch-utils", () => {
     expect((cfg.headers as Headers).get("If-Match")).toBeNull();
   });
 
-  test("testDeleteConfigHasDeleteMethod", () => {
+  test("deleteConfig has DELETE method", () => {
     const cfg = deleteConfig();
     expect(cfg.method).toBe("DELETE");
     expect((cfg.headers as Headers).get("Content-Type")).toBe(
@@ -106,12 +106,12 @@ describe("fetch-utils", () => {
     );
   });
 
-  test("testDefaultResponseHandlerDoesNothingOnOk", () => {
+  test("defaultResponseHandler does nothing on ok response", () => {
     const resp = { ok: true } as Response;
     expect(() => defaultResponseHandler(resp)).not.toThrow();
   });
 
-  test("testDefaultResponseHandlerThrowsApiErrorOn403", () => {
+  test("defaultResponseHandler throws ApiError on 403", () => {
     const resp = { ok: false, status: 403 } as Response;
     try {
       defaultResponseHandler(resp);
@@ -124,7 +124,7 @@ describe("fetch-utils", () => {
     }
   });
 
-  test("testDefaultResponseHandlerReloadsOnOpaqueRedirect", () => {
+  test("defaultResponseHandler reloads on opaque redirect", () => {
     const reloadMock = vi.fn();
     vi.stubGlobal("location", { reload: reloadMock });
 
@@ -143,7 +143,7 @@ describe("fetch-utils", () => {
     expect(reloadMock).toHaveBeenCalled();
   });
 
-  test("testDefaultResponseHandlerThrowsWarningOnOtherErrors", () => {
+  test("defaultResponseHandler throws ApiError on other errors", () => {
     const resp = { ok: false, status: 500 } as Response;
     try {
       defaultResponseHandler(resp, "FehlerX");
@@ -156,7 +156,7 @@ describe("fetch-utils", () => {
     }
   });
 
-  test("testDefaultCatchHandlerThrowsApiErrorWithMessage", async () => {
+  test("defaultCatchHandler throws ApiError with message", async () => {
     await expect(async () =>
       defaultCatchHandler(new Error("boom"), "CatchMsg")
     ).rejects.toThrow(ApiError);
