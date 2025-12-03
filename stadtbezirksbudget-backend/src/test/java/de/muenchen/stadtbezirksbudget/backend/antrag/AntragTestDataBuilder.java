@@ -15,13 +15,13 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -34,7 +34,7 @@ public record AntragTestDataBuilder(
         AntragRepository antragRepository,
         AdresseRepository adresseRepository,
         FinanzierungRepository finanzierungRepository,
-        ZahlungsempfaengerRepository antragstellerRepository,
+        AntragstellerRepository antragstellerRepository,
         ProjektRepository projektRepository,
         BearbeitungsstandRepository bearbeitungsstandRepository,
         BankverbindungRepository bankverbindungRepository,

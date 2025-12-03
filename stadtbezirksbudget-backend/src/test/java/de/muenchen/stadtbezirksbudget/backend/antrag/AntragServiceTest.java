@@ -22,9 +22,11 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
+import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
+import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +51,7 @@ class AntragServiceTest {
     @Mock
     private AntragRepository antragRepository;
     @Mock
-    private ZahlungsempfaengerRepository zahlungsempfaengerRepository;
+    private AntragstellerRepository zahlungsempfaengerRepository;
     @Mock
     private ProjektRepository projektRepository;
     @InjectMocks
@@ -170,8 +172,8 @@ class AntragServiceTest {
     class GetFilterOptions {
         @Test
         void testEmptyLists() {
-            when(zahlungsempfaengerRepository.findDistinctAntragstellerNames()).thenReturn(Collections.emptyList());
-            when(projektRepository.findDistinctProjektTitles()).thenReturn(Collections.emptyList());
+            when(zahlungsempfaengerRepository.findDistinctByNameIsNotNull()).thenReturn(Collections.emptyList());
+            when(projektRepository.findDistinctByTitelIsNotNull()).thenReturn(Collections.emptyList());
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 
@@ -185,8 +187,11 @@ class AntragServiceTest {
             final List<String> antragstellerNames = List.of("Antragsteller1", "Antragsteller2");
             final List<String> projektTitles = List.of("Projekt1", "Projekt2");
 
-            when(zahlungsempfaengerRepository.findDistinctAntragstellerNames()).thenReturn(antragstellerNames);
-            when(projektRepository.findDistinctProjektTitles()).thenReturn(projektTitles);
+            final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
+            final List<TitelView> titelViews = projektTitles.stream().map(titel -> (TitelView) () -> titel).toList();
+
+            when(zahlungsempfaengerRepository.findDistinctByNameIsNotNull()).thenReturn(nameViews);
+            when(projektRepository.findDistinctByTitelIsNotNull()).thenReturn(titelViews);
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 
@@ -198,10 +203,12 @@ class AntragServiceTest {
         @Test
         void testPartialEmptyLists() {
             final List<String> antragstellerNames = List.of("Antragsteller1");
-            final List<String> projektTitles = Collections.emptyList();
 
-            when(zahlungsempfaengerRepository.findDistinctAntragstellerNames()).thenReturn(antragstellerNames);
-            when(projektRepository.findDistinctProjektTitles()).thenReturn(projektTitles);
+            final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
+            final List<TitelView> titelViews = Collections.emptyList();
+
+            when(zahlungsempfaengerRepository.findDistinctByNameIsNotNull()).thenReturn(nameViews);
+            when(projektRepository.findDistinctByTitelIsNotNull()).thenReturn(titelViews);
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 

@@ -5,9 +5,11 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
+import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
+import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ import org.springframework.stereotype.Service;
 public class AntragService {
     private final AntragRepository antragRepository;
     private final ProjektRepository projektRepository;
-    private final ZahlungsempfaengerRepository zahlungsempfaengerRepository;
+    private final AntragstellerRepository antragstellerRepository;
     private final AntragFilterService antragFilterService;
 
     /**
@@ -49,8 +51,8 @@ public class AntragService {
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        final List<String> antragstellerNameList = zahlungsempfaengerRepository.findDistinctAntragstellerNames();
-        final List<String> projektTitelList = projektRepository.findDistinctProjektTitles();
+        final List<String> antragstellerNameList = antragstellerRepository.findDistinctByNameIsNotNull().stream().map(NameView::getName).sorted().toList();
+        final List<String> projektTitelList = projektRepository.findDistinctByTitelIsNotNull().stream().map(TitelView::getTitel).sorted().toList();
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
