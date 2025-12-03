@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row class="text-grey-darken-1">
-      <v-col>{{ label }}</v-col>
+      <v-col data-test="range-input-label">{{ label }}</v-col>
     </v-row>
     <v-row no-gutters>
       <v-col>
@@ -9,7 +9,7 @@
           :is="inputComponent"
           v-model="fromModel"
           :label="fromLabel"
-          data-test="from-input"
+          data-test="range-input-from"
           v-bind="inputProps"
         />
       </v-col>
@@ -18,7 +18,7 @@
           :is="inputComponent"
           v-model="toModel"
           :label="toLabel"
-          data-test="to-input"
+          data-test="range-input-to"
           v-bind="inputProps"
         />
       </v-col>

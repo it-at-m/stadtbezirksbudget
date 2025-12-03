@@ -38,7 +38,7 @@ const inputFields = [
   },
   {
     dataTest: "antrag-list-filter-eingang-datum",
-    subFields: ["from-input", "to-input"],
+    subFields: ["range-input-from", "range-input-to"],
   },
   {
     dataTest: "antrag-list-filter-antragsteller-name",
@@ -48,7 +48,7 @@ const inputFields = [
   },
   {
     dataTest: "antrag-list-filter-beantragtes-budget",
-    subFields: ["from-input", "to-input"],
+    subFields: ["range-input-from", "range-input-to"],
   },
   {
     dataTest: "antrag-list-filter-art",
@@ -58,7 +58,7 @@ const inputFields = [
   },
   {
     dataTest: "antrag-list-filter-aktualisierung-datum",
-    subFields: ["from-input", "to-input"],
+    subFields: ["range-input-from", "range-input-to"],
   },
 ];
 
