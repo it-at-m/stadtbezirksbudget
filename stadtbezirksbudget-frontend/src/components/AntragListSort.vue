@@ -130,7 +130,7 @@ const {sortOption, resetSorting, updateSorting} = useAntragListSort();
         <v-col>
           <v-select
               :items="sortOptionsByField('beantragtesBudget')"
-              :model-value="sortOption.beantragtresBudget"
+              :model-value="sortOption.beantragtesBudget"
               clearable
               density="compact"
               hide-details="auto"
