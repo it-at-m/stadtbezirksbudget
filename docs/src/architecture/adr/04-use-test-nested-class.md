@@ -11,6 +11,9 @@ lead to confusion and make it harder to map tests to source methods.
 All test classes in the backend have exactly one nested class for each method in the class under test. The nested classes are named after the method they test,
 starting with a capital letter. Overloaded methods are tested in the same nested class. Each nested class contains one or more test methods.
 
+In the frontend, nested describe blocks should be used for each tested function, but this is not enforced. For example, files that only contain tests for a
+single function may not need nested describe blocks. If used, the describe blocks are named after the function they test.
+
 ## Consequences
 
 - Every method in the source class is explicitly tested, improving coverage and traceability.

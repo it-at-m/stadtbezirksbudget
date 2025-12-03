@@ -14,8 +14,8 @@ const vuetify = createVuetify({
   directives,
 });
 
-describe("TheSnackbar.vue", () => {
-  test("testRenderingMessageWhenPassed", () => {
+describe("TheSnackbar", () => {
+  test("renders snackbar with message", () => {
     const message = "Hello_World";
     const wrapper = shallowMount(TheSnackbar, {
       global: {
