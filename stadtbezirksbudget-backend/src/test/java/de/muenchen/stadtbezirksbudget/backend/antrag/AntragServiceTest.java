@@ -99,7 +99,7 @@ class AntragServiceTest {
         @Test
         void testEmptyAntragList() {
             final Pageable pageable = PageRequest.of(0, 10);
-            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class); // Mocking AntragFilterDTO
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
 
             when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
                     .thenReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
@@ -114,7 +114,7 @@ class AntragServiceTest {
         @Test
         void testGetAllEntitiesWithDifferentStatus() {
             final Pageable pageable = PageRequest.of(0, 10);
-            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class); // Mocking AntragFilterDTO
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());
 
@@ -142,7 +142,7 @@ class AntragServiceTest {
         @Test
         void testGetAllEntitiesWithMultipleItems() {
             final Pageable pageable = PageRequest.of(0, 5);
-            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class); // Mocking AntragFilterDTO
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());
 
