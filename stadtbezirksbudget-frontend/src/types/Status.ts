@@ -1,5 +1,5 @@
 // Array of all status options for use in UI components
-export const statusOptions: readonly StatusOption[] = [
+export const statusOptions = [
   { value: "EINGEGANGEN", shortText: "Offen", longText: "Antrag eingegangen" },
   {
     value: "WARTEN_AUF_BUERGERRUECKMELDUNG",
@@ -98,7 +98,7 @@ export type Status = (typeof statusOptions)[number]["value"];
 
 // Interface for status options used in dropdowns or selectors
 export interface StatusOption {
-  value: string;
+  value: Status;
   shortText: string;
   longText: string;
 }
