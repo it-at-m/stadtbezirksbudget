@@ -30,6 +30,22 @@ describe("RangeInput", () => {
     expect(label.text()).toContain("Range Label");
   });
 
+  test("uses default input labels", () => {
+    const wrapper = mount(RangeInput, {
+      props: {
+        label: "Range Label",
+        inputComponent: InputStub,
+      },
+      global: {
+        plugins: [pinia, vuetify],
+      },
+    });
+
+    const [fromInput, toInput] = wrapper.findAllComponents(InputStub);
+    expect(fromInput.props("label")).toBe("von");
+    expect(toInput.props("label")).toBe("bis");
+  });
+
   test("renders two inputs", () => {
     const wrapper = mount(RangeInput, {
       props: {
@@ -92,5 +108,23 @@ describe("RangeInput", () => {
 
     expect(wrapper.vm.fromModel).toBe("10");
     expect(wrapper.vm.toModel).toBe("20");
+  });
+
+  test("accepts initial values via from/to props", () => {
+    const wrapper = mount(RangeInput, {
+      props: {
+        label: "Range Label",
+        inputComponent: InputStub,
+        from: "initial-from",
+        to: "initial-to",
+      },
+      global: {
+        plugins: [pinia, vuetify],
+      },
+    });
+
+    const [fromInput, toInput] = wrapper.findAllComponents(InputStub);
+    expect(fromInput.props("modelValue")).toBe("initial-from");
+    expect(toInput.props("modelValue")).toBe("initial-to");
   });
 });
