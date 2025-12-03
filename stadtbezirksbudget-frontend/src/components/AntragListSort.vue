@@ -1,5 +1,8 @@
-<script setup lang="ts">
-import { sortOptions } from "@/types/AntragListSort.ts";
+<script lang="ts" setup>
+import {sortOptionsByField} from "@/types/AntragListSort.ts";
+import {useAntragListSort} from "@/composables/useAntragListSort.ts";
+
+const {sortOption, resetSorting, updateSorting} = useAntragListSort();
 </script>
 
 <template>
@@ -9,9 +12,10 @@ import { sortOptions } from "@/types/AntragListSort.ts";
         <v-col class="d-flex align-center">Sortieren nach</v-col>
         <v-col cols="auto">
           <v-btn
-            data-test="antrag-list-sort-reset-btn"
-            variant="outlined"
-            >Sortierung zurücksetzen
+              data-test="antrag-list-sort-reset-btn"
+              variant="outlined"
+              @click="resetSorting"
+          >Sortierung zurücksetzen
           </v-btn>
         </v-col>
       </v-row>
@@ -20,132 +24,165 @@ import { sortOptions } from "@/types/AntragListSort.ts";
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Status"
-            :items="sortOptions['status']"
+              :items="sortOptionsByField('status')"
+              :model-value="sortOption.status"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Status"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Nummer"
-            :items="sortOptions['nummer']"
+              :items="sortOptionsByField('nummer')"
+              :model-value="sortOption.nummer"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Nummer"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Aktenzeichen"
-            :items="sortOptions['aktenzeichen']"
+              :items="sortOptionsByField('aktenzeichen')"
+              :model-value="sortOption.aktenzeichen"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Aktenzeichen"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Bezirk"
-            :items="sortOptions['bezirk']"
+              :items="sortOptionsByField('bezirk')"
+              :model-value="sortOption.bezirk"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Bezirk"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Antragsdatum"
-            :items="sortOptions['antragsdatum']"
+              :items="sortOptionsByField('antragsdatum')"
+              :model-value="sortOption.antragsdatum"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Antragsdatum"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Antragsteller/in"
-            :items="sortOptions['antragsteller']"
+              :items="sortOptionsByField('antragsteller')"
+              :model-value="sortOption.antragsteller"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Antragsteller/in"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Projekt"
-            :items="sortOptions['projekt']"
+              :items="sortOptionsByField('projekt')"
+              :model-value="sortOption.projekt"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Projekt"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Beantragtes Budget"
-            :items="sortOptions['beantragtesBudget']"
+              :items="sortOptionsByField('beantragtesBudget')"
+              :model-value="sortOption.beantragtresBudget"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Beantragtes Budget"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Art"
-            :items="sortOptions['art']"
+              :items="sortOptionsByField('art')"
+              :model-value="sortOption.art"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Art"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Aktualisierung"
-            :items="sortOptions['aktualisierungArt']"
+              :items="sortOptionsByField('aktualisierungArt')"
+              :model-value="sortOption.aktualisierungArt"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Aktualisierung"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
       <v-row>
         <v-col>
           <v-select
-            clearable
-            density="compact"
-            variant="underlined"
-            hide-details="auto"
-            label="Datum Aktualisierung"
-            :items="sortOptions['aktualisierungDatum']"
+              :items="sortOptionsByField('aktualisierungDatum')"
+              :model-value="sortOption.aktualisierungDatum"
+              clearable
+              density="compact"
+              hide-details="auto"
+              label="Datum Aktualisierung"
+              return-object
+              variant="underlined"
+              @update:model-value="updateSorting"
           ></v-select>
         </v-col>
       </v-row>
