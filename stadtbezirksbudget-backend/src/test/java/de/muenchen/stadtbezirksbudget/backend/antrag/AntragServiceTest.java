@@ -51,7 +51,7 @@ class AntragServiceTest {
     @Mock
     private AntragRepository antragRepository;
     @Mock
-    private AntragstellerRepository zahlungsempfaengerRepository;
+    private AntragstellerRepository antragstellerRepository;
     @Mock
     private ProjektRepository projektRepository;
     @InjectMocks
@@ -172,8 +172,8 @@ class AntragServiceTest {
     class GetFilterOptions {
         @Test
         void testEmptyLists() {
-            when(zahlungsempfaengerRepository.findDistinctByNameIsNotNull()).thenReturn(Collections.emptyList());
-            when(projektRepository.findDistinctByTitelIsNotNull()).thenReturn(Collections.emptyList());
+            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(Collections.emptyList());
+            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(Collections.emptyList());
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 
@@ -190,8 +190,8 @@ class AntragServiceTest {
             final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
             final List<TitelView> titelViews = projektTitles.stream().map(titel -> (TitelView) () -> titel).toList();
 
-            when(zahlungsempfaengerRepository.findDistinctByNameIsNotNull()).thenReturn(nameViews);
-            when(projektRepository.findDistinctByTitelIsNotNull()).thenReturn(titelViews);
+            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(nameViews);
+            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(titelViews);
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 
@@ -207,8 +207,8 @@ class AntragServiceTest {
             final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
             final List<TitelView> titelViews = Collections.emptyList();
 
-            when(zahlungsempfaengerRepository.findDistinctByNameIsNotNull()).thenReturn(nameViews);
-            when(projektRepository.findDistinctByTitelIsNotNull()).thenReturn(titelViews);
+            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(nameViews);
+            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(titelViews);
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 

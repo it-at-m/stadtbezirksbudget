@@ -11,5 +11,5 @@ public interface AntragstellerRepository extends CrudRepository<Antragsteller, U
     /**
      * Retrieves all distinct Antragsteller names as List of NameView
      */
-    List<NameView> findDistinctByNameIsNotNull();
+    List<NameView> findDistinctByNameIsNotNullOrderByNameAsc();
 }

@@ -18,5 +18,5 @@ public interface ProjektRepository extends CrudRepository<Projekt, UUID>, JpaRep
     /**
      * Retrieves all distinct Projekt titles as List of TitelView
      */
-    List<TitelView> findDistinctByTitelIsNotNull();
+    List<TitelView> findDistinctByTitelIsNotNullOrderByTitelAsc();
 }

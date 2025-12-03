@@ -51,8 +51,8 @@ public class AntragService {
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        final List<String> antragstellerNameList = antragstellerRepository.findDistinctByNameIsNotNull().stream().map(NameView::getName).sorted().toList();
-        final List<String> projektTitelList = projektRepository.findDistinctByTitelIsNotNull().stream().map(TitelView::getTitel).sorted().toList();
+        final List<String> antragstellerNameList = antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc().stream().map(NameView::getName).toList();
+        final List<String> projektTitelList = projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc().stream().map(TitelView::getTitel).toList();
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
