@@ -86,7 +86,7 @@ describe("RangeInput", () => {
       },
     });
 
-    const [fromInput, toInput] = wrapper.findAll("input");
+    const [fromInput, toInput] = wrapper.findAllComponents(InputStub);
     await fromInput.setValue("10");
     await toInput.setValue("20");
 
