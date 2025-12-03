@@ -59,18 +59,13 @@ describe("RangeInput", () => {
       },
     });
 
-    const fromInput = wrapper.find('[data-test="range-input-from"]');
-    const toInput = wrapper.find('[data-test="range-input-to"]');
-    expect(fromInput.exists()).toBe(true);
-    expect(toInput.exists()).toBe(true);
-
     const inputs = wrapper.findAllComponents(InputStub);
     expect(inputs.length).toBe(2);
-    expect(inputs[0].props("label")).toBe("From Label");
-    expect(inputs[1].props("label")).toBe("To Label");
-
-    expect(fromInput.html()).toBe(inputs[0].html());
-    expect(toInput.html()).toBe(inputs[1].html());
+    const [fromInput, toInput] = inputs;
+    expect(fromInput.props("label")).toBe("From Label");
+    expect(toInput.props("label")).toBe("To Label");
+    expect(fromInput.attributes()["data-test"]).toBe("range-input-from");
+    expect(toInput.attributes()["data-test"]).toBe("range-input-to");
   });
 
   test("forwards inputProps", () => {
