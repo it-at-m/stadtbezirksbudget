@@ -129,6 +129,42 @@ describe("converter util", () => {
       expect(dto.aktualisierungDatum).toBeUndefined();
     });
 
+    test("converts partial date ranges future", () => {
+      const filters: AntragListFilter = {
+        ...testFilters,
+        eingangDatumBis: undefined,
+        aktualisierungDatumBis: undefined,
+      };
+      const dto = antragListFilterToDTO(filters);
+
+      expect(dto.eingangDatumVon).toBe(
+        toLocalISOString(new Date("2025-11-26T00:00:00Z"))
+      );
+      expect(dto.eingangDatumBis).toBeUndefined();
+      expect(dto.aktualisierungDatumVon).toBe(
+        toLocalISOString(new Date("2025-11-24T00:00:00Z"))
+      );
+      expect(dto.aktualisierungDatumBis).toBeUndefined();
+    });
+
+    test("converts partial date ranges past", () => {
+      const filters: AntragListFilter = {
+        ...testFilters,
+        eingangDatumVon: undefined,
+        aktualisierungDatumVon: undefined,
+      };
+      const dto = antragListFilterToDTO(filters);
+
+      expect(dto.eingangDatumVon).toBeUndefined();
+      expect(dto.eingangDatumBis).toBe(
+        toLocalISOString(new Date("2025-11-28T00:00:00Z"))
+      );
+      expect(dto.aktualisierungDatumVon).toBeUndefined();
+      expect(dto.aktualisierungDatumBis).toBe(
+        toLocalISOString(new Date("2025-11-25T00:00:00Z"))
+      );
+    });
+
     test("converts undefined dates to undefined", () => {
       const filters: AntragListFilter = {
         ...testFilters,
