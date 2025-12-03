@@ -107,7 +107,7 @@ describe("useAntragSummaryList", () => {
   });
 
   describe("updateOptions", () => {
-    test("fetches new items when update options", async () => {
+    test("fetches new items when updating options", async () => {
       const mockResponse: Page<AntragSummary> = {
         content: [
           {
