@@ -39,110 +39,114 @@ describe("useAntragSummaryList", () => {
     (useAntragListFilterStore as vi.Mock).mockReturnValue(filterStoreMock);
   });
 
-  test("fetches items successfully", async () => {
-    const mockResponse: Page<AntragSummary> = {
-      content: [
-        {
-          id: "2",
-          status: "IN_BEARBEITUNG",
-          zammadNr: "Z-002",
-          aktenzeichen: "AZ-002",
-          bezirksausschussNr: 2,
-          eingangDatum: "2025-01-16",
-          antragstellerName: "Test Antragsteller 2",
-          projektTitel: "Test Projekt 2",
-          beantragtesBudget: 7500,
-          istFehlbetrag: false,
-          aktualisierung: "Aktualisiert",
-          aktualisierungDatum: "2025-01-16",
-        },
-      ],
-      page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
-    };
+  describe("fetchItems", () => {
+    test("fetches items successfully", async () => {
+      const mockResponse: Page<AntragSummary> = {
+        content: [
+          {
+            id: "2",
+            status: "IN_BEARBEITUNG",
+            zammadNr: "Z-002",
+            aktenzeichen: "AZ-002",
+            bezirksausschussNr: 2,
+            eingangDatum: "2025-01-16",
+            antragstellerName: "Test Antragsteller 2",
+            projektTitel: "Test Projekt 2",
+            beantragtesBudget: 7500,
+            istFehlbetrag: false,
+            aktualisierung: "Aktualisiert",
+            aktualisierungDatum: "2025-01-16",
+          },
+        ],
+        page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
+      };
 
-    (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
-    const { items, totalItems, fetchItems, loading } = useAntragSummaryList();
+      (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
+      const { items, totalItems, fetchItems, loading } = useAntragSummaryList();
 
-    fetchItems();
+      fetchItems();
 
-    await vi.waitFor(() => {
-      expect(items.value).toEqual(mockResponse.content);
-      expect(totalItems.value).toBe(mockResponse.page.totalElements);
-      expect(loading.value).toBe(false);
-    });
-  });
-
-  test("handles api errors when fetching items", async () => {
-    const errorMessage = "API Error";
-    (getAntragsSummaryList as vi.Mock).mockRejectedValue(
-      new Error(errorMessage)
-    );
-
-    const { fetchItems, loading } = useAntragSummaryList();
-    fetchItems();
-
-    await vi.waitFor(() => {
-      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-        message: errorMessage,
-        level: STATUS_INDICATORS.WARNING,
-      });
-      expect(loading.value).toBe(false);
-    });
-  });
-
-  test("handles generic errors when fetching items", async () => {
-    (getAntragsSummaryList as vi.Mock).mockRejectedValue(new Error());
-
-    const { fetchItems } = useAntragSummaryList();
-    fetchItems();
-
-    await vi.waitFor(() => {
-      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-        message: "Fehler beim Laden der Anträge",
-        level: STATUS_INDICATORS.WARNING,
+      await vi.waitFor(() => {
+        expect(items.value).toEqual(mockResponse.content);
+        expect(totalItems.value).toBe(mockResponse.page.totalElements);
+        expect(loading.value).toBe(false);
       });
     });
-  });
 
-  test("fetches new items when update options", async () => {
-    const mockResponse: Page<AntragSummary> = {
-      content: [
-        {
-          id: "1",
-          status: "EINGEGANGEN",
-          zammadNr: "Z-001",
-          aktenzeichen: "AZ-001",
-          bezirksausschussNr: 1,
-          eingangDatum: "2025-01-15",
-          antragstellerName: "Test Antragsteller",
-          projektTitel: "Test Projekt",
-          beantragtesBudget: 5000,
-          istFehlbetrag: false,
-          aktualisierung: "Erstellt",
-          aktualisierungDatum: "2025-01-15",
-        },
-      ],
-      page: { size: 10, number: 0, totalElements: 1, totalPages: 1 },
-    };
+    test("handles api errors when fetching items", async () => {
+      const errorMessage = "API Error";
+      (getAntragsSummaryList as vi.Mock).mockRejectedValue(
+        new Error(errorMessage)
+      );
 
-    (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
-    const { updateOptions, items } = useAntragSummaryList();
+      const { fetchItems, loading } = useAntragSummaryList();
+      fetchItems();
 
-    updateOptions({ page: 2, itemsPerPage: 5 });
+      await vi.waitFor(() => {
+        expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+          message: errorMessage,
+          level: STATUS_INDICATORS.WARNING,
+        });
+        expect(loading.value).toBe(false);
+      });
+    });
 
-    await vi.waitFor(() => {
-      expect(getAntragsSummaryList).toHaveBeenCalledWith(1, 5, filtersValue);
-      expect(items.value).toEqual(mockResponse.content);
+    test("handles generic errors when fetching items", async () => {
+      (getAntragsSummaryList as vi.Mock).mockRejectedValue(new Error());
+
+      const { fetchItems } = useAntragSummaryList();
+      fetchItems();
+
+      await vi.waitFor(() => {
+        expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+          message: "Fehler beim Laden der Anträge",
+          level: STATUS_INDICATORS.WARNING,
+        });
+      });
     });
   });
 
-  test("updates options correctly", () => {
-    const { updateOptions, page, itemsPerPage } = useAntragSummaryList();
+  describe("updateOptions", () => {
+    test("fetches new items when update options", async () => {
+      const mockResponse: Page<AntragSummary> = {
+        content: [
+          {
+            id: "1",
+            status: "EINGEGANGEN",
+            zammadNr: "Z-001",
+            aktenzeichen: "AZ-001",
+            bezirksausschussNr: 1,
+            eingangDatum: "2025-01-15",
+            antragstellerName: "Test Antragsteller",
+            projektTitel: "Test Projekt",
+            beantragtesBudget: 5000,
+            istFehlbetrag: false,
+            aktualisierung: "Erstellt",
+            aktualisierungDatum: "2025-01-15",
+          },
+        ],
+        page: { size: 10, number: 0, totalElements: 1, totalPages: 1 },
+      };
 
-    updateOptions({ page: 3, itemsPerPage: 15 });
+      (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
+      const { updateOptions, items } = useAntragSummaryList();
 
-    expect(page.value).toBe(3);
-    expect(itemsPerPage.value).toBe(15);
+      updateOptions({ page: 2, itemsPerPage: 5 });
+
+      await vi.waitFor(() => {
+        expect(getAntragsSummaryList).toHaveBeenCalledWith(1, 5, filtersValue);
+        expect(items.value).toEqual(mockResponse.content);
+      });
+    });
+
+    test("updates options correctly", () => {
+      const { updateOptions, page, itemsPerPage } = useAntragSummaryList();
+
+      updateOptions({ page: 3, itemsPerPage: 15 });
+
+      expect(page.value).toBe(3);
+      expect(itemsPerPage.value).toBe(15);
+    });
   });
 
   test("handles filter store subscription", async () => {
