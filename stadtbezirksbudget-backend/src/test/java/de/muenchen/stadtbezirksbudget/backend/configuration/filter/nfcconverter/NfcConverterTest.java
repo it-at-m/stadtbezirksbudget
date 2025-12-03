@@ -81,26 +81,19 @@ class NfcConverterTest {
     @Test
     void testSkipFilterIfContenttypeNotInWhitelist() throws ServletException, IOException {
         mockRequest("application/notvalid");
-
         filter.doFilter(req, resp, chain);
-
-        // Check
         final ArgumentCaptor<HttpServletRequest> reqCaptor = ArgumentCaptor.forClass(HttpServletRequest.class);
         Mockito.verify(chain, Mockito.times(1)).doFilter(reqCaptor.capture(), Mockito.any(ServletResponse.class));
-
         assertEquals(VALUE_NFD, reqCaptor.getValue().getParameter(NAME_NFD));
         assertEquals(VALUE_NFD, reqCaptor.getValue().getHeader(NAME_NFD));
         assertEquals(VALUE_NFD, reqCaptor.getValue().getCookies()[0].getValue());
         assertEquals(VALUE_NFD, IOUtils.toString(reqCaptor.getValue().getReader()));
-
-        // Check that multipart requests are not touched.
         assertArrayEquals(VALUE_NFD.getBytes(UTF8), IOUtils.toByteArray(reqCaptor.getValue().getPart(NAME_NFD).getInputStream()));
     }
 
     private void mockRequest(final String contentType) throws IOException, ServletException {
         Mockito.when(req.getContentType()).thenReturn(contentType);
         Mockito.when(req.getRequestURI()).thenReturn("/index.html?type=" + contentType);
-
         final Map<String, String[]> baseMapParams = new HashMap<>();
         baseMapParams.put(NAME_NFD, new String[] { VALUE_NFD, VALUE2_NFD });
         final Map<String, String[]> params = UnmodifiableMap.unmodifiableMap(baseMapParams);
@@ -116,9 +109,7 @@ class NfcConverterTest {
         final List<String> values = new UnmodifiableList<>(baseListvalues);
         Mockito.when(req.getHeaders(NAME_NFD)).thenReturn(Collections.enumeration(values));
         Mockito.when(req.getCookies()).thenReturn(mockCookies());
-
         Mockito.when(req.getReader()).thenReturn(new BufferedReader(new StringReader(VALUE_NFD)));
-
         final Collection<Part> parts = mockParts();
         Mockito.when(req.getPart(NAME_NFD)).thenReturn(parts.iterator().next());
     }
