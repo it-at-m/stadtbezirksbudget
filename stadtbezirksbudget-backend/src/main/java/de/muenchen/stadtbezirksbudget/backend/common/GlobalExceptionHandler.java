@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(PropertyReferenceException.class)
-    public ResponseEntity<Map<String, Object>> handlePropertyReferenceException(PropertyReferenceException ex) {
+    public ResponseEntity<Map<String, Object>> handlePropertyReferenceException(final PropertyReferenceException ex) {
         return ResponseEntity.badRequest().body(
                 Map.of(
                         "error", "Invalid property reference",
