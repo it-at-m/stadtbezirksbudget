@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class AntragController {
 
     /**
      * Retrieves a paginated list of Antrag summaries.
+     * Can be sorted by any field of Antrag.
      *
      * @param page number of the page
      * @param size amount of items in each page
@@ -47,8 +49,9 @@ public class AntragController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
-    public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size) {
-        final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged() : PageRequest.of(page, size);
+    public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
+            final Sort sort) {
+        final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged(sort) : PageRequest.of(page, size, sort);
         final Page<Antrag> antragPage = antragService.getAntragPage(pageable);
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
                 .map(antragMapper::toAntragSummaryDTO)
