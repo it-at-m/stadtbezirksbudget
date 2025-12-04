@@ -154,6 +154,62 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(1)));
         }
+
+        @Test
+        void testGivenSortAscThenReturnSortedResults() throws Exception {
+            antragList.get(50).getBearbeitungsstand().setStatus(Status.EINGEGANGEN);
+            bearbeitungsstandRepository.save(antragList.get(50).getBearbeitungsstand());
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "100")
+                            .param("sort", "bearbeitungsstand.status,asc")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content[0].id", is(antragList.get(50).getId().toString())));
+        }
+
+        @Test
+        void testGivenSortDescThenReturnSortedResults() throws Exception {
+            antragList.get(50).setZammadTicketNr("100000000");
+            antragRepository.save(antragList.get(50));
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("page", "0")
+                            .param("size", "100")
+                            .param("sort", "zammadTicketNr,desc")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content[0].id", is(antragList.get(50).getId().toString())));
+        }
+
+        @Test
+        void testGivenSortUnpagedThenReturnSortedResults() throws Exception {
+            antragList.get(50).getProjekt().setTitel("Allerbestes Projekt");
+            projektRepository.save(antragList.get(50).getProjekt());
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("size", "-1")
+                            .param("sort", "projekt.titel,asc")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content[0].id", is(antragList.get(50).getId().toString())));
+        }
+
+        @Test
+        void testGivenInvalidSortFieldThenReturnBadRequest() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("sort", "invalidField,asc")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.invalidProperty", is("invalidField")))
+                    .andExpect(jsonPath("$.error", is("Invalid property reference")));
+        }
     }
 
     @Nested
