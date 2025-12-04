@@ -7,6 +7,8 @@ import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
+import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
+import { antragListSortToSortItem } from "@/types/AntragListSort.ts";
 
 /**
  * Composable function that manages the state and operations for a list of
@@ -19,6 +21,7 @@ import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 export function useAntragSummaryList() {
   const snackbarStore = useSnackbarStore();
   const filterStore = useAntragListFilterStore();
+  const sortingStore = useAntragListSortingStore();
 
   const items = ref<AntragSummary[]>([]);
   const totalItems = ref<number>(0);
@@ -36,7 +39,8 @@ export function useAntragSummaryList() {
     getAntragsSummaryList(
       page.value - 1,
       itemsPerPage.value,
-      filterStore.filters
+      filterStore.filters,
+      sortingStore.sorting,
     )
       .then((content: Page<AntragSummary>) => {
         items.value = content.content;
@@ -73,6 +77,11 @@ export function useAntragSummaryList() {
   }
 
   filterStore.$subscribe(() => {
+    page.value = 1;
+    fetchItems();
+  });
+
+  sortingStore.$subscribe(() => {
     page.value = 1;
     fetchItems();
   });
