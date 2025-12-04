@@ -4,7 +4,7 @@ import { describe, expect, test } from "vitest";
 
 import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
 
-describe("BezirksausschussNr type", () => {
+describe("BezirksausschussNr", () => {
   describe("bezirksausschussNrOptions", () => {
     test("has 25 entries and values 1..25", () => {
       expect(bezirksausschussNrOptions).toHaveLength(25);

@@ -7,7 +7,7 @@ import {
 } from "@/util/converter.ts";
 import { toLocalISOString } from "@/util/formatter";
 
-describe("converter util", () => {
+describe("converter", () => {
   describe("objectToSearchParams", () => {
     test("convert empty object", () => {
       const object = {};

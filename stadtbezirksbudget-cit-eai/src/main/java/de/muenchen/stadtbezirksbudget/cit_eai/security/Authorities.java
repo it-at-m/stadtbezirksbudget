@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
  */
 public final class Authorities {
     public static final String KAFKA_PUBLISH_MESSAGE = "hasAnyRole('sbb-system')";
+    public static final String ZAMMAD_CREATE_TICKET = "hasAnyRole('sbb-system')";
 
     private Authorities() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");

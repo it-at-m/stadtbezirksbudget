@@ -63,7 +63,7 @@ describe("AntragSummaryList", () => {
     });
   });
 
-  test("testRenderingAntragSummaryList", () => {
+  test("renders antrag summary list", () => {
     expect(wrapper.find('[data-test="antrag-summary-list"]').exists()).toBe(
       true
     );
@@ -88,7 +88,7 @@ describe("AntragSummaryList", () => {
     );
   });
 
-  test("testUpdatingUiScreenSizeChange", async () => {
+  test("updates ui on screen size change", async () => {
     const originalInnerWidth = window.innerWidth;
 
     const initialWidth = 1200;
@@ -151,7 +151,7 @@ describe("AntragSummaryList", () => {
     });
   });
 
-  test("testUpdatingUiItemsChange", async () => {
+  test("renders antrag summary items", async () => {
     mockUseAntragSummaryList.items.value = [
       {
         id: "2",
@@ -207,7 +207,7 @@ describe("AntragSummaryList", () => {
     expect(istFehlbetragElement.text()).toBe("Fest");
   });
 
-  test("testUpdatingUiOptionsChange", async () => {
+  test("updates props on pagination options change", async () => {
     mockUseAntragSummaryList.page.value = 2;
     mockUseAntragSummaryList.itemsPerPage.value = 5;
 
@@ -217,7 +217,8 @@ describe("AntragSummaryList", () => {
     expect(dataTable.props("page")).toBe(2);
     expect(dataTable.props("itemsPerPage")).toBe(5);
   });
-  test("testPaginationTriggersUpdateOptions", async () => {
+
+  test("emits update:options event on pagination change", async () => {
     const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
 
     dataTable.vm.$emit("update:options", {

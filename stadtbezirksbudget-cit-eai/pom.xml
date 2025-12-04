@@ -45,6 +45,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
+        <!-- OpenAPI -->
+        <openapi-generator-maven-plugin.version>7.14.0</openapi-generator-maven-plugin.version>
+        <jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
+
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
 
@@ -103,8 +107,20 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-stream-binder-kafka</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
 
         <!-- Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-resource-server</artifactId>
@@ -113,9 +129,12 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
+
+        <!-- OpenAPI -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
         </dependency>
 
         <!-- Test -->
@@ -361,6 +380,33 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/openapi-spec.json</inputSpec>
+                            <library>webclient</library>
+                            <generatorName>java</generatorName>
+                            <apiPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.api</apiPackage>
+                            <modelPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model</modelPackage>
+                            <invokerPackage>de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated</invokerPackage>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
+                            <serverVariableOverrides />
+                            <configOptions>
+                                <useAbstractionForFiles>true</useAbstractionForFiles>
+                                <useJakartaEe>true</useJakartaEe>
+                            </configOptions>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

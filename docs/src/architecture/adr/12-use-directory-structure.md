@@ -13,10 +13,14 @@ Inside each feature-based package, we use a type-oriented structure (e.g. `entit
 In the frontend, the structure is layer-oriented, meaning that all files of the same type (e.g. `components`, `services`, etc.) are in the same parent
 directory. In these directories, files can be further organized by feature.
 
+Tests in both the backend and frontend follow the same directory structure as the implementation code they are testing.
+
 ## Consequences
 
 - The feature-oriented structure in the backend promotes modularity, allowing for easier maintenance and scalability of individual features.
 - Teams can work on different features concurrently without interfering with each other, reducing merge conflicts and improving collaboration.
-- The type-oriented structure within each feature package helps developers quickly locate relevant files (e.g., entities, DTOs, repositories) related to a specific feature.
-- The separation of concerns between the backend and frontend structures may lead to code duplication if similar logic is required in both layers but is organized differently.
+- The type-oriented structure within each feature package helps developers quickly locate relevant files (e.g., entities, DTOs, repositories) related to a
+  specific feature.
+- The separation of concerns between the backend and frontend structures may lead to code duplication if similar logic is required in both layers but is
+  organized differently.
 - New developers might face a steeper learning curve due to the differing organizational structures between the backend and frontend, requiring time to adapt.
