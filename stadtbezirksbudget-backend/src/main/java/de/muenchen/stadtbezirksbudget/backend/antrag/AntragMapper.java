@@ -21,7 +21,7 @@ public interface AntragMapper {
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
     @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
-    @Mapping(target = "istFehlbetrag", expression = "java(antrag.getFinanzierung().istFehlbetrag())")
+    @Mapping(target = "istFehlbetrag", source = "antrag.finanzierung.istFehlbetrag")
     @Mapping(target = "aktualisierung", source = "aktualisierungArt")
     AntragSummaryDTO toAntragSummaryDTO(Antrag antrag);
 }

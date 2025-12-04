@@ -54,6 +54,7 @@ class AntragIntegrationTest {
             TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
 
     private final List<Antrag> antragList = new ArrayList<>();
+    private AntragTestDataBuilder antragTestDataBuilder;
 
     @Autowired
     private AntragRepository antragRepository;
@@ -76,7 +77,7 @@ class AntragIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
+        antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository);
         for (int i = 0; i < 100; i++) {
             antragList.add(antragTestDataBuilder.initializeAntrag());
@@ -153,6 +154,93 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.page.size", is(100)))
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(1)));
+        }
+
+        @Test
+        @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
+        void testGivenSortAscThenReturnSortedResults() throws Exception {
+            antragRepository.deleteAll();
+            antragList.clear();
+            for (int i = 0; i < 3; i++) {
+                final Antrag antrag = antragTestDataBuilder.initializeAntrag();
+                antrag.getBearbeitungsstand().setStatus(Status.VOLLSTAENDIG);
+                if (i == 1) {
+                    antrag.getBearbeitungsstand().setStatus(Status.EINGEGANGEN);
+                }
+                antragList.add(antrag);
+                antragRepository.save(antrag);
+                bearbeitungsstandRepository.save(antrag.getBearbeitungsstand());
+            }
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("sortBy", "status")
+                            .param("sortDirection", "ASC")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content[0].id", is(antragList.get(1).getId().toString())));
+        }
+
+        @Test
+        void testGivenSortDescThenReturnSortedResults() throws Exception {
+            antragRepository.deleteAll();
+            antragList.clear();
+            for (int i = 0; i < 3; i++) {
+                final Antrag antrag = antragTestDataBuilder.initializeAntrag();
+                antrag.setZammadTicketNr(String.valueOf(i));
+                antragList.add(antrag);
+                antragRepository.save(antrag);
+            }
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("sortBy", "zammadNr")
+                            .param("sortDirection", "DESC")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content[0].id", is(antragList.get(2).getId().toString())));
+        }
+
+        @Test
+        void testGivenSortUnpagedThenReturnSortedResults() throws Exception {
+            antragRepository.deleteAll();
+            antragList.clear();
+            for (int i = 0; i < 3; i++) {
+                final Antrag antrag = antragTestDataBuilder.initializeAntrag();
+                antrag.getProjekt().setTitel(String.valueOf(i));
+                antragList.add(antrag);
+                antragRepository.save(antrag);
+                projektRepository.save(antrag.getProjekt());
+            }
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("size", "-1")
+                            .param("sortBy", "projektTitel")
+                            .param("sortDirection", "ASC")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.content[0].id", is(antragList.getFirst().getId().toString())));
+        }
+
+        @Test
+        void testGivenInvalidSortByThenReturnBadRequest() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("sortBy", "invalidField")
+                            .param("sortDirection", "ASC")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void testGivenInvalidSortDirectionThenReturnBadRequest() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("sortBy", "beantragtesBudget")
+                            .param("sortDirection", "INVALID_DIRECTION")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
         }
     }
 
