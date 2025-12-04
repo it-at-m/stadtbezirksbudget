@@ -2,7 +2,9 @@ import type {
   AntragListFilter,
   AntragListFilterDTO,
 } from "@/types/AntragListFilter.ts";
+import type { AntragListSort } from "@/types/AntragListSort.ts";
 
+import { antragListSortToSortString } from "@/types/AntragListSort.ts";
 import { toLocalISOString } from "@/util/formatter.ts";
 
 /**
@@ -28,6 +30,23 @@ export function objectToSearchParams(
       params.append(key, String(value));
     }
   });
+  return params;
+}
+
+/**
+ * Converts AntragListSort to URLSearchParams.
+ * @param sortObject - The AntragListSort object to convert
+ * @param params - Optional existing URLSearchParams to append to
+ * @returns The resulting URLSearchParams
+ */
+export function sortObjectToSearchParams(
+  sortObject: AntragListSort,
+  params: URLSearchParams = new URLSearchParams()
+): URLSearchParams {
+  const sortString = antragListSortToSortString(sortObject);
+  if (sortString && sortString.length > 0) {
+    params.append("sort", sortString);
+  }
   return params;
 }
 
