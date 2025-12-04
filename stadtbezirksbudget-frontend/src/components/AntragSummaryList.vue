@@ -18,12 +18,27 @@
     data-test="antrag-summary-list"
     @update:options="updateOptions"
   >
-    <template v-slot:[`header.beantragtesBudget`]>
+    <template
+      v-slot:[`header.beantragtesBudget`]="{
+        column,
+        toggleSort,
+        isSorted,
+        getSortIcon,
+      }"
+    >
       <div
-        class="text-left"
-        data-test="header-beantragtes-budget"
+        class="d-flex v-data-table-header__cell"
+        style="cursor: pointer; align-items: center"
+        @click="() => toggleSort"
       >
-        Beantragtes<br />Budget [€]
+        <span class="mr-1 text-left"> Beantragtes <br />Budget [€] </span>
+        <v-icon
+          :class="[
+            'v-data-table-header__sort-icon',
+            { 'v-data-table-header__sort-icon--active': isSorted(column) },
+          ]"
+          :icon="getSortIcon(column)"
+        />
       </div>
     </template>
     <template v-slot:[`item.status`]="{ item }">
