@@ -35,7 +35,7 @@ public class RequestResponseLoggingFilterTest {
     @Nested
     class CheckForLogging {
         @Test
-        void testLoggingEnabledForAllMode() throws IOException, ServletException {
+        void testFilterDelegatesWithoutErrorForAllMode() throws IOException, ServletException {
 
             when(securityProperties.getLoggingMode()).thenReturn(RequestResponseLoggingFilter.LoggingMode.ALL);
             when(mockRequest.getMethod()).thenReturn(HttpMethod.GET.name());
@@ -46,7 +46,7 @@ public class RequestResponseLoggingFilterTest {
         }
 
         @Test
-        void testLoggingDisabledForNoneMode() throws IOException, ServletException {
+        void testFilterDelegatesWithoutErrorForNoneMode() throws IOException, ServletException {
             when(securityProperties.getLoggingMode()).thenReturn(RequestResponseLoggingFilter.LoggingMode.NONE);
             when(mockRequest.getMethod()).thenReturn(HttpMethod.POST.name());
             when(mockRequest.getRequestURI()).thenReturn("/test");
@@ -56,7 +56,7 @@ public class RequestResponseLoggingFilterTest {
         }
 
         @Test
-        void testLoggingEnabledForChangingMode() throws IOException, ServletException {
+        void testFilterDelegatesWithoutErrorForChangingMode() throws IOException, ServletException {
             when(securityProperties.getLoggingMode()).thenReturn(RequestResponseLoggingFilter.LoggingMode.CHANGING);
             when(mockRequest.getMethod()).thenReturn(HttpMethod.POST.name());
             when(mockRequest.getRequestURI()).thenReturn("/test");

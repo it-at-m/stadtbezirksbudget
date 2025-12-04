@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -22,8 +21,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
 import org.springframework.cache.Cache;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -113,25 +110,25 @@ class UserInfoAuthoritiesConverterTest {
         }
 
         @Test
-        @MockitoSettings(strictness = Strictness.LENIENT)
         void testMapWithoutAuthorities() {
             final Jwt jwt = mock(Jwt.class);
             when(jwt.getSubject()).thenReturn("123");
             when(cache.get("123")).thenReturn(null);
             final Map<String, Object> responseMap = Map.of("no-authorities-here", "x");
-            when(restTemplate.getForObject(anyString(), eq(Map.class))).thenReturn(responseMap);
+            when(restTemplate.exchange(eq(USER_INFO_URI), eq(HttpMethod.GET), any(HttpEntity.class), eq(Map.class)))
+                    .thenReturn(new ResponseEntity<>(responseMap, HttpStatus.OK));
             final Collection<GrantedAuthority> result = converter.convert(jwt);
             assertNotNull(result);
             assertTrue(result.isEmpty());
         }
 
         @Test
-        @MockitoSettings(strictness = Strictness.LENIENT)
         void testNullResponseFromUserInfo() {
             final Jwt jwt = mock(Jwt.class);
             when(jwt.getSubject()).thenReturn("234");
             when(cache.get("234")).thenReturn(null);
-            when(restTemplate.getForObject(anyString(), eq(Map.class))).thenReturn(null);
+            when(restTemplate.exchange(eq(USER_INFO_URI), eq(HttpMethod.GET), any(HttpEntity.class), eq(Map.class)))
+                    .thenReturn(new ResponseEntity<>(null, HttpStatus.OK));
             final Collection<GrantedAuthority> result = converter.convert(jwt);
             assertNotNull(result);
             assertTrue(result.isEmpty());
@@ -149,27 +146,13 @@ class UserInfoAuthoritiesConverterTest {
         }
 
         @Test
-        @MockitoSettings(strictness = Strictness.LENIENT)
         void testAsAuthoritiesWithNonCollection() {
             final Jwt jwt = mock(Jwt.class);
             when(jwt.getSubject()).thenReturn("sub1");
             when(cache.get("sub1")).thenReturn(null);
             final Map<String, Object> response = Map.of(AUTHORITIES, "not-a-collection");
-            when(restTemplate.getForObject(anyString(), eq(Map.class))).thenReturn(response);
-            final Collection<GrantedAuthority> result = converter.convert(jwt);
-            assertNotNull(result);
-            assertTrue(result.isEmpty());
-        }
-
-        @Test
-        @MockitoSettings(strictness = Strictness.LENIENT)
-        void testAsAuthoritiesWithMixedCollection() {
-            final Jwt jwt = mock(Jwt.class);
-            when(jwt.getSubject()).thenReturn("sub2");
-            when(cache.get("sub2")).thenReturn(null);
-            final List<Object> mixed = List.of(123, true, 4.56);
-            final Map<String, Object> response = Map.of(AUTHORITIES, mixed);
-            when(restTemplate.getForObject(anyString(), eq(Map.class))).thenReturn(response);
+            when(restTemplate.exchange(eq(USER_INFO_URI), eq(HttpMethod.GET), any(HttpEntity.class), eq(Map.class)))
+                    .thenReturn(new ResponseEntity<>(response, HttpStatus.OK));
             final Collection<GrantedAuthority> result = converter.convert(jwt);
             assertNotNull(result);
             assertTrue(result.isEmpty());

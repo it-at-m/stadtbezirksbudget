@@ -4,6 +4,7 @@ import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SEC
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -42,21 +43,17 @@ import org.testcontainers.utility.DockerImageName;
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class CacheControlFilterTest {
 
-    private CacheControlFilter filter;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
-    private FilterChain filterChain;
-
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
-
     private static final String ANTRAG_ENDPOINT_URL = "/antrag";
-
     private static final String EXPECTED_CACHE_CONTROL_HEADER_VALUES = "no-cache, no-store, must-revalidate";
-
+    private CacheControlFilter filter;
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private FilterChain filterChain;
     @Autowired
     private TestRestTemplate testRestTemplate;
 
@@ -72,10 +69,10 @@ class CacheControlFilterTest {
     class DoFilterInternalTests {
         @Test
         void testForCacheControlHeadersForEntityEndpoint() {
-            final ResponseEntity<String> response = testRestTemplate.exchange(ANTRAG_ENDPOINT_URL, HttpMethod.GET, null, String.class);
-            assertEquals(HttpStatus.OK, response.getStatusCode());
-            assertTrue(response.getHeaders().containsKey(HttpHeaders.CACHE_CONTROL));
-            assertEquals(EXPECTED_CACHE_CONTROL_HEADER_VALUES, response.getHeaders().getCacheControl());
+            final ResponseEntity<String> responseEntity = testRestTemplate.exchange(ANTRAG_ENDPOINT_URL, HttpMethod.GET, null, String.class);
+            assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+            assertTrue(responseEntity.getHeaders().containsKey(HttpHeaders.CACHE_CONTROL));
+            assertEquals(EXPECTED_CACHE_CONTROL_HEADER_VALUES, responseEntity.getHeaders().getCacheControl());
         }
 
         @Test
@@ -84,7 +81,7 @@ class CacheControlFilterTest {
             filter.doFilterInternal(request, response, filterChain);
             verify(response).addHeader(
                     HttpHeaders.CACHE_CONTROL,
-                    "no-cache, no-store, must-revalidate");
+                    EXPECTED_CACHE_CONTROL_HEADER_VALUES);
             verify(filterChain).doFilter(request, response);
         }
 
@@ -94,15 +91,15 @@ class CacheControlFilterTest {
             filter.doFilterInternal(request, response, filterChain);
             verify(response).addHeader(
                     HttpHeaders.CACHE_CONTROL,
-                    "no-cache, no-store, must-revalidate");
+                    EXPECTED_CACHE_CONTROL_HEADER_VALUES);
             verify(filterChain).doFilter(request, response);
         }
 
         @Test
         void testDoesNotOverrideExistingCacheControlHeader() throws ServletException, IOException {
-            when(response.getHeader(anyString())).thenReturn("max-age=3600");
+            when(response.getHeader(HttpHeaders.CACHE_CONTROL)).thenReturn("max-age=3600");
             filter.doFilterInternal(request, response, filterChain);
-            verify(response, never()).addHeader(anyString(), anyString());
+            verify(response, never()).addHeader(eq(HttpHeaders.CACHE_CONTROL), anyString());
             verify(filterChain).doFilter(request, response);
         }
     }

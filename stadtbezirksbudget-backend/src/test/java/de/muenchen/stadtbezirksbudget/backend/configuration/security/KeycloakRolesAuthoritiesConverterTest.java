@@ -54,7 +54,7 @@ class KeycloakRolesAuthoritiesConverterTest {
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
 
             // Assert
-            assert authorities != null;
+            Assertions.assertNotNull(authorities);
             assertEquals(2, authorities.size());
             assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_admin")));
             assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_user")));
@@ -63,17 +63,16 @@ class KeycloakRolesAuthoritiesConverterTest {
         @Test
         void testConvertWithoutRoles() {
             // Setup
-            final Map<String, Object> claims = new HashMap<>();
-            claims.put(RESOURCE_ACCESS_CLAIM, Map.of(
-                    TEST_CLIENT, Collections.emptyMap()));
+            final Map<String, Object> resourceAccessClaim = new HashMap<>();
+            resourceAccessClaim.put(TEST_CLIENT, Collections.emptyMap());
             final Jwt jwt = mock(Jwt.class);
-            when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(claims);
+            when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(resourceAccessClaim);
 
             // Call
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
 
             // Assert
-            assert authorities != null;
+            Assertions.assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
 
@@ -89,7 +88,7 @@ class KeycloakRolesAuthoritiesConverterTest {
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
 
             // Assert
-            assert authorities != null;
+            Assertions.assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
 
@@ -102,7 +101,7 @@ class KeycloakRolesAuthoritiesConverterTest {
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
 
             // Assert
-            assert authorities != null;
+            Assertions.assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
 

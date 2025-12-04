@@ -28,7 +28,7 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 
 /*
  * This configuration class is considered too complex to test effectively.
- * As a result, it is excluded from unit testing to maintain focus on simpler,
+ * As a result, it is excluded from unit testing for branch coverage to maintain focus on simpler,
  * more testable components of the application.
  */
 @ExcludedFromGeneratedCoverage

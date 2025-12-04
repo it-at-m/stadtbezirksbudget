@@ -23,7 +23,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-@ExcludedFromGeneratedCoverage //Excluded because it is only a dummy
+@ExcludedFromGeneratedCoverage
+//Excluded because no further implementation exists, tests will be implemented later. TODO: Add tests and remove exclusion to reach branch coverage
 public class KafkaConsumerService {
     @Value("${spring.kafka.consumer.group-id}")
     private String groupId;

@@ -9,9 +9,6 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-@Documented
-@Retention(CLASS)
-
 /**
  * Marker annotation to exclude classes, methods, or constructors from JaCoCo coverage reports.
  * <p>
@@ -23,6 +20,9 @@ import java.lang.annotation.Target;
  * reference)</li>
  * </ul>
  */
+
+@Documented
+@Retention(CLASS)
 @Target({ TYPE, METHOD, CONSTRUCTOR })
 public @interface ExcludedFromGeneratedCoverage {
 
