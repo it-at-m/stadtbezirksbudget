@@ -104,8 +104,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("status", Status.EINGEGANGEN.name() + "," + Status.ABGESCHLOSSEN.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -129,8 +127,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("bezirksausschussNr", "1,25")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -161,8 +157,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("eingangDatumVon", "2009-12-31T01:01:00")
                         .param("eingangDatumBis", "2010-01-02T00:00:00")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -185,8 +179,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "20")
                         .param("antragstellerName", "Max Mustermann 0")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -207,8 +199,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("projektTitel", "Projekt XYZ 0")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -235,8 +225,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("beantragtesBudgetVon", "1000")
                         .param("beantragtesBudgetBis", "5000")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -262,8 +250,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("istFehlbetrag", "true")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -272,8 +258,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("istFehlbetrag", "false")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -294,8 +278,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("aktualisierungArt", AktualisierungArt.FACHANWENDUNG.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -316,8 +298,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("status", Status.EINGEGANGEN.name())
                         .param("bezirksausschussNr", "1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -347,8 +327,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("status", Status.EINGEGANGEN.name())
                         .param("eingangDatumVon", "2009-12-31T01:00:00")
                         .param("eingangDatumBis", "2009-12-31T01:01:00")
@@ -375,8 +353,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("bezirksausschussNr", "1")
                         .param("antragstellerName", "Max Mustermann 0")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -404,8 +380,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("projektTitel", "Projekt XYZ 0")
                         .param("beantragtesBudgetVon", "1000")
                         .param("beantragtesBudgetBis", "5000")
@@ -435,8 +409,6 @@ class FilteringIntegrationTest {
         entityManager.clear();
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("istFehlbetrag", "true")
                         .param("aktualisierungArt", AktualisierungArt.FACHANWENDUNG.name())
                         .contentType(MediaType.APPLICATION_JSON))
@@ -457,8 +429,6 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "100")
                         .param("status", "")
                         .param("bezirksausschussNr", "")
                         .param("aktualisierungArt", "")
@@ -472,8 +442,6 @@ class FilteringIntegrationTest {
     void testMalformedDateFormatInEingangDatumVon() throws Exception {
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("eingangDatumVon", "2009-12-3100:01:00")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -483,8 +451,6 @@ class FilteringIntegrationTest {
     void testInvalidEnumValueInStatusFilter() throws Exception {
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("status", "INVALID_STATUS")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -494,8 +460,6 @@ class FilteringIntegrationTest {
     void testInvalidEnumValueInAktualisierungArtFilter() throws Exception {
         mockMvc
                 .perform(get("/antrag")
-                        .param("page", "0")
-                        .param("size", "10")
                         .param("aktualisierungArt", "INVALID_ART")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
