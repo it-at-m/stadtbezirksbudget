@@ -19,6 +19,8 @@
 
 ## Comparison
 
+<!-- markdownlint-disable MD060 -->
+
 |                                       | Prism | Imposter | Mock Server | SoapUI | WireMock |
 | ------------------------------------- | ----- | -------- | ----------- | ------ | -------- |
 | OpenAPI 3.1                           | ✅    | ✅       | ✅          | ❌     | ✅       |
@@ -27,6 +29,8 @@
 | Open Source                           | ✅    | ✅       | ✅          | ✅     | ✅       |
 | Validation                            | ✅    | ✅       | ✅          | ✅     | ❌       |
 | Docker Container with OpenAPI Support | ✅    | ✅       | ✅          | ❌     | ❌       |
+
+<!-- markdownlint-enable MD060 -->
 
 :::info
 For SoapUI, only the free version has been considered.
