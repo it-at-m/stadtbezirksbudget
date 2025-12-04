@@ -29,27 +29,33 @@ Examples for possible commit messages:
 When creating branches for your contributions, please use one of the following prefixes to indicate the type of work being done. This helps in categorizing and
 understanding the purpose of each branch at a glance.
 
-| Prefix      | Gitmoji | Description                                            | Example                       | Labels             |
-| ----------- | ------- | ------------------------------------------------------ | ----------------------------- | ------------------ |
-| `feature/`  | ✨      | Implementing a new feature or major functionality      | `feature/user-authentication` | ✨ Enhancement     |
+<!-- markdownlint-disable MD060 -->
+
+| Prefix      | Gitmoji | Description                                            | Example                       | Labels            |
+| ----------- | ------- | ------------------------------------------------------ | ----------------------------- | ----------------- |
+| `feature/`  | ✨      | Implementing a new feature or major functionality      | `feature/user-authentication` | ✨ Enhancement    |
 | `fix/`      | 🐛      | Fixing a bug, issue, or regression                     | `fix/crash-on-startup`        | 🐛 Bug, 🚑️ Hotfix |
-| `docs/`     | 📝      | Documentation updates or improvements                  | `docs/api-usage-guide`        | 📝 Documentation   |
-| `refactor/` | ♻️      | Code refactoring without changing existing behavior    | `refactor/database-layer`     | ♻️ Refactor        |
-| `ui/`       | 💄      | User interface or experience improvements              | `ui/button-alignment`         | 💄 UI/UX           |
-| `security/` | 🔒️     | Fixing or improving security-related functionality     | `security/fix-token-leak`     | 🔒️ Security       |
-| `chore/`    | 🛠️      | General maintenance, dependency updates, tooling, etc. | `chore/improve-logging`       | 🛠️ Maintenance     |
+| `docs/`     | 📝      | Documentation updates or improvements                  | `docs/api-usage-guide`        | 📝 Documentation  |
+| `refactor/` | ♻️      | Code refactoring without changing existing behavior    | `refactor/database-layer`     | ♻️ Refactor       |
+| `ui/`       | 💄      | User interface or experience improvements              | `ui/button-alignment`         | 💄 UI/UX          |
+| `security/` | 🔒️      | Fixing or improving security-related functionality     | `security/fix-token-leak`     | 🔒️ Security       |
+| `chore/`    | 🛠️      | General maintenance, dependency updates, tooling, etc. | `chore/improve-logging`       | 🛠️ Maintenance    |
+
+<!-- markdownlint-enable MD060 -->
 
 ## Labels
 
 When creating pull requests and issues, please use the appropriate labels to categorize your changes. This helps maintainers quickly understand the nature of
 your contribution. The labels should match the prefixes used in branch naming.
 
+<!-- markdownlint-disable MD060 -->
+
 | Label            | Description                                          | Color   |
 | ---------------- | ---------------------------------------------------- | ------- |
 | ✨ Enhancement   | New feature or request                               | #eeff00 |
 | 🐛 Bug           | Something isn't working as intended                  | #ff4545 |
-| 🚑️ Hotfix       | Critical or emergency fix                            | #b60205 |
-| 🔒️ Security     | Address security vulnerabilities                     | #b60205 |
+| 🚑️ Hotfix        | Critical or emergency fix                            | #b60205 |
+| 🔒️ Security      | Address security vulnerabilities                     | #b60205 |
 | 📌 Dependencies  | External library or package updates                  | #4da0ff |
 | 📝 Documentation | Improvements or additions to documentation           | #005999 |
 | ♻️ Refactor      | Code improvements without changing function          | #009600 |
@@ -58,3 +64,5 @@ your contribution. The labels should match the prefixes used in branch naming.
 | 🏗️ Backend       | Changes related to Backend                           | #ff7f00 |
 | 🏗️ Frontend      | Changes related to Frontend                          | #ff7f00 |
 | 🏗️ CIT-EAI       | Changes related to CIT-EAI                           | #ff7f00 |
+
+<!-- markdownlint-disable MD060 -->

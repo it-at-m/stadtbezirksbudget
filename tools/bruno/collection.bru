@@ -1,4 +1,20 @@
-vars:pre-request {
-  backend: http://localhost:39146
-  cit-eai: http://localhost:8085
+auth {
+  mode: oauth2
+}
+
+auth:oauth2 {
+  grant_type: password
+  access_token_url: {{sso}}/protocol/openid-connect/token
+  refresh_token_url: 
+  username: {{sso-username}}
+  password: {{sso-password}}
+  client_id: {{sso-clientid}}
+  client_secret: {{sso-clientsecret}}
+  scope: {{sso-scope}}
+  credentials_placement: basic_auth_header
+  credentials_id: credentials
+  token_placement: header
+  token_header_prefix: Bearer
+  auto_fetch_token: true
+  auto_refresh_token: false
 }

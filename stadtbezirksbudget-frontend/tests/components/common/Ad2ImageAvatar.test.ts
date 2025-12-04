@@ -19,7 +19,7 @@ describe("Ad2ImageAvatar", () => {
       },
     });
 
-  test("testRendersImgWithProvidedPropsAndCallsAvatarHref", () => {
+  test("renders img with provided props and calls avatarHref", () => {
     const spy = vi
       .spyOn(DefaultLhmAvatarService, "avatarHref")
       .mockReturnValue("https://example/avatar?uid=user2");
@@ -37,7 +37,7 @@ describe("Ad2ImageAvatar", () => {
     expect(img.attributes("alt")).toBe("Bild von user2");
   });
 
-  test("testUsesDefaultPropsWhenOmitted", () => {
+  test("renders img with default props when omitted", () => {
     const spy = vi
       .spyOn(DefaultLhmAvatarService, "avatarHref")
       .mockReturnValue("https://example/default");
@@ -50,7 +50,7 @@ describe("Ad2ImageAvatar", () => {
     expect(img.attributes("alt")).toBe("Bild von user1");
   });
 
-  test("testHandlesEmptyUsername", () => {
+  test("renders img with empty username", () => {
     const spy = vi
       .spyOn(DefaultLhmAvatarService, "avatarHref")
       .mockReturnValue("https://example/empty");

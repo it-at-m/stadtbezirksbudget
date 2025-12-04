@@ -6,7 +6,7 @@ import User from "@/types/User";
 
 global.fetch = vi.fn();
 
-describe("getUser", () => {
+describe("user-client", () => {
   beforeEach(() => {
     vi.spyOn(fetchUtils, "getConfig").mockImplementation(() => {
       return {
@@ -19,7 +19,7 @@ describe("getUser", () => {
     vi.restoreAllMocks();
   });
 
-  test("testParsesCorrectResponse", async () => {
+  test("parses correct response", async () => {
     const mockJson = {
       sub: "123",
       displayName: "Test",
@@ -61,7 +61,7 @@ describe("getUser", () => {
     expect(fetch).toHaveBeenCalledWith("api/sso/userinfo", expect.anything());
   });
 
-  test("testParsesEmptyResponse", async () => {
+  test("parses empty response", async () => {
     const mockJson = {
       sub: undefined,
       displayName: undefined,
@@ -102,7 +102,7 @@ describe("getUser", () => {
     expect(user.authorities).toEqual([]);
   });
 
-  test("testThrowsWhenFetchRejected", async () => {
+  test("throws when fetch is rejected", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
       new Error("Network")
     );
@@ -110,7 +110,7 @@ describe("getUser", () => {
     await expect(getUser()).rejects.toThrow("unbekannter Fehler");
   });
 
-  test("testThrowsOnWrongResponse", async () => {
+  test("throws when fetch is unauthorized", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: false,
       status: 401,

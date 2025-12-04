@@ -1,7 +1,9 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.kafka;
 
+import de.muenchen.stadtbezirksbudget.cit_eai.security.Authorities;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ public class KafkaProducerController {
      * @param message the message to be published as KafkaDTO
      * @return confirmation text that the message was published successfully
      */
+    @PreAuthorize(Authorities.KAFKA_PUBLISH_MESSAGE)
     @PostMapping("/publish")
     public String publishMessage(@RequestBody @Valid final KafkaDTO message) {
         kafkaProducerService.publishMessage(message);

@@ -8,8 +8,10 @@ development or CI processes.
 
 ## Decision
 
-All test methods start with the prefix `test`. Following lowerCamelCase, the method name continues with an uppercase letter. This convention applies to both
-frontend and backend test methods.
+All test methods in the backend start with the prefix `test`. Following lowerCamelCase, the method name continues with an uppercase letter.
+
+In the frontend, all tests are defined using the `test` function from the testing framework (not `it`). The test name is a normal string describing the test
+case.
 
 ## Consequences
 
