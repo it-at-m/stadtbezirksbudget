@@ -37,6 +37,7 @@ public class AntragController {
 
     private final AntragService antragService;
     private final AntragMapper antragMapper;
+    private final AntragSortMapper antragSortMapper;
 
     /**
      * Retrieves a paginated list of Antrag summaries.
@@ -50,7 +51,8 @@ public class AntragController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
     public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
-            final Sort sort) {
+            @RequestParam(required = false) final String sortBy, @RequestParam(defaultValue = "ASC") final Sort.Direction sortDirection) {
+        final Sort sort = antragSortMapper.map(sortBy, sortDirection);
         final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged(sort) : PageRequest.of(page, size, sort);
         final Page<Antrag> antragPage = antragService.getAntragPage(pageable);
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
