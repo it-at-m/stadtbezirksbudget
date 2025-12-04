@@ -173,7 +173,8 @@ class AntragIntegrationTest {
             }
             mockMvc
                     .perform(get("/antrag")
-                            .param("sort", "bearbeitungsstand.status,asc")
+                            .param("sortBy", "status")
+                            .param("sortDirection", "ASC")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -192,7 +193,8 @@ class AntragIntegrationTest {
             }
             mockMvc
                     .perform(get("/antrag")
-                            .param("sort", "zammadTicketNr,desc")
+                            .param("sortBy", "zammadNr")
+                            .param("sortDirection", "DESC")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -213,7 +215,8 @@ class AntragIntegrationTest {
             mockMvc
                     .perform(get("/antrag")
                             .param("size", "-1")
-                            .param("sort", "projekt.titel,asc")
+                            .param("sortBy", "projektTitel")
+                            .param("sortDirection", "ASC")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -221,15 +224,23 @@ class AntragIntegrationTest {
         }
 
         @Test
-        void testGivenInvalidSortFieldThenReturnBadRequest() throws Exception {
+        void testGivenInvalidSortByThenReturnBadRequest() throws Exception {
             mockMvc
                     .perform(get("/antrag")
-                            .param("sort", "invalidField,asc")
+                            .param("sortBy", "invalidField")
+                            .param("sortDirection", "ASC")
                             .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest())
-                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.invalidProperty", is("invalidField")))
-                    .andExpect(jsonPath("$.error", is("Invalid property reference")));
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        void testGivenInvalidSortDirectionThenReturnBadRequest() throws Exception {
+            mockMvc
+                    .perform(get("/antrag")
+                            .param("sortBy", "beantragtesBudget")
+                            .param("sortDirection", "INVALID_DIRECTION")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest());
         }
     }
 
