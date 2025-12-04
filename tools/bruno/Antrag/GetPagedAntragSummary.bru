@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: http://localhost:39146/antrag?page=1&size=10
+  url: {{backend}}/antrag?page=1&size=10&sort=bearbeitungsstand.status,desc
   body: none
   auth: inherit
 }
@@ -13,6 +13,7 @@ get {
 params:query {
   page: 1
   size: 10
+  sort: bearbeitungsstand.status,desc
 }
 
 settings {
