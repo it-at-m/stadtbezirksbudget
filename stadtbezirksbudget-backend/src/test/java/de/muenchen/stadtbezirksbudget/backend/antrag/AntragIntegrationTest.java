@@ -87,19 +87,20 @@ class AntragIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private AntragTestDataBuilder antragTestDataBuilder;
-
     @BeforeEach
     public void setUp() {
-        AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
+        final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
-        initializeDefaultAntragList(100);
+        initializeDefaultAntragList(100, antragTestDataBuilder);
     }
 
-    private void initializeDefaultAntragList(final int size) {
+    private void initializeDefaultAntragList(final int size, final AntragTestDataBuilder dataBuilder) {
+        if (dataBuilder == null) {
+            throw new IllegalArgumentException("dataBuilder cannot be null");
+        }
         for (int i = 0; i < size; i++) {
-            antragList.add(antragTestDataBuilder.initializeDefaultAntrag());
+            antragList.add(dataBuilder.initializeDefaultAntrag());
         }
         entityManager.flush();
     }
