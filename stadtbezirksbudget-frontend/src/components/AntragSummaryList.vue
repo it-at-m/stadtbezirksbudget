@@ -1,5 +1,6 @@
 <template>
   <v-data-table-server
+    v-model:sortBy="sortBy"
     :cell-props="{
       style: {
         overflow: 'hidden',
@@ -15,7 +16,6 @@
     :loading="loading"
     :page="page"
     data-test="antrag-summary-list"
-    disable-sort
     @update:options="updateOptions"
   >
     <template v-slot:[`header.beantragtesBudget`]>
@@ -76,8 +76,15 @@ import {
   toNumberString,
 } from "@/util/formatter.ts";
 
-const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
-  useAntragSummaryList();
+const {
+  items,
+  totalItems,
+  page,
+  itemsPerPage,
+  loading,
+  updateOptions,
+  sortBy,
+} = useAntragSummaryList();
 
 const screenWidth = ref(window.innerWidth);
 
