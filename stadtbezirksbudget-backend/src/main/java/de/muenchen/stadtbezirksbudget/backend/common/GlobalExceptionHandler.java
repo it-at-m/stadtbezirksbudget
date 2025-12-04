@@ -14,8 +14,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(
                 Map.of(
                         "error", "Invalid property reference",
-                        "invalidProperty", ex.getPropertyName()
-                )
-        );
+                        "invalidProperty", ex.getPropertyName()));
     }
 }
