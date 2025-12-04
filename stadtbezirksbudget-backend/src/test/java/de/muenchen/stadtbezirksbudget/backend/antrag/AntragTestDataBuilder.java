@@ -28,7 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.UUID;
 
 public record AntragTestDataBuilder(
         AntragRepository antragRepository,
@@ -41,21 +41,89 @@ public record AntragTestDataBuilder(
         FinanzierungsmittelRepository finanzierungsmittelRepository,
         VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository) {
 
-    private static final LocalDateTime FIXED_DATE_TIME = LocalDateTime.of(2010, 1, 1, 0, 0);
+    public static final Status DEFAULT_STATUS = Status.VOLLSTAENDIG;
+    public static final int DEFAULT_BEZIRKSAUSSCHUSS_NR = 1;
+    public static final LocalDateTime DEFAULT_DATUM = LocalDate.now().atStartOfDay();
+    public static final BigDecimal DEFAULT_BEANTRAGTES_BUDGET = BigDecimal.valueOf(3000);
+    public static final boolean DEFAULT_IST_FEHLBETRAG = false;
+    public static final AktualisierungArt DEFAULT_AKTUALISIERUNG_ART = AktualisierungArt.E_AKTE;
 
-    private Adresse initializeAdresse(final int index) {
+    public static String getDefaultAntragstellerName() {
+        return "Max Mustermann " + generateRandomUuidString();
+    }
+
+    public static String getDefaultProjektTitel() {
+        return "Projekt XYZ " + generateRandomUuidString();
+    }
+
+    private static String generateRandomUuidString() {
+        return UUID.randomUUID().toString();
+    }
+
+    private Adresse initializeAdresse() {
         final Adresse adresse = new Adresse();
-        adresse.setStrasse("Musterstraße " + index);
+        adresse.setStrasse("Musterstraße 1 " + generateRandomUuidString());
         adresse.setHausnummer("1");
         adresse.setPostleitzahl("12345");
         adresse.setOrt("München");
         return adresseRepository.save(adresse);
     }
 
-    private Antragsteller initializeAntragsteller(final Adresse adresse, final int index) {
+    public Antrag initializeDefaultAntrag() {
+        final Antrag antrag = new Antrag();
+        final Adresse adresse = initializeAdresse();
+        final Antragsteller antragsteller = initializeAntragsteller(adresse, getDefaultAntragstellerName());
+        antrag.setEingangDatum(DEFAULT_DATUM);
+        antrag.setBezirksausschussNr(DEFAULT_BEZIRKSAUSSCHUSS_NR);
+        antrag.setIstPersonVorsteuerabzugsberechtigt(true);
+        antrag.setIstAndererZuwendungsantrag(false);
+        antrag.setBearbeitungsstand(initializeBearbeitungsstand(DEFAULT_STATUS));
+        antrag.setAktualisierungArt(DEFAULT_AKTUALISIERUNG_ART);
+        antrag.setZammadTicketNr("000000000");
+        antrag.setAktualisierungDatum(DEFAULT_DATUM);
+        antrag.setAktenzeichen("0000.0-00-0000");
+        antrag.setFinanzierung(initializeFinanzierung(DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG));
+        antrag.setProjekt(initializeProjekt(getDefaultProjektTitel()));
+        antrag.setAntragsteller(antragsteller);
+        antrag.setBankverbindung(initializeBankverbindung(antragsteller));
+        antrag.setAndereZuwendungsantraege(new ArrayList<>());
+        return antragRepository.save(antrag);
+    }
+
+    public Antrag initializeAntrag(
+            final Status status,
+            final int bezirksausschussNr,
+            final LocalDateTime eingangsDatum,
+            final String antragstellerName,
+            final String projektTitel,
+            final BigDecimal beantragtesBudget,
+            final boolean istFehlbetrag,
+            final AktualisierungArt aktualisierungArt,
+            final LocalDateTime aktualisierungDatum) {
+
+        final Antrag antrag = new Antrag();
+        final Adresse adresse = initializeAdresse();
+        final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
+
+        antrag.setEingangDatum(eingangsDatum);
+        antrag.setBezirksausschussNr(bezirksausschussNr);
+        antrag.setBearbeitungsstand(initializeBearbeitungsstand(status));
+        antrag.setAktualisierungArt(aktualisierungArt);
+        antrag.setZammadTicketNr("000000000");
+        antrag.setAktualisierungDatum(aktualisierungDatum);
+        antrag.setAktenzeichen("0000.0-00-0000");
+        antrag.setFinanzierung(initializeFinanzierung(beantragtesBudget, istFehlbetrag));
+        antrag.setProjekt(initializeProjekt(projektTitel));
+        antrag.setAntragsteller(antragsteller);
+        antrag.setBankverbindung(initializeBankverbindung(antragsteller));
+        antrag.setAndereZuwendungsantraege(new ArrayList<>());
+        return antragRepository.save(antrag);
+    }
+
+    private Antragsteller initializeAntragsteller(final Adresse adresse, final String name) {
         final Antragsteller antragsteller = new Antragsteller();
-        antragsteller.setName("Max Mustermann " + (index % 10)); // Dopplungen alle 10 Anträge
-        antragsteller.setZielsetzung("Förderung von Projekten " + index);
+        antragsteller.setName(name);
+        antragsteller.setZielsetzung("Förderung von Projekten");
         antragsteller.setRechtsform(Rechtsform.NATUERLICHE_PERSON);
         antragsteller.setTelefonNr("0123456789");
         antragsteller.setEmail("max@mustermann.de");
@@ -63,10 +131,10 @@ public record AntragTestDataBuilder(
         return antragstellerRepository.save(antragsteller);
     }
 
-    private Projekt initializeProjekt(final int index) {
+    private Projekt initializeProjekt(final String titel) {
         final Projekt projekt = new Projekt();
-        projekt.setTitel("Projekt XYZ " + (index % 10)); // Dopplungen alle 10 Anträge
-        projekt.setBeschreibung("Beschreibung des Projekts " + index);
+        projekt.setTitel(titel);
+        projekt.setBeschreibung("Beschreibung des Projekts, Titel: " + generateRandomUuidString());
         projekt.setStart(LocalDate.now());
         projekt.setEnde(LocalDate.now().plusMonths(6));
         projekt.setFristBruchBegruendung("");
@@ -81,7 +149,7 @@ public record AntragTestDataBuilder(
         return bearbeitungsstandRepository.save(bearbeitungsstand);
     }
 
-    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final int index) {
+    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final boolean istFehlbetrag) {
         final Finanzierung finanzierung = new Finanzierung();
         finanzierung.setIstProjektVorsteuerabzugsberechtigt(true);
         finanzierung.setSonstigeFoerderhinweise("Keine");
@@ -92,17 +160,15 @@ public record AntragTestDataBuilder(
         final VoraussichtlicheAusgabe ausgabe = new VoraussichtlicheAusgabe();
         ausgabe.setKategorie("Material");
 
-        if (index % 2 == 0) {
-            // Bei geraden Zahlen: istFehlbetrag soll true sein, daher Ausgabe-Mittel=beantragtes Budget.
-
-            // Finanzierungsmittel auf die Hälfte des beantragten Budget setzen
+        if (istFehlbetrag) {
+            // Set financing means to half of the requested budget
             finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
 
-            // VoraussichtlicheAusgabe auf Summe aus beantragtesBudget und Finanzierungsmittel setzen, damit Formel erfüllt ist.
+            // Set expected expenditure to the sum of requested budget and financing means to satisfy the formula.
             final BigDecimal ausgabenBetrag = beantragtesBudget.add(finanzierungsmittel.getBetrag());
             ausgabe.setBetrag(ausgabenBetrag);
         } else {
-            // Bei ungeraden Zahlen: istFehlbetrag soll false sein, daher ziemlich alle Zahlen möglich. Hier 10_000 Mittel, Ausgaben in Höhe des beantragten Budgets
+            // If istFehlbetrag is false, almost all numbers are possible. Here, 10.000 means, expenditure in the amount of the requested budget
             finanzierungsmittel.setBetrag(new BigDecimal(10_000));
             ausgabe.setBetrag(beantragtesBudget);
         }
@@ -145,34 +211,5 @@ public record AntragTestDataBuilder(
         bankverbindung.setZahlungsempfaenger(antragsteller);
 
         return bankverbindungRepository.save(bankverbindung);
-    }
-
-    public List<Antrag> initializeAntragList(final int count) {
-        final List<Antrag> antragList = new ArrayList<>();
-        final Status[] statuses = Status.values();
-        final AktualisierungArt[] aktualisierungArts = AktualisierungArt.values();
-        final int[] bezirksausschussNrs = IntStream.rangeClosed(1, 25).toArray();
-
-        for (int i = 0; i < count; i++) {
-            final Antrag antrag = new Antrag();
-            final Adresse adresse = initializeAdresse(i);
-            final Antragsteller antragsteller = initializeAntragsteller(adresse, i);
-
-            // Dates are generated in following pattern: 01.01.2010 00:00:00, 31.12.2009 01:01:00, 30.12.2009 02:02:00, 29.12.2009 03:03:00, etc. for both eingangsdatum and aktualisierungsDatum
-            antrag.setEingangDatum(FIXED_DATE_TIME.minusDays(i).plusHours(i % 24).plusMinutes(i % 60));
-            antrag.setBezirksausschussNr(bezirksausschussNrs[i % bezirksausschussNrs.length]);
-            antrag.setBearbeitungsstand(initializeBearbeitungsstand(statuses[i % statuses.length]));
-            antrag.setAktualisierungArt(aktualisierungArts[i % aktualisierungArts.length]);
-            antrag.setZammadTicketNr(String.format("%09d", i));
-            antrag.setAktualisierungDatum(FIXED_DATE_TIME.minusDays(i).plusHours(i % 24).plusMinutes(i % 60));
-            antrag.setAktenzeichen("0000.0-00-" + String.format("%04d", i));
-            antrag.setFinanzierung(initializeFinanzierung(new BigDecimal((i + 1) * 1000), i));
-            antrag.setProjekt(initializeProjekt(i));
-            antrag.setAntragsteller(antragsteller);
-            antrag.setBankverbindung(initializeBankverbindung(antragsteller));
-            antrag.setAndereZuwendungsantraege(new ArrayList<>());
-            antragList.add(antragRepository.save(antrag));
-        }
-        return antragList;
     }
 }
