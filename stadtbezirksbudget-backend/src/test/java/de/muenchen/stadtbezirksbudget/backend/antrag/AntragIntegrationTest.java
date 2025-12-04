@@ -96,9 +96,6 @@ class AntragIntegrationTest {
     }
 
     private void initializeDefaultAntragList(final int size, final AntragTestDataBuilder dataBuilder) {
-        if (dataBuilder == null) {
-            throw new IllegalArgumentException("dataBuilder cannot be null");
-        }
         for (int i = 0; i < size; i++) {
             antragList.add(dataBuilder.initializeDefaultAntrag());
         }
