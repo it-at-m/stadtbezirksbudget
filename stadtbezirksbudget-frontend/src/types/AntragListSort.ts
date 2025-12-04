@@ -52,3 +52,20 @@ const antragSortFieldMapper: Record<string, string> = {
   eingangDatum: "eingangDatum",
   antragstellerName: "antragsteller.name",
 };
+
+/**
+ * Converts AntragListSort to URLSearchParams.
+ * @param sortObject - The AntragListSort object to convert
+ * @param params - Optional existing URLSearchParams to append to
+ * @returns The resulting URLSearchParams
+ */
+export function sortObjectToSearchParams(
+  sortObject: AntragListSort,
+  params: URLSearchParams = new URLSearchParams()
+): URLSearchParams {
+  const sortString = antragListSortToSortString(sortObject);
+  if (sortString && sortString.length > 0) {
+    params.append("sort", sortString);
+  }
+  return params;
+}

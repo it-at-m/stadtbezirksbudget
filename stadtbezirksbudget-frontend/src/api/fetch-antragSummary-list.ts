@@ -9,10 +9,10 @@ import {
   getConfig,
 } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
+import { sortObjectToSearchParams } from "@/types/AntragListSort.ts";
 import {
   antragListFilterToDTO,
   objectToSearchParams,
-  sortObjectToSearchParams,
 } from "@/util/converter.ts";
 
 /**
