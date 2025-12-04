@@ -6,6 +6,7 @@ changes:
       clientId: local
       secret: client_secret
       publicClient: false
+      serviceAccountsEnabled: true
       redirectUris:
         - http://*
         - https://*

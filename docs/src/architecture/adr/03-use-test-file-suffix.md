@@ -8,8 +8,10 @@ development or CI processes.
 
 ## Decision
 
-All test files and class names in the backend end with the suffix `Test`.
-All test files in the frontend end with the suffix `.test` (instead of `.spec`).
+All test files are named like their corresponding implementation files, with an added suffix to indicate they are test files. In the backend, this suffix is
+`Test`, while in the frontend, the suffix is `.test`.
+
+In the frontend, the root describe block inside each test file is named after the tested file (excluding the file extension).
 
 ## Consequences
 

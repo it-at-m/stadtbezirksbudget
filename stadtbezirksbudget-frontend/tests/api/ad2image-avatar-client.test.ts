@@ -2,8 +2,8 @@ import { describe, expect, test } from "vitest";
 
 import { Ad2imageAvatarClient } from "@/api/ad2image-avatar-client";
 
-describe("Ad2imageAvatarClient", () => {
-  test("testBuildsCorrectUrl", () => {
+describe("ad2image-avatar-client", () => {
+  test("builds correct URL", () => {
     const base = "https://ad2image.example.com";
     const client = new Ad2imageAvatarClient(base);
 
@@ -14,7 +14,7 @@ describe("Ad2imageAvatarClient", () => {
     );
   });
 
-  test("testCustomModeAndSize", () => {
+  test("builds correct URL with custom mode and size", () => {
     const base = "https://ad2image.example.com/"; // trailing slash should be handled
     const client = new Ad2imageAvatarClient(base);
 
@@ -25,7 +25,7 @@ describe("Ad2imageAvatarClient", () => {
     );
   });
 
-  test("testSpecialCharacters", () => {
+  test("builds correct URL with special characters", () => {
     const client = new Ad2imageAvatarClient("https://ad2image.example.com");
 
     const href = client.avatarHref("test user@domain");
