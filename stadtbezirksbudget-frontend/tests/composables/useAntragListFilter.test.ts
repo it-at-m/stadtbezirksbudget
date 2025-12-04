@@ -39,22 +39,26 @@ describe("useAntragListFilter", () => {
     expect(filters.value).toStrictEqual(testFilters);
   });
 
-  test("resets filters to empty and updates store", async () => {
-    const { resetFilters, filters } = useAntragListFilter();
+  describe("resetFilters", () => {
+    test("resets filters to empty and updates store", async () => {
+      const { resetFilters, filters } = useAntragListFilter();
 
-    resetFilters();
-    expect(filters.value).toStrictEqual(emptyAntragListFilter());
-    expect(filterStoreMock.setFilters).toHaveBeenCalled();
+      resetFilters();
+      expect(filters.value).toStrictEqual(emptyAntragListFilter());
+      expect(filterStoreMock.setFilters).toHaveBeenCalled();
+    });
   });
 
-  test("update filters updates store on change", async () => {
-    const { updateFilters, filters } = useAntragListFilter();
+  describe("updateFilters", () => {
+    test("update filters updates store on change", async () => {
+      const { updateFilters, filters } = useAntragListFilter();
 
-    updateFilters();
-    expect(filterStoreMock.setFilters).not.toHaveBeenCalled();
+      updateFilters();
+      expect(filterStoreMock.setFilters).not.toHaveBeenCalled();
 
-    filters.value = emptyAntragListFilter();
-    updateFilters();
-    expect(filterStoreMock.setFilters).toHaveBeenCalled();
+      filters.value = emptyAntragListFilter();
+      updateFilters();
+      expect(filterStoreMock.setFilters).toHaveBeenCalled();
+    });
   });
 });

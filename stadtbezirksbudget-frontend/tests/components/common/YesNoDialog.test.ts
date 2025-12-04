@@ -9,7 +9,7 @@ import YesNoDialog from "@/components/common/YesNoDialog.vue";
 const vuetify = createVuetify({ components, directives });
 
 describe("YesNoDialog", () => {
-  test("testDialogRendersActivator", () => {
+  test("renders activator", () => {
     const wrapper = mount(YesNoDialog, {
       props: {
         modelValue: false,
@@ -24,7 +24,7 @@ describe("YesNoDialog", () => {
     expect(activator.exists()).toBe(true);
   });
 
-  test("testRendersIcon", () => {
+  test("renders icon", () => {
     const wrapper = mount(YesNoDialog, {
       props: {
         modelValue: false,
@@ -42,7 +42,7 @@ describe("YesNoDialog", () => {
     expect(icon.classes()).toContain("mdi-delete");
   });
 
-  test("testEmitsOnClicks", async () => {
+  test("emits events on button clicks", async () => {
     const wrapper = mount(YesNoDialog, {
       props: {
         modelValue: false,
