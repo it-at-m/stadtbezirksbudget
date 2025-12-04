@@ -3,6 +3,14 @@ server:
 
 logging:
   include-application-group: false
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
+
+oauth:
+  registrationId: local
 
 sso:
   url: http://keycloak:8100
@@ -10,10 +18,6 @@ sso:
   client: local
 
 spring:
-  kafka:
-    bootstrap-servers: localhost:29092
-    template:
-      default-topic: stadtbezirksbudget-cit-backend-local
   security:
     oauth2:
       resourceserver:
@@ -23,8 +27,28 @@ spring:
           # requires client to be in audience claim, see https://www.keycloak.org/docs/latest/server_admin/#_audience_resolve
           audiences:
             - ${sso.client}
+      client:
+        registration:
+          local:
+            provider: keycloak
+            client-id: local
+            client-secret: client_secret
+            authorization-grant-type: client_credentials
+            scope:
+              - openid
+        provider:
+          keycloak:
+            token-uri: http://localhost:8100/auth/realms/local_realm/protocol/openid-connect/token
+  kafka:
+    bootstrap-servers: localhost:29092
+    template:
+      default-topic: stadtbezirksbudget-cit-backend-local
+
 refarch:
   security:
     client-id: ${sso.client}
     user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
     logging-mode: all
+
+zammad:
+  base-path: "http://localhost:8090"
