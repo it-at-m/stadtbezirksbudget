@@ -39,13 +39,20 @@ export function objectToSearchParams(
 export function antragListFilterToDTO(
   filters: AntragListFilter
 ): AntragListFilterDTO {
-  const { eingangDatum, art, aktualisierungDatum, ...rest } = filters;
+  const {
+    eingangDatumVon,
+    eingangDatumBis,
+    art,
+    aktualisierungDatumVon,
+    aktualisierungDatumBis,
+    ...rest
+  } = filters;
   return {
     ...rest,
-    eingangDatumVon: toLocalISOString(eingangDatum.at(0)),
-    eingangDatumBis: toLocalISOString(eingangDatum.at(-1)),
+    eingangDatumVon: toLocalISOString(eingangDatumVon),
+    eingangDatumBis: toLocalISOString(eingangDatumBis),
     istFehlbetrag: art ? art === "Fehl" : undefined,
-    aktualisierungDatumVon: toLocalISOString(aktualisierungDatum.at(0)),
-    aktualisierungDatumBis: toLocalISOString(aktualisierungDatum.at(-1)),
+    aktualisierungDatumVon: toLocalISOString(aktualisierungDatumVon),
+    aktualisierungDatumBis: toLocalISOString(aktualisierungDatumBis),
   };
 }
