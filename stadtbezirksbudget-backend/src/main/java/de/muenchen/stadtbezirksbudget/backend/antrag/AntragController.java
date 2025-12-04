@@ -41,10 +41,12 @@ public class AntragController {
 
     /**
      * Retrieves a paginated list of Antrag summaries.
-     * Can be sorted by any field of Antrag.
+     * Can be sorted by selected fields of Antrag.
      *
      * @param page number of the page
      * @param size amount of items in each page
+     * @param sortBy external sort key defined in {@link AntragSortMapper}
+     * @param sortDirection direction of sorting (ASC or DESC)
      * @return a page of AntragSummaryDTOs
      */
     @GetMapping
