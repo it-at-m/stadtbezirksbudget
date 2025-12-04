@@ -1,8 +1,12 @@
-// Type definition of sorting diretion
 import type { sortOptionsRecord } from "@/types/AntragListSortDefinitions.ts";
+import type { DataTableSortItem } from "vuetify";
 
-import { sortOptionsRecord as sortOptionDefinitions } from "@/types/AntragListSortDefinitions.ts";
+import {
+  antragSortFieldMapper,
+  sortOptionsRecord as sortOptionDefinitions,
+} from "@/types/AntragListSortDefinitions.ts";
 
+// Type definition of sorting diretion
 export type sortDirection = "asc" | "desc";
 
 // Interface for Antrag list sorting options
@@ -43,14 +47,39 @@ export const antragListSortToSortString = (sort: AntragListSort): string => {
 
   return sortStrings.join(";");
 };
+/**
+ * Converts DataTableSortItem or array of DataTableSortItem to AntragListSortOption
+ * @param sortItems - The DataTableSortItem or array of DataTableSortItem to convert
+ * @returns The corresponding AntragListSortOption or undefined if not found
+ */
+export const antragListSortOptionFromSortItems = (
+  sortItems: DataTableSortItem[]
+): AntragListSortOption | undefined => {
+  const i = sortItems[0];
+  if (!i || !["asc", "desc"].includes(String(i.order))) return;
 
-const antragSortFieldMapper: Record<string, string> = {
-  status: "bearbeitungsstand.status",
-  zammadNr: "zammadNr",
-  aktenzeichen: "aktenzeichen",
-  bezirksausschussNr: "bezirksausschussNr",
-  eingangDatum: "eingangDatum",
-  antragstellerName: "antragsteller.name",
+  const match = sortOptionDefinitions[i.key]?.find(
+    (o) => o.sortDirection === i.order
+  );
+  return match
+    ? {
+        ...match,
+        sortBy: i.key,
+        sortDirection: i.order as sortDirection,
+      }
+    : undefined;
+};
+
+// Converts AntragListSort to DataTableSortItem array for Vuetify data table sorting
+export const antragListSortToSortItem = (
+  sort: AntragListSort
+): DataTableSortItem[] => {
+  return Object.values(sort)
+    .filter((v): v is AntragListSortOption => v !== undefined)
+    .map((v) => ({
+      key: v.sortBy,
+      order: v.sortDirection,
+    }));
 };
 
 /**
