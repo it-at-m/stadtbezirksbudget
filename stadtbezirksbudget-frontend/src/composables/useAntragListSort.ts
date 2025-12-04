@@ -2,11 +2,15 @@ import type {
   AntragListSort,
   AntragListSortOption,
 } from "@/types/AntragListSort.ts";
+import type { DataTableSortItem } from "vuetify/framework";
 
 import { ref } from "vue";
 
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
-import { createEmptyListSort } from "@/types/AntragListSort.ts";
+import {
+  antragListSortOptionFromSortItems,
+  createEmptyListSort,
+} from "@/types/AntragListSort.ts";
 
 /**
  * Composable for managing the Antrag list sorting options.
@@ -33,6 +37,19 @@ export function useAntragListSort() {
   }
 
   /**
+   * Updates the store with the current sorting options.
+   * @param newValue array of SortItem (the first item is used)
+   */
+  function updateSortingWithSortItem(newValue: DataTableSortItem[]) {
+    const newSortOption = antragListSortOptionFromSortItems(newValue);
+    if (newSortOption == undefined) {
+      resetSorting();
+      return;
+    }
+    updateSorting(newSortOption);
+  }
+
+  /**
    * Resets the current sorting options.
    */
   function resetSorting() {
@@ -40,5 +57,5 @@ export function useAntragListSort() {
     sortOption.value = createEmptyListSort();
   }
 
-  return { sortOption, resetSorting, updateSorting };
+  return { sortOption, resetSorting, updateSorting, updateSortingWithSortItem };
 }
