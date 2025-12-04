@@ -1,5 +1,11 @@
 # API Mocking
 
+API mocking replaces real API endpoints with simulated ones that return predefined responses. This is useful for local development where the real API may be unavailable, unreliable, or have side effects.
+
+## Why we need API mocking
+
+The Zammad EAI is currently not publicly available. To enable local development without relying on the EAI’s availability, we use API mocking.
+
 ## Software under consideration
 
 - [Prism](https://stoplight.io/open-source/prism)
