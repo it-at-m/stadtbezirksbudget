@@ -29,6 +29,13 @@ class NfcHelperTest {
 
     private static final String[] NFC_OUTPUT_EXPECTED = { FIRST_NFC, SECOND_NFC, THIRD_NFC };
 
+    private static Cookie createNfdCookie() {
+        final Cookie nfdCookie = new Cookie(NfcConverterTest.TOKEN, Arrays.toString(NFD_INPUT));
+        nfdCookie.setDomain(THIRD_NFD);
+        nfdCookie.setPath(THIRD_NFD);
+        return nfdCookie;
+    }
+
     @Test
     void testNfcConverterString() {
         assertEquals(FIRST_NFC, NfcHelper.nfcConverter(FIRST_NFD));
@@ -106,12 +113,5 @@ class NfcHelperTest {
     void testNfcConverterWithNullInput() {
         final String result = NfcHelper.nfcConverter((String) null);
         assertNull(result);
-    }
-
-    private static Cookie createNfdCookie() {
-        final Cookie nfdCookie = new Cookie(NfcConverterTest.TOKEN, Arrays.toString(NFD_INPUT));
-        nfdCookie.setDomain(THIRD_NFD);
-        nfdCookie.setPath(THIRD_NFD);
-        return nfdCookie;
     }
 }

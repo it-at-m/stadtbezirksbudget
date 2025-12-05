@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.configuration.security;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -10,7 +11,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -44,17 +44,12 @@ class KeycloakRolesAuthoritiesConverterTest {
 
         @Test
         void testConvertWithRoles() {
-            // Setup
             final Map<String, Object> resourceAccessClaim = new HashMap<>();
             resourceAccessClaim.put(TEST_CLIENT, Map.of("roles", List.of("admin", "user")));
             final Jwt jwt = mock(Jwt.class);
             when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(resourceAccessClaim);
-
-            // Call
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
-
-            // Assert
-            Assertions.assertNotNull(authorities);
+            assertNotNull(authorities);
             assertEquals(2, authorities.size());
             assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_admin")));
             assertTrue(authorities.contains(new SimpleGrantedAuthority("ROLE_user")));
@@ -62,46 +57,31 @@ class KeycloakRolesAuthoritiesConverterTest {
 
         @Test
         void testConvertWithoutRoles() {
-            // Setup
             final Map<String, Object> resourceAccessClaim = new HashMap<>();
             resourceAccessClaim.put(TEST_CLIENT, Collections.emptyMap());
             final Jwt jwt = mock(Jwt.class);
             when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(resourceAccessClaim);
-
-            // Call
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
-
-            // Assert
-            Assertions.assertNotNull(authorities);
+            assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
 
         @Test
         void testConvertClientNotInResourceAccess() {
-            // Setup
             final Map<String, Object> resourceAccessClaim = new HashMap<>();
             resourceAccessClaim.put("other-client", Map.of("roles", List.of("admin")));
             final Jwt jwt = mock(Jwt.class);
             when(jwt.getClaimAsMap(RESOURCE_ACCESS_CLAIM)).thenReturn(resourceAccessClaim);
-
-            // Call
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
-
-            // Assert
-            Assertions.assertNotNull(authorities);
+            assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
 
         @Test
         void testConvertNullClaims() {
-            // Setup
             final Jwt jwt = mock(Jwt.class);
-
-            // Call
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
-
-            // Assert
-            Assertions.assertNotNull(authorities);
+            assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
 
@@ -109,7 +89,7 @@ class KeycloakRolesAuthoritiesConverterTest {
         @MockitoSettings(strictness = Strictness.LENIENT)
         void testConvertNullJwt() {
             final Collection<GrantedAuthority> authorities = converter.convert(null);
-            Assertions.assertNotNull(authorities);
+            assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
     }

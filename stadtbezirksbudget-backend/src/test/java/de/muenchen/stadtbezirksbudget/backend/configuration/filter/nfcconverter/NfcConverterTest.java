@@ -39,7 +39,6 @@ import org.mockito.quality.Strictness;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class NfcConverterTest {
 
-    // For places in the API where strings must comply with certain rules.
     public static final String TOKEN = "token";
     private static final String NAME_NFD = "aM\u0302ao\u0308a";
     private static final String VALUE_NFD = "b M\u0302 b o\u0308 b";
@@ -57,27 +56,19 @@ class NfcConverterTest {
     @Mock
     private FilterChain chain;
 
-    // Test that request with configured ContentType is normalized to NFC.
     @Test
     void testFilterIfContenttypeInWhitelist() throws ServletException, IOException {
         mockRequest("text/plain");
-
         filter.doFilter(req, resp, chain);
-
-        // Check
         final ArgumentCaptor<HttpServletRequest> reqCaptor = ArgumentCaptor.forClass(HttpServletRequest.class);
         Mockito.verify(chain, Mockito.times(1)).doFilter(reqCaptor.capture(), Mockito.any(ServletResponse.class));
-
         assertEquals(VALUE_NFC, reqCaptor.getValue().getParameter(NAME_NFC));
         assertEquals(VALUE_NFC, reqCaptor.getValue().getHeader(NAME_NFC));
         assertEquals(VALUE_NFC, reqCaptor.getValue().getCookies()[0].getValue());
         assertEquals(VALUE_NFC, IOUtils.toString(reqCaptor.getValue().getReader()));
-
-        // Check that multipart requests are not touched.
         assertArrayEquals(VALUE_NFD.getBytes(UTF8), IOUtils.toByteArray(reqCaptor.getValue().getPart(NAME_NFD).getInputStream()));
     }
 
-    // Test that Request not configured ContentType remains unchanged, i.e. is not normalized to NFC.
     @Test
     void testSkipFilterIfContenttypeNotInWhitelist() throws ServletException, IOException {
         mockRequest("application/notvalid");
