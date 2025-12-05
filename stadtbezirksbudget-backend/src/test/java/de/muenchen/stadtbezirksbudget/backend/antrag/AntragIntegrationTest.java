@@ -15,18 +15,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ZahlungsempfaengerRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -37,10 +42,12 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Transactional
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -55,6 +62,8 @@ class AntragIntegrationTest {
 
     private final List<Antrag> antragList = new ArrayList<>();
 
+    @PersistenceContext
+    private EntityManager entityManager;
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
@@ -62,13 +71,17 @@ class AntragIntegrationTest {
     @Autowired
     private FinanzierungRepository finanzierungRepository;
     @Autowired
-    private ZahlungsempfaengerRepository antragstellerRepository;
+    private AntragstellerRepository antragstellerRepository;
     @Autowired
     private ProjektRepository projektRepository;
     @Autowired
     private BearbeitungsstandRepository bearbeitungsstandRepository;
     @Autowired
     private BankverbindungRepository bankverbindungRepository;
+    @Autowired
+    private FinanzierungsmittelRepository finanzierungsmittelRepository;
+    @Autowired
+    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -77,16 +90,16 @@ class AntragIntegrationTest {
     @BeforeEach
     public void setUp() {
         final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
-                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository);
-        for (int i = 0; i < 100; i++) {
-            antragList.add(antragTestDataBuilder.initializeAntrag());
-        }
+                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
+                finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        initializeDefaultAntragList(100, antragTestDataBuilder);
     }
 
-    @AfterEach
-    public void tearDown() {
-        antragRepository.deleteAll();
-        antragList.clear();
+    private void initializeDefaultAntragList(final int size, final AntragTestDataBuilder dataBuilder) {
+        for (int i = 0; i < size; i++) {
+            antragList.add(dataBuilder.initializeDefaultAntrag());
+        }
+        entityManager.flush();
     }
 
     @Nested
@@ -153,6 +166,36 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.page.size", is(100)))
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(1)));
+        }
+    }
+
+    @Nested
+    class GetFilterOptions {
+        @Test
+        void testGetFilterOptionsReturnsAlphabeticallySortedLists() throws Exception {
+            final List<String> sortedAntragstellerNamen = antragList.stream()
+                    .map(Antrag::getAntragsteller)
+                    .map(Antragsteller::getName)
+                    .sorted()
+                    .toList();
+            final List<String> sortedProjektTitel = antragList.stream()
+                    .map(Antrag::getProjekt)
+                    .map(Projekt::getTitel)
+                    .sorted()
+                    .toList();
+            mockMvc
+                    .perform(get("/antrag/filterOptions")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.antragstellerNamen").isArray())
+                    .andExpect(jsonPath("$.projektTitel").isArray())
+                    .andExpect(jsonPath("$.antragstellerNamen", hasSize(100)))
+                    .andExpect(jsonPath("$.projektTitel", hasSize(100)))
+                    .andExpect(jsonPath("$.antragstellerNamen[0]", is(sortedAntragstellerNamen.getFirst())))
+                    .andExpect(jsonPath("$.antragstellerNamen[99]", is(sortedAntragstellerNamen.get(99))))
+                    .andExpect(jsonPath("$.projektTitel[0]", is(sortedProjektTitel.getFirst())))
+                    .andExpect(jsonPath("$.projektTitel[99]", is(sortedProjektTitel.get(99))));
         }
     }
 
