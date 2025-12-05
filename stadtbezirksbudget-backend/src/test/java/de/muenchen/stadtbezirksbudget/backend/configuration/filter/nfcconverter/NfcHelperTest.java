@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.configuration.filter.nfcconverter
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import jakarta.servlet.http.Cookie;
 import java.util.Arrays;
@@ -36,7 +37,7 @@ class NfcHelperTest {
     }
 
     @Test
-    void nfcConverterString() {
+    void testNfcConverterString() {
         assertEquals(FIRST_NFC, NfcHelper.nfcConverter(FIRST_NFD));
         assertEquals(FIRST_NFC.length(), NfcHelper.nfcConverter(FIRST_NFD).length());
 
@@ -48,7 +49,7 @@ class NfcHelperTest {
     }
 
     @Test
-    void nfcConverterStringBuffer() {
+    void testNfcConverterStringBuffer() {
         assertEquals(FIRST_NFC, NfcHelper.nfcConverter(new StringBuffer(FIRST_NFD)).toString());
         assertEquals(FIRST_NFC.length(), NfcHelper.nfcConverter(new StringBuffer(FIRST_NFD)).length());
 
@@ -60,13 +61,13 @@ class NfcHelperTest {
     }
 
     @Test
-    void nfcConverterStringArray() {
+    void testNfcConverterStringArray() {
         assertArrayEquals(NFC_OUTPUT_EXPECTED, NfcHelper.nfcConverter(NFD_INPUT));
         assertEquals(NFC_OUTPUT_EXPECTED.length, NfcHelper.nfcConverter(NFD_INPUT).length);
     }
 
     @Test
-    void nfcConverterMapOfStrings() {
+    void testNfcConverterMapOfStrings() {
         final Map<String, String[]> nfdInput = new HashMap<>();
         nfdInput.put(FIRST_NFD, NFD_INPUT);
         nfdInput.put(SECOND_NFD, NFD_INPUT);
@@ -80,7 +81,7 @@ class NfcHelperTest {
     }
 
     @Test
-    void nfcConverterCookie() {
+    void testNfcConverterCookie() {
         final Cookie nfcCookie = NfcHelper.nfcConverter(createNfdCookie());
 
         assertEquals(NfcConverterTest.TOKEN, nfcCookie.getName());
@@ -91,7 +92,7 @@ class NfcHelperTest {
 
     @SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
     @Test
-    void nfcConverterCookieArray() {
+    void testNfcConverterCookieArray() {
         final Cookie[] nfdCookies = Collections.nCopies(3, createNfdCookie()).toArray(new Cookie[3]);
         final Cookie[] nfcCookies = NfcHelper.nfcConverter(nfdCookies);
         Arrays.asList(nfcCookies).forEach(nfcCookie -> {
@@ -102,4 +103,15 @@ class NfcHelperTest {
         });
     }
 
+    @Test
+    void testNfcConverterWithNullArray() {
+        final Cookie[] result = NfcHelper.nfcConverter((Cookie[]) null);
+        assertArrayEquals(new Cookie[0], result);
+    }
+
+    @Test
+    void testNfcConverterWithNullInput() {
+        final String result = NfcHelper.nfcConverter((String) null);
+        assertNull(result);
+    }
 }
