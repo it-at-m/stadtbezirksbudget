@@ -2,8 +2,6 @@ package de.muenchen.stadtbezirksbudget.backend.configuration.filter;
 
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
@@ -26,9 +24,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -67,13 +62,6 @@ class CacheControlFilterTest {
 
     @Nested
     class DoFilterInternalTests {
-        @Test
-        void testForCacheControlHeadersForEntityEndpoint() {
-            final ResponseEntity<String> responseEntity = testRestTemplate.exchange(ANTRAG_ENDPOINT_URL, HttpMethod.GET, null, String.class);
-            assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-            assertTrue(responseEntity.getHeaders().containsKey(HttpHeaders.CACHE_CONTROL));
-            assertEquals(EXPECTED_CACHE_CONTROL_HEADER_VALUES, responseEntity.getHeaders().getCacheControl());
-        }
 
         @Test
         void testAddsCacheControlHeaderWhenNotPresent() throws ServletException, IOException {

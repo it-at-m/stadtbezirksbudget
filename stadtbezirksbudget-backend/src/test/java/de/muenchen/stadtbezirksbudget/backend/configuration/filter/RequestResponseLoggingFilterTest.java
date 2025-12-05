@@ -17,6 +17,8 @@ import org.springframework.http.HttpMethod;
 
 public class RequestResponseLoggingFilterTest {
 
+    private static final String TEST_ENDPOINT_URL = "/test";
+
     private RequestResponseLoggingFilter filter;
     private SecurityProperties securityProperties;
     private HttpServletRequest mockRequest;
@@ -39,7 +41,7 @@ public class RequestResponseLoggingFilterTest {
 
             when(securityProperties.getLoggingMode()).thenReturn(RequestResponseLoggingFilter.LoggingMode.ALL);
             when(mockRequest.getMethod()).thenReturn(HttpMethod.GET.name());
-            when(mockRequest.getRequestURI()).thenReturn("/test");
+            when(mockRequest.getRequestURI()).thenReturn(TEST_ENDPOINT_URL);
             when(mockResponse.getStatus()).thenReturn(200);
             filter.doFilterInternal(mockRequest, mockResponse, mockFilterChain);
             verify(mockFilterChain).doFilter(mockRequest, mockResponse);
@@ -49,7 +51,7 @@ public class RequestResponseLoggingFilterTest {
         void testFilterDelegatesWithoutErrorForNoneMode() throws IOException, ServletException {
             when(securityProperties.getLoggingMode()).thenReturn(RequestResponseLoggingFilter.LoggingMode.NONE);
             when(mockRequest.getMethod()).thenReturn(HttpMethod.POST.name());
-            when(mockRequest.getRequestURI()).thenReturn("/test");
+            when(mockRequest.getRequestURI()).thenReturn(TEST_ENDPOINT_URL);
             when(mockResponse.getStatus()).thenReturn(200);
             filter.doFilterInternal(mockRequest, mockResponse, mockFilterChain);
             verify(mockFilterChain).doFilter(mockRequest, mockResponse);
@@ -59,8 +61,18 @@ public class RequestResponseLoggingFilterTest {
         void testFilterDelegatesWithoutErrorForChangingMode() throws IOException, ServletException {
             when(securityProperties.getLoggingMode()).thenReturn(RequestResponseLoggingFilter.LoggingMode.CHANGING);
             when(mockRequest.getMethod()).thenReturn(HttpMethod.POST.name());
-            when(mockRequest.getRequestURI()).thenReturn("/test");
+            when(mockRequest.getRequestURI()).thenReturn(TEST_ENDPOINT_URL);
             when(mockResponse.getStatus()).thenReturn(200);
+            filter.doFilterInternal(mockRequest, mockResponse, mockFilterChain);
+            verify(mockFilterChain).doFilter(mockRequest, mockResponse);
+        }
+
+        @Test
+        void testFilterDelegatesWithoutErrorForChangingModeWithErrorStatus() throws IOException, ServletException {
+            when(securityProperties.getLoggingMode()).thenReturn(RequestResponseLoggingFilter.LoggingMode.CHANGING);
+            when(mockRequest.getMethod()).thenReturn(HttpMethod.POST.name());
+            when(mockRequest.getRequestURI()).thenReturn(TEST_ENDPOINT_URL);
+            when(mockResponse.getStatus()).thenReturn(500);
             filter.doFilterInternal(mockRequest, mockResponse, mockFilterChain);
             verify(mockFilterChain).doFilter(mockRequest, mockResponse);
         }
