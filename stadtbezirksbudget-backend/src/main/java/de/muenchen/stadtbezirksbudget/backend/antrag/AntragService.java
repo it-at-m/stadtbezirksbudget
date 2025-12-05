@@ -1,9 +1,16 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
+import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
+import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
+import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,16 +26,34 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
+    private final ProjektRepository projektRepository;
+    private final AntragstellerRepository antragstellerRepository;
+    private final AntragFilterService antragFilterService;
 
     /**
-     * Retrieves a paginated list of Antrag entities.
+     * Retrieves a paginated filtered list of Antrag entities.
      *
      * @param pageable pagination information
+     * @param antragFilterDTO filter information
      * @return a page of Antrag entities
      */
-    public Page<Antrag> getAntragPage(final Pageable pageable) {
-        log.info("Get antrag page with pageable {}", pageable);
-        return antragRepository.findAll(pageable);
+    public Page<Antrag> getAntragPage(final Pageable pageable, final AntragFilterDTO antragFilterDTO) {
+        log.info("Get antrag page with pageable {} and filterDTO {}", pageable, antragFilterDTO);
+        return antragRepository.findAll(
+                (root, query, criteriaBuilder) -> antragFilterService.filterAntrag(antragFilterDTO, root, criteriaBuilder),
+                pageable);
+    }
+
+    /**
+     * Retrieves all Antragsteller names and Projekt titles.
+     *
+     * @return a FilterOptionsDTO containing lists of Antragsteller names and Projekt titles
+     */
+    public FilterOptionsDTO getFilterOptions() {
+        log.info("Get FilterOptions");
+        final List<String> antragstellerNameList = antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc().stream().map(NameView::getName).toList();
+        final List<String> projektTitelList = projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc().stream().map(TitelView::getTitel).toList();
+        return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
     /**

@@ -38,6 +38,7 @@ const inputFields = [
   },
   {
     dataTest: "antrag-list-filter-eingang-datum",
+    subFields: ["range-input-from", "range-input-to"],
   },
   {
     dataTest: "antrag-list-filter-antragsteller-name",
@@ -46,10 +47,8 @@ const inputFields = [
     dataTest: "antrag-list-filter-projekt-titel",
   },
   {
-    dataTest: "antrag-list-filter-beantragtes-budget-von",
-  },
-  {
-    dataTest: "antrag-list-filter-beantragtes-budget-bis",
+    dataTest: "antrag-list-filter-beantragtes-budget",
+    subFields: ["range-input-from", "range-input-to"],
   },
   {
     dataTest: "antrag-list-filter-art",
@@ -59,6 +58,7 @@ const inputFields = [
   },
   {
     dataTest: "antrag-list-filter-aktualisierung-datum",
+    subFields: ["range-input-from", "range-input-to"],
   },
 ];
 
@@ -101,9 +101,19 @@ describe("AntragListFilter", () => {
 
   test.each(inputFields)(
     "renders input field $dataTest",
-    async ({ dataTest }) => {
+    async ({ dataTest, subFields }) => {
       const input = wrapper.findComponent(`[data-test="${dataTest}"]`);
       expect(input.exists()).toBe(true);
+
+      if (subFields) {
+        for (const subField of subFields) {
+          const subInput = input.findComponent(`[data-test="${subField}"]`);
+          expect(subInput.exists()).toBe(true);
+          await subInput.trigger("focusout");
+          expect(mockUseAntragListFilter.updateFilters).toHaveBeenCalled();
+        }
+        return;
+      }
 
       await input.trigger("focusout");
       expect(mockUseAntragListFilter.updateFilters).toHaveBeenCalled();
