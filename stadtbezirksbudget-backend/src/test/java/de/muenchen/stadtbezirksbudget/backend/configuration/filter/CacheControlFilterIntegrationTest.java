@@ -32,6 +32,7 @@ import org.testcontainers.utility.DockerImageName;
 class CacheControlFilterIntegrationTest {
     @Container
     @ServiceConnection
+    @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
 
