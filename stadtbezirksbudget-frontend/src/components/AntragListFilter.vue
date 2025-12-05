@@ -47,17 +47,20 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-date-input
-            v-model="filters.eingangDatum"
-            clearable
+          <range-input
+            v-model:from="filters.eingangDatumVon"
+            v-model:to="filters.eingangDatumBis"
+            :inputComponent="VDateInput"
+            :inputProps="{
+              clearable: true,
+              density: 'compact',
+              hideDetails: 'auto',
+              onFocusout: updateFilters,
+              prependIcon: '',
+              variant: 'underlined',
+            }"
             data-test="antrag-list-filter-eingang-datum"
-            density="compact"
-            hide-details="auto"
             label="Antragsdatum"
-            multiple="range"
-            prepend-icon=""
-            variant="underlined"
-            @focusout="updateFilters"
           />
         </v-col>
       </v-row>
@@ -93,41 +96,23 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-row class="text-grey-darken-1">
-            <v-col>Beantragtes Budget</v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-              <v-number-input
-                v-model="filters.beantragtesBudgetVon"
-                :precision="2"
-                clearable
-                control-variant="hidden"
-                data-test="antrag-list-filter-beantragtes-budget-von"
-                density="compact"
-                hide-details="auto"
-                label="von"
-                suffix="€"
-                variant="underlined"
-                @focusout="updateFilters"
-              />
-            </v-col>
-            <v-col>
-              <v-number-input
-                v-model="filters.beantragtesBudgetBis"
-                :precision="2"
-                clearable
-                control-variant="hidden"
-                data-test="antrag-list-filter-beantragtes-budget-bis"
-                density="compact"
-                hide-details="auto"
-                label="bis"
-                suffix="€"
-                variant="underlined"
-                @focusout="updateFilters"
-              />
-            </v-col>
-          </v-row>
+          <range-input
+            v-model:from="filters.beantragtesBudgetVon"
+            v-model:to="filters.beantragtesBudgetBis"
+            :inputComponent="VNumberInput"
+            :inputProps="{
+              clearable: true,
+              controlVariant: 'hidden',
+              density: 'compact',
+              hideDetails: 'auto',
+              onFocusout: updateFilters,
+              precision: 2,
+              suffix: '€',
+              variant: 'underlined',
+            }"
+            data-test="antrag-list-filter-beantragtes-budget"
+            label="Beantragtes Budget"
+          />
         </v-col>
       </v-row>
       <v-row>
@@ -163,17 +148,20 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-date-input
-            v-model="filters.aktualisierungDatum"
-            clearable
+          <range-input
+            v-model:from="filters.aktualisierungDatumVon"
+            v-model:to="filters.aktualisierungDatumBis"
+            :inputComponent="VDateInput"
+            :inputProps="{
+              clearable: true,
+              density: 'compact',
+              hideDetails: 'auto',
+              onFocusout: updateFilters,
+              prependIcon: '',
+              variant: 'underlined',
+            }"
             data-test="antrag-list-filter-aktualisierung-datum"
-            density="compact"
-            hide-details="auto"
             label="Datum Aktualisierung"
-            multiple="range"
-            prepend-icon=""
-            variant="underlined"
-            @focusout="updateFilters"
           />
         </v-col>
       </v-row>
@@ -182,6 +170,10 @@
 </template>
 
 <script lang="ts" setup>
+import { VNumberInput } from "vuetify/components";
+import { VDateInput } from "vuetify/labs/components";
+
+import RangeInput from "@/components/common/RangeInput.vue";
 import StatusSelect from "@/components/StatusSelect.vue";
 import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
 import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";

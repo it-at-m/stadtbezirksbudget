@@ -17,9 +17,10 @@ features:
     title: Application list
     details: The application list on the homepage provides a summary of all applications submitted by citizens, enabling caseworkers to manage and process them efficiently.
     link: /features/application-list/
-  - icon: 2️⃣
-    title: Title 2
-    details: Add some interesting information here
+  - icon: 📇
+    title: Zammad integration
+    details: The Zammad integration is utilized to create tickets, users and more within the Zammad system.
+    link: /features/zammad-integration/
   - icon: 📨
     title: Reliable communication
     details: The project uses a robust communication architecture to ensure reliable data exchange between all connected systems. To achieve this, the event bus Kafka is used.

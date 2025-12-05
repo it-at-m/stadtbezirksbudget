@@ -5,20 +5,26 @@ import type { Status } from "@/types/Status.ts";
 export interface AntragListFilter {
   status: Status[];
   bezirksausschussNr: number[];
-  eingangDatum: Date[];
+  eingangDatumVon?: Date;
+  eingangDatumBis?: Date;
   antragstellerName?: string;
   projektTitel?: string;
   beantragtesBudgetVon?: number;
   beantragtesBudgetBis?: number;
   art?: string;
   aktualisierungArt: AktualisierungArt[];
-  aktualisierungDatum: Date[];
+  aktualisierungDatumVon?: Date;
+  aktualisierungDatumBis?: Date;
 }
 
 // Data Transfer Object for AntragListFilter
 export interface AntragListFilterDTO extends Omit<
   AntragListFilter,
-  "eingangDatum" | "art" | "aktualisierungDatum"
+  | "eingangDatumVon"
+  | "eingangDatumBis"
+  | "art"
+  | "aktualisierungDatumVon"
+  | "aktualisierungDatumBis"
 > {
   eingangDatumVon?: string;
   eingangDatumBis?: string;
@@ -31,14 +37,16 @@ export interface AntragListFilterDTO extends Omit<
 export const emptyAntragListFilter = (): AntragListFilter => ({
   status: [],
   bezirksausschussNr: [],
-  eingangDatum: [],
+  eingangDatumVon: undefined,
+  eingangDatumBis: undefined,
   antragstellerName: undefined,
   projektTitel: undefined,
   beantragtesBudgetVon: undefined,
   beantragtesBudgetBis: undefined,
   art: undefined,
   aktualisierungArt: [],
-  aktualisierungDatum: [],
+  aktualisierungDatumVon: undefined,
+  aktualisierungDatumBis: undefined,
 });
 
 // Interface for Antrag list filter options
