@@ -268,6 +268,11 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <optional>true</optional>
+        </dependency>
 
     </dependencies>
 
@@ -307,6 +312,10 @@
                             <groupId>com.github.therapi</groupId>
                             <artifactId>therapi-runtime-javadoc-scribe</artifactId>
                             <version>${therapi-runtime-javadoc.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.hibernate.orm</groupId>
+                            <artifactId>hibernate-jpamodelgen</artifactId> <!-- Needs to be changed to hibernate-processor on hibernate v7 upgrade -->
                         </path>
                     </annotationProcessorPaths>
                     <showDeprecation>true</showDeprecation>
