@@ -2,8 +2,8 @@
   <v-container fluid>
     <v-row>
       <v-col
-        cols="12"
         class="text-left"
+        cols="12"
       >
         <v-card rounded="lg"><antrag-summary-list /></v-card>
       </v-col>
@@ -11,6 +11,6 @@
   </v-container>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import AntragSummaryList from "@/components/AntragSummaryList.vue";
 </script>
