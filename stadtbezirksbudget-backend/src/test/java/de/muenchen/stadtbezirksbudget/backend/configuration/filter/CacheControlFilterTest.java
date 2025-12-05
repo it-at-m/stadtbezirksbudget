@@ -43,7 +43,6 @@ class CacheControlFilterTest {
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
-    private static final String ANTRAG_ENDPOINT_URL = "/antrag";
     private static final String EXPECTED_CACHE_CONTROL_HEADER_VALUES = "no-cache, no-store, must-revalidate";
     private CacheControlFilter filter;
     private HttpServletRequest request;
