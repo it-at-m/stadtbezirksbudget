@@ -61,7 +61,7 @@ class CacheControlFilterTest {
     }
 
     @Nested
-    class DoFilterInternalTests {
+    class DoFilterInternal {
 
         @Test
         void testAddsCacheControlHeaderWhenNotPresent() throws ServletException, IOException {

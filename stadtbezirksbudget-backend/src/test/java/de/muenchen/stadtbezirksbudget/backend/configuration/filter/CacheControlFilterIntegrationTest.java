@@ -43,7 +43,7 @@ class CacheControlFilterIntegrationTest {
     private TestRestTemplate testRestTemplate;
 
     @Nested
-    class DoFilterInternalTests {
+    class DoFilterInternal {
         @Test
         void testCacheControlHeaderIsPresentForEndpoint() {
 
