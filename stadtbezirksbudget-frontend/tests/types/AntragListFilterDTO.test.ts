@@ -109,18 +109,15 @@ describe("AntragListFilterDTO", () => {
     });
 
     test("converts art to istFehlbetrag", () => {
-      const filters: AntragListFilter = {
-        ...testFilters,
-      };
-
-      filters.art = "Fest";
-      expect(antragListFilterToDTO(filters).istFehlbetrag).toBe(false);
-
-      filters.art = "Fehl";
-      expect(antragListFilterToDTO(filters).istFehlbetrag).toBe(true);
-
-      filters.art = undefined;
-      expect(antragListFilterToDTO(filters).istFehlbetrag).toBeUndefined();
+      expect(
+        antragListFilterToDTO({ ...testFilters, art: "Fest" }).istFehlbetrag
+      ).toBe(false);
+      expect(
+        antragListFilterToDTO({ ...testFilters, art: "Fehl" }).istFehlbetrag
+      ).toBe(true);
+      expect(
+        antragListFilterToDTO({ ...testFilters, art: undefined }).istFehlbetrag
+      ).toBeUndefined();
     });
   });
 });
