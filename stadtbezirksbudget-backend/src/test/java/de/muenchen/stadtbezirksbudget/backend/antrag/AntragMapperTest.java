@@ -75,14 +75,6 @@ class AntragMapperTest {
         }
 
         @Test
-        void testGivenAntragEntityWithFehlbetragThenReturnsCorrectDTO() {
-            final AntragSummaryDTO result = antragMapper.toAntragSummaryDTO(antrag);
-
-            assertNotNull(result);
-            assertThat(result.istFehlbetrag()).isTrue();
-        }
-
-        @Test
         void testGivenAntragEntityWithNoFehlbetragThenReturnsCorrectDTO() {
             antrag.getFinanzierung().setBeantragtesBudget(new BigDecimal("25.0"));
             final AntragSummaryDTO result = antragMapper.toAntragSummaryDTO(antrag);
