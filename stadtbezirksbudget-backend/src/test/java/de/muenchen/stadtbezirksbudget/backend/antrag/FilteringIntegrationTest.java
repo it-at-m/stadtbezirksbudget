@@ -2,12 +2,14 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
+import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_AKTENZEICHEN;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_AKTUALISIERUNG_ART;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_BEANTRAGTES_BUDGET;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_BEZIRKSAUSSCHUSS_NR;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_DATUM;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_IST_FEHLBETRAG;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_STATUS;
+import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_ZAMMAD_NR;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.getDefaultAntragstellerName;
 import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.getDefaultProjektTitel;
 import static org.hamcrest.Matchers.hasSize;
@@ -94,13 +96,17 @@ class FilteringIntegrationTest {
     @Test
     void testFilterByStatus() throws Exception {
         antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(Status.ABGESCHLOSSEN, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(Status.ABGELEHNT_NICHT_FOERDERFAEHIG, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -116,14 +122,14 @@ class FilteringIntegrationTest {
 
     @Test
     void testFilterByBezirksausschussNr() throws Exception {
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 25, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 7, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 25, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 7, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -139,21 +145,21 @@ class FilteringIntegrationTest {
 
     @Test
     void testFilterDatumVonBisBounds() throws Exception {
-        antragTestDataBuilder.initializeAntrag(
-                DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2009, 12, 31, 1, 0), getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(
-                DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2009, 12, 31, 1, 1), getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(
-                DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 1, 0, 0), getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(
-                DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 2, 0, 0), getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(
-                DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 2, 0, 1), getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2009, 12, 31, 1, 0), getDefaultAntragstellerName(),
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2009, 12, 31, 1, 1), getDefaultAntragstellerName(),
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 1, 0, 0), getDefaultAntragstellerName(),
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 2, 0, 0), getDefaultAntragstellerName(),
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 2, 0, 1), getDefaultAntragstellerName(),
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -170,12 +176,12 @@ class FilteringIntegrationTest {
 
     @Test
     void testFilterByAntragstellerName() throws Exception {
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, "Max Mustermann 0",
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, "Max Mustermann 0",
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, "Max Mustermann 9",
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, "Max Mustermann 0", getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, "Max Mustermann 0", getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, "Max Mustermann 9", getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -190,12 +196,12 @@ class FilteringIntegrationTest {
 
     @Test
     void testFilterByProjektTitel() throws Exception {
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 0", DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 0", DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 9", DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 0",
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 0",
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 9",
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -211,17 +217,23 @@ class FilteringIntegrationTest {
     @Test
     void testFilterByBeantragtesBudgetVonBis() throws Exception {
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), BigDecimal.valueOf(999), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), BigDecimal.valueOf(999), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), BigDecimal.valueOf(1000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), BigDecimal.valueOf(1000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), BigDecimal.valueOf(5000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), BigDecimal.valueOf(5000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), BigDecimal.valueOf(5001), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), BigDecimal.valueOf(5001), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -240,13 +252,15 @@ class FilteringIntegrationTest {
     @Test
     void testFilterByIstFehlbetrag() throws Exception {
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -268,13 +282,17 @@ class FilteringIntegrationTest {
     @Test
     void testFilterByAktualisierungArt() throws Exception {
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.ZAMMAD, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.ZAMMAD, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.E_AKTE, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, AktualisierungArt.E_AKTE, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -287,14 +305,14 @@ class FilteringIntegrationTest {
 
     @Test
     void testFilterByStatusAndBezirksausschussNr() throws Exception {
-        antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, 1, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, 1, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(Status.ABGESCHLOSSEN, 25, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(Status.ABGELEHNT_NICHT_FOERDERFAEHIG, 7, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+        antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, 1, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, 1, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(Status.ABGESCHLOSSEN, 25, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(Status.ABGELEHNT_NICHT_FOERDERFAEHIG, 7, DEFAULT_DATUM, getDefaultAntragstellerName(), getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -313,17 +331,17 @@ class FilteringIntegrationTest {
     @Test
     void testFilterByStatusAndDatumVonBis() throws Exception {
         antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2009, 12, 31, 1, 0),
-                getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultAntragstellerName(), getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART,
+                DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2009, 12, 31, 1, 1),
-                getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultAntragstellerName(), getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART,
+                DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(Status.ABGESCHLOSSEN, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 1, 0, 0),
-                getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultAntragstellerName(), getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART,
+                DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(Status.ABGELEHNT_NICHT_FOERDERFAEHIG, DEFAULT_BEZIRKSAUSSCHUSS_NR, LocalDateTime.of(2010, 1, 2, 0, 0),
-                getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+                getDefaultAntragstellerName(), getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART,
+                DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -342,14 +360,14 @@ class FilteringIntegrationTest {
 
     @Test
     void testFilterByBezirksausschussNrAndAntragstellerName() throws Exception {
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, "Max Mustermann 0",
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, "Max Mustermann 0",
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 25, DEFAULT_DATUM, "Max Mustermann 9",
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 7, DEFAULT_DATUM, "Max Mustermann 0",
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, "Max Mustermann 0", getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET,
+                DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 1, DEFAULT_DATUM, "Max Mustermann 0", getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET,
+                DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 25, DEFAULT_DATUM, "Max Mustermann 9", getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET,
+                DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, 7, DEFAULT_DATUM, "Max Mustermann 0", getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET,
+                DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -367,16 +385,16 @@ class FilteringIntegrationTest {
 
     @Test
     void testFilterByProjektTitelAndBeantragtesBudgetVonBis() throws Exception {
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 0", BigDecimal.valueOf(999), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 0", BigDecimal.valueOf(1000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 0", BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 9", BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "Projekt XYZ 0", BigDecimal.valueOf(5000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 0",
+                BigDecimal.valueOf(999), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 0",
+                BigDecimal.valueOf(1000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 0",
+                BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 9",
+                BigDecimal.valueOf(3000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "Projekt XYZ 0",
+                BigDecimal.valueOf(5000), DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
 
         mockMvc
                 .perform(get("/antrag")
@@ -398,13 +416,15 @@ class FilteringIntegrationTest {
     @Test
     void testFilterByIstFehlbetragAndAktualisierungArt() throws Exception {
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, AktualisierungArt.FACHANWENDUNG, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, AktualisierungArt.ZAMMAD, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, AktualisierungArt.ZAMMAD, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, AktualisierungArt.E_AKTE, DEFAULT_DATUM);
+                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, false, AktualisierungArt.E_AKTE, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         entityManager.flush();
         entityManager.clear();
         mockMvc
