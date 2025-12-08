@@ -197,4 +197,51 @@ describe("useAntragSummaryList", () => {
       expect(getAntragsSummaryList).toHaveBeenCalled();
     });
   });
+
+  test("handles sorting store subscription", async () => {
+    let capturedSubscribe: (() => void) | undefined;
+    sortingStoreMock.$subscribe = vi.fn((cb: () => void) => {
+      capturedSubscribe = cb;
+    });
+
+    const mockResponse: Page<AntragSummary> = {
+      content: [],
+      page: { size: 10, number: 0, totalElements: 0, totalPages: 0 },
+    };
+    (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
+
+    const { page, updateOptions } = useAntragSummaryList();
+
+    updateOptions({ page: 5, itemsPerPage: 10 });
+    expect(page.value).toBe(5);
+
+    capturedSubscribe?.();
+
+    await vi.waitFor(() => {
+      expect(page.value).toBe(1);
+      expect(getAntragsSummaryList).toHaveBeenCalled();
+    });
+  });
+
+  test("updating computed value sortBy updates store", () => {
+    const { sortBy } = useAntragSummaryList();
+
+    sortBy.value = [{ sortBy: "test", sortDesc: false }];
+
+    expect(sortingStoreMock.setListSorting).toHaveBeenCalled();
+  });
+
+  test("getting computed value sortBy returns correct value", () => {
+    const { sortBy } = useAntragSummaryList();
+    const sortingGetter = vi.fn(() => createEmptyListSort());
+    Object.defineProperty(sortingStoreMock, "sorting", {
+      get: sortingGetter,
+      configurable: true,
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    sortBy.value;
+
+    expect(sortingGetter).toHaveBeenCalled();
+  });
 });
