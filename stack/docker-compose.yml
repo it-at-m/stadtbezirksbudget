@@ -167,7 +167,7 @@ services:
       - kafka
 
   kafka-ui:
-    image: provectuslabs/kafka-ui:0.7.2@sha256:8f2ff02d64b0a7a2b71b6b3b3148b85f66d00ec20ad40c30bdcd415d46d31818
+    image: ghcr.io/kafbat/kafka-ui:1.4.2@sha256:8dd62c9b18a01b732824cae91c6fe5203fac8e931448a2a639bd20270b8fed2b
     ports:
       - "8089:8080"
     depends_on:
