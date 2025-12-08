@@ -27,6 +27,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('status')"
             :model-value="sortOption.status"
             clearable
+            data-test="antrag-list-sort-status"
             density="compact"
             hide-details="auto"
             label="Status"
@@ -42,6 +43,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('zammadNr')"
             :model-value="sortOption.zammadNr"
             clearable
+            data-test="antrag-list-sort-zammad-nr"
             density="compact"
             hide-details="auto"
             label="Nummer"
@@ -57,6 +59,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('aktenzeichen')"
             :model-value="sortOption.aktenzeichen"
             clearable
+            data-test="antrag-list-sort-aktenzeichen"
             density="compact"
             hide-details="auto"
             label="Aktenzeichen"
@@ -72,6 +75,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('bezirksausschussNr')"
             :model-value="sortOption.bezirksausschussNr"
             clearable
+            data-test="antrag-list-sort-bezirksausschuss-nr"
             density="compact"
             hide-details="auto"
             label="Bezirk"
@@ -87,6 +91,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('eingangDatum')"
             :model-value="sortOption.eingangDatum"
             clearable
+            data-test="antrag-list-sort-eingang-datum"
             density="compact"
             hide-details="auto"
             label="Antragsdatum"
@@ -102,6 +107,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('antragstellerName')"
             :model-value="sortOption.antragstellerName"
             clearable
+            data-test="antrag-list-sort-antragsteller-name"
             density="compact"
             hide-details="auto"
             label="Antragsteller/in"
@@ -117,6 +123,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('projektTitel')"
             :model-value="sortOption.projektTitel"
             clearable
+            data-test="antrag-list-sort-projekt-titel"
             density="compact"
             hide-details="auto"
             label="Projekt"
@@ -132,6 +139,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('beantragtesBudget')"
             :model-value="sortOption.beantragtesBudget"
             clearable
+            data-test="antrag-list-sort-beantragtes-budget"
             density="compact"
             hide-details="auto"
             label="Beantragtes Budget"
@@ -147,6 +155,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('istFehlbetrag')"
             :model-value="sortOption.istFehlbetrag"
             clearable
+            data-test="antrag-list-sort-art"
             density="compact"
             hide-details="auto"
             label="Art"
@@ -162,6 +171,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('aktualisierung')"
             :model-value="sortOption.aktualisierung"
             clearable
+            data-test="antrag-list-sort-aktualisierung"
             density="compact"
             hide-details="auto"
             label="Aktualisierung"
@@ -177,6 +187,7 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
             :items="sortOptionsByField('aktualisierungDatum')"
             :model-value="sortOption.aktualisierungDatum"
             clearable
+            data-test="antrag-list-sort-aktualisierung-datum"
             density="compact"
             hide-details="auto"
             label="Datum Aktualisierung"
