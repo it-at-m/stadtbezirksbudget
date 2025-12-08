@@ -6,6 +6,11 @@ import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
 import { emptyAntragListFilter } from "@/types/AntragListFilter";
 import { antragListFilterToDTO, objectToSearchParams } from "@/util/converter";
+import {
+  AntragListSort,
+  createEmptyListSort,
+  sortObjectToSearchParams,
+} from "../../src/types/AntragListSort";
 
 global.fetch = vi.fn();
 
@@ -29,6 +34,12 @@ const testFiltersString = objectToSearchParams(
   antragListFilterToDTO(testFilters)
 ).toString();
 
+const testSorting: AntragListSort = {
+  status: { sortBy: "status", sortDirection: "asc", title: "Status" },
+};
+
+const testSortingString = sortObjectToSearchParams(testSorting).toString();
+
 const mockResponse = {
   content: [],
   page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
@@ -45,7 +56,12 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    const result = await getAntragsSummaryList(1, 5, emptyAntragListFilter());
+    const result = await getAntragsSummaryList(
+      1,
+      5,
+      emptyAntragListFilter(),
+      createEmptyListSort()
+    );
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5`,
@@ -60,7 +76,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    await getAntragsSummaryList(1, 5, testFilters);
+    await getAntragsSummaryList(1, 5, testFilters, createEmptyListSort());
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5&${testFiltersString}`,
@@ -75,7 +91,12 @@ describe("fetch-antragSummary-list", () => {
     );
 
     await expect(
-      getAntragsSummaryList(1, 5, emptyAntragListFilter())
+      getAntragsSummaryList(
+        1,
+        5,
+        emptyAntragListFilter(),
+        createEmptyListSort()
+      )
     ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
   });
 
@@ -87,7 +108,12 @@ describe("fetch-antragSummary-list", () => {
     });
 
     await expect(
-      getAntragsSummaryList(1, 5, emptyAntragListFilter())
+      getAntragsSummaryList(
+        1,
+        5,
+        emptyAntragListFilter(),
+        createEmptyListSort()
+      )
     ).rejects.toThrow();
   });
 });
