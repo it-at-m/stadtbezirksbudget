@@ -47,6 +47,8 @@ public record AntragTestDataBuilder(
     public static final BigDecimal DEFAULT_BEANTRAGTES_BUDGET = BigDecimal.valueOf(3000);
     public static final boolean DEFAULT_IST_FEHLBETRAG = false;
     public static final AktualisierungArt DEFAULT_AKTUALISIERUNG_ART = AktualisierungArt.E_AKTE;
+    public static final String DEFAULT_ZAMMAD_NR = "000000000";
+    public static final String DEFAULT_AKTENZEICHEN = "0000.0-00-0000";
 
     public static String getDefaultAntragstellerName() {
         return "Max Mustermann " + generateRandomUuidString();
@@ -70,24 +72,18 @@ public record AntragTestDataBuilder(
     }
 
     public Antrag initializeDefaultAntrag() {
-        final Antrag antrag = new Antrag();
-        final Adresse adresse = initializeAdresse();
-        final Antragsteller antragsteller = initializeAntragsteller(adresse, getDefaultAntragstellerName());
-        antrag.setEingangDatum(DEFAULT_DATUM);
-        antrag.setBezirksausschussNr(DEFAULT_BEZIRKSAUSSCHUSS_NR);
-        antrag.setIstPersonVorsteuerabzugsberechtigt(true);
-        antrag.setIstAndererZuwendungsantrag(false);
-        antrag.setBearbeitungsstand(initializeBearbeitungsstand(DEFAULT_STATUS));
-        antrag.setAktualisierungArt(DEFAULT_AKTUALISIERUNG_ART);
-        antrag.setZammadTicketNr("000000000");
-        antrag.setAktualisierungDatum(DEFAULT_DATUM);
-        antrag.setAktenzeichen("0000.0-00-0000");
-        antrag.setFinanzierung(initializeFinanzierung(DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG));
-        antrag.setProjekt(initializeProjekt(getDefaultProjektTitel()));
-        antrag.setAntragsteller(antragsteller);
-        antrag.setBankverbindung(initializeBankverbindung(antragsteller));
-        antrag.setAndereZuwendungsantraege(new ArrayList<>());
-        return antragRepository.save(antrag);
+        return initializeAntrag(
+                DEFAULT_STATUS,
+                DEFAULT_BEZIRKSAUSSCHUSS_NR,
+                DEFAULT_DATUM,
+                getDefaultAntragstellerName(),
+                getDefaultProjektTitel(),
+                DEFAULT_BEANTRAGTES_BUDGET,
+                DEFAULT_IST_FEHLBETRAG,
+                DEFAULT_AKTUALISIERUNG_ART,
+                DEFAULT_DATUM,
+                DEFAULT_ZAMMAD_NR,
+                DEFAULT_AKTENZEICHEN);
     }
 
     public Antrag initializeAntrag(
@@ -99,7 +95,9 @@ public record AntragTestDataBuilder(
             final BigDecimal beantragtesBudget,
             final boolean istFehlbetrag,
             final AktualisierungArt aktualisierungArt,
-            final LocalDateTime aktualisierungDatum) {
+            final LocalDateTime aktualisierungDatum,
+            final String zammadNr,
+            final String aktenzeichen) {
 
         final Antrag antrag = new Antrag();
         final Adresse adresse = initializeAdresse();
@@ -109,9 +107,9 @@ public record AntragTestDataBuilder(
         antrag.setBezirksausschussNr(bezirksausschussNr);
         antrag.setBearbeitungsstand(initializeBearbeitungsstand(status));
         antrag.setAktualisierungArt(aktualisierungArt);
-        antrag.setZammadTicketNr("000000000");
+        antrag.setZammadTicketNr(zammadNr);
         antrag.setAktualisierungDatum(aktualisierungDatum);
-        antrag.setAktenzeichen("0000.0-00-0000");
+        antrag.setAktenzeichen(aktenzeichen);
         antrag.setFinanzierung(initializeFinanzierung(beantragtesBudget, istFehlbetrag));
         antrag.setProjekt(initializeProjekt(projektTitel));
         antrag.setAntragsteller(antragsteller);
