@@ -167,6 +167,18 @@ class ZammadAPIServiceTest {
             assertThrows(NullPointerException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, null).block());
         }
 
+        @Test
+        void testCreateTicketWithApiErrorThrowsZammadAPIException() {
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
+
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), any(), any(), any()))
+                    .thenReturn(Mono.error(new WebClientResponseException("fail", 500, "ERR", null, null, null)));
+
+            final ZammadAPIException exception = assertThrows(ZammadAPIException.class,
+                    () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+            assertThat(exception.getStatusCode()).isEqualTo(500);
+        }
+
     }
 
     @Nested
