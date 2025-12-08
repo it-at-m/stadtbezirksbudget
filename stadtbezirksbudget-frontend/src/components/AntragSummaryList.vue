@@ -1,25 +1,25 @@
 <template>
   <v-data-table-server
-      v-model:sortBy="sortBy"
-      :cell-props="{
+    v-model:sortBy="sortBy"
+    :cell-props="{
       style: {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
       },
     }"
-      :headers="computedHeaders"
-      :hover="true"
-      :items="items"
-      :items-length="totalItems"
-      :items-per-page="itemsPerPage"
-      :loading="loading"
-      :page="page"
-      data-test="antrag-summary-list"
-      @update:options="updateOptions"
+    :headers="computedHeaders"
+    :hover="true"
+    :items="items"
+    :items-length="totalItems"
+    :items-per-page="itemsPerPage"
+    :loading="loading"
+    :page="page"
+    data-test="antrag-summary-list"
+    @update:options="updateOptions"
   >
     <template
-        v-slot:[`header.beantragtesBudget`]="{
+      v-slot:[`header.beantragtesBudget`]="{
         column,
         toggleSort,
         isSorted,
@@ -27,65 +27,65 @@
       }"
     >
       <div
-          class="d-flex v-data-table-header__cell"
-          data-test="header-beantragtes-budget"
-          style="cursor: pointer; align-items: center"
-          @click="() => toggleSort"
+        class="d-flex v-data-table-header__cell"
+        data-test="header-beantragtes-budget"
+        style="cursor: pointer; align-items: center"
+        @click="() => toggleSort"
       >
         <span class="mr-1 text-left"> Beantragtes <br />Budget [€] </span>
         <v-icon
-            :class="[
+          :class="[
             'v-data-table-header__sort-icon',
             { 'v-data-table-header__sort-icon--active': isSorted(column) },
           ]"
-            :icon="getSortIcon(column)"
+          :icon="getSortIcon(column)"
         />
       </div>
     </template>
     <template v-slot:[`item.status`]="{ item }">
       <antrag-status-update
-          :antrag-id="item.id"
-          :initial-status="item.status"
-          data-test="item-status"
+        :antrag-id="item.id"
+        :initial-status="item.status"
+        data-test="item-status"
       />
     </template>
     <template v-slot:[`item.eingangDatum`]="{ item }">
       <span data-test="item-eingang-datum">{{
-          toDateString(new Date(item.eingangDatum))
-        }}</span>
+        toDateString(new Date(item.eingangDatum))
+      }}</span>
     </template>
     <template v-slot:[`item.aktualisierung`]="{ item }">
       <span data-test="item-aktualisierung-art">{{
-          AktualisierungArtText[item.aktualisierung]
-        }}</span>
+        AktualisierungArtText[item.aktualisierung]
+      }}</span>
     </template>
     <template v-slot:[`item.aktualisierungDatum`]="{ item }">
       <span data-test="item-aktualisierung-datum">{{
-          toDateString(new Date(item.aktualisierungDatum))
-        }}</span>
+        toDateString(new Date(item.aktualisierungDatum))
+      }}</span>
     </template>
     <template v-slot:[`item.beantragtesBudget`]="{ item }">
       <span data-test="item-beantragtes-budget">{{
-          toNumberString(item.beantragtesBudget, 0)
-        }}</span>
+        toNumberString(item.beantragtesBudget, 0)
+      }}</span>
     </template>
     <template v-slot:[`item.istFehlbetrag`]="{ item }">
       <span data-test="item-ist-fehlbetrag">{{
-          booleanToFestOrFehl(item.istFehlbetrag)
-        }}</span>
+        booleanToFestOrFehl(item.istFehlbetrag)
+      }}</span>
     </template>
   </v-data-table-server>
 </template>
 
 <script lang="ts" setup>
-import type {DataTableHeader} from "vuetify";
+import type { DataTableHeader } from "vuetify";
 
-import {useDebounceFn} from "@vueuse/core";
-import {computed, onMounted, onUnmounted, ref} from "vue";
+import { useDebounceFn } from "@vueuse/core";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
-import {useAntragSummaryList} from "@/composables/useAntragSummaryList.ts";
-import {AktualisierungArtText} from "@/types/AktualisierungArt.ts";
+import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
 import {
   booleanToFestOrFehl,
   toDateString,
