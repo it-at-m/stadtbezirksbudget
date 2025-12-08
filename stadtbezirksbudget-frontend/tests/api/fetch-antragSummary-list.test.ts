@@ -4,7 +4,7 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
-import { emptyAntragListFilter } from "@/types/AntragListFilter";
+import { defaultAntragListFilter } from "@/types/AntragListFilter";
 import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
 import { objectToSearchParams } from "@/util/converter";
 
@@ -46,7 +46,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    const result = await getAntragsSummaryList(1, 5, emptyAntragListFilter());
+    const result = await getAntragsSummaryList(1, 5, defaultAntragListFilter());
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5`,
@@ -76,7 +76,7 @@ describe("fetch-antragSummary-list", () => {
     );
 
     await expect(
-      getAntragsSummaryList(1, 5, emptyAntragListFilter())
+      getAntragsSummaryList(1, 5, defaultAntragListFilter())
     ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
   });
 
@@ -88,7 +88,7 @@ describe("fetch-antragSummary-list", () => {
     });
 
     await expect(
-      getAntragsSummaryList(1, 5, emptyAntragListFilter())
+      getAntragsSummaryList(1, 5, defaultAntragListFilter())
     ).rejects.toThrow();
   });
 });

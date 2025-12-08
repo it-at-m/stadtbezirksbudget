@@ -3,7 +3,7 @@ import type { AntragListFilter } from "@/types/AntragListFilter.ts";
 import { ref } from "vue";
 
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
-import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
+import { defaultAntragListFilter } from "@/types/AntragListFilter.ts";
 
 /**
  * Composable for managing the Antrag list filters.
@@ -28,7 +28,7 @@ export function useAntragListFilter() {
    * Resets the filters to their default empty state and updates the store.
    */
   function resetFilters() {
-    filters.value = emptyAntragListFilter();
+    filters.value = defaultAntragListFilter();
     updateFilters();
   }
 

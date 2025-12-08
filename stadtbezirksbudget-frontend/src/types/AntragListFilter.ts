@@ -17,8 +17,8 @@ export interface AntragListFilter {
   aktualisierungDatumBis?: Date;
 }
 
-// Creates an empty AntragListFilter object
-export const emptyAntragListFilter = (): AntragListFilter => ({
+// Creates an AntragListFilter object with default values
+export const defaultAntragListFilter = (): AntragListFilter => ({
   status: [
     "EINGEGANGEN",
     "SITZUNGSVORLAGE_ERSTELLT",
