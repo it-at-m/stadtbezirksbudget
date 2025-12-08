@@ -10,7 +10,7 @@ import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import {
   AntragListFilter,
-  emptyAntragListFilter,
+  defaultAntragListFilter,
 } from "@/types/AntragListFilter.ts";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
@@ -24,7 +24,7 @@ describe("useAntragSummaryList", () => {
     setFilters: ReturnType<typeof vi.fn>;
     $subscribe: ReturnType<typeof vi.fn>;
   };
-  const filtersValue = emptyAntragListFilter();
+  const filtersValue = defaultAntragListFilter();
 
   beforeEach(() => {
     snackbarStoreMock = {

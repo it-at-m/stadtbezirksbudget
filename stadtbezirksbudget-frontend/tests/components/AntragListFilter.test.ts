@@ -11,7 +11,7 @@ import { VDateInput } from "vuetify/labs/components";
 
 import AntragListFilter from "@/components/AntragListFilter.vue";
 import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
-import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
+import { defaultAntragListFilter } from "@/types/AntragListFilter.ts";
 
 vi.mock("@/composables/useAntragListFilter.ts");
 global.ResizeObserver = class {
@@ -70,7 +70,7 @@ describe("AntragListFilter", () => {
     mockUseAntragListFilter = {
       updateFilters: vi.fn(),
       resetFilters: vi.fn(),
-      filters: ref(emptyAntragListFilter()),
+      filters: ref(defaultAntragListFilter()),
     };
 
     vi.mocked(useAntragListFilter).mockReturnValue(mockUseAntragListFilter);

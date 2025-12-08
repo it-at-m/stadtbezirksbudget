@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
-  emptyAntragListFilter,
+  defaultAntragListFilter,
 } from "@/types/AntragListFilter";
 
 const testFilters: AntragListFilter = {
@@ -29,9 +29,9 @@ describe("useAntragListFilterStore", () => {
     setActivePinia(createPinia());
   });
 
-  test("initially emptyAntragListFilter", () => {
+  test("initially defaultAntragListFilter", () => {
     const store = useAntragListFilterStore();
-    expect(store.filters).toStrictEqual(emptyAntragListFilter());
+    expect(store.filters).toStrictEqual(defaultAntragListFilter());
   });
 
   test("setFilters stores filter", () => {
