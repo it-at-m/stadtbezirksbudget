@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.configuration.filter;
 
+import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import de.muenchen.stadtbezirksbudget.backend.configuration.security.SecurityProperties;
 import de.muenchen.stadtbezirksbudget.backend.security.AuthUtils;
 import jakarta.servlet.FilterChain;
@@ -37,6 +38,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
      * the kind of HTTP-Request, the targeted URI and the response http status code.
      * {@inheritDoc}
      */
+    @ExcludedFromGeneratedCoverage //Excluded from coverage due to the complexity of testing logging
     @Override
     protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {

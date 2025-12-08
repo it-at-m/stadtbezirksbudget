@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand;
@@ -19,7 +22,11 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
+import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
+import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +42,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
 class AntragServiceTest {
@@ -42,6 +50,10 @@ class AntragServiceTest {
 
     @Mock
     private AntragRepository antragRepository;
+    @Mock
+    private AntragstellerRepository antragstellerRepository;
+    @Mock
+    private ProjektRepository projektRepository;
     @InjectMocks
     private AntragService antragService;
 
@@ -87,18 +99,22 @@ class AntragServiceTest {
         @Test
         void testEmptyAntragList() {
             final Pageable pageable = PageRequest.of(0, 10);
-            when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
 
-            final Page<Antrag> result = antragService.getAntragPage(pageable);
+            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+                    .thenReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
+
+            final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).isEmpty();
-            verify(antragRepository).findAll(pageable);
+            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
         }
 
         @Test
         void testGetAllEntitiesWithDifferentStatus() {
             final Pageable pageable = PageRequest.of(0, 10);
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());
 
@@ -113,18 +129,20 @@ class AntragServiceTest {
             final Antrag antrag = createAntrag(bearbeitungsstand, antragsteller, finanzierung, "Projekt Titel", "Projekt Beschreibung",
                     Status.ABGELEHNT_VON_BA);
 
-            when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(Collections.singletonList(antrag), pageable, 1));
+            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+                    .thenReturn(new PageImpl<>(Collections.singletonList(antrag), pageable, 1));
 
-            final Page<Antrag> result = antragService.getAntragPage(pageable);
+            final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(1);
-            verify(antragRepository).findAll(pageable);
+            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
         }
 
         @Test
         void testGetAllEntitiesWithMultipleItems() {
             final Pageable pageable = PageRequest.of(0, 5);
+            final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
             final Finanzierung finanzierung = new Finanzierung();
             finanzierung.setId(UUID.randomUUID());
 
@@ -139,13 +157,64 @@ class AntragServiceTest {
 
             final Antrag antrag2 = createAntrag(new Bearbeitungsstand(), antragsteller2, finanzierung, "Projekt 2", "Beschreibung 2", Status.ABGESCHLOSSEN);
 
-            when(antragRepository.findAll(pageable)).thenReturn(new PageImpl<>(List.of(antrag1, antrag2), pageable, 2));
+            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+                    .thenReturn(new PageImpl<>(List.of(antrag1, antrag2), pageable, 2));
 
-            final Page<Antrag> result = antragService.getAntragPage(pageable);
+            final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(2);
-            verify(antragRepository).findAll(pageable);
+            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
+        }
+    }
+
+    @Nested
+    class GetFilterOptions {
+        @Test
+        void testEmptyLists() {
+            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(Collections.emptyList());
+            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(Collections.emptyList());
+
+            final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
+
+            assertThat(filterOptions).isNotNull();
+            assertThat(filterOptions.antragstellerNamen()).isEmpty();
+            assertThat(filterOptions.projektTitel()).isEmpty();
+        }
+
+        @Test
+        void testNonEmptyLists() {
+            final List<String> antragstellerNames = List.of("Antragsteller1", "Antragsteller2");
+            final List<String> projektTitles = List.of("Projekt1", "Projekt2");
+
+            final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
+            final List<TitelView> titelViews = projektTitles.stream().map(titel -> (TitelView) () -> titel).toList();
+
+            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(nameViews);
+            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(titelViews);
+
+            final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
+
+            assertThat(filterOptions).isNotNull();
+            assertThat(filterOptions.antragstellerNamen()).containsExactlyElementsOf(antragstellerNames);
+            assertThat(filterOptions.projektTitel()).containsExactlyElementsOf(projektTitles);
+        }
+
+        @Test
+        void testPartialEmptyLists() {
+            final List<String> antragstellerNames = List.of("Antragsteller1");
+
+            final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
+            final List<TitelView> titelViews = Collections.emptyList();
+
+            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(nameViews);
+            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(titelViews);
+
+            final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
+
+            assertThat(filterOptions).isNotNull();
+            assertThat(filterOptions.antragstellerNamen()).containsExactlyElementsOf(antragstellerNames);
+            assertThat(filterOptions.projektTitel()).isEmpty();
         }
     }
 

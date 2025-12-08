@@ -1,0 +1,15 @@
+meta {
+  name: GetFilterOptions
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{backend}}/antrag/filterOptions
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

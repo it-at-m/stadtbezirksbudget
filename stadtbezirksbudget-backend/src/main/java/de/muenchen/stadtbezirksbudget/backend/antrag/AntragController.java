@@ -1,7 +1,9 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.security.Authorities;
 import jakarta.validation.Valid;
@@ -47,20 +49,34 @@ public class AntragController {
      * @param size amount of items in each page
      * @param sortBy external sort key defined in {@link AntragSortMapper}
      * @param sortDirection direction of sorting (ASC or DESC)
+     * @param antragFilterDTO contains filter data
      * @return a page of AntragSummaryDTOs
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
     public Page<AntragSummaryDTO> getAntragSummaryPage(@RequestParam(defaultValue = "0") final int page, @RequestParam(defaultValue = "10") final int size,
-            @RequestParam(required = false) final String sortBy, @RequestParam(defaultValue = "ASC") final Sort.Direction sortDirection) {
+            @RequestParam(required = false) final String sortBy, @RequestParam(defaultValue = "ASC") final Sort.Direction sortDirection,
+            final AntragFilterDTO antragFilterDTO) {
         final Sort sort = antragSortMapper.map(sortBy, sortDirection);
         final Pageable pageable = (size == UNPAGED_SIZE) ? Pageable.unpaged(sort) : PageRequest.of(page, size, sort);
-        final Page<Antrag> antragPage = antragService.getAntragPage(pageable);
+        final Page<Antrag> antragPage = antragService.getAntragPage(pageable, antragFilterDTO);
         final List<AntragSummaryDTO> summaryList = antragPage.getContent().stream()
                 .map(antragMapper::toAntragSummaryDTO)
                 .toList();
         return new PageImpl<>(summaryList, antragPage.getPageable(), antragPage.getTotalElements());
+    }
+
+    /**
+     * Retrieves all Antragsteller names and Projekt titles.
+     *
+     * @return a FilterOptionsDTO containing lists of Antragsteller names and Projekt titles
+     */
+    @GetMapping("filterOptions")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize(Authorities.ANTRAG_GET_SUMMARY)
+    public FilterOptionsDTO getFilterOptions() {
+        return antragService.getFilterOptions();
     }
 
     /**
