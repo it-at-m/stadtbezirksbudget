@@ -1,4 +1,5 @@
-const STATUS_DEFINITIONS = [
+// Array of all status options for use in UI components
+export const statusOptions = [
   { value: "EINGEGANGEN", shortText: "Offen", longText: "Antrag eingegangen" },
   {
     value: "WARTEN_AUF_BUERGERRUECKMELDUNG",
@@ -93,7 +94,7 @@ const STATUS_DEFINITIONS = [
 ] as const;
 
 // Type representing all possible status values
-export type Status = (typeof STATUS_DEFINITIONS)[number]["value"];
+export type Status = (typeof statusOptions)[number]["value"];
 
 // Interface for status options used in dropdowns or selectors
 export interface StatusOption {
@@ -107,11 +108,8 @@ export const StatusText: Record<
   Status,
   Omit<StatusOption, "value">
 > = Object.fromEntries(
-  STATUS_DEFINITIONS.map((s) => [
+  statusOptions.map((s) => [
     s.value,
     { shortText: s.shortText, longText: s.longText },
   ])
 ) as Record<Status, Omit<StatusOption, "value">>;
-
-// Array of all status options for use in UI components
-export const statusOptions: readonly StatusOption[] = STATUS_DEFINITIONS;
