@@ -128,9 +128,9 @@ class ZammadAPIServiceTest {
         }
 
         @Test
-        void testCreateTicketWithNullValueInRequestThrowsIllegalArgumentException() {
+        void testCreateTicketWithBlankTitleThrowsIllegalArgumentException() {
             final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
-            dto.setTitle(null);
+            dto.setTitle("");
 
             assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
         }
@@ -210,7 +210,7 @@ class ZammadAPIServiceTest {
         }
 
         @Test
-        void testCreateUserAndTicketWithBlankValuesInRequestThrowsIllegalArgumentException() {
+        void testCreateUserAndTicketWithBlankTitleThrowsIllegalArgumentException() {
             final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
             dto.getCreateTicketDTO().setTitle("");
 
