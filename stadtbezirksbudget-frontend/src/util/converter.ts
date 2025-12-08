@@ -2,9 +2,7 @@ import type {
   AntragListFilter,
   AntragListFilterDTO,
 } from "@/types/AntragListFilter.ts";
-import type { AntragListSort } from "@/types/AntragListSort.ts";
 
-import { antragListSortToSortString } from "@/types/AntragListSort.ts";
 import { toLocalISOString } from "@/util/formatter.ts";
 
 /**
