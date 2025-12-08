@@ -22,7 +22,6 @@ export const defaultAntragListFilter = (): AntragListFilter => ({
   ...emptyAntragListFilter(),
   status: [
     "EINGEGANGEN",
-    "SITZUNGSVORLAGE_ERSTELLT",
     "VOLLSTAENDIG",
     "SITZUNGSVORLAGE_ERSTELLT",
     "SITZUNGSVORLAGE_UEBERMITTELT",
