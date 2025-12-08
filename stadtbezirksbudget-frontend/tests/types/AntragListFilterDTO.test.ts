@@ -43,7 +43,6 @@ describe("AntragListFilterDTO", () => {
       expect(dto.eingangDatumBis).toBe(
         toLocalISOString(new Date("2025-11-28T23:59:59"))
       );
-      expect(dto.eingangDatum).toBeUndefined();
     });
 
     test("converts aktualisierungDatum to iso strings", () => {
@@ -55,7 +54,6 @@ describe("AntragListFilterDTO", () => {
       expect(dto.aktualisierungDatumBis).toBe(
         toLocalISOString(new Date("2025-11-25T23:59:59"))
       );
-      expect(dto.aktualisierungDatum).toBeUndefined();
     });
 
     test("converts partial date ranges future", () => {
