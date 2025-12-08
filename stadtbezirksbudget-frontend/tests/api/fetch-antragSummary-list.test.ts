@@ -11,6 +11,8 @@ import {
   createEmptyListSort,
   sortObjectToSearchParams,
 } from "../../src/types/AntragListSort";
+import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
+import { objectToSearchParams } from "@/util/converter";
 
 global.fetch = vi.fn();
 
