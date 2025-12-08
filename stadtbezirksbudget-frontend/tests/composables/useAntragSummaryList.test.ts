@@ -12,10 +12,16 @@ import {
   AntragListFilter,
   emptyAntragListFilter,
 } from "@/types/AntragListFilter.ts";
+import { useAntragListSortingStore } from "../../src/stores/useAntragListSortingStore";
+import {
+  AntragListSort,
+  createEmptyListSort,
+} from "../../src/types/AntragListSort";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
 vi.mock("@/stores/useAntragListFilterStore.ts");
+vi.mock("@/stores/useAntragListSortingStore.ts");
 
 describe("useAntragSummaryList", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
@@ -24,7 +30,13 @@ describe("useAntragSummaryList", () => {
     setFilters: ReturnType<typeof vi.fn>;
     $subscribe: ReturnType<typeof vi.fn>;
   };
+  let sortingStoreMock: {
+    sorting: AntragListSort;
+    setListSorting: ReturnType<typeof vi.fn>;
+    $subscribe: ReturnType<typeof vi.fn>;
+  };
   const filtersValue = emptyAntragListFilter();
+  const sortingValue = createEmptyListSort();
 
   beforeEach(() => {
     snackbarStoreMock = {
@@ -35,8 +47,15 @@ describe("useAntragSummaryList", () => {
       setFilters: vi.fn(),
       $subscribe: vi.fn(),
     };
+    sortingStoreMock = {
+      sorting: sortingValue,
+      setListSorting: vi.fn(),
+      $subscribe: vi.fn(),
+    };
+
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
     (useAntragListFilterStore as vi.Mock).mockReturnValue(filterStoreMock);
+    (useAntragListSortingStore as vi.Mock).mockReturnValue(sortingStoreMock);
   });
 
   describe("fetchItems", () => {
@@ -134,7 +153,12 @@ describe("useAntragSummaryList", () => {
       updateOptions({ page: 2, itemsPerPage: 5 });
 
       await vi.waitFor(() => {
-        expect(getAntragsSummaryList).toHaveBeenCalledWith(1, 5, filtersValue);
+        expect(getAntragsSummaryList).toHaveBeenCalledWith(
+          1,
+          5,
+          filtersValue,
+          createEmptyListSort()
+        );
         expect(items.value).toEqual(mockResponse.content);
       });
     });
