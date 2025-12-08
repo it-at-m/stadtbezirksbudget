@@ -40,13 +40,13 @@ describe("fetch-antragSummary-list", () => {
     vi.clearAllMocks();
   });
 
-  test("fetches with correct parameters", async () => {
+  test("fetches with correct parameters without filters", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       json: async () => mockResponse,
     });
 
-    const result = await getAntragsSummaryList(1, 5, defaultAntragListFilter());
+    const result = await getAntragsSummaryList(1, 5, {});
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5`,
