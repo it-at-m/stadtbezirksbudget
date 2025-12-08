@@ -52,16 +52,17 @@ class ZammadAPIServiceTest {
         service = new ZammadAPIService(ticketsApi);
     }
 
+    // This needs to be accessed by the createTicketAndUser test cases
+    private CreateTicketDTOV2 generateCreateTicketDTOV2() {
+        return new CreateTicketDTOV2()
+                .title("T")
+                .anliegenart("a")
+                .vertrauensniveau("1")
+                .group("g");
+    }
+
     @Nested
     class CreateTicket {
-
-        private CreateTicketDTOV2 generateCreateTicketDTOV2() {
-            return new CreateTicketDTOV2()
-                    .title("T")
-                    .anliegenart("a")
-                    .vertrauensniveau("1")
-                    .group("g");
-        }
 
         @Test
         void testCreateTicketReturnsCorrectTicket() {
@@ -173,11 +174,7 @@ class ZammadAPIServiceTest {
 
         private CreateUserAndTicketDTOV2 generateCreateUserAndTicketDTOV2() {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
-            dto.setCreateTicketDTO(new CreateTicketDTOV2()
-                    .title("T")
-                    .anliegenart("a")
-                    .vertrauensniveau("1")
-                    .group("g"));
+            dto.setCreateTicketDTO(generateCreateTicketDTOV2());
             return dto;
         }
 
@@ -215,9 +212,7 @@ class ZammadAPIServiceTest {
         @Test
         void testCreateUserAndTicketWithBlankValuesInRequestThrowsIllegalArgumentException() {
             final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
-            final CreateTicketDTOV2 createTicketDTO = new CreateTicketDTOV2();
-            createTicketDTO.setTitle("");
-            dto.setCreateTicketDTO(createTicketDTO);
+            dto.getCreateTicketDTO().setTitle("");
 
             assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
