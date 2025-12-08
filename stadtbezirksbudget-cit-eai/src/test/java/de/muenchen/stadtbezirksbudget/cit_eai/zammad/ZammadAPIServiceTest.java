@@ -28,14 +28,12 @@ import reactor.core.publisher.Mono;
 class ZammadAPIServiceTest {
     private static final String EXTERNAL_ID = "ext-1";
     private final AbstractResource resource = new AbstractResource() {
-        @NonNull
-        @Override
+        @NonNull @Override
         public String getDescription() {
             return "test abstract resource";
         }
 
-        @NonNull
-        @Override
+        @NonNull @Override
         public InputStream getInputStream() {
             return new ByteArrayInputStream("hello".getBytes(StandardCharsets.UTF_8));
         }
