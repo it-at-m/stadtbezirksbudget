@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.configuration.security;
 
+import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,13 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
  * Additionally it configures the use of {@link KeycloakRolesAuthoritiesConverter} or deprecated
  * {@link UserInfoAuthoritiesConverter}.
  */
+
+/*
+ * This configuration class is considered too complex to test effectively.
+ * As a result, it is excluded from unit testing for branch coverage to maintain focus on simpler,
+ * more testable components of the application.
+ */
+@ExcludedFromGeneratedCoverage
 @RequiredArgsConstructor
 @Configuration
 @Profile("!no-security")
