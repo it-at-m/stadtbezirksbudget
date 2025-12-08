@@ -41,7 +41,7 @@ describe("AntragListFilterDTO", () => {
         toLocalISOString(new Date("2025-11-26T00:00:00Z"))
       );
       expect(dto.eingangDatumBis).toBe(
-        toLocalISOString(new Date("2025-11-28T00:00:00Z"))
+        toLocalISOString(new Date("2025-11-28T23:59:59"))
       );
       expect(dto.eingangDatum).toBeUndefined();
     });
@@ -53,7 +53,7 @@ describe("AntragListFilterDTO", () => {
         toLocalISOString(new Date("2025-11-24T00:00:00Z"))
       );
       expect(dto.aktualisierungDatumBis).toBe(
-        toLocalISOString(new Date("2025-11-25T00:00:00Z"))
+        toLocalISOString(new Date("2025-11-25T23:59:59"))
       );
       expect(dto.aktualisierungDatum).toBeUndefined();
     });
@@ -86,11 +86,11 @@ describe("AntragListFilterDTO", () => {
 
       expect(dto.eingangDatumVon).toBeUndefined();
       expect(dto.eingangDatumBis).toBe(
-        toLocalISOString(new Date("2025-11-28T00:00:00Z"))
+        toLocalISOString(new Date("2025-11-28T23:59:59"))
       );
       expect(dto.aktualisierungDatumVon).toBeUndefined();
       expect(dto.aktualisierungDatumBis).toBe(
-        toLocalISOString(new Date("2025-11-25T00:00:00Z"))
+        toLocalISOString(new Date("2025-11-25T23:59:59"))
       );
     });
 

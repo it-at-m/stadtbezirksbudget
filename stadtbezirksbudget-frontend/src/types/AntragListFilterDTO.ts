@@ -34,6 +34,8 @@ export function antragListFilterToDTO(
     aktualisierungDatumBis,
     ...rest
   } = filters;
+  eingangDatumBis?.setHours(23, 59, 59, 999);
+  aktualisierungDatumBis?.setHours(23, 59, 59, 999);
   return {
     ...rest,
     eingangDatumVon: toLocalISOString(eingangDatumVon),
