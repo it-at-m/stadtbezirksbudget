@@ -47,6 +47,7 @@ export const antragListSortToSortString = (sort: AntragListSort): string => {
 
   return sortStrings.join(";");
 };
+
 /**
  * Converts DataTableSortItem or array of DataTableSortItem to AntragListSortOption
  * @param sortItems - The DataTableSortItem or array of DataTableSortItem to convert
