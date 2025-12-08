@@ -19,7 +19,17 @@ export interface AntragListFilter {
 
 // Creates an empty AntragListFilter object
 export const emptyAntragListFilter = (): AntragListFilter => ({
-  status: [],
+  status: [
+    "EINGEGANGEN",
+    "SITZUNGSVORLAGE_ERSTELLT",
+    "VOLLSTAENDIG",
+    "SITZUNGSVORLAGE_ERSTELLT",
+    "SITZUNGSVORLAGE_UEBERMITTELT",
+    "WARTEN_AUF_BUERGERRUECKMELDUNG",
+    "BESCHLUSS_ERHALTEN",
+    "ZUWENDUNGSBESCHEID_ERSTELLT",
+    "ZUWENDUNGSBESCHEID_VERSENDET",
+  ],
   bezirksausschussNr: [],
   eingangDatumVon: undefined,
   eingangDatumBis: undefined,
