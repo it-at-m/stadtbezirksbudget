@@ -26,18 +26,16 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 
 class ZammadAPIServiceTest {
-    private TicketsApi ticketsApi;
-    private ZammadAPIService service;
-
     private static final String EXTERNAL_ID = "ext-1";
-
     private final AbstractResource resource = new AbstractResource() {
-        @NonNull @Override
+        @NonNull
+        @Override
         public String getDescription() {
             return "test abstract resource";
         }
 
-        @NonNull @Override
+        @NonNull
+        @Override
         public InputStream getInputStream() {
             return new ByteArrayInputStream("hello".getBytes(StandardCharsets.UTF_8));
         }
@@ -47,6 +45,8 @@ class ZammadAPIServiceTest {
             return "test.txt";
         }
     };
+    private TicketsApi ticketsApi;
+    private ZammadAPIService service;
 
     @BeforeEach
     void setUp() {
@@ -215,10 +215,10 @@ class ZammadAPIServiceTest {
         }
 
         @Test
-        void testCreateUserAndTicketWithNullValueInRequestThrowsIllegalArgumentException() {
+        void testCreateUserAndTicketWithBlankValuesInRequestThrowsIllegalArgumentException() {
             final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
             final CreateTicketDTOV2 createTicketDTO = new CreateTicketDTOV2();
-            createTicketDTO.setTitle(null);
+            createTicketDTO.setTitle("");
             dto.setCreateTicketDTO(createTicketDTO);
 
             assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
