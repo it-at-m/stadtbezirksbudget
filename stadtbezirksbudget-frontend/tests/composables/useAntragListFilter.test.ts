@@ -5,6 +5,7 @@ import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
   defaultAntragListFilter,
+  emptyAntragListFilter,
 } from "@/types/AntragListFilter";
 
 vi.mock("@/stores/useAntragListFilterStore.ts");
@@ -44,7 +45,7 @@ describe("useAntragListFilter", () => {
       const { resetFilters, filters } = useAntragListFilter();
 
       resetFilters();
-      expect(filters.value).toStrictEqual(defaultAntragListFilter());
+      expect(filters.value).toStrictEqual(emptyAntragListFilter());
       expect(filterStoreMock.setFilters).toHaveBeenCalled();
     });
   });

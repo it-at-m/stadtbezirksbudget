@@ -19,6 +19,7 @@ export interface AntragListFilter {
 
 // Creates an AntragListFilter object with default values
 export const defaultAntragListFilter = (): AntragListFilter => ({
+  ...emptyAntragListFilter(),
   status: [
     "EINGEGANGEN",
     "SITZUNGSVORLAGE_ERSTELLT",
@@ -30,6 +31,11 @@ export const defaultAntragListFilter = (): AntragListFilter => ({
     "ZUWENDUNGSBESCHEID_ERSTELLT",
     "ZUWENDUNGSBESCHEID_VERSENDET",
   ],
+});
+
+// Creates an empty AntragListFilter object
+export const emptyAntragListFilter = (): AntragListFilter => ({
+  status: [],
   bezirksausschussNr: [],
   eingangDatumVon: undefined,
   eingangDatumBis: undefined,
