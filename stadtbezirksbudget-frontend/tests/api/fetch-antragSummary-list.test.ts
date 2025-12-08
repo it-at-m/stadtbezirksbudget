@@ -5,7 +5,8 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
 import { emptyAntragListFilter } from "@/types/AntragListFilter";
-import { antragListFilterToDTO, objectToSearchParams } from "@/util/converter";
+import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
+import { objectToSearchParams } from "@/util/converter";
 
 global.fetch = vi.fn();
 
