@@ -34,14 +34,21 @@ export function antragListFilterToDTO(
     aktualisierungDatumBis,
     ...rest
   } = filters;
-  eingangDatumBis?.setHours(23, 59, 59, 999);
-  aktualisierungDatumBis?.setHours(23, 59, 59, 999);
   return {
     ...rest,
     eingangDatumVon: toLocalISOString(eingangDatumVon),
-    eingangDatumBis: toLocalISOString(eingangDatumBis),
+    eingangDatumBis: toLocalISOString(toEndOfDay(eingangDatumBis)),
     istFehlbetrag: art ? art === "Fehl" : undefined,
     aktualisierungDatumVon: toLocalISOString(aktualisierungDatumVon),
-    aktualisierungDatumBis: toLocalISOString(aktualisierungDatumBis),
+    aktualisierungDatumBis: toLocalISOString(
+      toEndOfDay(aktualisierungDatumBis)
+    ),
   };
+}
+
+function toEndOfDay(date: Date | undefined): Date | undefined {
+  if (!date) return undefined;
+  const adjustedDate = new Date(date.getTime());
+  adjustedDate.setHours(23, 59, 59, 999);
+  return adjustedDate;
 }
