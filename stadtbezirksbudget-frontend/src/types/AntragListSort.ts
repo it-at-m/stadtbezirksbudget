@@ -1,10 +1,7 @@
 import type { sortOptionsRecord } from "@/types/AntragListSortDefinitions.ts";
 import type { DataTableSortItem } from "vuetify";
 
-import {
-  antragSortFieldMapper,
-  sortOptionsRecord as sortOptionDefinitions,
-} from "@/types/AntragListSortDefinitions.ts";
+import { sortOptionsRecord as sortOptionDefinitions } from "@/types/AntragListSortDefinitions.ts";
 
 // Type definition of sorting diretion
 export type sortDirection = "asc" | "desc";
@@ -39,10 +36,7 @@ export const antragListSortToSortString = (sort: AntragListSort): string => {
   const sortStrings = Object.values(sort)
     .filter((v): v is AntragListSortOption => v !== undefined)
     .map((v) => {
-      const mapped = antragSortFieldMapper[v.sortBy];
-      return mapped
-        ? `${mapped},${v.sortDirection}`
-        : `${v.sortBy},${v.sortDirection}`;
+      return `${v.sortBy},${v.sortDirection}`;
     });
 
   return sortStrings.join(";");

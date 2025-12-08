@@ -116,14 +116,3 @@ export const sortOptionsRecord: Record<
     },
   ],
 };
-
-// Important: Maps the front-end sort fields to the corresponding back-end fields
-export const antragSortFieldMapper: Record<string, string> = {
-  status: "bearbeitungsstand.status",
-  zammadNr: "zammadTicketNr",
-  antragstellerName: "antragsteller.name",
-  projektTitel: "projekt.titel",
-  beantragtesBudget: "finanzierung.beantragtesBudget",
-  istFehlbetrag: "finanzierung.istFehlbetrag",
-  aktualisierung: "aktualisierungArt",
-};
