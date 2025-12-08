@@ -17,22 +17,6 @@ export interface AntragListFilter {
   aktualisierungDatumBis?: Date;
 }
 
-// Data Transfer Object for AntragListFilter
-export interface AntragListFilterDTO extends Omit<
-  AntragListFilter,
-  | "eingangDatumVon"
-  | "eingangDatumBis"
-  | "art"
-  | "aktualisierungDatumVon"
-  | "aktualisierungDatumBis"
-> {
-  eingangDatumVon?: string;
-  eingangDatumBis?: string;
-  istFehlbetrag?: boolean;
-  aktualisierungDatumVon?: string;
-  aktualisierungDatumBis?: string;
-}
-
 // Creates an empty AntragListFilter object
 export const emptyAntragListFilter = (): AntragListFilter => ({
   status: [],
