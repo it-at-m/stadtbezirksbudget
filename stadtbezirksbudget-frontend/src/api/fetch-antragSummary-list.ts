@@ -9,11 +9,9 @@ import {
   getConfig,
 } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
+import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
 import { sortObjectToSearchParams } from "@/types/AntragListSort.ts";
-import {
-  antragListFilterToDTO,
-  objectToSearchParams,
-} from "@/util/converter.ts";
+import { objectToSearchParams } from "@/util/converter.ts";
 
 /**
  * Fetches a paginated list of Antrag summaries from the backend, applying the given filters.
