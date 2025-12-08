@@ -18,14 +18,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AntragSortMapper {
-    private static final Map<String, String> SORT_MAPPING = Map.of(
-            "status", path(Antrag_.bearbeitungsstand, Bearbeitungsstand_.status),
-            "zammadNr", path(Antrag_.zammadTicketNr),
-            "antragstellerName", path(Antrag_.antragsteller, Antragsteller_.name),
-            "projektTitel", path(Antrag_.projekt, Projekt_.titel),
-            "beantragtesBudget", path(Antrag_.finanzierung, Finanzierung_.beantragtesBudget),
-            "istFehlbetrag", path(Antrag_.finanzierung, Finanzierung_.istFehlbetrag),
-            "aktualisierung", path(Antrag_.aktualisierungArt));
+    private static final Map<String, String> SORT_MAPPING = Map.ofEntries(
+            Map.entry("status", path(Antrag_.bearbeitungsstand, Bearbeitungsstand_.status)),
+            Map.entry("zammadNr", path(Antrag_.zammadTicketNr)),
+            Map.entry("aktenzeichen", path(Antrag_.aktenzeichen)),
+            Map.entry("bezirksausschussNr", path(Antrag_.bezirksausschussNr)),
+            Map.entry("eingangDatum", path(Antrag_.eingangDatum)),
+            Map.entry("antragstellerName", path(Antrag_.antragsteller, Antragsteller_.name)),
+            Map.entry("projektTitel", path(Antrag_.projekt, Projekt_.titel)),
+            Map.entry("beantragtesBudget", path(Antrag_.finanzierung, Finanzierung_.beantragtesBudget)),
+            Map.entry("istFehlbetrag", path(Antrag_.finanzierung, Finanzierung_.istFehlbetrag)),
+            Map.entry("aktualisierung", path(Antrag_.aktualisierungArt)),
+            Map.entry("aktualisierungDatum", path(Antrag_.aktualisierungDatum)));
 
     private static String path(final SingularAttribute<?, ?>... attributes) {
         return Arrays.stream(attributes)
