@@ -86,6 +86,7 @@ public record AntragTestDataBuilder(
                 DEFAULT_AKTENZEICHEN);
     }
 
+    @SuppressWarnings({ "PMD.UseObjectForClearerAPI", "PMD.ExcessiveParameterList" })
     public Antrag initializeAntrag(
             final Status status,
             final int bezirksausschussNr,

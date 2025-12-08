@@ -24,7 +24,7 @@ import org.testcontainers.junit.jupiter.Container;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
-public class AntragSortMapperTest {
+class AntragSortMapperTest {
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
@@ -34,7 +34,7 @@ public class AntragSortMapperTest {
     @Autowired
     private AntragSortMapper antragSortMapper;
 
-    public static Stream<Arguments> mappingData() {
+    private static Stream<Arguments> mappingData() {
         return Stream.of(
                 Arguments.of("status", "bearbeitungsstand.status"),
                 Arguments.of("zammadNr", "zammadTicketNr"),
@@ -46,37 +46,35 @@ public class AntragSortMapperTest {
                 Arguments.of("beantragtesBudget", "finanzierung.beantragtesBudget"),
                 Arguments.of("istFehlbetrag", "finanzierung.istFehlbetrag"),
                 Arguments.of("aktualisierung", "aktualisierungArt"),
-                Arguments.of("aktualisierungDatum", "aktualisierungDatum")
-        );
+                Arguments.of("aktualisierungDatum", "aktualisierungDatum"));
     }
 
-    public static Stream<Arguments> invalidData() {
+    private static Stream<Arguments> invalidData() {
         return Stream.of(
                 Arguments.of((Object) null),
                 Arguments.of(""),
-                Arguments.of("invalidField")
-        );
+                Arguments.of("invalidField"));
     }
 
     @ParameterizedTest
     @MethodSource("mappingData")
-    void testMappingAsc(String sortBy, String expectedField) {
-        Sort sort = antragSortMapper.map(sortBy, Sort.Direction.ASC);
+    void testMappingAsc(final String sortBy, final String expectedField) {
+        final Sort sort = antragSortMapper.map(sortBy, Sort.Direction.ASC);
         assertEquals(expectedField, Objects.requireNonNull(sort.getOrderFor(expectedField)).getProperty());
         assertEquals(Sort.Direction.ASC, Objects.requireNonNull(sort.getOrderFor(expectedField)).getDirection());
     }
 
     @ParameterizedTest
     @MethodSource("mappingData")
-    void testMappingDesc(String sortBy, String expectedField) {
-        Sort sort = antragSortMapper.map(sortBy, Sort.Direction.DESC);
+    void testMappingDesc(final String sortBy, final String expectedField) {
+        final Sort sort = antragSortMapper.map(sortBy, Sort.Direction.DESC);
         assertEquals(expectedField, Objects.requireNonNull(sort.getOrderFor(expectedField)).getProperty());
         assertEquals(Sort.Direction.DESC, Objects.requireNonNull(sort.getOrderFor(expectedField)).getDirection());
     }
 
     @ParameterizedTest
     @MethodSource("invalidData")
-    void testInvalidMapping(String sortBy) {
+    void testInvalidMapping(final String sortBy) {
         if (Objects.isNull(sortBy) || sortBy.isBlank()) {
             assertEquals(Sort.unsorted(), antragSortMapper.map("", Sort.Direction.ASC));
         } else {
