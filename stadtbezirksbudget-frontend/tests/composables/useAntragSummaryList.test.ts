@@ -36,7 +36,6 @@ describe("useAntragSummaryList", () => {
   let sortingStoreMock: {
     sorting: AntragListSort;
     setListSorting: ReturnType<typeof vi.fn>;
-    $subscribe: ReturnType<typeof vi.fn>;
   };
   const filtersValue = defaultAntragListFilter();
   const sortingValue = createEmptyListSort();
@@ -53,7 +52,6 @@ describe("useAntragSummaryList", () => {
     sortingStoreMock = {
       sorting: sortingValue,
       setListSorting: vi.fn(),
-      $subscribe: vi.fn(),
     };
 
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
@@ -179,31 +177,6 @@ describe("useAntragSummaryList", () => {
   test("handles filter store subscription", async () => {
     let capturedSubscribe: (() => void) | undefined;
     filterStoreMock.$subscribe = vi.fn((cb: () => void) => {
-      capturedSubscribe = cb;
-    });
-
-    const mockResponse: Page<AntragSummary> = {
-      content: [],
-      page: { size: 10, number: 0, totalElements: 0, totalPages: 0 },
-    };
-    (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
-
-    const { page, updateOptions } = useAntragSummaryList();
-
-    updateOptions({ page: 5, itemsPerPage: 10 });
-    expect(page.value).toBe(5);
-
-    capturedSubscribe?.();
-
-    await vi.waitFor(() => {
-      expect(page.value).toBe(1);
-      expect(getAntragsSummaryList).toHaveBeenCalled();
-    });
-  });
-
-  test("handles sorting store subscription", async () => {
-    let capturedSubscribe: (() => void) | undefined;
-    sortingStoreMock.$subscribe = vi.fn((cb: () => void) => {
       capturedSubscribe = cb;
     });
 

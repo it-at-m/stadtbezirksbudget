@@ -88,11 +88,6 @@ export function useAntragSummaryList() {
     fetchItems();
   });
 
-  sortingStore.$subscribe(() => {
-    page.value = 1;
-    fetchItems();
-  });
-
   return {
     // List of AntragSummary items.
     items: readonly(items),
