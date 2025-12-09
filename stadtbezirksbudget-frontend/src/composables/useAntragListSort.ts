@@ -42,7 +42,7 @@ export function useAntragListSort() {
    */
   function updateSortingWithSortItem(newValue: DataTableSortItem[]) {
     const newSortOption = antragListSortOptionFromSortItems(newValue);
-    if (newSortOption == undefined) {
+    if (newSortOption === undefined) {
       resetSorting();
       return;
     }
