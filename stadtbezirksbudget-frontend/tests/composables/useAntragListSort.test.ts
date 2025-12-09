@@ -68,13 +68,7 @@ describe("useAntragListSort", () => {
     const { updateSortingWithSortItem } = useAntragListSort();
 
     updateSortingWithSortItem(testSortingItems);
-    expect(sortingStoreMock.setListSorting.mock.calls.length).toEqual(2);
-    expect(sortingStoreMock.setListSorting).toHaveBeenNthCalledWith(
-      1,
-      createEmptyListSort()
-    );
-    expect(sortingStoreMock.setListSorting).not.toHaveBeenNthCalledWith(
-      2,
+    expect(sortingStoreMock.setListSorting).not.toHaveBeenCalledWith(
       createEmptyListSort()
     );
   });

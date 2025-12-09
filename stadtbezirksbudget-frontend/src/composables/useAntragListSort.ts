@@ -27,13 +27,11 @@ export function useAntragListSort() {
    * @param newValue new sorting option
    */
   function updateSorting(newValue: AntragListSortOption) {
-    resetSorting();
-
-    sortingStore.setListSorting({
+    sortOption.value = {
       ...createEmptyListSort(),
       [newValue.sortBy]: newValue,
-    });
-    sortOption.value[newValue.sortBy] = newValue;
+    };
+    sortingStore.setListSorting({ ...sortOption.value });
   }
 
   /**
