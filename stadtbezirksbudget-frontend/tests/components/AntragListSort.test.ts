@@ -9,21 +9,15 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 import AntragListSort from "@/components/AntragListSort.vue";
-import { useAntragListSort } from "../../src/composables/useAntragListSort";
-import { createEmptyListSort } from "../../src/types/AntragListSort";
+import { useAntragListSort } from "@/composables/useAntragListSort";
+import { createEmptyListSort } from "@/types/AntragListSort";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock";
 
 vi.mock("../../src/composables/useAntragListSort.ts", () => ({
   useAntragListSort: vi.fn(),
 }));
 
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const pinia = createPinia();
 const vuetify = createVuetify({
