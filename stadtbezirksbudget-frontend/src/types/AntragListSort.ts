@@ -31,7 +31,7 @@ export const createEmptyListSort = (): AntragListSort => {
 export const sortOptionsByField = (
   field: keyof typeof sortOptionsRecord
 ): AntragListSortOption[] =>
-  sortOptionDefinitions[field]?.map((value) => ({ ...value, sortBy: field })) ||
+  sortOptionDefinitions[field]?.map((value) => ({ ...value, sortBy: field })) ??
   [];
 
 // Converts AntragListSort to backend sort string format
@@ -91,7 +91,7 @@ export function sortObjectToSearchParams(
   params: URLSearchParams = new URLSearchParams()
 ): URLSearchParams {
   const sortString = antragListSortToSortString(sortObject);
-  if (sortString && sortString.length > 0) {
+  if (sortString) {
     params.append("sort", sortString);
   }
   return params;
