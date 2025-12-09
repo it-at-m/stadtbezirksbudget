@@ -3,6 +3,56 @@ import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { sortOptionsByField } from "@/types/AntragListSort.ts";
 
 const { sortOption, resetSorting, updateSorting } = useAntragListSort();
+
+const sortFields = [
+  { field: "status", label: "Status", dataTest: "antrag-list-sort-status" },
+  {
+    field: "zammadNr",
+    label: "Nummer",
+    dataTest: "antrag-list-sort-zammad-nr",
+  },
+  {
+    field: "aktenzeichen",
+    label: "Aktenzeichen",
+    dataTest: "antrag-list-sort-aktenzeichen",
+  },
+  {
+    field: "bezirksausschussNr",
+    label: "Bezirk",
+    dataTest: "antrag-list-sort-bezirksausschuss-nr",
+  },
+  {
+    field: "eingangDatum",
+    label: "Antragsdatum",
+    dataTest: "antrag-list-sort-eingang-datum",
+  },
+  {
+    field: "antragstellerName",
+    label: "Antragsteller/in",
+    dataTest: "antrag-list-sort-antragsteller-name",
+  },
+  {
+    field: "projektTitel",
+    label: "Projekt",
+    dataTest: "antrag-list-sort-projekt-titel",
+  },
+  {
+    field: "beantragtesBudget",
+    label: "Beantragtes Budget",
+    dataTest: "antrag-list-sort-beantragtes-budget",
+  },
+  { field: "istFehlbetrag", label: "Art", dataTest: "antrag-list-sort-art" },
+  {
+    field: "aktualisierung",
+    label: "Aktualisierung",
+    dataTest: "antrag-list-sort-aktualisierung",
+  },
+  {
+    field: "aktualisierungDatum",
+    label: "Datum Aktualisierung",
+    dataTest: "antrag-list-sort-aktualisierung-datum",
+  },
+];
 </script>
 
 <template>
@@ -21,176 +71,19 @@ const { sortOption, resetSorting, updateSorting } = useAntragListSort();
       </v-row>
     </v-card-title>
     <v-card-text>
-      <v-row>
+      <v-row
+        v-for="{ field, label, dataTest } in sortFields"
+        :key="field"
+      >
         <v-col>
           <v-select
-            :items="sortOptionsByField('status')"
-            :model-value="sortOption.status"
+            :data-test="dataTest"
+            :items="sortOptionsByField(field)"
+            :label="label"
+            :model-value="sortOption[field]"
             clearable
-            data-test="antrag-list-sort-status"
             density="compact"
             hide-details="auto"
-            label="Status"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('zammadNr')"
-            :model-value="sortOption.zammadNr"
-            clearable
-            data-test="antrag-list-sort-zammad-nr"
-            density="compact"
-            hide-details="auto"
-            label="Nummer"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('aktenzeichen')"
-            :model-value="sortOption.aktenzeichen"
-            clearable
-            data-test="antrag-list-sort-aktenzeichen"
-            density="compact"
-            hide-details="auto"
-            label="Aktenzeichen"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('bezirksausschussNr')"
-            :model-value="sortOption.bezirksausschussNr"
-            clearable
-            data-test="antrag-list-sort-bezirksausschuss-nr"
-            density="compact"
-            hide-details="auto"
-            label="Bezirk"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('eingangDatum')"
-            :model-value="sortOption.eingangDatum"
-            clearable
-            data-test="antrag-list-sort-eingang-datum"
-            density="compact"
-            hide-details="auto"
-            label="Antragsdatum"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('antragstellerName')"
-            :model-value="sortOption.antragstellerName"
-            clearable
-            data-test="antrag-list-sort-antragsteller-name"
-            density="compact"
-            hide-details="auto"
-            label="Antragsteller/in"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('projektTitel')"
-            :model-value="sortOption.projektTitel"
-            clearable
-            data-test="antrag-list-sort-projekt-titel"
-            density="compact"
-            hide-details="auto"
-            label="Projekt"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('beantragtesBudget')"
-            :model-value="sortOption.beantragtesBudget"
-            clearable
-            data-test="antrag-list-sort-beantragtes-budget"
-            density="compact"
-            hide-details="auto"
-            label="Beantragtes Budget"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('istFehlbetrag')"
-            :model-value="sortOption.istFehlbetrag"
-            clearable
-            data-test="antrag-list-sort-art"
-            density="compact"
-            hide-details="auto"
-            label="Art"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('aktualisierung')"
-            :model-value="sortOption.aktualisierung"
-            clearable
-            data-test="antrag-list-sort-aktualisierung"
-            density="compact"
-            hide-details="auto"
-            label="Aktualisierung"
-            return-object
-            variant="underlined"
-            @update:model-value="updateSorting"
-          ></v-select>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-select
-            :items="sortOptionsByField('aktualisierungDatum')"
-            :model-value="sortOption.aktualisierungDatum"
-            clearable
-            data-test="antrag-list-sort-aktualisierung-datum"
-            density="compact"
-            hide-details="auto"
-            label="Datum Aktualisierung"
             return-object
             variant="underlined"
             @update:model-value="updateSorting"
