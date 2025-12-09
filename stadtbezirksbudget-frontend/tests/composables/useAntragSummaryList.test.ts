@@ -35,7 +35,7 @@ describe("useAntragSummaryList", () => {
   };
   let sortingStoreMock: {
     sorting: AntragListSort;
-    setListSorting: ReturnType<typeof vi.fn>;
+    setSorting: ReturnType<typeof vi.fn>;
   };
   const filtersValue = defaultAntragListFilter();
   const sortingValue = createEmptyListSort();
@@ -51,7 +51,7 @@ describe("useAntragSummaryList", () => {
     };
     sortingStoreMock = {
       sorting: sortingValue,
-      setListSorting: vi.fn(),
+      setSorting: vi.fn(),
     };
 
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
@@ -206,10 +206,8 @@ describe("useAntragSummaryList", () => {
     expectedSort.status = antragListSortOptionFromSortItems([sortItem]);
     sortBy.value = [sortItem];
 
-    expect(sortingStoreMock.setListSorting).toHaveBeenCalled();
-    expect(sortingStoreMock.setListSorting).toHaveBeenLastCalledWith(
-      expectedSort
-    );
+    expect(sortingStoreMock.setSorting).toHaveBeenCalled();
+    expect(sortingStoreMock.setSorting).toHaveBeenLastCalledWith(expectedSort);
   });
 
   test("getting computed value sortBy returns correct value", () => {

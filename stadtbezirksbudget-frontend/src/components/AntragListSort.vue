@@ -23,13 +23,13 @@
             :data-test="dataTest"
             :items="sortOptionsByField(field)"
             :label="label"
-            :model-value="sortOption[field]"
+            :model-value="sorting[field]"
             clearable
             density="compact"
             hide-details="auto"
             return-object
             variant="underlined"
-            @update:model-value="(v) => (v ? updateSorting(v) : resetSorting)"
+            @update:model-value="(v) => (v ? updateSorting(v) : resetSorting())"
           ></v-select>
         </v-col>
       </v-row>
@@ -41,7 +41,7 @@
 import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { sortOptionsByField } from "@/types/AntragListSort.ts";
 
-const { sortOption, resetSorting, updateSorting } = useAntragListSort();
+const { sorting, resetSorting, updateSorting } = useAntragListSort();
 
 const sortFields = [
   { field: "status", label: "Status", dataTest: "antrag-list-sort-status" },

@@ -48,7 +48,7 @@ describe("AntragListSort", () => {
       updateSorting: vi.fn(),
       updateSortingWithSortItem: vi.fn(),
       resetSorting: vi.fn(),
-      sortOption: ref(createEmptyListSort()),
+      sorting: ref(createEmptyListSort()),
     };
 
     vi.mocked(useAntragListSort).mockReturnValue(mockUseAntragListSort);

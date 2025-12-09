@@ -16,9 +16,9 @@ export const useAntragListSortingStore = defineStore("antragListSort", () => {
    * Sets the sorting options for the Antrag list.
    * @param payload - The new sorting options to apply.
    */
-  function setListSorting(payload: AntragListSort): void {
+  function setSorting(payload: AntragListSort): void {
     sorting.value = payload;
   }
 
-  return { sorting, setListSorting };
+  return { sorting, setSorting };
 });

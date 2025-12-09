@@ -20,18 +20,18 @@ export function useAntragListSort() {
   const sortingStore = useAntragListSortingStore();
 
   // The current applied sorting option
-  const sortOption = ref<AntragListSort>({ ...sortingStore.sorting });
+  const sorting = ref<AntragListSort>({ ...sortingStore.sorting });
 
   /**
    * Updates the store with the current sorting options.
    * @param newValue new sorting option
    */
   function updateSorting(newValue: AntragListSortOption) {
-    sortOption.value = {
+    sorting.value = {
       ...createEmptyListSort(),
       [newValue.sortBy]: newValue,
     };
-    sortingStore.setListSorting({ ...sortOption.value });
+    sortingStore.setSorting({ ...sorting.value });
   }
 
   /**
@@ -51,9 +51,14 @@ export function useAntragListSort() {
    * Resets the current sorting options.
    */
   function resetSorting() {
-    sortingStore.setListSorting(createEmptyListSort());
-    sortOption.value = createEmptyListSort();
+    sortingStore.setSorting(createEmptyListSort());
+    sorting.value = createEmptyListSort();
   }
 
-  return { sortOption, resetSorting, updateSorting, updateSortingWithSortItem };
+  return {
+    sorting,
+    resetSorting,
+    updateSorting,
+    updateSortingWithSortItem,
+  };
 }
