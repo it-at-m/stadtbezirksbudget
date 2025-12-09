@@ -71,8 +71,13 @@ describe("useAntragListSort", () => {
     const { updateSortingWithSortItem } = useAntragListSort();
 
     updateSortingWithSortItem(testSortingItems);
-    expect(sortingStoreMock.setSorting).not.toHaveBeenCalledWith(
-      createEmptyListSort()
+    expect(sortingStoreMock.setSorting).toHaveBeenCalledWith(
+      expect.objectContaining({
+        status: expect.objectContaining({
+          sortBy: "status",
+          sortDirection: "asc",
+        }),
+      })
     );
   });
 });
