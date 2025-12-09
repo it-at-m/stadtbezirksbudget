@@ -86,7 +86,7 @@ const sortFields = [
             hide-details="auto"
             return-object
             variant="underlined"
-            @update:model-value="updateSorting"
+            @update:model-value="(v) => (v ? updateSorting(v) : resetSorting)"
           ></v-select>
         </v-col>
       </v-row>
