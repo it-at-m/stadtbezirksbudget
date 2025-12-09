@@ -100,7 +100,7 @@ export function sortObjectToSearchParams(
   const sortString = antragListSortToSortString(sortObject);
   if (sortString.sortBy && sortString.sortDirection) {
     params.append("sortBy", sortString.sortBy);
-    params.append("sortDirection", sortString.sortDirection.toUpperCase());
+    params.append("sortDirection", sortString.sortDirection);
   }
   return params;
 }
