@@ -51,8 +51,8 @@ export function useAntragListSort() {
    * Resets the current sorting options.
    */
   function resetSorting() {
-    sortingStore.setSorting(createEmptyListSort());
     sorting.value = createEmptyListSort();
+    sortingStore.setSorting({ ...sorting.value });
   }
 
   return {
