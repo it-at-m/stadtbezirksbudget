@@ -1,13 +1,12 @@
-import { setActivePinia } from "pinia";
+import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
-import pinia from "@/plugins/pinia.ts";
 import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
 import { AntragListFilterOptions } from "@/types/AntragListFilter.ts";
 
 describe("useAntragListFilterOptionsStore", () => {
   beforeEach(() => {
-    setActivePinia(pinia);
+    setActivePinia(createPinia());
   });
 
   test("contains initially empty arrays", () => {
