@@ -94,6 +94,20 @@ describe("fetch-antragSummary-list", () => {
     );
   });
 
+  test("fetches with correct parameters when both filters and sorting are applied", async () => {
+    (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    });
+
+    await getAntragsSummaryList(1, 5, testFilters, testSorting);
+
+    expect(fetch).toHaveBeenCalledWith(
+      `${BACKEND}/antrag?page=1&size=5&${testFiltersString}&${testSortingString}`,
+      expect.any(Object)
+    );
+  });
+
   test("handles network errors", async () => {
     const errorMessage = "Network Error";
     (fetch as ReturnType<typeof vi.fn>).mockRejectedValueOnce(
