@@ -9,7 +9,7 @@ export type sortDirection = "asc" | "desc";
 // Interface for Antrag list sorting options
 export interface AntragListSortOption {
   title: string;
-  sortBy: string;
+  sortBy: keyof typeof sortOptionsRecord;
   sortDirection: sortDirection;
 }
 
