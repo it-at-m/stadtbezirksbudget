@@ -1,13 +1,11 @@
 import { mount } from "@vue/test-utils";
-import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 import AntragSummaryList from "@/components/AntragSummaryList.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import pinia from "@/plugins/pinia.ts";
+import vuetify from "@/plugins/vuetify.ts";
 
 vi.mock("@/composables/useAntragSummaryList.ts");
 
@@ -19,11 +17,6 @@ global.ResizeObserver = class {
     // Mock implementation: No action needed
   }
 };
-const pinia = createPinia();
-const vuetify = createVuetify({
-  components,
-  directives,
-});
 
 describe("AntragSummaryList", () => {
   let wrapper;

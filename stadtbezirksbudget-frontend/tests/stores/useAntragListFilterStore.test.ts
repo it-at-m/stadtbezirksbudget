@@ -1,6 +1,7 @@
-import { createPinia, setActivePinia } from "pinia";
+import { setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
+import pinia from "@/plugins/pinia.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
@@ -26,7 +27,7 @@ const testFilters: AntragListFilter = {
 
 describe("useAntragListFilterStore", () => {
   beforeEach(() => {
-    setActivePinia(createPinia());
+    setActivePinia(pinia);
   });
 
   test("initially defaultAntragListFilter", () => {

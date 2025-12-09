@@ -1,12 +1,13 @@
-import { createPinia, setActivePinia } from "pinia";
+import { setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
 import { STATUS_INDICATORS } from "@/constants";
+import pinia from "@/plugins/pinia.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
 describe("useSnackbarStore", () => {
   beforeEach(() => {
-    setActivePinia(createPinia());
+    setActivePinia(pinia);
   });
 
   test("has initial state", () => {

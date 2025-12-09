@@ -1,12 +1,13 @@
-import { createPinia, setActivePinia } from "pinia";
+import { setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
+import pinia from "@/plugins/pinia.ts";
 import { useUserStore } from "@/stores/useUserStore.ts";
 import User, { UserLocalDevelopment } from "@/types/User";
 
 describe("useUserStore", () => {
   beforeEach(() => {
-    setActivePinia(createPinia());
+    setActivePinia(pinia);
   });
 
   test("testInitiallyNullUser", () => {
