@@ -134,9 +134,11 @@ describe("AntragListSort", () => {
   });
 
   describe("sortObjectToSearchParams", () => {
-    const existingParams = new URLSearchParams({ existing: "param" });
-    const sortObject = createEmptyListSort();
+    let existingParams;
+    let sortObject;
     beforeEach(() => {
+      existingParams = new URLSearchParams({ existing: "param" });
+      sortObject = createEmptyListSort();
       sortObject["test"] = {
         title: "Test",
         sortBy: "test",
