@@ -6,17 +6,11 @@ import AntragSummaryList from "@/components/AntragSummaryList.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.mock("@/composables/useAntragSummaryList.ts");
 
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 describe("AntragSummaryList", () => {
   let wrapper;

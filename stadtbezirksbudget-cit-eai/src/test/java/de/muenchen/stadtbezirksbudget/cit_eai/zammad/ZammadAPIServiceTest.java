@@ -26,11 +26,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import reactor.core.publisher.Mono;
 
 class ZammadAPIServiceTest {
-    private TicketsApi ticketsApi;
-    private ZammadAPIService service;
-
     private static final String EXTERNAL_ID = "ext-1";
-
     private final AbstractResource resource = new AbstractResource() {
         @NonNull @Override
         public String getDescription() {
@@ -47,6 +43,8 @@ class ZammadAPIServiceTest {
             return "test.txt";
         }
     };
+    private TicketsApi ticketsApi;
+    private ZammadAPIService service;
 
     @BeforeEach
     void setUp() {
@@ -54,16 +52,16 @@ class ZammadAPIServiceTest {
         service = new ZammadAPIService(ticketsApi);
     }
 
+    private CreateTicketDTOV2 generateCreateTicketDTOV2() {
+        return new CreateTicketDTOV2()
+                .title("T")
+                .anliegenart("a")
+                .vertrauensniveau("1")
+                .group("g");
+    }
+
     @Nested
     class CreateTicket {
-
-        private CreateTicketDTOV2 generateCreateTicketDTOV2() {
-            return new CreateTicketDTOV2()
-                    .title("T")
-                    .anliegenart("a")
-                    .vertrauensniveau("1")
-                    .group("g");
-        }
 
         @Test
         void testCreateTicketReturnsCorrectTicket() {
@@ -129,6 +127,36 @@ class ZammadAPIServiceTest {
         }
 
         @Test
+        void testCreateTicketWithBlankTitleThrowsIllegalArgumentException() {
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
+            dto.setTitle("");
+
+            assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+        }
+
+        @Test
+        void testCreateTicketWithNullTitleThrowsIllegalArgumentException() {
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
+            dto.setTitle(null);
+
+            assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+        }
+
+        @Test
+        void testCreateTicketWithResponseMissingIdThrowsZammadAPIException() {
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
+
+            final TicketInternal resp = new TicketInternal().title("T");
+
+            Mockito.when(ticketsApi.createNewTicket(any(CreateTicketDTOV2.class), eq(EXTERNAL_ID), eq(null), any()))
+                    .thenReturn(Mono.just(resp));
+
+            final ZammadAPIException exception = assertThrows(ZammadAPIException.class,
+                    () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+            assertThat(exception.getMessage()).isEqualTo("Ticket or ticket id is null in response");
+        }
+
+        @Test
         void testCreateTicketWithMissingIdsThrowsIllegalArgumentException() {
             final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
 
@@ -153,11 +181,7 @@ class ZammadAPIServiceTest {
 
         private CreateUserAndTicketDTOV2 generateCreateUserAndTicketDTOV2() {
             final CreateUserAndTicketDTOV2 dto = new CreateUserAndTicketDTOV2();
-            dto.setCreateTicketDTO(new CreateTicketDTOV2()
-                    .title("T")
-                    .anliegenart("a")
-                    .vertrauensniveau("1")
-                    .group("g"));
+            dto.setCreateTicketDTO(generateCreateTicketDTOV2());
             return dto;
         }
 
@@ -176,6 +200,51 @@ class ZammadAPIServiceTest {
 
             assertThat(result).isNotNull();
             assertThat(result).isSameAs(resp);
+        }
+
+        @Test
+        void testCreateUserAndTicketWithNullTicketInResponseThrowsZammadAPIException() {
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
+
+            final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
+
+            Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
+                    .thenReturn(Mono.just(resp));
+
+            final ZammadAPIException exception = assertThrows(ZammadAPIException.class,
+                    () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+            assertThat(exception.getMessage()).isEqualTo("Ticket or ticket id is null in response");
+        }
+
+        @Test
+        void testCreateUserAndTicketWithBlankTitleThrowsIllegalArgumentException() {
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
+            dto.getCreateTicketDTO().setTitle("");
+
+            assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+        }
+
+        @Test
+        void testCreateUserAndTicketWithNullTitleThrowsIllegalArgumentException() {
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
+            dto.getCreateTicketDTO().setTitle(null);
+
+            assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+        }
+
+        @Test
+        void testCreateUserAndTicketWithResponseMissingTicketIdThrowsZammadAPIException() {
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
+
+            final UserAndTicketResponseDTO resp = new UserAndTicketResponseDTO();
+            resp.setTicket(new TicketInternal().title("T"));
+
+            Mockito.when(ticketsApi.createNewTicketWithUser(any(CreateUserAndTicketDTOV2.class), any()))
+                    .thenReturn(Mono.just(resp));
+
+            final ZammadAPIException exception = assertThrows(ZammadAPIException.class,
+                    () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+            assertThat(exception.getMessage()).isEqualTo("Ticket or ticket id is null in response");
         }
 
         @Test

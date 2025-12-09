@@ -3,16 +3,11 @@ import { describe, expect, test, vi } from "vitest";
 
 import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
 import vuetify from "@/plugins/vuetify.ts";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.stubGlobal("visualViewport", new EventTarget());
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
+
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 describe("AntragListFilterMenu", () => {
   const wrapper = mount(AntragListFilterMenu, {
