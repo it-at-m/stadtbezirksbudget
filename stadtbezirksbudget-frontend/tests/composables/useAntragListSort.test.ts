@@ -11,7 +11,7 @@ import {
 
 vi.mock("@/stores/useAntragListSortingStore.ts");
 
-const testSorting: AntragListSort = {};
+const testSorting: AntragListSort = createEmptyListSort();
 const testEmptySortingItems: DataTableSortItem[] = [];
 const testSortingItems: DataTableSortItem[] = [
   {
@@ -21,7 +21,10 @@ const testSortingItems: DataTableSortItem[] = [
 ];
 
 describe("useAntragListSort", () => {
-  let sortingStoreMock;
+  let sortingStoreMock: {
+    sorting: AntragListSort;
+    setSorting: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(() => {
     sortingStoreMock = { sorting: testSorting, setSorting: vi.fn() };
