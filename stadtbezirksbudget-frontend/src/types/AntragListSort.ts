@@ -22,7 +22,7 @@ export type AntragListSort = Record<
 // Creates an empty AntragListSort object
 export const createEmptyListSort = (): AntragListSort => {
   return Object.keys(sortOptionDefinitions).reduce((acc, key) => {
-    acc[key] = undefined;
+    acc[key as keyof typeof sortOptionDefinitions] = undefined;
     return acc;
   }, {} as AntragListSort);
 };
