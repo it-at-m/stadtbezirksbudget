@@ -13,9 +13,11 @@ export interface AntragListSortOption {
   sortDirection: sortDirection;
 }
 
-// Type definition of AntragListSort based of {@link sortOptionsRecord}
-export type AntragListSort = Record<string, AntragListSortOption | undefined>;
 //Type definition of AntragListSort based on {@link sortOptionsRecord}
+export type AntragListSort = Record<
+  keyof typeof sortOptionsRecord,
+  AntragListSortOption | undefined
+>;
 
 // Creates an empty AntragListSort object
 export const createEmptyListSort = (): AntragListSort => {
