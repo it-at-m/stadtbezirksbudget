@@ -8,17 +8,12 @@ import * as directives from "vuetify/directives";
 
 import AntragSummaryList from "@/components/AntragSummaryList.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.mock("@/composables/useAntragSummaryList.ts");
 
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
+
 const pinia = createPinia();
 const vuetify = createVuetify({
   components,

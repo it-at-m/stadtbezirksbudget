@@ -12,16 +12,11 @@ import { VDateInput } from "vuetify/labs/components";
 import AntragListFilter from "@/components/AntragListFilter.vue";
 import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
 import { defaultAntragListFilter } from "@/types/AntragListFilter.ts";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.mock("@/composables/useAntragListFilter.ts");
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
+
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const pinia = createPinia();
 const vuetify = createVuetify({
