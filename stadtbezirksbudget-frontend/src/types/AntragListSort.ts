@@ -3,7 +3,7 @@ import type { DataTableSortItem } from "vuetify";
 
 import { sortOptionsRecord as sortOptionDefinitions } from "@/types/AntragListSortDefinitions.ts";
 
-// Type definition of sorting diretion
+// Type definition of sorting direction
 export type sortDirection = "asc" | "desc";
 
 // Interface for Antrag list sorting options
@@ -15,6 +15,7 @@ export interface AntragListSortOption {
 
 // Type definition of AntragListSort based of {@link sortOptionsRecord}
 export type AntragListSort = Record<string, AntragListSortOption | undefined>;
+//Type definition of AntragListSort based on {@link sortOptionsRecord}
 
 // Creates an empty AntragListSort object
 export const createEmptyListSort = (): AntragListSort => {
