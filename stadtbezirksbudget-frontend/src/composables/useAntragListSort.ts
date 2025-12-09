@@ -39,12 +39,12 @@ export function useAntragListSort() {
    * @param newValue array of SortItem (the first item is used)
    */
   function updateSortingWithSortItem(newValue: DataTableSortItem[]) {
-    const newSortOption = antragListSortOptionFromSortItems(newValue);
-    if (newSortOption === undefined) {
+    const newSorting = antragListSortOptionFromSortItems(newValue);
+    if (newSorting === undefined) {
       resetSorting();
       return;
     }
-    updateSorting(newSortOption);
+    updateSorting(newSorting);
   }
 
   /**
