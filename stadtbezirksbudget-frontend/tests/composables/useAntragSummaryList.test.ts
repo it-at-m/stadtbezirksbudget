@@ -2,6 +2,8 @@ import type AntragSummary from "@/types/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
 import { beforeEach, describe, expect, test, vi } from "vitest";
+import { ref } from "vue";
+import { DataTableSortItem } from "vuetify/framework";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
@@ -14,6 +16,7 @@ import {
   defaultAntragListFilter,
 } from "@/types/AntragListFilter.ts";
 import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
+import { antragListSortOptionFromSortItems } from "../../src/types/AntragListSort";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
@@ -222,15 +225,20 @@ describe("useAntragSummaryList", () => {
 
   test("updating computed value sortBy updates store", () => {
     const { sortBy } = useAntragSummaryList();
-
-    sortBy.value = [{ sortBy: "test", sortDesc: false }];
+    const expectedSort = createEmptyListSort();
+    const sortItem: DataTableSortItem = { key: "status", order: "asc" };
+    expectedSort.status = antragListSortOptionFromSortItems([sortItem]);
+    sortBy.value = [sortItem];
 
     expect(sortingStoreMock.setListSorting).toHaveBeenCalled();
+    expect(sortingStoreMock.setListSorting).toHaveBeenLastCalledWith(
+      expectedSort
+    );
   });
 
   test("getting computed value sortBy returns correct value", () => {
     const { sortBy } = useAntragSummaryList();
-    const sortingGetter = vi.fn(() => createEmptyListSort());
+    const sortingGetter = vi.fn(() => ref(createEmptyListSort()));
     Object.defineProperty(sortingStoreMock, "sorting", {
       get: sortingGetter,
       configurable: true,
