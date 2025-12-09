@@ -31,6 +31,7 @@ export function useAntragSummaryList() {
   const itemsPerPage = ref<number>(10);
   const loading = ref<boolean>(false);
 
+  // Computed property for the current sorting option
   const sortBy = computed({
     get: () => antragListSortToSortItem(sortingStore.sorting),
     set: (value) => antragListSort.updateSortingWithSortItem(value),
