@@ -46,8 +46,8 @@ export function antragListFilterToDTO(
   };
 }
 
-function toEndOfDay(date: Date | undefined): Date | undefined {
-  if (!date) return undefined;
+function toEndOfDay(date: Date | null): Date | null {
+  if (!date) return null;
   const adjustedDate = new Date(date.getTime());
   adjustedDate.setHours(23, 59, 59, 999);
   return adjustedDate;
