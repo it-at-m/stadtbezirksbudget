@@ -1,10 +1,10 @@
-import type { sortOptionsRecord } from "@/types/AntragListSortDefinitions.ts";
 import type { DataTableSortItem } from "vuetify";
 
-import { sortOptionsRecord as sortOptionDefinitions } from "@/types/AntragListSortDefinitions.ts";
+import { sortOptionsRecord } from "@/types/AntragListSortDefinitions.ts";
 
-// Type definition of sorting direction
-export type sortDirection = "asc" | "desc";
+// Runtime definition of sorting directions and derived type
+export const SORT_DIRECTIONS = ["asc", "desc"] as const;
+export type sortDirection = (typeof SORT_DIRECTIONS)[number];
 
 // Interface for Antrag list sorting options
 export interface AntragListSortOption {
@@ -21,8 +21,8 @@ export type AntragListSort = Record<
 
 // Creates an empty AntragListSort object
 export const createEmptyListSort = (): AntragListSort => {
-  return Object.keys(sortOptionDefinitions).reduce((acc, key) => {
-    acc[key as keyof typeof sortOptionDefinitions] = undefined;
+  return Object.keys(sortOptionsRecord).reduce((acc, key) => {
+    acc[key as keyof typeof sortOptionsRecord] = undefined;
     return acc;
   }, {} as AntragListSort);
 };
@@ -31,8 +31,7 @@ export const createEmptyListSort = (): AntragListSort => {
 export const sortOptionsByField = (
   field: keyof typeof sortOptionsRecord
 ): AntragListSortOption[] =>
-  sortOptionDefinitions[field]?.map((value) => ({ ...value, sortBy: field })) ??
-  [];
+  sortOptionsRecord[field]?.map((value) => ({ ...value, sortBy: field })) ?? [];
 
 // Converts AntragListSort to backend sort string format
 export const antragListSortToSortString = (
@@ -61,9 +60,9 @@ export const antragListSortOptionFromSortItems = (
   sortItems: DataTableSortItem[]
 ): AntragListSortOption | undefined => {
   const i = sortItems[0];
-  if (!i || !["asc", "desc"].includes(String(i.order))) return;
+  if (!i || !SORT_DIRECTIONS.includes(String(i.order) as sortDirection)) return;
 
-  const match = sortOptionDefinitions[i.key]?.find(
+  const match = sortOptionsRecord[i.key]?.find(
     (o) => o.sortDirection === i.order
   );
   return match
