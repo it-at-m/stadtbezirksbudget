@@ -81,8 +81,16 @@ describe("AntragListSort", () => {
     const input = wrapper.findComponent(`[data-test="${dataTest}"]`);
     expect(input.exists()).toBe(true);
 
-    await input.setValue("test");
+    const selectedValue = {
+      title: "Test",
+      sortBy: "test",
+      sortDirection: "asc",
+    };
+
+    await input.setValue(selectedValue);
     expect(mockUseAntragListSort.updateSorting).toHaveBeenCalled();
-    expect(mockUseAntragListSort.updateSorting).toHaveBeenCalledWith("test");
+    expect(mockUseAntragListSort.updateSorting).toHaveBeenCalledWith(
+      selectedValue
+    );
   });
 });
