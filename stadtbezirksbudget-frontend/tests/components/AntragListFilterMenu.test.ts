@@ -5,16 +5,11 @@ import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
 import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.stubGlobal("visualViewport", new EventTarget());
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
+
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const vuetify = createVuetify({
   components,
