@@ -83,5 +83,6 @@ describe("AntragListSort", () => {
 
     await input.setValue("test");
     expect(mockUseAntragListSort.updateSorting).toHaveBeenCalled();
+    expect(mockUseAntragListSort.updateSorting).toHaveBeenCalledWith("test");
   });
 });
