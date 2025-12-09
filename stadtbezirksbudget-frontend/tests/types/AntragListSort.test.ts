@@ -80,7 +80,7 @@ describe("AntragListSort", () => {
 
       const result = antragListSortToSortString(sort);
 
-      expect(result).toBe("test,asc");
+      expect(result).toStrictEqual({ sortBy: "test", sortDirection: "ASC" });
     });
   });
 
@@ -149,7 +149,7 @@ describe("AntragListSort", () => {
     test("creates new URLSearchParams if none provided", () => {
       const sort = sortObjectToSearchParams(sortObject);
       expect(sort).toBeInstanceOf(URLSearchParams);
-      expect(sort.toString()).toBe("sort=test%2Cdesc");
+      expect(sort.toString()).toBe("sortBy=test&sortDirection=DESC");
     });
 
     test("skips empty sort object", () => {
@@ -159,7 +159,9 @@ describe("AntragListSort", () => {
 
     test("appends to existing URLSearchParams", () => {
       const sort = sortObjectToSearchParams(sortObject, existingParams);
-      expect(sort.toString()).toBe("existing=param&sort=test%2Cdesc");
+      expect(sort.toString()).toBe(
+        "existing=param&sortBy=test&sortDirection=DESC"
+      );
     });
   });
 });

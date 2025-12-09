@@ -35,14 +35,21 @@ export const sortOptionsByField = (
   [];
 
 // Converts AntragListSort to backend sort string format
-export const antragListSortToSortString = (sort: AntragListSort): string => {
-  const sortStrings = Object.values(sort)
-    .filter((v): v is AntragListSortOption => v !== undefined)
-    .map((v) => {
-      return `${v.sortBy},${v.sortDirection}`;
-    });
+export const antragListSortToSortString = (
+  sort: AntragListSort
+): { sortBy: string; sortDirection: string } => {
+  const item = Object.values(sort).find(
+    (v): v is AntragListSortOption => v !== undefined
+  );
 
-  return sortStrings.join(";");
+  if (!item) {
+    return { sortBy: "", sortDirection: "" };
+  }
+
+  return {
+    sortBy: item.sortBy,
+    sortDirection: item.sortDirection.toUpperCase(),
+  };
 };
 
 /**
@@ -91,8 +98,9 @@ export function sortObjectToSearchParams(
   params: URLSearchParams = new URLSearchParams()
 ): URLSearchParams {
   const sortString = antragListSortToSortString(sortObject);
-  if (sortString) {
-    params.append("sort", sortString);
+  if (sortString.sortBy && sortString.sortDirection) {
+    params.append("sortBy", sortString.sortBy);
+    params.append("sortDirection", sortString.sortDirection.toUpperCase());
   }
   return params;
 }
