@@ -11,13 +11,11 @@ import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateTicke
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.CreateUserAndTicketDTOV2;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.TicketInternal;
 import de.muenchen.stadtbezirksbudget.cit_eai.zammad.generated.model.UserAndTicketResponseDTO;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
-
 import lombok.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -30,14 +28,12 @@ import reactor.core.publisher.Mono;
 class ZammadAPIServiceTest {
     private static final String EXTERNAL_ID = "ext-1";
     private final AbstractResource resource = new AbstractResource() {
-        @NonNull
-        @Override
+        @NonNull @Override
         public String getDescription() {
             return "test abstract resource";
         }
 
-        @NonNull
-        @Override
+        @NonNull @Override
         public InputStream getInputStream() {
             return new ByteArrayInputStream("hello".getBytes(StandardCharsets.UTF_8));
         }
