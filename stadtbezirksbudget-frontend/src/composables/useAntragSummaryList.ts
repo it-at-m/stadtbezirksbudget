@@ -23,7 +23,7 @@ export function useAntragSummaryList() {
   const snackbarStore = useSnackbarStore();
   const filterStore = useAntragListFilterStore();
   const sortingStore = useAntragListSortingStore();
-  const antragListStort = useAntragListSort();
+  const antragListSort = useAntragListSort();
 
   const items = ref<AntragSummary[]>([]);
   const totalItems = ref<number>(0);
@@ -33,7 +33,7 @@ export function useAntragSummaryList() {
 
   const sortBy = computed({
     get: () => antragListSortToSortItem(sortingStore.sorting),
-    set: (value) => antragListStort.updateSortingWithSortItem(value),
+    set: (value) => antragListSort.updateSortingWithSortItem(value),
   });
 
   /**
