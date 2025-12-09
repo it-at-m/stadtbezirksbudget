@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { mdiSort } from "@mdi/js";
-
-import AntragListSort from "@/components/AntragListSort.vue";
-</script>
-
 <template>
   <v-menu :close-on-content-click="false">
     <template #activator="{ props }">
@@ -18,4 +12,8 @@ import AntragListSort from "@/components/AntragListSort.vue";
   </v-menu>
 </template>
 
-<style scoped></style>
+<script lang="ts" setup>
+import { mdiSort } from "@mdi/js";
+
+import AntragListSort from "@/components/AntragListSort.vue";
+</script>
