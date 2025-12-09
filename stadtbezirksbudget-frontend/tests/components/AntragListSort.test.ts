@@ -13,7 +13,7 @@ import { useAntragListSort } from "@/composables/useAntragListSort";
 import { createEmptyListSort } from "@/types/AntragListSort";
 import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock";
 
-vi.mock("../../src/composables/useAntragListSort.ts", () => ({
+vi.mock("@/composables/useAntragListSort.ts", () => ({
   useAntragListSort: vi.fn(),
 }));
 
