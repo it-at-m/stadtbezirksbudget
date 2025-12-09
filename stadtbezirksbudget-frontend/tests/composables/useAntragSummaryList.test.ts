@@ -7,16 +7,13 @@ import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
+import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import {
   AntragListFilter,
   defaultAntragListFilter,
 } from "@/types/AntragListFilter.ts";
-import { useAntragListSortingStore } from "../../src/stores/useAntragListSortingStore";
-import {
-  AntragListSort,
-  createEmptyListSort,
-} from "../../src/types/AntragListSort";
+import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
