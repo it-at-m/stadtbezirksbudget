@@ -15,8 +15,11 @@ import {
   AntragListFilter,
   defaultAntragListFilter,
 } from "@/types/AntragListFilter.ts";
-import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
-import { antragListSortOptionFromSortItems } from "../../src/types/AntragListSort";
+import {
+  AntragListSort,
+  antragListSortOptionFromSortItems,
+  createEmptyListSort,
+} from "@/types/AntragListSort";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
