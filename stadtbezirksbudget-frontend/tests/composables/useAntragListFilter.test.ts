@@ -4,6 +4,7 @@ import { useAntragListFilter } from "@/composables/useAntragListFilter";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
+  defaultAntragListFilter,
   emptyAntragListFilter,
 } from "@/types/AntragListFilter";
 
@@ -56,7 +57,7 @@ describe("useAntragListFilter", () => {
       updateFilters();
       expect(filterStoreMock.setFilters).not.toHaveBeenCalled();
 
-      filters.value = emptyAntragListFilter();
+      filters.value = defaultAntragListFilter();
       updateFilters();
       expect(filterStoreMock.setFilters).toHaveBeenCalled();
     });

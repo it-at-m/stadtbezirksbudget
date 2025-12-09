@@ -25,7 +25,7 @@ export function useAntragListFilter() {
   }
 
   /**
-   * Resets the filters to their default empty state and updates the store.
+   * Resets the filters to their empty state and updates the store.
    */
   function resetFilters() {
     filters.value = emptyAntragListFilter();

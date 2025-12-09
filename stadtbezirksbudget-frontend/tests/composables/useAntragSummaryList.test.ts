@@ -10,7 +10,7 @@ import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import {
   AntragListFilter,
-  emptyAntragListFilter,
+  defaultAntragListFilter,
 } from "@/types/AntragListFilter.ts";
 import { useAntragListSortingStore } from "../../src/stores/useAntragListSortingStore";
 import {
@@ -35,7 +35,7 @@ describe("useAntragSummaryList", () => {
     setListSorting: ReturnType<typeof vi.fn>;
     $subscribe: ReturnType<typeof vi.fn>;
   };
-  const filtersValue = emptyAntragListFilter();
+  const filtersValue = defaultAntragListFilter();
   const sortingValue = createEmptyListSort();
 
   beforeEach(() => {

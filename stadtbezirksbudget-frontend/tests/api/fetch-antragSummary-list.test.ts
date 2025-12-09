@@ -4,8 +4,8 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
-import { emptyAntragListFilter } from "@/types/AntragListFilter";
-import { antragListFilterToDTO } from "@/types/AntragListFilterDTO";
+import { defaultAntragListFilter } from "@/types/AntragListFilter";
+import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
 import { objectToSearchParams } from "@/util/converter";
 import {
   AntragListSort,
@@ -51,18 +51,13 @@ describe("fetch-antragSummary-list", () => {
     vi.clearAllMocks();
   });
 
-  test("fetches with correct parameters", async () => {
+  test("fetches with correct parameters without filters", async () => {
     (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       json: async () => mockResponse,
     });
 
-    const result = await getAntragsSummaryList(
-      1,
-      5,
-      emptyAntragListFilter(),
-      createEmptyListSort()
-    );
+    const result = await getAntragsSummaryList(1, 5, {}, createEmptyListSort());
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5`,
@@ -91,7 +86,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    await getAntragsSummaryList(1, 5, emptyAntragListFilter(), testSorting);
+    await getAntragsSummaryList(1, 5, {}, testSorting);
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5&${testSortingString}`,
@@ -109,7 +104,7 @@ describe("fetch-antragSummary-list", () => {
       getAntragsSummaryList(
         1,
         5,
-        emptyAntragListFilter(),
+        defaultAntragListFilter(),
         createEmptyListSort()
       )
     ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
@@ -126,7 +121,7 @@ describe("fetch-antragSummary-list", () => {
       getAntragsSummaryList(
         1,
         5,
-        emptyAntragListFilter(),
+        defaultAntragListFilter(),
         createEmptyListSort()
       )
     ).rejects.toThrow();
