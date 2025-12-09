@@ -136,6 +136,14 @@ class ZammadAPIServiceTest {
         }
 
         @Test
+        void testCreateTicketWithNullTitleThrowsIllegalArgumentException() {
+            final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
+            dto.setTitle(null);
+
+            assertThrows(IllegalArgumentException.class, () -> service.createTicket(dto, EXTERNAL_ID, null, Collections.emptyList()).block());
+        }
+
+        @Test
         void testCreateTicketWithResponseMissingIdThrowsZammadAPIException() {
             final CreateTicketDTOV2 dto = generateCreateTicketDTOV2();
 
@@ -213,6 +221,14 @@ class ZammadAPIServiceTest {
         void testCreateUserAndTicketWithBlankTitleThrowsIllegalArgumentException() {
             final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
             dto.getCreateTicketDTO().setTitle("");
+
+            assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
+        }
+
+        @Test
+        void testCreateUserAndTicketWithNullTitleThrowsIllegalArgumentException() {
+            final CreateUserAndTicketDTOV2 dto = generateCreateUserAndTicketDTOV2();
+            dto.getCreateTicketDTO().setTitle(null);
 
             assertThrows(IllegalArgumentException.class, () -> service.createUserAndTicket(dto, Collections.emptyList()).block());
         }
