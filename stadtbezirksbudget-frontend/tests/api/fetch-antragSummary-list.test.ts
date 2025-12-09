@@ -6,12 +6,12 @@ import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
 import { defaultAntragListFilter } from "@/types/AntragListFilter";
 import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
-import { objectToSearchParams } from "@/util/converter";
 import {
   AntragListSort,
   createEmptyListSort,
   sortObjectToSearchParams,
-} from "../../src/types/AntragListSort";
+} from "@/types/AntragListSort";
+import { objectToSearchParams } from "@/util/converter";
 
 global.fetch = vi.fn();
 
