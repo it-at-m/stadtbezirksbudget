@@ -82,6 +82,11 @@ describe("AntragListSort", () => {
 
       expect(result).toStrictEqual({ sortBy: "test", sortDirection: "ASC" });
     });
+
+    test("returns empty strings for empty sort", () => {
+      const result = antragListSortToSortString(createEmptyListSort());
+      expect(result).toStrictEqual({ sortBy: "", sortDirection: "" });
+    });
   });
 
   describe("antragListSortOptionFromSortItems", () => {
