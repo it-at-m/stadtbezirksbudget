@@ -77,7 +77,7 @@ describe("AntragListSort", () => {
     expect(mockUseAntragListSort.resetSorting).toHaveBeenCalled();
   });
 
-  test.each(inputFields)("renders input field $dataTest", async (dataTest) => {
+  test.each(inputFields)("renders input field %s", async (dataTest) => {
     const input = wrapper.findComponent(`[data-test="${dataTest}"]`);
     expect(input.exists()).toBe(true);
 
