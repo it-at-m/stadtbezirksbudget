@@ -5,16 +5,16 @@ import type { Status } from "@/types/Status.ts";
 export interface AntragListFilter {
   status: Status[];
   bezirksausschussNr: number[];
-  eingangDatumVon?: Date;
-  eingangDatumBis?: Date;
-  antragstellerName?: string;
-  projektTitel?: string;
-  beantragtesBudgetVon?: number;
-  beantragtesBudgetBis?: number;
-  art?: string;
+  eingangDatumVon: Date | null;
+  eingangDatumBis: Date | null;
+  antragstellerName: string | null;
+  projektTitel: string | null;
+  beantragtesBudgetVon: number | null;
+  beantragtesBudgetBis: number | null;
+  art: string | null;
   aktualisierungArt: AktualisierungArt[];
-  aktualisierungDatumVon?: Date;
-  aktualisierungDatumBis?: Date;
+  aktualisierungDatumVon: Date | null;
+  aktualisierungDatumBis: Date | null;
 }
 
 // Creates an AntragListFilter object with default values
@@ -36,16 +36,16 @@ export const defaultAntragListFilter = (): AntragListFilter => ({
 export const emptyAntragListFilter = (): AntragListFilter => ({
   status: [],
   bezirksausschussNr: [],
-  eingangDatumVon: undefined,
-  eingangDatumBis: undefined,
-  antragstellerName: undefined,
-  projektTitel: undefined,
-  beantragtesBudgetVon: undefined,
-  beantragtesBudgetBis: undefined,
-  art: undefined,
+  eingangDatumVon: null,
+  eingangDatumBis: null,
+  antragstellerName: null,
+  projektTitel: null,
+  beantragtesBudgetVon: null,
+  beantragtesBudgetBis: null,
+  art: null,
   aktualisierungArt: [],
-  aktualisierungDatumVon: undefined,
-  aktualisierungDatumBis: undefined,
+  aktualisierungDatumVon: null,
+  aktualisierungDatumBis: null,
 });
 
 // Interface for Antrag list filter options
