@@ -1,18 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
-import { createPinia } from "pinia";
 import { describe, expect, test } from "vitest";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import i18n from "@/plugins/i18n";
-
-const pinia = createPinia();
-const vuetify = createVuetify({
-  components,
-  directives,
-});
+import pinia from "@/plugins/pinia.ts";
+import vuetify from "@/plugins/vuetify.ts";
 
 describe("TheSnackbar", () => {
   test("renders snackbar with message", () => {
