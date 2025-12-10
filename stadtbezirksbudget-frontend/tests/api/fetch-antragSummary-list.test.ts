@@ -8,8 +8,8 @@ import { defaultAntragListFilter } from "@/types/AntragListFilter";
 import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
 import {
   AntragListSort,
+  antragListSortToSortString,
   createEmptyListSort,
-  sortObjectToSearchParams,
 } from "@/types/AntragListSort";
 import { objectToSearchParams } from "@/util/converter";
 
@@ -39,7 +39,9 @@ const testSorting: AntragListSort = {
   status: { sortBy: "status", sortDirection: "asc", title: "Status" },
 };
 
-const testSortingString = sortObjectToSearchParams(testSorting).toString();
+const testSortingString = objectToSearchParams(
+  antragListSortToSortString(testSorting)
+).toString();
 
 const mockResponse = {
   content: [],

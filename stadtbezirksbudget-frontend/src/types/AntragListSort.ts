@@ -85,21 +85,3 @@ export const antragListSortToSortItem = (
       order: v.sortDirection,
     }));
 };
-
-/**
- * Converts AntragListSort to URLSearchParams.
- * @param sortObject - The AntragListSort object to convert
- * @param params - Optional existing URLSearchParams to append to
- * @returns The resulting URLSearchParams
- */
-export function sortObjectToSearchParams(
-  sortObject: AntragListSort,
-  params: URLSearchParams = new URLSearchParams()
-): URLSearchParams {
-  const sortString = antragListSortToSortString(sortObject);
-  if (sortString.sortBy && sortString.sortDirection) {
-    params.append("sortBy", sortString.sortBy);
-    params.append("sortDirection", sortString.sortDirection);
-  }
-  return params;
-}

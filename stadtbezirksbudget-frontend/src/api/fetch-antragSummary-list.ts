@@ -10,7 +10,7 @@ import {
 } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
 import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
-import { sortObjectToSearchParams } from "@/types/AntragListSort.ts";
+import { antragListSortToSortString } from "@/types/AntragListSort.ts";
 import { objectToSearchParams } from "@/util/converter.ts";
 
 /**
@@ -28,12 +28,13 @@ export function getAntragsSummaryList(
   sorting: AntragListSort
 ): Promise<Page<AntragSummary>> {
   const filtersDto = antragListFilterToDTO(filters);
+  const sortingDto = antragListSortToSortString(sorting);
   const params = new URLSearchParams({
     page: String(page),
     size: String(size),
   });
   objectToSearchParams(filtersDto, params);
-  sortObjectToSearchParams(sorting, params);
+  objectToSearchParams(sortingDto, params);
 
   return fetch(`${BACKEND}/antrag?${params}`, getConfig())
     .then((response) => {

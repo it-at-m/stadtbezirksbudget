@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { DataTableSortItem } from "vuetify/framework";
 
 import {
@@ -6,7 +6,6 @@ import {
   antragListSortToSortItem,
   antragListSortToSortString,
   createEmptyListSort,
-  sortObjectToSearchParams,
   sortOptionsByField,
 } from "../../src/types/AntragListSort";
 import { sortOptionsRecord } from "../../src/types/AntragListSortDefinitions";
@@ -135,38 +134,6 @@ describe("AntragListSort", () => {
       sort["test"] = { title: "Test", sortBy: "test", sortDirection: "asc" };
       const res = antragListSortToSortItem(sort);
       expect(res).toEqual([{ key: "test", order: "asc" }]);
-    });
-  });
-
-  describe("sortObjectToSearchParams", () => {
-    let existingParams;
-    let sortObject;
-    beforeEach(() => {
-      existingParams = new URLSearchParams({ existing: "param" });
-      sortObject = createEmptyListSort();
-      sortObject["test"] = {
-        title: "Test",
-        sortBy: "test",
-        sortDirection: "desc",
-      };
-    });
-
-    test("creates new URLSearchParams if none provided", () => {
-      const sort = sortObjectToSearchParams(sortObject);
-      expect(sort).toBeInstanceOf(URLSearchParams);
-      expect(sort.toString()).toBe("sortBy=test&sortDirection=DESC");
-    });
-
-    test("skips empty sort object", () => {
-      const sort = sortObjectToSearchParams(createEmptyListSort());
-      expect(sort.toString()).toBe("");
-    });
-
-    test("appends to existing URLSearchParams", () => {
-      const sort = sortObjectToSearchParams(sortObject, existingParams);
-      expect(sort.toString()).toBe(
-        "existing=param&sortBy=test&sortDirection=DESC"
-      );
     });
   });
 });
