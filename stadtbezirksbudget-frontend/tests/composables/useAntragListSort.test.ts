@@ -1,5 +1,7 @@
+import type { DataTableSortItem } from "vuetify";
+
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { DataTableSortItem } from "vuetify";
+import { reactive } from "vue";
 
 import { useAntragListSort } from "@/composables/useAntragListSort";
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
@@ -27,7 +29,12 @@ describe("useAntragListSort", () => {
   };
 
   beforeEach(() => {
-    sortingStoreMock = { sorting: testSorting, setSorting: vi.fn() };
+    sortingStoreMock = reactive({
+      sorting: testSorting,
+      setSorting: vi.fn((payload: AntragListSort) => {
+        sortingStoreMock.sorting = payload;
+      }),
+    });
     (useAntragListSortingStore as vi.Mock).mockReturnValue(sortingStoreMock);
   });
 
