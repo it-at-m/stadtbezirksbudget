@@ -34,7 +34,7 @@ export const sortOptionsByField = (
   sortOptionsRecord[field]?.map((value) => ({ ...value, sortBy: field })) ?? [];
 
 // Converts AntragListSort to backend sort string format
-export const antragListSortToSortString = (
+export const antragListSortToSortDto = (
   sort: AntragListSort
 ): { sortBy: string; sortDirection: string } => {
   const item = Object.values(sort).find(

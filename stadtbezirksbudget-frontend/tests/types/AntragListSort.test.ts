@@ -3,8 +3,8 @@ import { DataTableSortItem } from "vuetify/framework";
 
 import {
   antragListSortOptionFromSortItems,
+  antragListSortToSortDto,
   antragListSortToSortItem,
-  antragListSortToSortString,
   createEmptyListSort,
   sortOptionsByField,
 } from "../../src/types/AntragListSort";
@@ -77,13 +77,13 @@ describe("AntragListSort", () => {
         sortDirection: "asc",
       };
 
-      const result = antragListSortToSortString(sort);
+      const result = antragListSortToSortDto(sort);
 
       expect(result).toStrictEqual({ sortBy: "test", sortDirection: "ASC" });
     });
 
     test("returns empty strings for empty sort", () => {
-      const result = antragListSortToSortString(createEmptyListSort());
+      const result = antragListSortToSortDto(createEmptyListSort());
       expect(result).toStrictEqual({ sortBy: "", sortDirection: "" });
     });
   });

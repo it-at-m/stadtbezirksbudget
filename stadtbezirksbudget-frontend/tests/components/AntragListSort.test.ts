@@ -46,7 +46,6 @@ describe("AntragListSort", () => {
   beforeEach(() => {
     mockUseAntragListSort = {
       updateSorting: vi.fn(),
-      updateSortingWithSortItem: vi.fn(),
       resetSorting: vi.fn(),
       sorting: ref(createEmptyListSort()),
     };
