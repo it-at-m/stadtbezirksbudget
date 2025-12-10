@@ -2,9 +2,9 @@ import type {
   AntragListSort,
   AntragListSortOption,
 } from "@/types/AntragListSort.ts";
-import type { DataTableSortItem } from "vuetify/framework";
+import type { DataTableSortItem } from "vuetify";
 
-import { ref } from "vue";
+import { computed } from "vue";
 
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
 import {
@@ -20,18 +20,17 @@ export function useAntragListSort() {
   const sortingStore = useAntragListSortingStore();
 
   // The current applied sorting option
-  const sorting = ref<AntragListSort>({ ...sortingStore.sorting });
+  const sorting = computed<AntragListSort>(() => sortingStore.sorting);
 
   /**
    * Updates the store with the current sorting options.
    * @param newValue new sorting option
    */
   function updateSorting(newValue: AntragListSortOption) {
-    sorting.value = {
+    sortingStore.setSorting({
       ...createEmptyListSort(),
       [newValue.sortBy]: newValue,
-    };
-    sortingStore.setSorting({ ...sorting.value });
+    });
   }
 
   /**
@@ -51,8 +50,7 @@ export function useAntragListSort() {
    * Resets the current sorting options.
    */
   function resetSorting() {
-    sorting.value = createEmptyListSort();
-    sortingStore.setSorting({ ...sorting.value });
+    sortingStore.setSorting(createEmptyListSort());
   }
 
   return {

@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { DataTableSortItem } from "vuetify/framework";
+import { DataTableSortItem } from "vuetify";
 
-import { useAntragListSort } from "../../src/composables/useAntragListSort";
-import { useAntragListSortingStore } from "../../src/stores/useAntragListSortingStore";
+import { useAntragListSort } from "@/composables/useAntragListSort";
+import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
 import {
   AntragListSort,
   AntragListSortOption,
   createEmptyListSort,
-} from "../../src/types/AntragListSort";
+} from "@/types/AntragListSort";
 
 vi.mock("@/stores/useAntragListSortingStore.ts");
 
@@ -36,16 +36,18 @@ describe("useAntragListSort", () => {
     expect(sorting.value).toStrictEqual(testSorting);
   });
 
-  test("resets sorting to empty and updates store", async () => {
+  test("resets sorting to empty and updates store", () => {
     const { resetSorting, sorting } = useAntragListSort();
 
     resetSorting();
     expect(sorting.value).toStrictEqual(createEmptyListSort());
-    expect(sortingStoreMock.setSorting).toHaveBeenCalled();
+    expect(sortingStoreMock.setSorting).toHaveBeenCalledWith(
+      createEmptyListSort()
+    );
   });
 
-  test("update sorting updates store", async () => {
-    const { updateSorting, sorting } = useAntragListSort();
+  test("update sorting updates store", () => {
+    const { updateSorting } = useAntragListSort();
 
     const newSortOption: AntragListSortOption = {
       sortBy: "test",
@@ -54,11 +56,13 @@ describe("useAntragListSort", () => {
     };
 
     updateSorting(newSortOption);
-    expect(sortingStoreMock.setSorting).toHaveBeenCalled();
-    expect(sorting.value.test).toStrictEqual(newSortOption);
+    expect(sortingStoreMock.setSorting).toHaveBeenCalledWith({
+      ...createEmptyListSort(),
+      [newSortOption.sortBy]: newSortOption,
+    });
   });
 
-  test("update sorting without new sort item resets store", async () => {
+  test("update sorting without new sort item resets store", () => {
     const { updateSortingWithSortItem } = useAntragListSort();
 
     updateSortingWithSortItem(testEmptySortingItems);
@@ -67,7 +71,7 @@ describe("useAntragListSort", () => {
     );
   });
 
-  test("update sorting with new sort item updates store", async () => {
+  test("update sorting with new sort item updates store", () => {
     const { updateSortingWithSortItem } = useAntragListSort();
 
     updateSortingWithSortItem(testSortingItems);
