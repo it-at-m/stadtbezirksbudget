@@ -1,10 +1,7 @@
 import type { AntragListSortOption } from "@/types/AntragListSort.ts";
 
 // Defines which sorting options are available for different values
-export const sortOptionsRecord: Record<
-  string,
-  Omit<AntragListSortOption, "sortBy">[]
-> = {
+export const sortOptionsRecord = {
   status: [
     {
       title: "A-Z / Aufsteigend",
@@ -115,4 +112,4 @@ export const sortOptionsRecord: Record<
       sortDirection: "desc",
     },
   ],
-};
+} satisfies Record<string, Omit<AntragListSortOption, "sortBy">[]>;

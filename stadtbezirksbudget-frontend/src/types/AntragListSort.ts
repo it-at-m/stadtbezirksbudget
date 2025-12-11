@@ -69,17 +69,18 @@ export const antragListSortToSortDto = (
 export const antragListSortOptionFromSortItems = (
     sortItems: DataTableSortItem[]
 ): AntragListSortOption | undefined => {
-    const i = sortItems[0];
-    if (!i || !SORT_DIRECTIONS.includes(String(i.order) as sortDirection)) return;
+    const firstItem = sortItems[0];
+    if (!firstItem || !SORT_DIRECTIONS.includes(String(firstItem.order) as sortDirection)) return;
 
-    const match = sortOptionsRecord[i.key]?.find(
-        (o) => o.sortDirection === i.order
+    const key = firstItem.key as keyof typeof sortOptionsRecord;
+    const match = sortOptionsRecord[key]?.find(
+        (o) => o.sortDirection === firstItem.order
     );
     return match
         ? {
             ...match,
-            sortBy: i.key,
-            sortDirection: i.order as sortDirection,
+            sortBy: key,
+            sortDirection: firstItem.order as sortDirection,
         }
         : undefined;
 };
