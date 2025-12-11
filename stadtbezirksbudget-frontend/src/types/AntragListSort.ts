@@ -1,6 +1,6 @@
-import type {DataTableSortItem} from "vuetify";
+import type { DataTableSortItem } from "vuetify";
 
-import {sortOptionsRecord} from "@/types/AntragListSortDefinitions.ts";
+import { sortOptionsRecord } from "@/types/AntragListSortDefinitions.ts";
 
 // Runtime definition of sorting directions and derived type
 export const SORT_DIRECTIONS = ["asc", "desc"] as const;
@@ -10,23 +10,23 @@ export type sortDirection = (typeof SORT_DIRECTIONS)[number];
 
 // Interface for Antrag list sorting options
 export interface AntragListSortOption {
-    title: string;
-    sortBy: keyof typeof sortOptionsRecord;
-    sortDirection: sortDirection;
+  title: string;
+  sortBy: keyof typeof sortOptionsRecord;
+  sortDirection: sortDirection;
 }
 
 //Type definition of AntragListSort based on {@link sortOptionsRecord}
 export type AntragListSort = Record<
-    keyof typeof sortOptionsRecord,
-    AntragListSortOption | undefined
+  keyof typeof sortOptionsRecord,
+  AntragListSortOption | undefined
 >;
 
 // Creates an empty AntragListSort object
 export const createEmptyListSort = (): AntragListSort => {
-    return Object.keys(sortOptionsRecord).reduce((acc, key) => {
-        acc[key as keyof typeof sortOptionsRecord] = undefined;
-        return acc;
-    }, {} as AntragListSort);
+  return Object.keys(sortOptionsRecord).reduce((acc, key) => {
+    acc[key as keyof typeof sortOptionsRecord] = undefined;
+    return acc;
+  }, {} as AntragListSort);
 };
 
 /**
@@ -35,9 +35,9 @@ export const createEmptyListSort = (): AntragListSort => {
  * @returns array of {@link AntragListSortOption} for specified field
  */
 export const sortOptionsByField = (
-    field: keyof typeof sortOptionsRecord
+  field: keyof typeof sortOptionsRecord
 ): AntragListSortOption[] =>
-    sortOptionsRecord[field]?.map((value) => ({...value, sortBy: field})) ?? [];
+  sortOptionsRecord[field]?.map((value) => ({ ...value, sortBy: field })) ?? [];
 
 /**
  * Converts AntragListSort to backend sort string format
@@ -45,20 +45,20 @@ export const sortOptionsByField = (
  * @return sorting dto
  */
 export const antragListSortToSortDto = (
-    sort: AntragListSort
+  sort: AntragListSort
 ): { sortBy: string; sortDirection: string } => {
-    const item = Object.values(sort).find(
-        (v): v is AntragListSortOption => v !== undefined
-    );
+  const item = Object.values(sort).find(
+    (v): v is AntragListSortOption => v !== undefined
+  );
 
-    if (!item) {
-        return {sortBy: "", sortDirection: ""};
-    }
+  if (!item) {
+    return { sortBy: "", sortDirection: "" };
+  }
 
-    return {
-        sortBy: item.sortBy,
-        sortDirection: item.sortDirection.toUpperCase(),
-    };
+  return {
+    sortBy: item.sortBy,
+    sortDirection: item.sortDirection.toUpperCase(),
+  };
 };
 
 /**
@@ -67,22 +67,26 @@ export const antragListSortToSortDto = (
  * @returns The corresponding AntragListSortOption or undefined if not found
  */
 export const antragListSortOptionFromSortItems = (
-    sortItems: DataTableSortItem[]
+  sortItems: DataTableSortItem[]
 ): AntragListSortOption | undefined => {
-    const firstItem = sortItems[0];
-    if (!firstItem || !SORT_DIRECTIONS.includes(String(firstItem.order) as sortDirection)) return;
+  const firstItem = sortItems[0];
+  if (
+    !firstItem ||
+    !SORT_DIRECTIONS.includes(String(firstItem.order) as sortDirection)
+  )
+    return;
 
-    const key = firstItem.key as keyof typeof sortOptionsRecord;
-    const match = sortOptionsRecord[key]?.find(
-        (o) => o.sortDirection === firstItem.order
-    );
-    return match
-        ? {
-            ...match,
-            sortBy: key,
-            sortDirection: firstItem.order as sortDirection,
-        }
-        : undefined;
+  const key = firstItem.key as keyof typeof sortOptionsRecord;
+  const match = sortOptionsRecord[key]?.find(
+    (o) => o.sortDirection === firstItem.order
+  );
+  return match
+    ? {
+        ...match,
+        sortBy: key,
+        sortDirection: firstItem.order as sortDirection,
+      }
+    : undefined;
 };
 
 /**
@@ -91,12 +95,12 @@ export const antragListSortOptionFromSortItems = (
  * @returns array of {@link DataTableSortItem}
  */
 export const antragListSortToSortItem = (
-    sort: AntragListSort
+  sort: AntragListSort
 ): DataTableSortItem[] => {
-    return Object.values(sort)
-        .filter((v): v is AntragListSortOption => v !== undefined)
-        .map((v) => ({
-            key: v.sortBy,
-            order: v.sortDirection,
-        }));
+  return Object.values(sort)
+    .filter((v): v is AntragListSortOption => v !== undefined)
+    .map((v) => ({
+      key: v.sortBy,
+      order: v.sortDirection,
+    }));
 };
