@@ -59,8 +59,8 @@ describe("AntragListFilterDTO", () => {
     test("converts partial date ranges future", () => {
       const filters: AntragListFilter = {
         ...testFilters,
-        eingangDatumBis: undefined,
-        aktualisierungDatumBis: undefined,
+        eingangDatumBis: null,
+        aktualisierungDatumBis: null,
       };
       const dto = antragListFilterToDTO(filters);
 
@@ -77,8 +77,8 @@ describe("AntragListFilterDTO", () => {
     test("converts partial date ranges past", () => {
       const filters: AntragListFilter = {
         ...testFilters,
-        eingangDatumVon: undefined,
-        aktualisierungDatumVon: undefined,
+        eingangDatumVon: null,
+        aktualisierungDatumVon: null,
       };
       const dto = antragListFilterToDTO(filters);
 
@@ -92,13 +92,13 @@ describe("AntragListFilterDTO", () => {
       );
     });
 
-    test("converts undefined dates to undefined", () => {
+    test("converts null dates to undefined", () => {
       const filters: AntragListFilter = {
         ...testFilters,
-        eingangDatumVon: undefined,
-        eingangDatumBis: undefined,
-        aktualisierungDatumVon: undefined,
-        aktualisierungDatumBis: undefined,
+        eingangDatumVon: null,
+        eingangDatumBis: null,
+        aktualisierungDatumVon: null,
+        aktualisierungDatumBis: null,
       };
       const dto = antragListFilterToDTO(filters);
 
