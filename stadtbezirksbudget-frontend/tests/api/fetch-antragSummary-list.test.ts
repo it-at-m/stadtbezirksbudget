@@ -3,12 +3,7 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
 import { defaultAntragListFilter } from "@/types/AntragListFilter";
-import {
-  AntragListSort,
-  antragListSortToSortDto,
-  createEmptyListSort,
-} from "@/types/AntragListSort";
-import { objectToSearchParams } from "@/util/converter";
+import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
 
 global.fetch = vi.fn();
 
@@ -16,9 +11,7 @@ const testSorting: AntragListSort = {
   status: { sortBy: "status", sortDirection: "asc", title: "Status" },
 };
 
-const testSortingString = objectToSearchParams(
-  antragListSortToSortDto(testSorting)
-).toString();
+const testSortingString = "sortBy=status&sortDirection=ASC";
 
 const mockResponse = {
   content: [],

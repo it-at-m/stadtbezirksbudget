@@ -38,6 +38,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { sortOptionsRecord } from "@/types/AntragListSortDefinitions.ts";
+
 import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { sortOptionsByField } from "@/types/AntragListSort.ts";
 
@@ -91,5 +93,9 @@ const sortFields = [
     label: "Datum Aktualisierung",
     dataTest: "antrag-list-sort-aktualisierung-datum",
   },
-];
+] satisfies {
+  field: keyof typeof sortOptionsRecord;
+  label: string;
+  dataTest: string;
+}[];
 </script>

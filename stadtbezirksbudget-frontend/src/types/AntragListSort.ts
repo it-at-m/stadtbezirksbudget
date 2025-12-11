@@ -63,7 +63,7 @@ export const antragListSortToSortDto = (
 
 /**
  * Converts an array of DataTableSortItem to AntragListSortOption
- * @param sortItems - The DataTableSortItem array of DataTableSortItem to convert
+ * @param sortItems - The DataTableSortItem array to convert
  * @returns The corresponding AntragListSortOption or undefined if not found
  */
 export const antragListSortOptionFromSortItems = (
