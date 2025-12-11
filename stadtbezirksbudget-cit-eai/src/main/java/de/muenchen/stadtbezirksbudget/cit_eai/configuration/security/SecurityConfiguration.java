@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.configuration.security;
 
+import de.muenchen.stadtbezirksbudget.cit_eai.common.ExcludedFromGeneratedCoverage;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ import reactor.netty.http.client.HttpClient;
 /**
  * Configuration for OAuth2 security.
  */
+@ExcludedFromGeneratedCoverage //Too complex to test
 @Configuration
 @Profile("!no-security")
 @EnableWebSecurity
