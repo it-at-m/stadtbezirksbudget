@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Positive;
 import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,7 +29,7 @@ import lombok.Setter;
 @Setter
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
