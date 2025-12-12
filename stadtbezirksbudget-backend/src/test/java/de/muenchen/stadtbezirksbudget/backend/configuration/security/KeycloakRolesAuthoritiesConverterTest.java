@@ -40,7 +40,7 @@ class KeycloakRolesAuthoritiesConverterTest {
     }
 
     @Nested
-    class ConvertTests {
+    class Convert {
 
         @Test
         void testConvertWithRoles() {
