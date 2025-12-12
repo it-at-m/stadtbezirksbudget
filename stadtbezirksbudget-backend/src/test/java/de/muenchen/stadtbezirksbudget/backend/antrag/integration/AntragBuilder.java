@@ -227,7 +227,7 @@ public class AntragBuilder {
 
         // Calculate amounts based on whether istFehlbetrag is true or false based on the formula for istFehlbetrag in Finanzierung-Entity
         if (istFehlbetrag) {
-            // Formula needs to be true: beantragtesBudget + finanzierungsmittel - finanzierungsmittel = beantragtesBudget
+            // Formula needs to be true: 1.5 * beantragtesBudget - 0.5 * beantragtesBudget = beantragtesBudget
             finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
             ausgabe.setBetrag(beantragtesBudget.add(finanzierungsmittel.getBetrag()));
         } else {
