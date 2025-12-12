@@ -27,8 +27,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepo
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -62,8 +60,6 @@ class AntragIntegrationTest {
 
     private final List<Antrag> antragList = new ArrayList<>();
 
-    @PersistenceContext
-    private EntityManager entityManager;
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
@@ -94,14 +90,6 @@ class AntragIntegrationTest {
         antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
-        initializeDefaultAntragList(100);
-    }
-
-    private void initializeDefaultAntragList(final int size) {
-        for (int i = 0; i < size; i++) {
-            antragList.add(antragBuilder.build());
-        }
-        entityManager.flush();
     }
 
     @Nested
@@ -109,38 +97,44 @@ class AntragIntegrationTest {
 
         @Test
         void testGivenPageAndSizeThenReturnPageOfAntragsdaten() throws Exception {
+            for (int i = 0; i < 6; i++) {
+                antragBuilder.build();
+            }
+
             mockMvc
                     .perform(get("/antrag")
-                            .param("page", "3")
-                            .param("size", "20")
+                            .param("page", "2")
+                            .param("size", "2")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.content", hasSize(20)))
-                    .andExpect(jsonPath("$.page.totalElements", is(100)))
-                    .andExpect(jsonPath("$.page.size", is(20)))
-                    .andExpect(jsonPath("$.page.number", is(3)))
-                    .andExpect(jsonPath("$.page.totalPages", is(5)));
+                    .andExpect(jsonPath("$.content", hasSize(2)))
+                    .andExpect(jsonPath("$.page.totalElements", is(6)))
+                    .andExpect(jsonPath("$.page.size", is(2)))
+                    .andExpect(jsonPath("$.page.number", is(2)))
+                    .andExpect(jsonPath("$.page.totalPages", is(3)));
         }
 
         @Test
         void testGivenNoParamsThenReturnDefaultPage() throws Exception {
+            for (int i = 0; i < 11; i++) {
+                antragBuilder.build();
+            }
+
             mockMvc
                     .perform(get("/antrag")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.content", hasSize(10)))
-                    .andExpect(jsonPath("$.page.totalElements", is(100)))
+                    .andExpect(jsonPath("$.page.totalElements", is(11)))
                     .andExpect(jsonPath("$.page.size", is(10)))
                     .andExpect(jsonPath("$.page.number", is(0)))
-                    .andExpect(jsonPath("$.page.totalPages", is(10)));
+                    .andExpect(jsonPath("$.page.totalPages", is(2)));
         }
 
         @Test
         void testGivenEmptyDatabaseThenReturnEmptyPage() throws Exception {
-            antragRepository.deleteAll();
-
             mockMvc
                     .perform(get("/antrag")
                             .param("page", "0")
@@ -157,15 +151,19 @@ class AntragIntegrationTest {
 
         @Test
         void testGivenAllSizeThenReturnUnpaged() throws Exception {
+            for (int i = 0; i < 11; i++) {
+                antragBuilder.build();
+            }
+
             mockMvc
                     .perform(get("/antrag")
                             .param("size", "-1")
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.content", hasSize(100)))
-                    .andExpect(jsonPath("$.page.totalElements", is(100)))
-                    .andExpect(jsonPath("$.page.size", is(100)))
+                    .andExpect(jsonPath("$.content", hasSize(11)))
+                    .andExpect(jsonPath("$.page.totalElements", is(11)))
+                    .andExpect(jsonPath("$.page.size", is(11)))
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(1)));
         }
@@ -175,6 +173,22 @@ class AntragIntegrationTest {
     class GetFilterOptions {
         @Test
         void testGetFilterOptionsReturnsAlphabeticallySortedLists() throws Exception {
+            antragList.add(antragBuilder
+                    .setAntragstellerName("Alex")
+                    .setProjektTitel("Zeltlager")
+                    .build());
+            antragList.add(antragBuilder
+                    .setAntragstellerName("Alina")
+                    .setProjektTitel("Wochenmarkt")
+                    .build());
+            antragList.add(antragBuilder
+                    .setAntragstellerName("Musterfrau")
+                    .setProjektTitel("Aktionswoche")
+                    .build());
+            antragList.add(antragBuilder
+                    .setAntragstellerName("Musterfrau")
+                    .setProjektTitel("Weihnachtsmarkt")
+                    .build());
             final List<String> sortedAntragstellerNamen = antragList.stream()
                     .map(Antrag::getAntragsteller)
                     .map(Antragsteller::getName)
@@ -185,6 +199,7 @@ class AntragIntegrationTest {
                     .map(Projekt::getTitel)
                     .sorted()
                     .toList();
+
             mockMvc
                     .perform(get("/antrag/filterOptions")
                             .contentType(MediaType.APPLICATION_JSON))
@@ -192,12 +207,12 @@ class AntragIntegrationTest {
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.antragstellerNamen").isArray())
                     .andExpect(jsonPath("$.projektTitel").isArray())
-                    .andExpect(jsonPath("$.antragstellerNamen", hasSize(100)))
-                    .andExpect(jsonPath("$.projektTitel", hasSize(100)))
+                    .andExpect(jsonPath("$.antragstellerNamen", hasSize(3)))
+                    .andExpect(jsonPath("$.projektTitel", hasSize(4)))
                     .andExpect(jsonPath("$.antragstellerNamen[0]", is(sortedAntragstellerNamen.getFirst())))
-                    .andExpect(jsonPath("$.antragstellerNamen[99]", is(sortedAntragstellerNamen.get(99))))
+                    .andExpect(jsonPath("$.antragstellerNamen[2]", is(sortedAntragstellerNamen.get(2))))
                     .andExpect(jsonPath("$.projektTitel[0]", is(sortedProjektTitel.getFirst())))
-                    .andExpect(jsonPath("$.projektTitel[99]", is(sortedProjektTitel.get(99))));
+                    .andExpect(jsonPath("$.projektTitel[3]", is(sortedProjektTitel.get(3))));
         }
     }
 
@@ -206,6 +221,11 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusSuccessfully() throws Exception {
+            antragList.add(antragBuilder
+                    .setStatus(Status.EINGEGANGEN)
+                    .build());
+            antragList.add(antragBuilder
+                    .build());
             final UUID antragId = antragList.getFirst().getId();
             final AntragStatusUpdateDTO dto = new AntragStatusUpdateDTO(Status.AUSZAHLUNG);
 
@@ -233,6 +253,11 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusNoBody() throws Exception {
+            antragList.add(antragBuilder
+                    .setStatus(Status.EINGEGANGEN)
+                    .build());
+            antragList.add(antragBuilder
+                    .build());
             final UUID antragId = antragList.getFirst().getId();
 
             mockMvc
@@ -243,6 +268,12 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusIdempotency() throws Exception {
+            antragList.add(antragBuilder
+                    .setStatus(Status.EINGEGANGEN)
+                    .build());
+            antragList.add(antragBuilder
+                    .build());
+
             final UUID antragId = antragList.getFirst().getId();
             final AntragStatusUpdateDTO dto = new AntragStatusUpdateDTO(Status.VOLLSTAENDIG);
 
@@ -267,6 +298,12 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusInvalidStatus() throws Exception {
+            antragList.add(antragBuilder
+                    .setStatus(Status.EINGEGANGEN)
+                    .build());
+            antragList.add(antragBuilder
+                    .build());
+
             final UUID antragId = antragList.getFirst().getId();
             final String invalidDto = "{\"status\":\"INVALID_STATUS\"}";
 
@@ -279,6 +316,12 @@ class AntragIntegrationTest {
 
         @Test
         void testUpdateAntragStatusNullStatus() throws Exception {
+            antragList.add(antragBuilder
+                    .setStatus(Status.EINGEGANGEN)
+                    .build());
+            antragList.add(antragBuilder
+                    .build());
+
             final UUID antragId = antragList.getFirst().getId();
             final String nullStatusDto = "{\"status\":null}";
 
