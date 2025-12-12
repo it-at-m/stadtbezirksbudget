@@ -1,20 +1,13 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, test, vi } from "vitest";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
+import vuetify from "@/plugins/vuetify.ts";
 import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.stubGlobal("visualViewport", new EventTarget());
 
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
-
-const vuetify = createVuetify({
-  components,
-  directives,
-});
 
 describe("AntragListFilterMenu", () => {
   const wrapper = mount(AntragListFilterMenu, {
