@@ -30,6 +30,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Test helper for building and persisting Antrag entities with all required dependencies.
+ * <p>
+ * This builder is stateful and reusable. After calling {@code build()}, the builder
+ * resets to default values, allowing it to be reused for creating multiple test entities:
+ *
+ * <pre>
+ * Antrag first = builder.setBezirksausschussNr(1).build();
+ * Antrag second = builder.setBezirksausschussNr(2).build(); // starts from defaults
+ * </pre>
+ */
 @SuppressWarnings("PMD.CouplingBetweenObjects")
 public class AntragBuilder {
     public static final Status DEFAULT_STATUS = Status.VOLLSTAENDIG;
@@ -211,6 +222,13 @@ public class AntragBuilder {
                 .direktoriumNotiz("Notiz zu Materialausgaben")
                 .build();
 
+        if (istFehlbetrag) {
+            finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
+            ausgabe.setBetrag(beantragtesBudget.add(finanzierungsmittel.getBetrag()));
+        } else {
+            finanzierungsmittel.setBetrag(new BigDecimal(10_000));
+            ausgabe.setBetrag(beantragtesBudget);
+        }
         if (istFehlbetrag) {
             finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
             ausgabe.setBetrag(beantragtesBudget.add(finanzierungsmittel.getBetrag()));
