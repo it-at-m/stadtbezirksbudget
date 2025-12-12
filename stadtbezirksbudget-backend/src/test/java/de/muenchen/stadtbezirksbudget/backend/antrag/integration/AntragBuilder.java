@@ -110,7 +110,6 @@ public class AntragBuilder {
         aktualisierungArt = DEFAULT_AKTUALISIERUNG_ART;
         zammadNr = DEFAULT_ZAMMAD_NR;
         aktenzeichen = DEFAULT_AKTENZEICHEN;
-        // Generate random UUIDs to ensure unique antragstellerName and projektTitel
         antragstellerName = "Max Mustermann";
         projektTitel = "Projekt XYZ";
     }
