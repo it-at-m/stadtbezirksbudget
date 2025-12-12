@@ -1,20 +1,16 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -41,17 +37,14 @@ class AuthUtilsTest {
         @Test
         void testJwtAuthTokenReturnsUsername() {
             final Jwt jwt = mock(Jwt.class);
-            final Map<String, Object> attributes = new HashMap<>();
-            attributes.put("preferred_username", "testUser");
-            when(jwt.getClaims()).thenReturn(attributes);
-            final Collection<? extends GrantedAuthority> authorities = Collections.emptyList();
-            final JwtAuthenticationToken jwtAuth = new JwtAuthenticationToken(jwt, authorities);
+            when(jwt.getClaims()).thenReturn(Map.of("preferred_username", "testUser"));
+            final JwtAuthenticationToken jwtAuth = new JwtAuthenticationToken(jwt, Collections.emptyList());
             when(securityContext.getAuthentication()).thenReturn(jwtAuth);
             final String username = AuthUtils.getUsername();
 
             assertThat(username).isEqualTo("testUser");
         }
-        
+
         @Test
         void testJwtAuthTokenWithMissingClaimReturnsDefault() {
             final Jwt jwt = mock(Jwt.class);
@@ -59,7 +52,7 @@ class AuthUtilsTest {
             final JwtAuthenticationToken jwtAuth = new JwtAuthenticationToken(jwt, Collections.emptyList());
             when(securityContext.getAuthentication()).thenReturn(jwtAuth);
             final String username = AuthUtils.getUsername();
-            assertNull(username);
+            assertThat(username).isNull();
         }
 
         @Test
