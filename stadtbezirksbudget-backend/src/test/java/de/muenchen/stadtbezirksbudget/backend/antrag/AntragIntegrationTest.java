@@ -18,6 +18,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
+import de.muenchen.stadtbezirksbudget.backend.antrag.integration.AntragBuilder;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
@@ -87,17 +88,19 @@ class AntragIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private AntragBuilder antragBuilder;
+
     @BeforeEach
     public void setUp() {
-        final AntragTestDataBuilder antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
+        antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
-        initializeDefaultAntragList(100, antragTestDataBuilder);
+        initializeDefaultAntragList(100);
     }
 
-    private void initializeDefaultAntragList(final int size, final AntragTestDataBuilder dataBuilder) {
+    private void initializeDefaultAntragList(final int size) {
         for (int i = 0; i < size; i++) {
-            antragList.add(dataBuilder.initializeDefaultAntrag());
+            antragList.add(antragBuilder.build());
         }
         entityManager.flush();
     }
