@@ -184,10 +184,10 @@ public class AntragBuilder {
                 .name(name)
                 .zielsetzung("Förderung von Projekten")
                 .rechtsform(Rechtsform.NATUERLICHE_PERSON)
+                .telefonNr("0123456789")
+                .email("0123456789")
+                .adresse(adresse)
                 .build();
-        antragsteller.setTelefonNr("0123456789");
-        antragsteller.setEmail("max@mustermann.de");
-        antragsteller.setAdresse(adresse);
         return antragstellerRepository.save(antragsteller);
     }
 
