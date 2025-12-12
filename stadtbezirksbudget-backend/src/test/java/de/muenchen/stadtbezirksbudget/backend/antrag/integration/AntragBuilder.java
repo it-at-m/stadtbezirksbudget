@@ -229,13 +229,6 @@ public class AntragBuilder {
             finanzierungsmittel.setBetrag(new BigDecimal(10_000));
             ausgabe.setBetrag(beantragtesBudget);
         }
-        if (istFehlbetrag) {
-            finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
-            ausgabe.setBetrag(beantragtesBudget.add(finanzierungsmittel.getBetrag()));
-        } else {
-            finanzierungsmittel.setBetrag(new BigDecimal(10_000));
-            ausgabe.setBetrag(beantragtesBudget);
-        }
 
         Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(true)
