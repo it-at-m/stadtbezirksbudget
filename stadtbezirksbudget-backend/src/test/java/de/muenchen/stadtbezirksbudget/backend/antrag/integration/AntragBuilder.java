@@ -110,8 +110,9 @@ public class AntragBuilder {
         aktualisierungArt = DEFAULT_AKTUALISIERUNG_ART;
         zammadNr = DEFAULT_ZAMMAD_NR;
         aktenzeichen = DEFAULT_AKTENZEICHEN;
-        antragstellerName = "Max Mustermann " + generateRandomUuidString();
-        projektTitel = "Projekt XYZ " + generateRandomUuidString();
+        // Generate random UUIDs to ensure unique antragstellerName and projektTitel
+        antragstellerName = "Max Mustermann";
+        projektTitel = "Projekt XYZ";
     }
 
     public AntragBuilder setStatus(final Status status) {
@@ -172,7 +173,8 @@ public class AntragBuilder {
     private Adresse initializeAdresse() {
         return adresseRepository.save(
                 Adresse.builder()
-                        .strasse("Musterstraße 1 " + generateRandomUuidString())
+                        // Generate random UUIDs to ensure unique strasse
+                        .strasse("Musterstraße 1 " + generateRandomUuidString()) //
                         .hausnummer("1")
                         .postleitzahl("12345")
                         .ort("München")
@@ -182,7 +184,8 @@ public class AntragBuilder {
     private Antragsteller initializeAntragsteller(final Adresse adresse, final String name) {
         final Antragsteller antragsteller = Antragsteller.builder()
                 .name(name)
-                .zielsetzung("Förderung von Projekten")
+                // Generate random UUIDs to ensure unique zielsetzung
+                .zielsetzung("Förderung von Projekten " + generateRandomUuidString())
                 .rechtsform(Rechtsform.NATUERLICHE_PERSON)
                 .telefonNr("0123456789")
                 .email("max@mustermann.de")
@@ -195,6 +198,7 @@ public class AntragBuilder {
         return projektRepository.save(
                 Projekt.builder()
                         .titel(titel)
+                        // Generate random UUIDs to ensure unique beschreibung
                         .beschreibung("Beschreibung des Projekts, Titel: " + generateRandomUuidString())
                         .start(LocalDate.now())
                         .ende(LocalDate.now().plusMonths(6))
@@ -222,10 +226,13 @@ public class AntragBuilder {
                 .direktoriumNotiz("Notiz zu Materialausgaben")
                 .build();
 
+        // Calculate amounts based on whether istFehlbetrag is true or false based on the formula for istFehlbetrag in Finanzierung-Entity
         if (istFehlbetrag) {
+            // Formula needs to be true: beantragtesBudget + finanzierungsmittel - finanzierungsmittel = beantragtesBudget
             finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
             ausgabe.setBetrag(beantragtesBudget.add(finanzierungsmittel.getBetrag()));
         } else {
+            // Formula needs to be false: beantragtesBudget - 10_000 != beantragtesBudget
             finanzierungsmittel.setBetrag(new BigDecimal(10_000));
             ausgabe.setBetrag(beantragtesBudget);
         }
