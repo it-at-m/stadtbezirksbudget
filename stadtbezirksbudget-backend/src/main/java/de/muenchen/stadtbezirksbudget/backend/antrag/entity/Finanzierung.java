@@ -44,9 +44,11 @@ public class Finanzierung extends BaseEntity {
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @Builder.Default
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @Builder.Default
     private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
     //TODO: Rewriting calculation for istFehlbetrag as it is currently wrong #356
