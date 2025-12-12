@@ -31,7 +31,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.client.RestTemplate;
 
-@Deprecated
 @ExtendWith(MockitoExtension.class)
 class UserInfoAuthoritiesConverterTest {
     private static final String TEST_SUBJECT = "test-subject";
@@ -79,7 +78,7 @@ class UserInfoAuthoritiesConverterTest {
             when(restTemplate.exchange(eq(USER_INFO_URI), eq(HttpMethod.GET), any(HttpEntity.class), eq(Map.class)))
                     .thenReturn(new ResponseEntity<>(responseMap, HttpStatus.OK));
             final Collection<GrantedAuthority> authorities = converter.convert(jwt);
-            assert authorities != null;
+            assertNotNull(authorities);
             assertTrue(authorities.isEmpty());
         }
 
@@ -90,7 +89,7 @@ class UserInfoAuthoritiesConverterTest {
             final Collection<GrantedAuthority> cachedAuthorities = Collections.singletonList(new SimpleGrantedAuthority(ROLE_USER));
             when(cache.get(eq(TEST_SUBJECT))).thenReturn(() -> cachedAuthorities);
             final Collection<GrantedAuthority> authorities1 = converter.convert(jwt);
-            assert authorities1 != null;
+            assertNotNull(authorities1);
             assertEquals(1, authorities1.size());
             assertTrue(authorities1.contains(new SimpleGrantedAuthority(ROLE_USER)));
             verifyNoInteractions(restTemplate);

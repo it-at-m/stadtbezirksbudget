@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -49,6 +50,16 @@ class AuthUtilsTest {
             final String username = AuthUtils.getUsername();
 
             assertThat(username).isEqualTo("testUser");
+        }
+        
+        @Test
+        void testJwtAuthTokenWithMissingClaimReturnsDefault() {
+            final Jwt jwt = mock(Jwt.class);
+            when(jwt.getClaims()).thenReturn(Collections.emptyMap());
+            final JwtAuthenticationToken jwtAuth = new JwtAuthenticationToken(jwt, Collections.emptyList());
+            when(securityContext.getAuthentication()).thenReturn(jwtAuth);
+            final String username = AuthUtils.getUsername();
+            assertNull(username);
         }
 
         @Test
