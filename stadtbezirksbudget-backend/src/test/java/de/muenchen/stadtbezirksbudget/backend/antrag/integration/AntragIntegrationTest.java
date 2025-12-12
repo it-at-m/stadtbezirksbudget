@@ -87,6 +87,7 @@ class AntragIntegrationTest {
 
     @BeforeEach
     public void setUp() {
+        antragList.clear();
         antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
