@@ -6,8 +6,12 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import java.io.Serial;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Represents an applicant that is part of the payee.
@@ -16,6 +20,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @DiscriminatorValue("Antragsteller")
 public class Antragsteller extends Zahlungsempfaenger {
     @Serial

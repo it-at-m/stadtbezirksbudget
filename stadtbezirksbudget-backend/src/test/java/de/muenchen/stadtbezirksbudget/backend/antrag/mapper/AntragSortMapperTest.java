@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag;
+package de.muenchen.stadtbezirksbudget.backend.antrag.mapper;
 
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.antrag.AntragSortMapper;
 import de.muenchen.stadtbezirksbudget.backend.common.InvalidSortPropertyException;
 import java.util.Objects;
 import java.util.stream.Stream;

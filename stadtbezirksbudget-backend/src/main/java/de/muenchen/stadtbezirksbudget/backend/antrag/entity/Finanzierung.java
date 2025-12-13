@@ -10,7 +10,11 @@ import java.io.Serial;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
@@ -21,6 +25,9 @@ import org.hibernate.annotations.Formula;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class Finanzierung extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -38,9 +45,11 @@ public class Finanzierung extends BaseEntity {
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @Builder.Default
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @Builder.Default
     private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
     //TODO: Rewriting calculation for istFehlbetrag as it is currently wrong #356

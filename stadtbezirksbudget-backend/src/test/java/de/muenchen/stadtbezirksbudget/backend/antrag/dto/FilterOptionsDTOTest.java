@@ -1,8 +1,7 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag;
+package de.muenchen.stadtbezirksbudget.backend.antrag.dto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,9 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag;
+package de.muenchen.stadtbezirksbudget.backend.antrag.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.AntragMapper;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
