@@ -59,11 +59,13 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
      * @return True if logging should be done otherwise false.
      */
     private boolean checkForLogging(final HttpServletRequest httpServletRequest) {
+        // @formatter:off
         final boolean isLoggingMode = switch (securityProperties.getLoggingMode()) {
         case ALL -> true;
         case CHANGING -> CHANGING_METHODS.contains(httpServletRequest.getMethod());
         default -> false;
         };
+        // @formatter:on
 
         return isLoggingMode && securityProperties.getLoggingIgnoreListAsMatchers().stream().noneMatch(matcher -> matcher.matches(httpServletRequest));
     }

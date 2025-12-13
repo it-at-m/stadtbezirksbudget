@@ -8,8 +8,8 @@
       <template v-if="buttontext">
         <v-btn
           color="primary"
-          v-bind="open"
           data-test="activator-button"
+          v-bind="open"
         >
           {{ buttontext }}
         </v-btn>
@@ -42,8 +42,8 @@
           Nein
         </v-btn>
         <v-btn
-          data-test="yes-button"
           color="primary"
+          data-test="yes-button"
           @click="yes"
         >
           Ja
@@ -53,7 +53,7 @@
   </v-dialog>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 /**
  * The YesNo dialog is a generic dialog for yes/no queries to the user.
  * For example, it can be used to confirm the deletion of an entity.
