@@ -8,6 +8,7 @@ import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
 global.fetch = vi.fn();
 
 const testSorting: AntragListSort = {
+  ...createEmptyListSort(),
   status: { sortBy: "status", sortDirection: "asc", title: "Status" },
 };
 
