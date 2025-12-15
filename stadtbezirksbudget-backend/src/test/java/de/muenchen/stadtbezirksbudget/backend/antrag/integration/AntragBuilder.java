@@ -43,8 +43,8 @@ import java.util.UUID;
  */
 @SuppressWarnings("PMD.CouplingBetweenObjects")
 public class AntragBuilder {
-    static final int limit = 100000;
-    static final Random random = new Random();
+    private static final int LIMIT = 100_000;
+    private static final Random RANDOM = new Random();
     private final AntragRepository antragRepository;
     private final AdresseRepository adresseRepository;
     private final FinanzierungRepository finanzierungRepository;
@@ -93,15 +93,15 @@ public class AntragBuilder {
     }
 
     private void setRandomValues() {
-        status = Status.values()[random.nextInt(Status.values().length)];
-        bezirksausschussNr = random.nextInt(limit);
-        eingangDatum = LocalDateTime.now().minusDays(random.nextInt(limit));
-        aktualisierungDatum = LocalDateTime.now().minusDays(random.nextInt(limit));
-        beantragtesBudget = BigDecimal.valueOf(random.nextInt(limit) / 100);
-        istFehlbetrag = random.nextBoolean();
-        aktualisierungArt = AktualisierungArt.values()[random.nextInt(AktualisierungArt.values().length)];
-        zammadNr = String.valueOf(random.nextInt(limit));
-        aktenzeichen = String.valueOf(random.nextInt(limit));
+        status = Status.values()[RANDOM.nextInt(Status.values().length)];
+        bezirksausschussNr = RANDOM.nextInt(LIMIT);
+        eingangDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
+        aktualisierungDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
+        beantragtesBudget = BigDecimal.valueOf(RANDOM.nextInt(LIMIT) / 100);
+        istFehlbetrag = RANDOM.nextBoolean();
+        aktualisierungArt = AktualisierungArt.values()[RANDOM.nextInt(AktualisierungArt.values().length)];
+        zammadNr = String.valueOf(RANDOM.nextInt(LIMIT));
+        aktenzeichen = String.valueOf(RANDOM.nextInt(LIMIT));
         antragstellerName = generateRandomUuidString();
         projektTitel = generateRandomUuidString();
     }
@@ -266,7 +266,7 @@ public class AntragBuilder {
         try {
             final Adresse adresse = initializeAdresse();
             final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
-            Antrag antrag = Antrag.builder()
+            final Antrag antrag = Antrag.builder()
                     .eingangDatum(eingangDatum)
                     .bezirksausschussNr(bezirksausschussNr)
                     .bearbeitungsstand(initializeBearbeitungsstand(status))
