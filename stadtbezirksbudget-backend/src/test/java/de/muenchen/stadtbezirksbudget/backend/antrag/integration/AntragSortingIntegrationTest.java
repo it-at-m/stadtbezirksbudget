@@ -1,17 +1,7 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag;
+package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_AKTENZEICHEN;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_AKTUALISIERUNG_ART;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_BEANTRAGTES_BUDGET;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_BEZIRKSAUSSCHUSS_NR;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_DATUM;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_IST_FEHLBETRAG;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_STATUS;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.DEFAULT_ZAMMAD_NR;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.getDefaultAntragstellerName;
-import static de.muenchen.stadtbezirksbudget.backend.antrag.AntragTestDataBuilder.getDefaultProjektTitel;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -50,7 +40,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class SortingIntegrationTest {
+class AntragSortingIntegrationTest {
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
@@ -77,26 +67,23 @@ class SortingIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private AntragTestDataBuilder antragTestDataBuilder;
+    private AntragBuilder antragBuilder;
 
     @BeforeEach
     public void setUp() {
-        antragTestDataBuilder = new AntragTestDataBuilder(antragRepository, adresseRepository,
+        antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
                 finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
     }
 
     @Test
     void testGivenSortAscThenReturnSortedResults() throws Exception {
-        antragTestDataBuilder.initializeAntrag(Status.VOLLSTAENDIG, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
-                DEFAULT_AKTENZEICHEN);
-        antragTestDataBuilder.initializeAntrag(Status.VOLLSTAENDIG, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR,
-                DEFAULT_AKTENZEICHEN);
-        final Antrag antrag = antragTestDataBuilder.initializeAntrag(Status.EINGEGANGEN, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM,
-                getDefaultAntragstellerName(), getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART,
-                DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragBuilder.status(Status.VOLLSTAENDIG)
+                .build();
+        antragBuilder.status(Status.VOLLSTAENDIG)
+                .build();
+        final Antrag antrag = antragBuilder.status(Status.EINGEGANGEN)
+                .build();
 
         mockMvc
                 .perform(get("/antrag")
@@ -110,15 +97,12 @@ class SortingIntegrationTest {
 
     @Test
     void testGivenSortDescThenReturnSortedResults() throws Exception {
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, "1",
-                DEFAULT_AKTENZEICHEN);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, "2",
-                DEFAULT_AKTENZEICHEN);
-        final Antrag antrag = antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, "3",
-                DEFAULT_AKTENZEICHEN);
+        antragBuilder.zammadNr("1")
+                .build();
+        antragBuilder.zammadNr("2")
+                .build();
+        final Antrag antrag = antragBuilder.zammadNr("3")
+                .build();
 
         mockMvc
                 .perform(get("/antrag")
@@ -132,13 +116,12 @@ class SortingIntegrationTest {
 
     @Test
     void testGivenSortUnpagedThenReturnSortedResults() throws Exception {
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "2",
-                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
-        final Antrag antrag = antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
-                "1",
-                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
-        antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(), "3",
-                DEFAULT_BEANTRAGTES_BUDGET, DEFAULT_IST_FEHLBETRAG, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
+        antragBuilder.projektTitel("2")
+                .build();
+        antragBuilder.projektTitel("3")
+                .build();
+        final Antrag antrag = antragBuilder.projektTitel("1")
+                .build();
 
         mockMvc
                 .perform(get("/antrag")

@@ -11,7 +11,10 @@ import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -23,6 +26,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Table(
@@ -44,8 +49,4 @@ public abstract class Zahlungsempfaenger extends BaseEntity {
 
     @NotNull @ManyToOne
     private Adresse adresse;
-
-    protected Zahlungsempfaenger() {
-        super();
-    }
 }
