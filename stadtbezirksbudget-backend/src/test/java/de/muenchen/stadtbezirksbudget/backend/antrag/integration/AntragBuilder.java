@@ -41,7 +41,7 @@ import java.util.UUID;
  * Antrag second = builder.setBezirksausschussNr(2).build(); // starts from defaults
  * </pre>
  */
-@SuppressWarnings("PMD.CouplingBetweenObjects")
+@SuppressWarnings({ "PMD.CouplingBetweenObjects", "PMD.AvoidFieldNameMatchingMethodName" })
 public class AntragBuilder {
     private static final int LIMIT = 100_000;
     private static final Random RANDOM = new Random();
@@ -106,57 +106,57 @@ public class AntragBuilder {
         projektTitel = generateRandomUuidString();
     }
 
-    public AntragBuilder setStatus(final Status status) {
+    public AntragBuilder status(final Status status) {
         this.status = status;
         return this;
     }
 
-    public AntragBuilder setBezirksausschussNr(final int bezirksausschussNr) {
+    public AntragBuilder bezirksausschussNr(final int bezirksausschussNr) {
         this.bezirksausschussNr = bezirksausschussNr;
         return this;
     }
 
-    public AntragBuilder setEingangDatum(final LocalDateTime datum) {
+    public AntragBuilder eingangDatum(final LocalDateTime datum) {
         this.eingangDatum = datum;
         return this;
     }
 
-    public AntragBuilder setAktualisierungDatum(final LocalDateTime datum) {
+    public AntragBuilder aktualisierungDatum(final LocalDateTime datum) {
         this.aktualisierungDatum = datum;
         return this;
     }
 
-    public AntragBuilder setBeantragtesBudget(final BigDecimal beantragtesBudget) {
+    public AntragBuilder beantragtesBudget(final BigDecimal beantragtesBudget) {
         this.beantragtesBudget = beantragtesBudget;
         return this;
     }
 
-    public AntragBuilder setIstFehlbetrag(final boolean istFehlbetrag) {
+    public AntragBuilder istFehlbetrag(final boolean istFehlbetrag) {
         this.istFehlbetrag = istFehlbetrag;
         return this;
     }
 
-    public AntragBuilder setAktualisierungArt(final AktualisierungArt aktualisierungArt) {
+    public AntragBuilder aktualisierungArt(final AktualisierungArt aktualisierungArt) {
         this.aktualisierungArt = aktualisierungArt;
         return this;
     }
 
-    public AntragBuilder setZammadNr(final String zammadNr) {
+    public AntragBuilder zammadNr(final String zammadNr) {
         this.zammadNr = zammadNr;
         return this;
     }
 
-    public AntragBuilder setAktenzeichen(final String aktenzeichen) {
+    public AntragBuilder aktenzeichen(final String aktenzeichen) {
         this.aktenzeichen = aktenzeichen;
         return this;
     }
 
-    public AntragBuilder setAntragstellerName(final String antragstellerName) {
+    public AntragBuilder antragstellerName(final String antragstellerName) {
         this.antragstellerName = antragstellerName;
         return this;
     }
 
-    public AntragBuilder setProjektTitel(final String projektTitel) {
+    public AntragBuilder projektTitel(final String projektTitel) {
         this.projektTitel = projektTitel;
         return this;
     }

@@ -78,11 +78,11 @@ class AntragSortingIntegrationTest {
 
     @Test
     void testGivenSortAscThenReturnSortedResults() throws Exception {
-        antragBuilder.setStatus(Status.VOLLSTAENDIG)
+        antragBuilder.status(Status.VOLLSTAENDIG)
                 .build();
-        antragBuilder.setStatus(Status.VOLLSTAENDIG)
+        antragBuilder.status(Status.VOLLSTAENDIG)
                 .build();
-        final Antrag antrag = antragBuilder.setStatus(Status.EINGEGANGEN)
+        final Antrag antrag = antragBuilder.status(Status.EINGEGANGEN)
                 .build();
 
         mockMvc
@@ -97,11 +97,11 @@ class AntragSortingIntegrationTest {
 
     @Test
     void testGivenSortDescThenReturnSortedResults() throws Exception {
-        antragBuilder.setZammadNr("1")
+        antragBuilder.zammadNr("1")
                 .build();
-        antragBuilder.setZammadNr("2")
+        antragBuilder.zammadNr("2")
                 .build();
-        final Antrag antrag = antragBuilder.setZammadNr("3")
+        final Antrag antrag = antragBuilder.zammadNr("3")
                 .build();
 
         mockMvc
@@ -116,11 +116,11 @@ class AntragSortingIntegrationTest {
 
     @Test
     void testGivenSortUnpagedThenReturnSortedResults() throws Exception {
-        antragBuilder.setProjektTitel("2")
+        antragBuilder.projektTitel("2")
                 .build();
-        antragBuilder.setProjektTitel("3")
+        antragBuilder.projektTitel("3")
                 .build();
-        final Antrag antrag = antragBuilder.setProjektTitel("1")
+        final Antrag antrag = antragBuilder.projektTitel("1")
                 .build();
 
         mockMvc

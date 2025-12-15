@@ -175,20 +175,20 @@ class AntragIntegrationTest {
         @Test
         void testGetFilterOptionsReturnsAlphabeticallySortedLists() throws Exception {
             antragList.add(antragBuilder
-                    .setAntragstellerName("Alex")
-                    .setProjektTitel("Zeltlager")
+                    .antragstellerName("Alex")
+                    .projektTitel("Zeltlager")
                     .build());
             antragList.add(antragBuilder
-                    .setAntragstellerName("Alina")
-                    .setProjektTitel("Wochenmarkt")
+                    .antragstellerName("Alina")
+                    .projektTitel("Wochenmarkt")
                     .build());
             antragList.add(antragBuilder
-                    .setAntragstellerName("Musterfrau")
-                    .setProjektTitel("Aktionswoche")
+                    .antragstellerName("Musterfrau")
+                    .projektTitel("Aktionswoche")
                     .build());
             antragList.add(antragBuilder
-                    .setAntragstellerName("Musterfrau")
-                    .setProjektTitel("Weihnachtsmarkt")
+                    .antragstellerName("Musterfrau")
+                    .projektTitel("Weihnachtsmarkt")
                     .build());
             final List<String> sortedAntragstellerNamen = antragList.stream()
                     .map(Antrag::getAntragsteller)
@@ -223,7 +223,7 @@ class AntragIntegrationTest {
         @Test
         void testUpdateAntragStatusSuccessfully() throws Exception {
             antragList.add(antragBuilder
-                    .setStatus(Status.EINGEGANGEN)
+                    .status(Status.EINGEGANGEN)
                     .build());
             antragList.add(antragBuilder
                     .build());
@@ -255,7 +255,7 @@ class AntragIntegrationTest {
         @Test
         void testUpdateAntragStatusNoBody() throws Exception {
             antragList.add(antragBuilder
-                    .setStatus(Status.EINGEGANGEN)
+                    .status(Status.EINGEGANGEN)
                     .build());
             antragList.add(antragBuilder
                     .build());
@@ -270,7 +270,7 @@ class AntragIntegrationTest {
         @Test
         void testUpdateAntragStatusIdempotency() throws Exception {
             antragList.add(antragBuilder
-                    .setStatus(Status.EINGEGANGEN)
+                    .status(Status.EINGEGANGEN)
                     .build());
             antragList.add(antragBuilder
                     .build());
@@ -300,7 +300,7 @@ class AntragIntegrationTest {
         @Test
         void testUpdateAntragStatusInvalidStatus() throws Exception {
             antragList.add(antragBuilder
-                    .setStatus(Status.EINGEGANGEN)
+                    .status(Status.EINGEGANGEN)
                     .build());
             antragList.add(antragBuilder
                     .build());
@@ -318,7 +318,7 @@ class AntragIntegrationTest {
         @Test
         void testUpdateAntragStatusNullStatus() throws Exception {
             antragList.add(antragBuilder
-                    .setStatus(Status.EINGEGANGEN)
+                    .status(Status.EINGEGANGEN)
                     .build());
             antragList.add(antragBuilder
                     .build());

@@ -85,13 +85,13 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByStatus() throws Exception {
-        antragBuilder.setStatus(Status.EINGEGANGEN)
+        antragBuilder.status(Status.EINGEGANGEN)
                 .build();
-        antragBuilder.setStatus(Status.EINGEGANGEN)
+        antragBuilder.status(Status.EINGEGANGEN)
                 .build();
-        antragBuilder.setStatus(Status.ABGESCHLOSSEN)
+        antragBuilder.status(Status.ABGESCHLOSSEN)
                 .build();
-        antragBuilder.setStatus(Status.ABGELEHNT_NICHT_FOERDERFAEHIG)
+        antragBuilder.status(Status.ABGELEHNT_NICHT_FOERDERFAEHIG)
                 .build();
         mockMvc
                 .perform(get("/antrag")
@@ -107,13 +107,13 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByBezirksausschussNr() throws Exception {
-        antragBuilder.setBezirksausschussNr(1)
+        antragBuilder.bezirksausschussNr(1)
                 .build();
-        antragBuilder.setBezirksausschussNr(1)
+        antragBuilder.bezirksausschussNr(1)
                 .build();
-        antragBuilder.setBezirksausschussNr(25)
+        antragBuilder.bezirksausschussNr(25)
                 .build();
-        antragBuilder.setBezirksausschussNr(7)
+        antragBuilder.bezirksausschussNr(7)
                 .build();
 
         mockMvc
@@ -130,15 +130,15 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterDatumVonBisBounds() throws Exception {
-        antragBuilder.setEingangDatum(LocalDateTime.of(2009, 12, 31, 1, 0))
+        antragBuilder.eingangDatum(LocalDateTime.of(2009, 12, 31, 1, 0))
                 .build();
-        antragBuilder.setEingangDatum(LocalDateTime.of(2009, 12, 31, 1, 1))
+        antragBuilder.eingangDatum(LocalDateTime.of(2009, 12, 31, 1, 1))
                 .build();
-        antragBuilder.setEingangDatum(LocalDateTime.of(2010, 1, 1, 0, 0))
+        antragBuilder.eingangDatum(LocalDateTime.of(2010, 1, 1, 0, 0))
                 .build();
-        antragBuilder.setEingangDatum(LocalDateTime.of(2010, 1, 2, 0, 0))
+        antragBuilder.eingangDatum(LocalDateTime.of(2010, 1, 2, 0, 0))
                 .build();
-        antragBuilder.setEingangDatum(LocalDateTime.of(2010, 1, 2, 0, 1))
+        antragBuilder.eingangDatum(LocalDateTime.of(2010, 1, 2, 0, 1))
                 .build();
 
         mockMvc
@@ -156,11 +156,11 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByAntragstellerName() throws Exception {
-        antragBuilder.setAntragstellerName("Max Mustermann 0")
+        antragBuilder.antragstellerName("Max Mustermann 0")
                 .build();
-        antragBuilder.setAntragstellerName("Max Mustermann 0")
+        antragBuilder.antragstellerName("Max Mustermann 0")
                 .build();
-        antragBuilder.setAntragstellerName("Max Mustermann 9")
+        antragBuilder.antragstellerName("Max Mustermann 9")
                 .build();
 
         mockMvc
@@ -176,11 +176,11 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByProjektTitel() throws Exception {
-        antragBuilder.setProjektTitel("Projekt XYZ 0")
+        antragBuilder.projektTitel("Projekt XYZ 0")
                 .build();
-        antragBuilder.setProjektTitel("Projekt XYZ 0")
+        antragBuilder.projektTitel("Projekt XYZ 0")
                 .build();
-        antragBuilder.setProjektTitel("Projekt XYZ 9")
+        antragBuilder.projektTitel("Projekt XYZ 9")
                 .build();
 
         mockMvc
@@ -196,17 +196,17 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByBeantragtesBudgetVonBis() throws Exception {
-        antragBuilder.setBeantragtesBudget(BigDecimal.valueOf(999))
+        antragBuilder.beantragtesBudget(BigDecimal.valueOf(999))
                 .build();
-        antragBuilder.setBeantragtesBudget(BigDecimal.valueOf(1000))
+        antragBuilder.beantragtesBudget(BigDecimal.valueOf(1000))
                 .build();
-        antragBuilder.setBeantragtesBudget(BigDecimal.valueOf(3000))
+        antragBuilder.beantragtesBudget(BigDecimal.valueOf(3000))
                 .build();
-        antragBuilder.setBeantragtesBudget(BigDecimal.valueOf(3000))
+        antragBuilder.beantragtesBudget(BigDecimal.valueOf(3000))
                 .build();
-        antragBuilder.setBeantragtesBudget(BigDecimal.valueOf(5000))
+        antragBuilder.beantragtesBudget(BigDecimal.valueOf(5000))
                 .build();
-        antragBuilder.setBeantragtesBudget(BigDecimal.valueOf(5001))
+        antragBuilder.beantragtesBudget(BigDecimal.valueOf(5001))
                 .build();
 
         mockMvc
@@ -225,13 +225,13 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByIstFehlbetrag() throws Exception {
-        antragBuilder.setIstFehlbetrag(true)
+        antragBuilder.istFehlbetrag(true)
                 .build();
-        antragBuilder.setIstFehlbetrag(true)
+        antragBuilder.istFehlbetrag(true)
                 .build();
-        antragBuilder.setIstFehlbetrag(false)
+        antragBuilder.istFehlbetrag(false)
                 .build();
-        antragBuilder.setIstFehlbetrag(false)
+        antragBuilder.istFehlbetrag(false)
                 .build();
 
         mockMvc
@@ -253,13 +253,13 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByAktualisierungArt() throws Exception {
-        antragBuilder.setAktualisierungArt(AktualisierungArt.FACHANWENDUNG)
+        antragBuilder.aktualisierungArt(AktualisierungArt.FACHANWENDUNG)
                 .build();
-        antragBuilder.setAktualisierungArt(AktualisierungArt.FACHANWENDUNG)
+        antragBuilder.aktualisierungArt(AktualisierungArt.FACHANWENDUNG)
                 .build();
-        antragBuilder.setAktualisierungArt(AktualisierungArt.ZAMMAD)
+        antragBuilder.aktualisierungArt(AktualisierungArt.ZAMMAD)
                 .build();
-        antragBuilder.setAktualisierungArt(AktualisierungArt.E_AKTE)
+        antragBuilder.aktualisierungArt(AktualisierungArt.E_AKTE)
                 .build();
 
         mockMvc
@@ -273,17 +273,17 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByStatusAndBezirksausschussNr() throws Exception {
-        antragBuilder.setStatus(Status.EINGEGANGEN)
-                .setBezirksausschussNr(1)
+        antragBuilder.status(Status.EINGEGANGEN)
+                .bezirksausschussNr(1)
                 .build();
-        antragBuilder.setStatus(Status.EINGEGANGEN)
-                .setBezirksausschussNr(1)
+        antragBuilder.status(Status.EINGEGANGEN)
+                .bezirksausschussNr(1)
                 .build();
-        antragBuilder.setStatus(Status.ABGESCHLOSSEN)
-                .setBezirksausschussNr(25)
+        antragBuilder.status(Status.ABGESCHLOSSEN)
+                .bezirksausschussNr(25)
                 .build();
-        antragBuilder.setStatus(Status.ABGELEHNT_NICHT_FOERDERFAEHIG)
-                .setBezirksausschussNr(7)
+        antragBuilder.status(Status.ABGELEHNT_NICHT_FOERDERFAEHIG)
+                .bezirksausschussNr(7)
                 .build();
 
         mockMvc
@@ -302,17 +302,17 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByStatusAndDatumVonBis() throws Exception {
-        antragBuilder.setStatus(Status.EINGEGANGEN)
-                .setEingangDatum(LocalDateTime.of(2009, 12, 31, 1, 0))
+        antragBuilder.status(Status.EINGEGANGEN)
+                .eingangDatum(LocalDateTime.of(2009, 12, 31, 1, 0))
                 .build();
-        antragBuilder.setStatus(Status.EINGEGANGEN)
-                .setEingangDatum(LocalDateTime.of(2009, 12, 31, 1, 1))
+        antragBuilder.status(Status.EINGEGANGEN)
+                .eingangDatum(LocalDateTime.of(2009, 12, 31, 1, 1))
                 .build();
-        antragBuilder.setStatus(Status.ABGESCHLOSSEN)
-                .setEingangDatum(LocalDateTime.of(2010, 12, 1, 0, 0))
+        antragBuilder.status(Status.ABGESCHLOSSEN)
+                .eingangDatum(LocalDateTime.of(2010, 12, 1, 0, 0))
                 .build();
-        antragBuilder.setStatus(Status.ABGELEHNT_NICHT_FOERDERFAEHIG)
-                .setEingangDatum(LocalDateTime.of(2010, 1, 2, 0, 0))
+        antragBuilder.status(Status.ABGELEHNT_NICHT_FOERDERFAEHIG)
+                .eingangDatum(LocalDateTime.of(2010, 1, 2, 0, 0))
                 .build();
 
         mockMvc
@@ -332,17 +332,17 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByBezirksausschussNrAndAntragstellerName() throws Exception {
-        antragBuilder.setBezirksausschussNr(1)
-                .setAntragstellerName("Max Mustermann 0")
+        antragBuilder.bezirksausschussNr(1)
+                .antragstellerName("Max Mustermann 0")
                 .build();
-        antragBuilder.setBezirksausschussNr(1)
-                .setAntragstellerName("Max Mustermann 0")
+        antragBuilder.bezirksausschussNr(1)
+                .antragstellerName("Max Mustermann 0")
                 .build();
-        antragBuilder.setBezirksausschussNr(25)
-                .setAntragstellerName("Max Mustermann 9")
+        antragBuilder.bezirksausschussNr(25)
+                .antragstellerName("Max Mustermann 9")
                 .build();
-        antragBuilder.setBezirksausschussNr(7)
-                .setAntragstellerName("Max Mustermann 0")
+        antragBuilder.bezirksausschussNr(7)
+                .antragstellerName("Max Mustermann 0")
                 .build();
 
         mockMvc
@@ -361,20 +361,20 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByProjektTitelAndBeantragtesBudgetVonBis() throws Exception {
-        antragBuilder.setProjektTitel("Projekt XYZ 0")
-                .setBeantragtesBudget(BigDecimal.valueOf(999))
+        antragBuilder.projektTitel("Projekt XYZ 0")
+                .beantragtesBudget(BigDecimal.valueOf(999))
                 .build();
-        antragBuilder.setProjektTitel("Projekt XYZ 0")
-                .setBeantragtesBudget(BigDecimal.valueOf(1000))
+        antragBuilder.projektTitel("Projekt XYZ 0")
+                .beantragtesBudget(BigDecimal.valueOf(1000))
                 .build();
-        antragBuilder.setProjektTitel("Projekt XYZ 0")
-                .setBeantragtesBudget(BigDecimal.valueOf(3000))
+        antragBuilder.projektTitel("Projekt XYZ 0")
+                .beantragtesBudget(BigDecimal.valueOf(3000))
                 .build();
-        antragBuilder.setProjektTitel("Projekt XYZ 9")
-                .setBeantragtesBudget(BigDecimal.valueOf(3000))
+        antragBuilder.projektTitel("Projekt XYZ 9")
+                .beantragtesBudget(BigDecimal.valueOf(3000))
                 .build();
-        antragBuilder.setProjektTitel("Projekt XYZ 0")
-                .setBeantragtesBudget(BigDecimal.valueOf(5000))
+        antragBuilder.projektTitel("Projekt XYZ 0")
+                .beantragtesBudget(BigDecimal.valueOf(5000))
                 .build();
 
         mockMvc
@@ -396,17 +396,17 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByIstFehlbetragAndAktualisierungArt() throws Exception {
-        antragBuilder.setIstFehlbetrag(true)
-                .setAktualisierungArt(AktualisierungArt.FACHANWENDUNG)
+        antragBuilder.istFehlbetrag(true)
+                .aktualisierungArt(AktualisierungArt.FACHANWENDUNG)
                 .build();
-        antragBuilder.setIstFehlbetrag(true)
-                .setAktualisierungArt(AktualisierungArt.FACHANWENDUNG)
+        antragBuilder.istFehlbetrag(true)
+                .aktualisierungArt(AktualisierungArt.FACHANWENDUNG)
                 .build();
-        antragBuilder.setIstFehlbetrag(false)
-                .setAktualisierungArt(AktualisierungArt.ZAMMAD)
+        antragBuilder.istFehlbetrag(false)
+                .aktualisierungArt(AktualisierungArt.ZAMMAD)
                 .build();
-        antragBuilder.setIstFehlbetrag(false)
-                .setAktualisierungArt(AktualisierungArt.E_AKTE)
+        antragBuilder.istFehlbetrag(false)
+                .aktualisierungArt(AktualisierungArt.E_AKTE)
                 .build();
         entityManager.flush();
         entityManager.clear();
