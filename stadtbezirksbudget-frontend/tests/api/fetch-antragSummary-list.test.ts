@@ -9,10 +9,10 @@ global.fetch = vi.fn();
 
 const testSorting: AntragListSort = {
   ...createEmptyListSort(),
-  test: { sortBy: "test", sortDirection: "asc", title: "Test" },
+  status: { sortBy: "status", sortDirection: "asc", title: "Status" },
 };
 
-const testSortingString = "sortBy=test&sortDirection=ASC";
+const testSortingString = "sortBy=status&sortDirection=ASC";
 
 const mockResponse = {
   content: [],
