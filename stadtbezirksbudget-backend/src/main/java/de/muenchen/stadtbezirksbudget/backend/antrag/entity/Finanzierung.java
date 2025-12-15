@@ -33,10 +33,10 @@ import org.hibernate.annotations.Formula;
 public class Finanzierung extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
-    private static final String ART_FORMULA = "CASE WHEN (" +
-            "(SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) - " +
-            "(SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) = beantragtes_budget " +
-            ") THEN 'FEHL' ELSE 'FEST' END";
+    private static final String ART_FORMULA = "CASE " +
+            "WHEN (SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) > 5000 THEN 'FEHL' " +
+            "WHEN (SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) > 0 THEN 'FEHL' " +
+            "ELSE 'FEST' END";
 
     private boolean istProjektVorsteuerabzugsberechtigt;
     @NotNull private String kostenAnmerkung;
