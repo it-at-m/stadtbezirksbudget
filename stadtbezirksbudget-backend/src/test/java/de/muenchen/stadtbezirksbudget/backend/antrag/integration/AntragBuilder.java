@@ -173,7 +173,7 @@ public class AntragBuilder {
         return adresseRepository.save(
                 Adresse.builder()
                         // Generate random UUIDs to ensure unique strasse
-                        .strasse("Musterstraße 1 " + generateRandomUuidString()) //
+                        .strasse("Musterstraße 1 " + generateRandomUuidString())
                         .hausnummer("1")
                         .postleitzahl("12345")
                         .ort("München")
