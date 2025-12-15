@@ -9,7 +9,7 @@ import {
   createEmptyListSort,
   sortOptionsByField,
 } from "@/types/AntragListSort";
-import { sortOptionsRecord } from "@/types/AntragListSortDefinitions";
+import { sortDefinitions } from "@/types/AntragListSortDefinitions";
 
 describe("AntragListSort", () => {
   test("create empty AntragListSort returns empty AntragListSort", () => {
@@ -21,16 +21,16 @@ describe("AntragListSort", () => {
 
   describe("sortOptionsByField", () => {
     const fields = Object.keys(
-      sortOptionsRecord
-    ) as (keyof typeof sortOptionsRecord)[];
+      sortDefinitions
+    ) as (keyof typeof sortDefinitions)[];
     const optionCases: [
-      keyof typeof sortOptionsRecord,
+      keyof typeof sortDefinitions,
       { title: string; sortDirection: string },
     ][] = [];
-    const countCases: [keyof typeof sortOptionsRecord, number][] = [];
+    const countCases: [keyof typeof sortDefinitions, number][] = [];
 
     for (const field of fields) {
-      const defs = sortOptionsRecord[field] || [];
+      const defs = sortDefinitions[field].options;
       countCases.push([field, defs.length]);
       for (const def of defs) {
         optionCases.push([
@@ -93,9 +93,9 @@ describe("AntragListSort", () => {
   describe("antragListSortOptionFromSortItems", () => {
     test("returns matching option for valid order", () => {
       const key = Object.keys(
-        sortOptionsRecord
-      )[0] as keyof typeof sortOptionsRecord;
-      const def = sortOptionsRecord[key]?.[0];
+        sortDefinitions
+      )[0] as keyof typeof sortDefinitions;
+      const def = sortDefinitions[key]?.options[0];
       const res = antragListSortOptionFromSortItems([
         { key, order: def.sortDirection } as DataTableSortItem,
       ]);
@@ -110,8 +110,8 @@ describe("AntragListSort", () => {
 
     test("returns undefined for invalid order", () => {
       const key = Object.keys(
-        sortOptionsRecord
-      )[0] as keyof typeof sortOptionsRecord;
+        sortDefinitions
+      )[0] as keyof typeof sortDefinitions;
       expect(
         antragListSortOptionFromSortItems([{ key, order: "invalid" }] as never)
       ).toBeUndefined();

@@ -1,6 +1,6 @@
 import type { DataTableSortItem } from "vuetify";
 
-import { sortOptionsRecord } from "@/types/AntragListSortDefinitions.ts";
+import { sortDefinitions } from "@/types/AntragListSortDefinitions.ts";
 
 // Runtime definition of sorting directions and derived type
 export const SORT_DIRECTIONS = ["asc", "desc"] as const;
@@ -11,33 +11,36 @@ export type sortDirection = (typeof SORT_DIRECTIONS)[number];
 // Interface for Antrag list sorting options
 export interface AntragListSortOption {
   title: string;
-  sortBy: keyof typeof sortOptionsRecord;
+  sortBy: keyof typeof sortDefinitions;
   sortDirection: sortDirection;
 }
 
-//Type definition of AntragListSort based on {@link sortOptionsRecord}
+//Type definition of AntragListSort based on {@link sortDefinitions}
 export type AntragListSort = Record<
-  keyof typeof sortOptionsRecord,
+  keyof typeof sortDefinitions,
   AntragListSortOption | undefined
 >;
 
 // Creates an empty AntragListSort object
 export const createEmptyListSort = (): AntragListSort => {
-  return Object.keys(sortOptionsRecord).reduce((acc, key) => {
-    acc[key as keyof typeof sortOptionsRecord] = undefined;
+  return Object.keys(sortDefinitions).reduce((acc, key) => {
+    acc[key as keyof typeof sortDefinitions] = undefined;
     return acc;
   }, {} as AntragListSort);
 };
 
 /**
- * Populates the {@link sortOptionsRecord} with the corresponding key as sortBy param
+ * Populates the {@link sortDefinitions} with the corresponding key as sortBy param
  * @param field key for {@link AntragListSortOption}
  * @returns array of {@link AntragListSortOption} for specified field
  */
 export const sortOptionsByField = (
-  field: keyof typeof sortOptionsRecord
+  field: keyof typeof sortDefinitions
 ): AntragListSortOption[] =>
-  sortOptionsRecord[field]?.map((value) => ({ ...value, sortBy: field })) ?? [];
+  sortDefinitions[field]?.options.map((value) => ({
+    ...value,
+    sortBy: field,
+  })) ?? [];
 
 /**
  * Converts AntragListSort to backend sort string format
@@ -76,8 +79,8 @@ export function antragListSortOptionFromSortItems(
   )
     return;
 
-  const key = firstItem.key as keyof typeof sortOptionsRecord;
-  const match = sortOptionsRecord[key]?.find(
+  const key = firstItem.key as keyof typeof sortDefinitions;
+  const match = sortDefinitions[key]?.options.find(
     (o) => o.sortDirection === firstItem.order
   );
   return match
