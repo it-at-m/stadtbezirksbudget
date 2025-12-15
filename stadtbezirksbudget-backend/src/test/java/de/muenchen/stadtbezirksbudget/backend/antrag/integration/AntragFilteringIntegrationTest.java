@@ -45,7 +45,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class FilteringIntegrationTest {
+class AntragFilteringIntegrationTest {
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
