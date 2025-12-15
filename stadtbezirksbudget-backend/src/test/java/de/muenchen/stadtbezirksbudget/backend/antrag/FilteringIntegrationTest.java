@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
@@ -250,7 +251,7 @@ class FilteringIntegrationTest {
     }
 
     @Test
-    void testFilterByIstFehlbetrag() throws Exception {
+    void testFilterByFinanzierungArt() throws Exception {
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
                 getDefaultProjektTitel(), DEFAULT_BEANTRAGTES_BUDGET, true, DEFAULT_AKTUALISIERUNG_ART, DEFAULT_DATUM, DEFAULT_ZAMMAD_NR, DEFAULT_AKTENZEICHEN);
         antragTestDataBuilder.initializeAntrag(DEFAULT_STATUS, DEFAULT_BEZIRKSAUSSCHUSS_NR, DEFAULT_DATUM, getDefaultAntragstellerName(),
@@ -264,7 +265,7 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("istFehlbetrag", "true")
+                        .param("finanzierungArt", "FEHL")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -272,7 +273,7 @@ class FilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("istFehlbetrag", "false")
+                        .param("finanzierungArt", "FEST")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -429,15 +430,15 @@ class FilteringIntegrationTest {
         entityManager.clear();
         mockMvc
                 .perform(get("/antrag")
-                        .param("istFehlbetrag", "true")
+                        .param("finanzierungArt", "FEHL")
                         .param("aktualisierungArt", AktualisierungArt.FACHANWENDUNG.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(2)))
-                .andExpect(jsonPath("$.content[0].istFehlbetrag", is(true)))
+                .andExpect(jsonPath("$.content[0].finanzierungArt", is(FinanzierungArt.FEHL.name())))
                 .andExpect(jsonPath("$.content[0].aktualisierung", is(AktualisierungArt.FACHANWENDUNG.name())))
-                .andExpect(jsonPath("$.content[1].istFehlbetrag", is(true)))
+                .andExpect(jsonPath("$.content[1].finanzierungArt", is(FinanzierungArt.FEHL.name())))
                 .andExpect(jsonPath("$.content[1].aktualisierung", is(AktualisierungArt.FACHANWENDUNG.name())));
     }
 

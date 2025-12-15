@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public class AntragFilterDTOTest {
             final String projektTitel = "Projekt Titel";
             final BigDecimal beantragtesBudgetVon = BigDecimal.valueOf(1000);
             final BigDecimal beantragtesBudgetBis = BigDecimal.valueOf(5000);
-            final Boolean istFehlbetrag = true;
+            final FinanzierungArt finanzierungArt = FinanzierungArt.FEHL;
             final List<AktualisierungArt> aktualisierungArtList = List.of(AktualisierungArt.E_AKTE);
             final LocalDateTime aktualisierungDatumVon = LocalDateTime.now().minusDays(2);
             final LocalDateTime aktualisierungDatumBis = LocalDateTime.now();
@@ -38,7 +39,7 @@ public class AntragFilterDTOTest {
                     projektTitel,
                     beantragtesBudgetVon,
                     beantragtesBudgetBis,
-                    istFehlbetrag,
+                    finanzierungArt,
                     aktualisierungArtList,
                     aktualisierungDatumVon,
                     aktualisierungDatumBis);
@@ -51,7 +52,7 @@ public class AntragFilterDTOTest {
             assertThat(antragFilterDTO.projektTitel()).isEqualTo(projektTitel);
             assertThat(antragFilterDTO.beantragtesBudgetVon()).isEqualTo(beantragtesBudgetVon);
             assertThat(antragFilterDTO.beantragtesBudgetBis()).isEqualTo(beantragtesBudgetBis);
-            assertThat(antragFilterDTO.istFehlbetrag()).isEqualTo(istFehlbetrag);
+            assertThat(antragFilterDTO.finanzierungArt()).isEqualTo(finanzierungArt);
             assertThat(antragFilterDTO.aktualisierungArt()).isEqualTo(aktualisierungArtList);
             assertThat(antragFilterDTO.aktualisierungDatumVon()).isEqualTo(aktualisierungDatumVon);
             assertThat(antragFilterDTO.aktualisierungDatumBis()).isEqualTo(aktualisierungDatumBis);
