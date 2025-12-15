@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_KAFKA_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,7 +26,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE, SPRING_NO_KAFKA_PROFILE })
 class AntragSortMapperTest {
     @Container
     @ServiceConnection

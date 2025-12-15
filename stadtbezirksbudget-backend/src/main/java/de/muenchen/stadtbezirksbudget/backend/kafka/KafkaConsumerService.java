@@ -4,6 +4,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
+@Profile("!no-kafka")
 @ExcludedFromGeneratedCoverage
 //Excluded because no further implementation exists, tests will be implemented later. TODO: #414 Add tests and remove exclusion to reach branch coverage
 public class KafkaConsumerService {
