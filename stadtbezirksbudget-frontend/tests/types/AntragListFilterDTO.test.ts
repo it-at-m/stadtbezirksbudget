@@ -16,7 +16,7 @@ describe("AntragListFilterDTO", () => {
       projektTitel: "TEST_TITEL",
       beantragtesBudgetVon: 537.25,
       beantragtesBudgetBis: 1098.98,
-      art: "Fest",
+      finanzierungArt: "FEST",
       aktualisierungArt: ["E_AKTE"],
       aktualisierungDatumVon: new Date("2025-11-24T00:00:00Z"),
       aktualisierungDatumBis: new Date("2025-11-25T00:00:00Z"),
@@ -31,6 +31,7 @@ describe("AntragListFilterDTO", () => {
       expect(dto.projektTitel).toBe(testFilters.projektTitel);
       expect(dto.beantragtesBudgetVon).toBe(testFilters.beantragtesBudgetVon);
       expect(dto.beantragtesBudgetBis).toBe(testFilters.beantragtesBudgetBis);
+      expect(dto.finanzierungArt).toBe(testFilters.finanzierungArt);
       expect(dto.aktualisierungArt).toBe(testFilters.aktualisierungArt);
     });
 
@@ -106,18 +107,6 @@ describe("AntragListFilterDTO", () => {
       expect(dto.eingangDatumBis).toBeUndefined();
       expect(dto.aktualisierungDatumVon).toBeUndefined();
       expect(dto.aktualisierungDatumBis).toBeUndefined();
-    });
-
-    test("converts art to istFehlbetrag", () => {
-      expect(
-        antragListFilterToDTO({ ...testFilters, art: "Fest" }).istFehlbetrag
-      ).toBe(false);
-      expect(
-        antragListFilterToDTO({ ...testFilters, art: "Fehl" }).istFehlbetrag
-      ).toBe(true);
-      expect(
-        antragListFilterToDTO({ ...testFilters, art: undefined }).istFehlbetrag
-      ).toBeUndefined();
     });
   });
 });
