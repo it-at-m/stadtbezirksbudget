@@ -20,7 +20,9 @@ export function useAntragListSort() {
   const sortingStore = useAntragListSortingStore();
 
   // The current applied sorting option
-  const sorting = computed<AntragListSort>(() => sortingStore.sorting);
+  const sorting = computed<AntragListSort>(() => {
+    return { ...sortingStore.sorting };
+  });
 
   /**
    * Updates the store with the current sorting options.
