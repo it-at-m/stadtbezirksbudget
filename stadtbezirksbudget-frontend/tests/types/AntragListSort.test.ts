@@ -69,7 +69,7 @@ describe("AntragListSort", () => {
     });
   });
 
-  describe("antragListSortToSortString", () => {
+  describe("antragListSortToSortDto", () => {
     test("converts AntragListSort to correct sort string", () => {
       const sort = createEmptyListSort();
       sort["test"] = {
@@ -83,7 +83,7 @@ describe("AntragListSort", () => {
       expect(result).toStrictEqual({ sortBy: "test", sortDirection: "ASC" });
     });
 
-    test("returns empty strings for empty sort", () => {
+    test("returns empty dto for empty sort", () => {
       const result = antragListSortToSortDto(createEmptyListSort());
       expect(result).toStrictEqual({ sortBy: "", sortDirection: "" });
     });
