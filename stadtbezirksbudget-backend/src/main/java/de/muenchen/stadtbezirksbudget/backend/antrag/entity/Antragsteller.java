@@ -8,10 +8,10 @@ import jakarta.validation.constraints.NotBlank;
 import java.io.Serial;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 /**
  * Represents an applicant that is part of the payee.
@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @DiscriminatorValue("Antragsteller")

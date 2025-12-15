@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -43,15 +44,8 @@ import java.util.UUID;
  */
 @SuppressWarnings("PMD.CouplingBetweenObjects")
 public class AntragBuilder {
-    public static final Status DEFAULT_STATUS = Status.VOLLSTAENDIG;
-    public static final int DEFAULT_BEZIRKSAUSSCHUSS_NR = 1;
-    public static final LocalDateTime DEFAULT_DATUM = LocalDate.now().atStartOfDay();
-    public static final BigDecimal DEFAULT_BEANTRAGTES_BUDGET = BigDecimal.valueOf(3000);
-    public static final boolean DEFAULT_IST_FEHLBETRAG = false;
-    public static final AktualisierungArt DEFAULT_AKTUALISIERUNG_ART = AktualisierungArt.E_AKTE;
-    public static final String DEFAULT_ZAMMAD_NR = "000000000";
-    public static final String DEFAULT_AKTENZEICHEN = "0000.0-00-0000";
-
+    static final int limit = 100000;
+    static final Random random = new Random();
     private final AntragRepository antragRepository;
     private final AdresseRepository adresseRepository;
     private final FinanzierungRepository finanzierungRepository;
@@ -61,7 +55,6 @@ public class AntragBuilder {
     private final BankverbindungRepository bankverbindungRepository;
     private final FinanzierungsmittelRepository finanzierungsmittelRepository;
     private final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-
     private Status status;
     private int bezirksausschussNr;
     private LocalDateTime eingangDatum;
@@ -93,25 +86,25 @@ public class AntragBuilder {
         this.bankverbindungRepository = bankverbindungRepository;
         this.finanzierungsmittelRepository = finanzierungsmittelRepository;
         this.voraussichtlicheAusgabeRepository = voraussichtlicheAusgabeRepository;
-        setDefaultValues();
+        setRandomValues();
     }
 
     private static String generateRandomUuidString() {
         return UUID.randomUUID().toString();
     }
 
-    private void setDefaultValues() {
-        status = DEFAULT_STATUS;
-        bezirksausschussNr = DEFAULT_BEZIRKSAUSSCHUSS_NR;
-        eingangDatum = DEFAULT_DATUM;
-        aktualisierungDatum = DEFAULT_DATUM;
-        beantragtesBudget = DEFAULT_BEANTRAGTES_BUDGET;
-        istFehlbetrag = DEFAULT_IST_FEHLBETRAG;
-        aktualisierungArt = DEFAULT_AKTUALISIERUNG_ART;
-        zammadNr = DEFAULT_ZAMMAD_NR;
-        aktenzeichen = DEFAULT_AKTENZEICHEN;
-        antragstellerName = "Max Mustermann";
-        projektTitel = "Projekt XYZ";
+    private void setRandomValues() {
+        status = Status.values()[random.nextInt(Status.values().length)];
+        bezirksausschussNr = random.nextInt(limit);
+        eingangDatum = LocalDateTime.now().minusDays(random.nextInt(limit));
+        aktualisierungDatum = LocalDateTime.now().minusDays(random.nextInt(limit));
+        beantragtesBudget = BigDecimal.valueOf(random.nextDouble() * limit);
+        istFehlbetrag = random.nextBoolean();
+        aktualisierungArt = AktualisierungArt.values()[random.nextInt(AktualisierungArt.values().length)];
+        zammadNr = String.valueOf(random.nextInt(limit));
+        aktenzeichen = String.valueOf(random.nextInt(limit));
+        antragstellerName = generateRandomUuidString();
+        projektTitel = generateRandomUuidString();
     }
 
     public AntragBuilder setStatus(final Status status) {
@@ -186,10 +179,10 @@ public class AntragBuilder {
                 // Generate random UUIDs to ensure unique zielsetzung
                 .zielsetzung("Förderung von Projekten " + generateRandomUuidString())
                 .rechtsform(Rechtsform.NATUERLICHE_PERSON)
-                .telefonNr("0123456789")
-                .email("max@mustermann.de")
-                .adresse(adresse)
                 .build();
+        antragsteller.setTelefonNr("0123456789");
+        antragsteller.setAdresse(adresse);
+        antragsteller.setEmail("max@mustermann.de");
         return antragstellerRepository.save(antragsteller);
     }
 
@@ -288,7 +281,7 @@ public class AntragBuilder {
                 .andereZuwendungsantraege(new ArrayList<>())
                 .build();
         antrag = antragRepository.save(antrag);
-        setDefaultValues();
+        setRandomValues();
         return antrag;
     }
 }
