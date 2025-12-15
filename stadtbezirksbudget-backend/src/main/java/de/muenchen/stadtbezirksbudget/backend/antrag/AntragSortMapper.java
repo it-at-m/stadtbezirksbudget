@@ -27,7 +27,7 @@ public class AntragSortMapper {
             Map.entry("antragstellerName", path(Antrag_.antragsteller, Antragsteller_.name)),
             Map.entry("projektTitel", path(Antrag_.projekt, Projekt_.titel)),
             Map.entry("beantragtesBudget", path(Antrag_.finanzierung, Finanzierung_.beantragtesBudget)),
-            Map.entry("istFehlbetrag", path(Antrag_.finanzierung, Finanzierung_.istFehlbetrag)),
+            Map.entry("finanzierungArt", path(Antrag_.finanzierung, Finanzierung_.art)),
             Map.entry("aktualisierung", path(Antrag_.aktualisierungArt)),
             Map.entry("aktualisierungDatum", path(Antrag_.aktualisierungDatum)));
 

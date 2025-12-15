@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.dto;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,7 +22,7 @@ public record AntragFilterDTO(
         String projektTitel,
         BigDecimal beantragtesBudgetVon,
         BigDecimal beantragtesBudgetBis,
-        Boolean istFehlbetrag,
+        FinanzierungArt finanzierungArt,
         List<AktualisierungArt> aktualisierungArt,
         LocalDateTime aktualisierungDatumVon,
         LocalDateTime aktualisierungDatumBis) {
