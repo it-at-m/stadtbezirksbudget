@@ -264,24 +264,26 @@ public class AntragBuilder {
     }
 
     public Antrag build() {
-        final Adresse adresse = initializeAdresse();
-        final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
-        Antrag antrag = Antrag.builder()
-                .eingangDatum(eingangDatum)
-                .bezirksausschussNr(bezirksausschussNr)
-                .bearbeitungsstand(initializeBearbeitungsstand(status))
-                .aktualisierungArt(aktualisierungArt)
-                .zammadTicketNr(zammadNr)
-                .aktualisierungDatum(aktualisierungDatum)
-                .aktenzeichen(aktenzeichen)
-                .finanzierung(initializeFinanzierung(beantragtesBudget, istFehlbetrag))
-                .projekt(initializeProjekt(projektTitel))
-                .antragsteller(antragsteller)
-                .bankverbindung(initializeBankverbindung(antragsteller))
-                .andereZuwendungsantraege(new ArrayList<>())
-                .build();
-        antrag = antragRepository.save(antrag);
-        setRandomValues();
-        return antrag;
+        try {
+            final Adresse adresse = initializeAdresse();
+            final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
+            Antrag antrag = Antrag.builder()
+                    .eingangDatum(eingangDatum)
+                    .bezirksausschussNr(bezirksausschussNr)
+                    .bearbeitungsstand(initializeBearbeitungsstand(status))
+                    .aktualisierungArt(aktualisierungArt)
+                    .zammadTicketNr(zammadNr)
+                    .aktualisierungDatum(aktualisierungDatum)
+                    .aktenzeichen(aktenzeichen)
+                    .finanzierung(initializeFinanzierung(beantragtesBudget, istFehlbetrag))
+                    .projekt(initializeProjekt(projektTitel))
+                    .antragsteller(antragsteller)
+                    .bankverbindung(initializeBankverbindung(antragsteller))
+                    .andereZuwendungsantraege(new ArrayList<>())
+                    .build();
+            return antragRepository.save(antrag);
+        } finally {
+            setRandomValues();
+        }
     }
 }
