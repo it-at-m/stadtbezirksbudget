@@ -210,7 +210,7 @@ describe("useAntragSummaryList", () => {
     expect(sortingStoreMock.setSorting).toHaveBeenLastCalledWith(expectedSort);
   });
 
-  test("getting computed value sortBy returns correct value", () => {
+  test("getting computed value sortBy calls sorting store getter", () => {
     const { sortBy } = useAntragSummaryList();
     const sortingGetter = vi.fn(() => ref(createEmptyListSort()));
     Object.defineProperty(sortingStoreMock, "sorting", {

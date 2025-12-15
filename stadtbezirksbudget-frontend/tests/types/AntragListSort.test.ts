@@ -7,25 +7,25 @@ import {
   antragListSortToSortItem,
   createEmptyListSort,
   sortOptionsByField,
-} from "../../src/types/AntragListSort";
-import { sortOptionsRecord } from "../../src/types/AntragListSortDefinitions";
+} from "@/types/AntragListSort";
+import { sortOptionsRecord } from "@/types/AntragListSortDefinitions";
 
 describe("AntragListSort", () => {
   test("create empty AntragListSort returns empty AntragListSort", () => {
     const emptySort = createEmptyListSort();
-    expect(Object.values(emptySort).every((v) => v === undefined)).toBe(true);
+    Object.values(emptySort).forEach((v) => {
+      expect(v).toBeUndefined();
+    });
   });
 
   describe("sortOptionsByField", () => {
     const fields = Object.keys(
       sortOptionsRecord
     ) as (keyof typeof sortOptionsRecord)[];
-
     const optionCases: [
       keyof typeof sortOptionsRecord,
       { title: string; sortDirection: string },
     ][] = [];
-
     const countCases: [keyof typeof sortOptionsRecord, number][] = [];
 
     for (const field of fields) {
@@ -62,6 +62,7 @@ describe("AntragListSort", () => {
         expect(opts.length).toBe(expectedLength);
       }
     );
+
     test("returns empty array for invalid field", () => {
       const opts = sortOptionsByField("invalid_field" as never);
       expect(opts).toEqual([]);

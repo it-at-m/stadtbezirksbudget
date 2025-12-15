@@ -1,15 +1,13 @@
 import type { VueWrapper } from "@vue/test-utils";
 
 import { mount } from "@vue/test-utils";
-import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 import AntragListSort from "@/components/AntragListSort.vue";
 import { useAntragListSort } from "@/composables/useAntragListSort";
+import pinia from "@/plugins/pinia.ts";
+import vuetify from "@/plugins/vuetify.ts";
 import { createEmptyListSort } from "@/types/AntragListSort";
 import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock";
 
@@ -18,12 +16,6 @@ vi.mock("@/composables/useAntragListSort.ts", () => ({
 }));
 
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
-
-const pinia = createPinia();
-const vuetify = createVuetify({
-  components,
-  directives,
-});
 
 const inputFields = [
   "antrag-list-sort-status",
