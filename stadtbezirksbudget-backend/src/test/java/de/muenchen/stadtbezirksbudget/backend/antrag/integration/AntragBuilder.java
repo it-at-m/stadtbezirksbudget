@@ -7,6 +7,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bankverbindung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierungsmittel;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Kategorie;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
@@ -59,7 +60,7 @@ public class AntragBuilder {
     private LocalDateTime eingangDatum;
     private LocalDateTime aktualisierungDatum;
     private BigDecimal beantragtesBudget;
-    private boolean istFehlbetrag;
+    private FinanzierungArt finanzierungArt;
     private AktualisierungArt aktualisierungArt;
     private String zammadNr;
     private String aktenzeichen;
@@ -98,7 +99,7 @@ public class AntragBuilder {
         eingangDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
         aktualisierungDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
         beantragtesBudget = BigDecimal.valueOf(RANDOM.nextInt(LIMIT) / 100);
-        istFehlbetrag = RANDOM.nextBoolean();
+        finanzierungArt = FinanzierungArt.values()[RANDOM.nextInt(FinanzierungArt.values().length)];
         aktualisierungArt = AktualisierungArt.values()[RANDOM.nextInt(AktualisierungArt.values().length)];
         zammadNr = String.valueOf(RANDOM.nextInt(LIMIT));
         aktenzeichen = String.valueOf(RANDOM.nextInt(LIMIT));
@@ -131,8 +132,8 @@ public class AntragBuilder {
         return this;
     }
 
-    public AntragBuilder istFehlbetrag(final boolean istFehlbetrag) {
-        this.istFehlbetrag = istFehlbetrag;
+    public AntragBuilder finanzierungArt(final FinanzierungArt finanzierungArt) {
+        this.finanzierungArt = finanzierungArt;
         return this;
     }
 
@@ -206,7 +207,7 @@ public class AntragBuilder {
                         .build());
     }
 
-    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final boolean istFehlbetrag) {
+    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final FinanzierungArt finanzierungArt) {
         final Finanzierungsmittel finanzierungsmittel = Finanzierungsmittel.builder()
                 .kategorie(Kategorie.EIGENMITTEL)
                 .direktoriumNotiz("Notiz zu Finanzierungsmitteln")
@@ -217,13 +218,13 @@ public class AntragBuilder {
                 .direktoriumNotiz("Notiz zu Materialausgaben")
                 .build();
 
-        // Calculate amounts based on whether istFehlbetrag is true or false based on the formula for istFehlbetrag in Finanzierung-Entity
-        if (istFehlbetrag) {
-            // Formula needs to be true: 2 * beantragtesBudget - 1 * beantragtesBudget = beantragtesBudget
+        // Calculate amounts based on whether finanzierungArt is FEHL or FEST based on the formula for finanzierungArt in Finanzierung-Entity
+        if (finanzierungArt == FinanzierungArt.FEHL) {
+            // Formula needs to be FEHL: 2 * beantragtesBudget - 1 * beantragtesBudget = beantragtesBudget
             finanzierungsmittel.setBetrag(beantragtesBudget);
             ausgabe.setBetrag(beantragtesBudget.add(finanzierungsmittel.getBetrag()));
         } else {
-            // Formula needs to be false: beantragtesBudget - 10_000 != beantragtesBudget
+            // Formula needs to be FEST: beantragtesBudget - 10_000 != beantragtesBudget
             finanzierungsmittel.setBetrag(new BigDecimal(10_000));
             ausgabe.setBetrag(beantragtesBudget);
         }
@@ -274,7 +275,7 @@ public class AntragBuilder {
                     .zammadTicketNr(zammadNr)
                     .aktualisierungDatum(aktualisierungDatum)
                     .aktenzeichen(aktenzeichen)
-                    .finanzierung(initializeFinanzierung(beantragtesBudget, istFehlbetrag))
+                    .finanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt))
                     .projekt(initializeProjekt(projektTitel))
                     .antragsteller(antragsteller)
                     .bankverbindung(initializeBankverbindung(antragsteller))

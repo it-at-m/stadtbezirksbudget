@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
@@ -224,19 +225,19 @@ class AntragFilteringIntegrationTest {
     }
 
     @Test
-    void testFilterByIstFehlbetrag() throws Exception {
-        antragBuilder.istFehlbetrag(true)
+    void testFilterByFinanzierungArt() throws Exception {
+        antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .build();
-        antragBuilder.istFehlbetrag(true)
+        antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .build();
-        antragBuilder.istFehlbetrag(false)
+        antragBuilder.finanzierungArt(FinanzierungArt.FEST)
                 .build();
-        antragBuilder.istFehlbetrag(false)
+        antragBuilder.finanzierungArt(FinanzierungArt.FEST)
                 .build();
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("istFehlbetrag", "true")
+                        .param("finanzierungArt", FinanzierungArt.FEHL.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -244,7 +245,7 @@ class AntragFilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("istFehlbetrag", "false")
+                        .param("finanzierungArt", FinanzierungArt.FEST.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -395,17 +396,17 @@ class AntragFilteringIntegrationTest {
     }
 
     @Test
-    void testFilterByIstFehlbetragAndAktualisierungArt() throws Exception {
-        antragBuilder.istFehlbetrag(true)
+    void testFilterByFinanzierungArtAndAktualisierungArt() throws Exception {
+        antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .aktualisierungArt(AktualisierungArt.FACHANWENDUNG)
                 .build();
-        antragBuilder.istFehlbetrag(true)
+        antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .aktualisierungArt(AktualisierungArt.FACHANWENDUNG)
                 .build();
-        antragBuilder.istFehlbetrag(false)
+        antragBuilder.finanzierungArt(FinanzierungArt.FEST)
                 .aktualisierungArt(AktualisierungArt.ZAMMAD)
                 .build();
-        antragBuilder.istFehlbetrag(false)
+        antragBuilder.finanzierungArt(FinanzierungArt.FEST)
                 .aktualisierungArt(AktualisierungArt.E_AKTE)
                 .build();
         entityManager.flush();
@@ -413,15 +414,15 @@ class AntragFilteringIntegrationTest {
 
         mockMvc
                 .perform(get("/antrag")
-                        .param("istFehlbetrag", "true")
+                        .param("finanzierungArt", FinanzierungArt.FEHL.name())
                         .param("aktualisierungArt", AktualisierungArt.FACHANWENDUNG.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(2)))
-                .andExpect(jsonPath("$.content[0].istFehlbetrag", is(true)))
+                .andExpect(jsonPath("$.content[0].finanzierungArt", is(FinanzierungArt.FEHL.name())))
                 .andExpect(jsonPath("$.content[0].aktualisierung", is(AktualisierungArt.FACHANWENDUNG.name())))
-                .andExpect(jsonPath("$.content[1].istFehlbetrag", is(true)))
+                .andExpect(jsonPath("$.content[1].finanzierungArt", is(FinanzierungArt.FEHL.name())))
                 .andExpect(jsonPath("$.content[1].aktualisierung", is(AktualisierungArt.FACHANWENDUNG.name())));
     }
 
