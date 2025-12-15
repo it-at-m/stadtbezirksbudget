@@ -8,7 +8,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -61,7 +60,6 @@ class AntragServiceTest {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.addMixIn(Finanzierung.class, FinanzierungMixIn.class);
         return mapper;
     }
 
@@ -86,12 +84,6 @@ class AntragServiceTest {
         antrag.setFinanzierung(finanzierung);
 
         return antrag;
-    }
-
-    @SuppressWarnings("PMD.CommentDefaultAccessModifier")
-    abstract static class FinanzierungMixIn {
-        @JsonIgnore
-        abstract boolean istFehlbetrag();
     }
 
     @Nested
