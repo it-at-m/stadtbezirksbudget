@@ -1,5 +1,6 @@
+import type { DataTableSortItem } from "vuetify";
+
 import { describe, expect, test } from "vitest";
-import { DataTableSortItem } from "vuetify/framework";
 
 import {
   antragListSortOptionFromSortItems,
