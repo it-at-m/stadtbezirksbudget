@@ -66,9 +66,9 @@ export const antragListSortToSortDto = (
  * @param sortItems - The DataTableSortItem array to convert
  * @returns The corresponding AntragListSortOption or undefined if not found
  */
-export const antragListSortOptionFromSortItems = (
+export function antragListSortOptionFromSortItems(
   sortItems: DataTableSortItem[]
-): AntragListSortOption | undefined => {
+): AntragListSortOption | undefined {
   const firstItem = sortItems[0];
   if (
     !firstItem ||
@@ -87,7 +87,7 @@ export const antragListSortOptionFromSortItems = (
         sortDirection: firstItem.order as sortDirection,
       }
     : undefined;
-};
+}
 
 /**
  * Converts AntragListSort to DataTableSortItem array for Vuetify data table sorting
@@ -96,11 +96,10 @@ export const antragListSortOptionFromSortItems = (
  */
 export const antragListSortToSortItem = (
   sort: AntragListSort
-): DataTableSortItem[] => {
-  return Object.values(sort)
+): DataTableSortItem[] =>
+  Object.values(sort)
     .filter((v): v is AntragListSortOption => v !== undefined)
     .map((v) => ({
       key: v.sortBy,
       order: v.sortDirection,
     }));
-};
