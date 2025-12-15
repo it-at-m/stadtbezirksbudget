@@ -23,7 +23,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.Finanzierungsmit
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -98,7 +97,7 @@ public class AntragBuilder {
         bezirksausschussNr = random.nextInt(limit);
         eingangDatum = LocalDateTime.now().minusDays(random.nextInt(limit));
         aktualisierungDatum = LocalDateTime.now().minusDays(random.nextInt(limit));
-        beantragtesBudget = BigDecimal.valueOf(random.nextDouble() * limit);
+        beantragtesBudget = BigDecimal.valueOf(random.nextInt(limit) / 100);
         istFehlbetrag = random.nextBoolean();
         aktualisierungArt = AktualisierungArt.values()[random.nextInt(AktualisierungArt.values().length)];
         zammadNr = String.valueOf(random.nextInt(limit));
@@ -220,8 +219,8 @@ public class AntragBuilder {
 
         // Calculate amounts based on whether istFehlbetrag is true or false based on the formula for istFehlbetrag in Finanzierung-Entity
         if (istFehlbetrag) {
-            // Formula needs to be true: 1.5 * beantragtesBudget - 0.5 * beantragtesBudget = beantragtesBudget
-            finanzierungsmittel.setBetrag(beantragtesBudget.divide(new BigDecimal(2), RoundingMode.HALF_UP));
+            // Formula needs to be true: 2 * beantragtesBudget - 1 * beantragtesBudget = beantragtesBudget
+            finanzierungsmittel.setBetrag(beantragtesBudget);
             ausgabe.setBetrag(beantragtesBudget.add(finanzierungsmittel.getBetrag()));
         } else {
             // Formula needs to be false: beantragtesBudget - 10_000 != beantragtesBudget
