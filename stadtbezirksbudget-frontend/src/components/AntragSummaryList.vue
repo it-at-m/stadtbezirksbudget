@@ -103,7 +103,7 @@ const {
   loading,
   sortBy,
   updateOptions,
-  goToDetails
+  goToDetails,
 } = useAntragSummaryList();
 
 const screenWidth = ref(window.innerWidth);

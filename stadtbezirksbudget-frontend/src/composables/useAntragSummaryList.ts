@@ -4,9 +4,9 @@ import type Page from "@/types/Page.ts";
 import { computed, readonly, ref } from "vue";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
+import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { ROUTES_DETAILS, STATUS_INDICATORS } from "@/constants.ts";
 import router from "@/plugins/router.ts";
-import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
