@@ -1,5 +1,6 @@
 <template>
   <v-data-table-server
+    v-model:sortBy="sortBy"
     :cell-props="{
       style: {
         overflow: 'hidden',
@@ -15,15 +16,30 @@
     :loading="loading"
     :page="page"
     data-test="antrag-summary-list"
-    disable-sort
     @update:options="updateOptions"
   >
-    <template v-slot:[`header.beantragtesBudget`]>
+    <template
+      v-slot:[`header.beantragtesBudget`]="{
+        column,
+        toggleSort,
+        isSorted,
+        getSortIcon,
+      }"
+    >
       <div
-        class="text-left"
+        class="d-flex v-data-table-header__cell"
         data-test="header-beantragtes-budget"
+        style="cursor: pointer; align-items: center"
+        @click="() => toggleSort"
       >
-        Beantragtes<br />Budget [€]
+        <span class="mr-1 text-left"> Beantragtes <br />Budget [€] </span>
+        <v-icon
+          :class="[
+            'v-data-table-header__sort-icon',
+            { 'v-data-table-header__sort-icon--active': isSorted(column) },
+          ]"
+          :icon="getSortIcon(column)"
+        />
       </div>
     </template>
     <template v-slot:[`item.status`]="{ item }">
@@ -73,8 +89,15 @@ import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
 import { FinanzierungArtText } from "@/types/FinanzierungArt.ts";
 import { toDateString, toNumberString } from "@/util/formatter.ts";
 
-const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
-  useAntragSummaryList();
+const {
+  items,
+  totalItems,
+  page,
+  itemsPerPage,
+  loading,
+  updateOptions,
+  sortBy,
+} = useAntragSummaryList();
 
 const screenWidth = ref(window.innerWidth);
 
