@@ -9,7 +9,8 @@ require attention and to navigate through the applications with ease.
 
 ## Column contents
 
-The displayed columns represent the most important data from the citizen form, such as the applicant or project title. Additionally, a few additional columns provide context and facilitate the processing of applications:
+The displayed columns represent the most important data from the citizen form, such as the applicant or project title. Additionally, a few additional columns
+provide context and facilitate the processing of applications:
 
 | Column               | Description                                                                                                     |
 | -------------------- | --------------------------------------------------------------------------------------------------------------- |
