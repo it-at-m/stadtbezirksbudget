@@ -7,7 +7,8 @@ import { DataTableSortItem } from "vuetify/framework";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
-import { STATUS_INDICATORS } from "@/constants.ts";
+import { ROUTES_DETAILS, STATUS_INDICATORS } from "@/constants.ts";
+import router from "@/plugins/router.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
@@ -25,6 +26,7 @@ vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
 vi.mock("@/stores/useAntragListFilterStore.ts");
 vi.mock("@/stores/useAntragListSortingStore.ts");
+vi.mock("@/plugins/router.ts", () => ({ default: { push: vi.fn() } }));
 
 describe("useAntragSummaryList", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
@@ -222,5 +224,33 @@ describe("useAntragSummaryList", () => {
     sortBy.value;
 
     expect(sortingGetter).toHaveBeenCalled();
+  });
+
+  test("goToDetails calls router.push with the correct id", () => {
+    (router.push as vi.Mock).mockResolvedValue(undefined);
+    const { goToDetails } = useAntragSummaryList();
+
+    const item = { id: "42" } as AntragSummary;
+    goToDetails(null, { item });
+
+    expect(router.push).toHaveBeenCalledWith({
+      name: ROUTES_DETAILS,
+      params: { id: "42" },
+    });
+  });
+
+  test("goToDetails shows snackbar on router error", async () => {
+    (router.push as vi.Mock).mockRejectedValue(new Error("fail"));
+    const { goToDetails } = useAntragSummaryList();
+
+    const item = { id: "99" } as AntragSummary;
+    goToDetails(null, { item });
+
+    await vi.waitFor(() => {
+      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+        message: "Fehler beim Öffnen der Detailansicht",
+        level: STATUS_INDICATORS.WARNING,
+      });
+    });
   });
 });
