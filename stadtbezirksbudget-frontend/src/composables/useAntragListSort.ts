@@ -9,6 +9,7 @@ import { computed } from "vue";
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
 import {
   antragListSortOptionFromSortItems,
+  createDefaultListSort,
   createEmptyListSort,
 } from "@/types/AntragListSort.ts";
 
@@ -42,7 +43,7 @@ export function useAntragListSort() {
   function updateSortingWithSortItem(newValue: DataTableSortItem[]) {
     const newSorting = antragListSortOptionFromSortItems(newValue);
     if (newSorting === undefined) {
-      resetSorting();
+      clearSorting();
       return;
     }
     updateSorting(newSorting);
@@ -52,6 +53,10 @@ export function useAntragListSort() {
    * Resets the current sorting options.
    */
   function resetSorting() {
+    sortingStore.setSorting(createDefaultListSort());
+  }
+
+  function clearSorting() {
     sortingStore.setSorting(createEmptyListSort());
   }
 
