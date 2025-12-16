@@ -37,6 +37,7 @@
           class="d-flex align-center justify-end"
           cols="3"
         >
+          <antrag-list-sort-menu />
           <antrag-list-filter-menu />
           <app-switcher
             v-if="appswitcherBaseUrl"
@@ -77,6 +78,7 @@ import { onMounted, ref } from "vue";
 
 import { getUser } from "@/api/user-client";
 import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
+import AntragListSortMenu from "@/components/AntragListSortMenu.vue";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useInitializeStores } from "@/composables/useInitializeStores.ts";
