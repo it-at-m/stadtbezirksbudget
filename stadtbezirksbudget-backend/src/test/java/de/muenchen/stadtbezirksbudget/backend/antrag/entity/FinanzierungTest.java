@@ -12,10 +12,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.test.context.ActiveProfiles;
@@ -27,7 +29,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Transactional
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings({ "PMD.ShortClassName" })
 class FinanzierungTest {
@@ -47,7 +48,7 @@ class FinanzierungTest {
     @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
 
-    private Finanzierung createFinanzierung(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungsmittelBetrag) {
+    private Finanzierung createFinanzierung(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen) {
         final Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(false)
                 .kostenAnmerkung("Kosten Anmerkung")
@@ -69,7 +70,7 @@ class FinanzierungTest {
                 .finanzierung(finanzierung)
                 .build()).toList();
 
-        final List<Finanzierungsmittel> finanzierungsmittel = finanzierungsmittelBetrag.stream().map(betrag -> Finanzierungsmittel.builder()
+        final List<Finanzierungsmittel> finanzierungsmittel = finanzierungen.stream().map(betrag -> Finanzierungsmittel.builder()
                 .kategorie(Kategorie.EIGENMITTEL)
                 .betrag(betrag)
                 .direktoriumNotiz("Notiz")
@@ -91,40 +92,32 @@ class FinanzierungTest {
 
     @Nested
     class Art {
-        @Test
-        void testAusgabenMoreThan5000WithoutFinanzierungsmittelReturnsFEHL() {
-            final Finanzierung finanzierung = createFinanzierung(
-                    List.of(BigDecimal.valueOf(5000), BigDecimal.ONE),
-                    List.of(BigDecimal.ZERO));
-            final Finanzierung loaded = finanzierungRepository.findById(finanzierung.getId()).orElseThrow();
-            assertThat(loaded.getArt()).isEqualTo(FinanzierungArt.FEHL);
+        private static Arguments args(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final FinanzierungArt art) {
+            return Arguments.of(ausgaben, finanzierungen, art);
         }
 
-        @Test
-        void testAusgabenLessThan5000WithoutFinanzierungsmittelReturnsFEST() {
-            final Finanzierung finanzierung = createFinanzierung(
-                    List.of(BigDecimal.valueOf(5000)),
-                    List.of(BigDecimal.ZERO));
-            final Finanzierung loaded = finanzierungRepository.findById(finanzierung.getId()).orElseThrow();
-            assertThat(loaded.getArt()).isEqualTo(FinanzierungArt.FEST);
+        private static Stream<Arguments> artTestData() {
+            return Stream.of(
+                    args(List.of(BigDecimal.valueOf(5000), BigDecimal.ONE),
+                            List.of(BigDecimal.ZERO),
+                            FinanzierungArt.FEHL),
+                    args(List.of(BigDecimal.valueOf(5000)),
+                            List.of(BigDecimal.ZERO),
+                            FinanzierungArt.FEST),
+                    args(List.of(BigDecimal.valueOf(5000), BigDecimal.ONE),
+                            List.of(BigDecimal.ZERO, BigDecimal.ONE),
+                            FinanzierungArt.FEHL),
+                    args(List.of(BigDecimal.valueOf(5000)),
+                            List.of(BigDecimal.ONE),
+                            FinanzierungArt.FEHL));
         }
 
-        @Test
-        void testAusgabenMoreThan5000WithFinanzierungsmittelReturnsFEHL() {
-            final Finanzierung finanzierung = createFinanzierung(
-                    List.of(BigDecimal.valueOf(5000), BigDecimal.ONE),
-                    List.of(BigDecimal.ZERO, BigDecimal.ONE));
-            final Finanzierung loaded = finanzierungRepository.findById(finanzierung.getId()).orElseThrow();
-            assertThat(loaded.getArt()).isEqualTo(FinanzierungArt.FEHL);
-        }
-
-        @Test
-        void testAusgabenLessThan5000WithFinanzierungsmittelReturnsFEHL() {
-            final Finanzierung finanzierung = createFinanzierung(
-                    List.of(BigDecimal.valueOf(5000)),
-                    List.of(BigDecimal.ONE));
-            final Finanzierung loaded = finanzierungRepository.findById(finanzierung.getId()).orElseThrow();
-            assertThat(loaded.getArt()).isEqualTo(FinanzierungArt.FEHL);
+        @ParameterizedTest
+        @MethodSource("artTestData")
+        void testArtDetermination(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final FinanzierungArt expectedArt) {
+            final Finanzierung created = createFinanzierung(ausgaben, finanzierungen);
+            final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
+            assertThat(loaded.getArt()).isEqualTo(expectedArt);
         }
     }
 }
