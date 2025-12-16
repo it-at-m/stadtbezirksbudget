@@ -1,5 +1,5 @@
 export const ROUTES_HOME = "home";
-export const ROUTES_GETSTARTED = "getstarted";
+export const ROUTES_DETAILS = "details";
 
 export const BACKEND = "api/backend-service";
 
