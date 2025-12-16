@@ -226,30 +226,32 @@ describe("useAntragSummaryList", () => {
     expect(sortingGetter).toHaveBeenCalled();
   });
 
-  test("goToDetails calls router.push with the correct id", () => {
-    (router.push as vi.Mock).mockResolvedValue(undefined);
-    const { goToDetails } = useAntragSummaryList();
+  describe("goToDetails", () => {
+    test("calls router.push with the correct id", () => {
+      (router.push as vi.Mock).mockResolvedValue(undefined);
+      const { goToDetails } = useAntragSummaryList();
 
-    const item = { id: "42" } as AntragSummary;
-    goToDetails(null, { item });
+      const item = { id: "42" } as AntragSummary;
+      goToDetails(null, { item });
 
-    expect(router.push).toHaveBeenCalledWith({
-      name: ROUTES_DETAILS,
-      params: { id: "42" },
+      expect(router.push).toHaveBeenCalledWith({
+        name: ROUTES_DETAILS,
+        params: { id: "42" },
+      });
     });
-  });
 
-  test("goToDetails shows snackbar on router error", async () => {
-    (router.push as vi.Mock).mockRejectedValue(new Error("fail"));
-    const { goToDetails } = useAntragSummaryList();
+    test("shows snackbar on router error", async () => {
+      (router.push as vi.Mock).mockRejectedValue(new Error("fail"));
+      const { goToDetails } = useAntragSummaryList();
 
-    const item = { id: "99" } as AntragSummary;
-    goToDetails(null, { item });
+      const item = { id: "99" } as AntragSummary;
+      goToDetails(null, { item });
 
-    await vi.waitFor(() => {
-      expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-        message: "Fehler beim Öffnen der Detailansicht",
-        level: STATUS_INDICATORS.WARNING,
+      await vi.waitFor(() => {
+        expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+          message: "Fehler beim Öffnen der Detailansicht",
+          level: STATUS_INDICATORS.WARNING,
+        });
       });
     });
   });
