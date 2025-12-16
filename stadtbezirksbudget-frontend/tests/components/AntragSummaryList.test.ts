@@ -224,9 +224,14 @@ describe("AntragSummaryList", () => {
 
   test("calls goToDetails on row click by emitting table event", async () => {
     const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
-    dataTable.vm.$emit("click:row", mockUseAntragSummaryList.items.value[0]);
+    dataTable.vm.$emit("click:row", new MouseEvent("click"), {
+      item: mockUseAntragSummaryList.items.value[0],
+    });
     await wrapper.vm.$nextTick();
 
-    expect(mockUseAntragSummaryList.goToDetails).toHaveBeenCalled();
+    expect(mockUseAntragSummaryList.goToDetails).toHaveBeenCalledWith(
+      expect.any(MouseEvent),
+      { item: mockUseAntragSummaryList.items.value[0] }
+    );
   });
 });
