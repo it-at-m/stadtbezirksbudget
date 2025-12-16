@@ -2,6 +2,9 @@ import type { DataTableSortItem } from "vuetify";
 
 import { sortDefinitions } from "@/types/AntragListSortDefinitions.ts";
 
+const DEFAULT_SORT_KEY: keyof typeof sortDefinitions = "eingangDatum";
+const DEFAULT_SORT_DIRECTION: sortDirection = "desc";
+
 // Runtime definition of sorting directions and derived type
 export const SORT_DIRECTIONS = ["asc", "desc"] as const;
 
@@ -35,11 +38,8 @@ export const createEmptyListSort = (): AntragListSort => {
  * @returns {@link createEmptyListSort} if default sort option is not found
  */
 export function createDefaultListSort(): AntragListSort {
-  const key: keyof typeof sortDefinitions = "eingangDatum";
-  const direction: sortDirection = "desc";
-
-  const option = sortDefinitions[key]?.options.find(
-    (o) => o.sortDirection === direction
+  const option = sortDefinitions[DEFAULT_SORT_KEY]?.options.find(
+    (o) => o.sortDirection === DEFAULT_SORT_DIRECTION
   );
 
   if (!option) {
@@ -48,7 +48,7 @@ export function createDefaultListSort(): AntragListSort {
 
   return {
     ...createEmptyListSort(),
-    [key]: { ...option, sortBy: key },
+    [DEFAULT_SORT_KEY]: { ...option, sortBy: DEFAULT_SORT_KEY },
   };
 }
 
