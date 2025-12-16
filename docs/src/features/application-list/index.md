@@ -1,20 +1,15 @@
 # Application list
 
-The application list is the main interface on the home page of the project. It provides an overview of
-all applications submitted by citizens, allowing
-caseworkers to efficiently manage and process them. It displays key information about each application,
-such as the applicant's name, submission date, current
-status, and any relevant actions that need to be taken. The list is designed to be user-friendly,
-enabling caseworkers to quickly identify applications that
+The application list is the main interface on the home page of the project. It provides an overview of all applications submitted by citizens, allowing
+caseworkers to efficiently manage and process them. It displays key information about each application, such as the applicant's name, submission date, current
+status, and any relevant actions that need to be taken. The list is designed to be user-friendly, enabling caseworkers to quickly identify applications that
 require attention and to navigate through the applications with ease.
 
 ![Application list showing multiple applications with their details and status](./application-list.png)
 
 ## Column contents
 
-The displayed columns represent the most important data from the citizen form, such as the applicant or
-project title. Additionally, a few additional columns
-provide context and facilitate the processing of applications:
+The displayed columns represent the most important data from the citizen form, such as the applicant or project title. Additionally, a few additional columns provide context and facilitate the processing of applications:
 
 | Column               | Description                                                                                                     |
 | -------------------- | --------------------------------------------------------------------------------------------------------------- |
@@ -26,22 +21,18 @@ provide context and facilitate the processing of applications:
 
 ## Updating application status
 
-The application status can be updated directly from the application list. Caseworkers can select an
-application and change its status based on the current stage
-of processing. This feature streamlines the workflow by allowing quick updates without needing to
-navigate to a separate page for each application.
+The application status can be updated directly from the application list. Caseworkers can select an application and change its status based on the current stage
+of processing. This feature streamlines the workflow by allowing quick updates without needing to navigate to a separate page for each application.
 
 ![Application list with an open dropdown menu to update the application status](./application-list-update-status.png)
 
 ## Filtering of the list
 
-The application list can be filtered based on various criteria to help caseworkers quickly find the
-applications they need to review.
+The application list can be filtered based on various criteria to help caseworkers quickly find the applications they need to review.
 
 ![Filtering of the application list](./application-list-filter.png)
 
-These filters can be combined to narrow down the list of applications and make it easier to manage them effectively,
-e.g. the filters of the image above show
+These filters can be combined to narrow down the list of applications and make it easier to manage them effectively, e.g. the filters of the image above show
 all applications where all the following conditions are met:
 
 - The status is "_Offen_" or "_Vorbereitung_"
