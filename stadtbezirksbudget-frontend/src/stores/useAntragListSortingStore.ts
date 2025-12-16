@@ -3,14 +3,14 @@ import type { AntragListSort } from "@/types/AntragListSort.ts";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { createEmptyListSort } from "@/types/AntragListSort.ts";
+import { createDefaultListSort } from "@/types/AntragListSort.ts";
 
 /**
  * Pinia store for managing the sorting options applied to the Antrag list.
  */
 export const useAntragListSortingStore = defineStore("antragListSort", () => {
   // State: The current sorting options applied to the Antrag list.
-  const sorting = ref<AntragListSort>(createEmptyListSort());
+  const sorting = ref<AntragListSort>(createDefaultListSort());
 
   /**
    * Sets the sorting options for the Antrag list.

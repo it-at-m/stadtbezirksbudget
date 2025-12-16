@@ -30,6 +30,29 @@ export const createEmptyListSort = (): AntragListSort => {
 };
 
 /**
+ * Creates the default AntragListSort object with predefined sorting
+ * @returns default {@link AntragListSort}
+ * @returns {@link createEmptyListSort} if default sort option is not found
+ */
+export function createDefaultListSort(): AntragListSort {
+  const key: keyof typeof sortDefinitions = "eingangDatum";
+  const direction: sortDirection = "desc";
+
+  const option = sortDefinitions[key]?.options.find(
+    (o) => o.sortDirection === direction
+  );
+
+  if (!option) {
+    return createEmptyListSort();
+  }
+
+  return {
+    ...createEmptyListSort(),
+    [key]: { ...option, sortBy: key },
+  };
+}
+
+/**
  * Populates the {@link sortDefinitions} with the corresponding key as sortBy param
  * @param field key for {@link AntragListSortOption}
  * @returns array of {@link AntragListSortOption} for specified field

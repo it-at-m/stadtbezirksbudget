@@ -2,7 +2,10 @@ import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, test } from "vitest";
 
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
-import { createEmptyListSort } from "@/types/AntragListSort";
+import {
+  createDefaultListSort,
+  createEmptyListSort,
+} from "@/types/AntragListSort";
 
 const testSorting = {
   ...createEmptyListSort(),
@@ -18,9 +21,9 @@ describe("useAntragListSortingStore", () => {
     setActivePinia(createPinia());
   });
 
-  test("initially empty store", () => {
+  test("initially default store", () => {
     const store = useAntragListSortingStore();
-    expect(store.sorting).toStrictEqual(createEmptyListSort());
+    expect(store.sorting).toStrictEqual(createDefaultListSort());
   });
 
   test("setSorting stores sorting", () => {
