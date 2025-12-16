@@ -19,7 +19,7 @@ const testFilters: AntragListFilter = {
   projektTitel: "TEST_TITEL",
   beantragtesBudgetVon: 537.25,
   beantragtesBudgetBis: 1098.98,
-  art: "Fest",
+  finanzierungArt: "FEST",
   aktualisierungArt: ["E_AKTE"],
   aktualisierungDatum: [new Date("2025-11-25T00:00:00Z")],
 };

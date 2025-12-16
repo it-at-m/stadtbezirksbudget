@@ -69,9 +69,9 @@
         toNumberString(item.beantragtesBudget, 0)
       }}</span>
     </template>
-    <template v-slot:[`item.istFehlbetrag`]="{ item }">
-      <span data-test="item-ist-fehlbetrag">{{
-        booleanToFestOrFehl(item.istFehlbetrag)
+    <template v-slot:[`item.finanzierungArt`]="{ item }">
+      <span data-test="item-finanzierung-art">{{
+        FinanzierungArtText[item.finanzierungArt]
       }}</span>
     </template>
   </v-data-table-server>
@@ -86,11 +86,8 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
-import {
-  booleanToFestOrFehl,
-  toDateString,
-  toNumberString,
-} from "@/util/formatter.ts";
+import { FinanzierungArtText } from "@/types/FinanzierungArt.ts";
+import { toDateString, toNumberString } from "@/util/formatter.ts";
 
 const {
   items,
@@ -162,7 +159,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
     },
     {
       title: "Art",
-      key: "istFehlbetrag",
+      key: "finanzierungArt",
       maxWidth: `${baseWidth}px`,
     },
     {

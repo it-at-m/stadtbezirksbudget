@@ -6,6 +6,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
@@ -43,7 +44,7 @@ public class AntragFilterService {
                 filterProjektTitel(filter.projektTitel(), root, criteriaBuilder),
                 filterBeantragtesBudgetVon(filter.beantragtesBudgetVon(), root, criteriaBuilder),
                 filterBeantragtesBudgetBis(filter.beantragtesBudgetBis(), root, criteriaBuilder),
-                filterIstFehlbetrag(filter.istFehlbetrag(), root, criteriaBuilder),
+                filterFinanzierungArt(filter.finanzierungArt(), root, criteriaBuilder),
                 filterAktualisierungArt(filter.aktualisierungArt(), root, criteriaBuilder),
                 filterAktualisierungDatumVon(filter.aktualisierungDatumVon(), root, criteriaBuilder),
                 filterAktualisierungDatumBis(filter.aktualisierungDatumBis(), root, criteriaBuilder));
@@ -115,9 +116,9 @@ public class AntragFilterService {
                 : criteriaBuilder.conjunction();
     }
 
-    private Predicate filterIstFehlbetrag(final Boolean istFehlbetrag, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
-        return (istFehlbetrag != null)
-                ? criteriaBuilder.equal(root.get(Antrag_.finanzierung).get(Finanzierung_.istFehlbetrag), istFehlbetrag)
+    private Predicate filterFinanzierungArt(final FinanzierungArt finanzierungArt, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+        return (finanzierungArt != null)
+                ? criteriaBuilder.equal(root.get(Antrag_.finanzierung).get(Finanzierung_.art), finanzierungArt)
                 : criteriaBuilder.conjunction();
     }
 

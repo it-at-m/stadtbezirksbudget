@@ -118,10 +118,10 @@
       <v-row>
         <v-col>
           <v-select
-            v-model="filters.art"
-            :items="['Fest', 'Fehl']"
+            v-model="filters.finanzierungArt"
+            :items="finanzierungArtOptions"
             clearable
-            data-test="antrag-list-filter-art"
+            data-test="antrag-list-filter-finanzierung-art"
             density="compact"
             hide-details="auto"
             label="Art"
@@ -179,6 +179,7 @@ import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
 import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
 import { aktualisierungArtOptions } from "@/types/AktualisierungArt.ts";
 import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
+import { finanzierungArtOptions } from "@/types/FinanzierungArt.ts";
 
 const { updateFilters, resetFilters, filters } = useAntragListFilter();
 const { filterOptions } = useAntragListFilterOptionsStore();

@@ -1,6 +1,6 @@
 import type { AktualisierungArt } from "@/types/AktualisierungArt.ts";
-
-import type { Status } from "./Status.ts";
+import type { FinanzierungArt } from "@/types/FinanzierungArt.ts";
+import type { Status } from "@/types/Status.ts";
 
 export default interface AntragSummary {
   id: string;
@@ -12,7 +12,7 @@ export default interface AntragSummary {
   antragstellerName: string;
   projektTitel: string;
   beantragtesBudget: number;
-  istFehlbetrag: boolean;
+  finanzierungArt: FinanzierungArt;
   aktualisierung: AktualisierungArt;
   aktualisierungDatum: string; // ISO date string from API
 }

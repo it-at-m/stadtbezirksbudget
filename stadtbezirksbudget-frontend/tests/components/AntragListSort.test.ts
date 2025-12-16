@@ -26,7 +26,7 @@ const inputFields = [
   "antrag-list-sort-antragsteller-name",
   "antrag-list-sort-projekt-titel",
   "antrag-list-sort-beantragtes-budget",
-  "antrag-list-sort-art",
+  "antrag-list-sort-finanzierung-art",
   "antrag-list-sort-aktualisierung",
   "antrag-list-sort-aktualisierung-datum",
 ];
