@@ -92,7 +92,14 @@ export function useAntragSummaryList() {
    * @param {AntragSummary} props.item - The AntragSummary item to view.
    */
   function goToDetails(_: MouseEvent, props: { item: AntragSummary }) {
-    router.push({ name: ROUTES_DETAILS, params: { id: props.item.id } }).then();
+    router
+      .push({ name: ROUTES_DETAILS, params: { id: props.item.id } })
+      .catch(() => {
+        snackbarStore.showMessage({
+          message: "Fehler beim Navigieren zur Detailansicht",
+          level: STATUS_INDICATORS.WARNING,
+        });
+      });
   }
 
   filterStore.$subscribe(() => {
