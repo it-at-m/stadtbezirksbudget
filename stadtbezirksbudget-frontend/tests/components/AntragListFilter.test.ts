@@ -37,7 +37,7 @@ const inputFields = [
     subFields: ["range-input-from", "range-input-to"],
   },
   {
-    dataTest: "antrag-list-filter-art",
+    dataTest: "antrag-list-filter-finanzierung-art",
   },
   {
     dataTest: "antrag-list-filter-aktualisierung-art",

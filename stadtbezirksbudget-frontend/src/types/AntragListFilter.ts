@@ -1,4 +1,5 @@
 import type { AktualisierungArt } from "@/types/AktualisierungArt.ts";
+import type { FinanzierungArt } from "@/types/FinanzierungArt.ts";
 import type { Status } from "@/types/Status.ts";
 
 // Interface for filtering Antrag list
@@ -11,7 +12,7 @@ export interface AntragListFilter {
   projektTitel: string | null;
   beantragtesBudgetVon: number | null;
   beantragtesBudgetBis: number | null;
-  art: string | null;
+  finanzierungArt: FinanzierungArt | null;
   aktualisierungArt: AktualisierungArt[];
   aktualisierungDatumVon: Date | null;
   aktualisierungDatumBis: Date | null;
@@ -42,7 +43,7 @@ export const emptyAntragListFilter = (): AntragListFilter => ({
   projektTitel: null,
   beantragtesBudgetVon: null,
   beantragtesBudgetBis: null,
-  art: null,
+  finanzierungArt: null,
   aktualisierungArt: [],
   aktualisierungDatumVon: null,
   aktualisierungDatumBis: null,

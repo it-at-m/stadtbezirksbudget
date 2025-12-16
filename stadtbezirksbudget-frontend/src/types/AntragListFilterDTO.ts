@@ -7,13 +7,11 @@ export interface AntragListFilterDTO extends Omit<
   AntragListFilter,
   | "eingangDatumVon"
   | "eingangDatumBis"
-  | "art"
   | "aktualisierungDatumVon"
   | "aktualisierungDatumBis"
 > {
   eingangDatumVon?: string;
   eingangDatumBis?: string;
-  istFehlbetrag?: boolean;
   aktualisierungDatumVon?: string;
   aktualisierungDatumBis?: string;
 }
@@ -29,7 +27,6 @@ export function antragListFilterToDTO(
   const {
     eingangDatumVon,
     eingangDatumBis,
-    art,
     aktualisierungDatumVon,
     aktualisierungDatumBis,
     ...rest
@@ -38,7 +35,6 @@ export function antragListFilterToDTO(
     ...rest,
     eingangDatumVon: toLocalISOString(eingangDatumVon),
     eingangDatumBis: toLocalISOString(toEndOfDay(eingangDatumBis)),
-    istFehlbetrag: art ? art === "Fehl" : undefined,
     aktualisierungDatumVon: toLocalISOString(aktualisierungDatumVon),
     aktualisierungDatumBis: toLocalISOString(
       toEndOfDay(aktualisierungDatumBis)

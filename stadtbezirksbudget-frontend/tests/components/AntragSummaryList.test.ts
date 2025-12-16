@@ -29,7 +29,7 @@ describe("AntragSummaryList", () => {
           antragstellerName: "Test Antragsteller",
           projektTitel: "Test Projekt",
           beantragtesBudget: 5000,
-          istFehlbetrag: false,
+          finanzierungArt: "FEST",
           aktualisierung: "ZAMMAD",
           aktualisierungDatum: "2025-01-15",
         },
@@ -68,7 +68,7 @@ describe("AntragSummaryList", () => {
     expect(wrapper.find('[data-test="item-beantragtes-budget"]').exists()).toBe(
       true
     );
-    expect(wrapper.find('[data-test="item-ist-fehlbetrag"]').exists()).toBe(
+    expect(wrapper.find('[data-test="item-finanzierung-art"]').exists()).toBe(
       true
     );
     expect(wrapper.find('[data-test="item-aktualisierung-art"]').exists()).toBe(
@@ -126,7 +126,7 @@ describe("AntragSummaryList", () => {
       "item-aktualisierung-art",
       "item-eingang-datum",
       "item-beantragtes-budget",
-      "item-ist-fehlbetrag",
+      "item-finanzierung-art",
     ];
 
     expectedItemSelectors.forEach((selector) => {
@@ -151,7 +151,7 @@ describe("AntragSummaryList", () => {
         antragstellerName: "Test Antragsteller 2",
         projektTitel: "Test Projekt 2",
         beantragtesBudget: 7500,
-        istFehlbetrag: false,
+        finanzierungArt: "FEST",
         aktualisierung: "FACHANWENDUNG",
         aktualisierungDatum: "2025-01-16",
       },
@@ -188,11 +188,11 @@ describe("AntragSummaryList", () => {
     expect(beantragtesBudgetElement.exists()).toBe(true);
     expect(beantragtesBudgetElement.text()).toBe("7.500");
 
-    const istFehlbetragElement = wrapper.find(
-      '[data-test="item-ist-fehlbetrag"]'
+    const finanzierungArtElement = wrapper.find(
+      '[data-test="item-finanzierung-art"]'
     );
-    expect(istFehlbetragElement.exists()).toBe(true);
-    expect(istFehlbetragElement.text()).toBe("Fest");
+    expect(finanzierungArtElement.exists()).toBe(true);
+    expect(finanzierungArtElement.text()).toBe("Fest");
   });
 
   test("updates props on pagination options change", async () => {

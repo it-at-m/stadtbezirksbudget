@@ -46,7 +46,7 @@ class AntragSortMapperTest {
                 Arguments.of("antragstellerName", "antragsteller.name"),
                 Arguments.of("projektTitel", "projekt.titel"),
                 Arguments.of("beantragtesBudget", "finanzierung.beantragtesBudget"),
-                Arguments.of("istFehlbetrag", "finanzierung.istFehlbetrag"),
+                Arguments.of("finanzierungArt", "finanzierung.art"),
                 Arguments.of("aktualisierung", "aktualisierungArt"),
                 Arguments.of("aktualisierungDatum", "aktualisierungDatum"));
     }

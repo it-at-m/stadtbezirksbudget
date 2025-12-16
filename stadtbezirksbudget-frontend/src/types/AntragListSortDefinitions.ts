@@ -114,9 +114,9 @@ export const sortDefinitions = {
       },
     ],
   },
-  istFehlbetrag: {
+  finanzierungArt: {
     label: "Art",
-    dataTest: "antrag-list-sort-art",
+    dataTest: "antrag-list-sort-finanzierung-art",
     options: [
       {
         title: "A-Z / Aufsteigend",
