@@ -56,6 +56,9 @@ export function useAntragListSort() {
     sortingStore.setSorting(createDefaultListSort());
   }
 
+  /**
+   * Clears the current sorting options.
+   */
   function clearSorting() {
     sortingStore.setSorting(createEmptyListSort());
   }
@@ -63,6 +66,7 @@ export function useAntragListSort() {
   return {
     sorting,
     resetSorting,
+    clearSorting,
     updateSorting,
     updateSortingWithSortItem,
   };
