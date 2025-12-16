@@ -96,7 +96,7 @@ export function useAntragSummaryList() {
       .push({ name: ROUTES_DETAILS, params: { id: props.item.id } })
       .catch(() => {
         snackbarStore.showMessage({
-          message: "Fehler beim Navigieren zur Detailansicht",
+          message: "Fehler beim Öffnen der Detailansicht",
           level: STATUS_INDICATORS.WARNING,
         });
       });
