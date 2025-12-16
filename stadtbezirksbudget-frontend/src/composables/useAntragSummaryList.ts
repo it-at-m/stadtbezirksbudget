@@ -4,7 +4,8 @@ import type Page from "@/types/Page.ts";
 import { readonly, ref } from "vue";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
-import { STATUS_INDICATORS } from "@/constants.ts";
+import { ROUTES_DETAILS, STATUS_INDICATORS } from "@/constants.ts";
+import router from "@/plugins/router.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
@@ -72,6 +73,16 @@ export function useAntragSummaryList() {
     fetchItems();
   }
 
+  /**
+   * Navigates to the details view of a specific AntragSummary item.
+   * @param {MouseEvent} _
+   * @param {Object} props
+   * @param {AntragSummary} props.item - The AntragSummary item to view.
+   */
+  function goToDetails(_: MouseEvent, props: { item: AntragSummary }) {
+    router.push({ name: ROUTES_DETAILS, params: { id: props.item.id } }).then();
+  }
+
   filterStore.$subscribe(() => {
     page.value = 1;
     fetchItems();
@@ -90,5 +101,6 @@ export function useAntragSummaryList() {
     loading: readonly(loading),
     fetchItems,
     updateOptions,
+    goToDetails,
   };
 }
