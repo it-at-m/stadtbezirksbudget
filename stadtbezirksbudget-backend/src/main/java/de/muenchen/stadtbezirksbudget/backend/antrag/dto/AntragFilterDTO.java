@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.dto;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
+import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * including status, Bezirksausschuss number, date ranges, Antragsteller name, Projekt title,
  * budget ranges, and update information.
  */
+@ExcludedFromGeneratedCoverage // DTO is a pure data carrier (no logic) and therefore unreasonable to test.
 public record AntragFilterDTO(
         List<Status> status,
         List<Integer> bezirksausschussNr,

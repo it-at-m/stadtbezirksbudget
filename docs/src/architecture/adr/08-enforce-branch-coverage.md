@@ -9,7 +9,7 @@ coverage. Branch coverage is a useful metric here, as it ensures that not only s
 
 We are setting a minimum of 80% branch coverage.
 
-We allow justified exceptions for hard-to-test code, but the reason has to be documented in an inline-comment.
+We allow justified exceptions for hard-to-test code and unreasonable tests, but the reason has to be documented in an inline-comment.
 Generated code is excluded.
 For ui components, coverage will not be considered and the UI will be tested only rudimentarily where it is dynamic (e.g., conditional rendering, DOM updates).
 

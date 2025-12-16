@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.dto;
 
+import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.util.List;
 
 /**
@@ -8,6 +9,7 @@ import java.util.List;
  * This DTO encapsulates lists of distinct Antragsteller names and Projekt titles,
  * which can be used for filtering purposes.
  */
+@ExcludedFromGeneratedCoverage // DTO is a pure data carrier (no logic) and therefore unreasonable to test.
 public record FilterOptionsDTO(List<String> antragstellerNamen, List<String> projektTitel) {
 
     public FilterOptionsDTO {
