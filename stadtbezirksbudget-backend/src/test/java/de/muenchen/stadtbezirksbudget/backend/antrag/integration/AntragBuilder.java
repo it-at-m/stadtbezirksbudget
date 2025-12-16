@@ -219,8 +219,9 @@ public class AntragBuilder {
                 .build();
 
         // Calculate amounts based on whether finanzierungArt is FEHL or FEST based on the formula for finanzierungArt in Finanzierung-Entity
-        if (finanzierungArt == FinanzierungArt.FEHL) {
-            // Formula needs to be FEHL: ausgabe > 5000 OR finanzierungsmittel > 0
+        switch (finanzierungArt) {
+        case FEHL:
+            // Formula needs to return FEHL: ausgabe > 5000 OR finanzierungsmittel > 0
             if (beantragtesBudget.compareTo(new BigDecimal(5000)) > 0) {
                 ausgabe.setBetrag(beantragtesBudget);
                 finanzierungsmittel.setBetrag(BigDecimal.ZERO);
@@ -228,10 +229,12 @@ public class AntragBuilder {
                 ausgabe.setBetrag(beantragtesBudget);
                 finanzierungsmittel.setBetrag(new BigDecimal(1000));
             }
-        } else if (finanzierungArt == FinanzierungArt.FEST) {
-            // Formula needs to be FEST: ausgabe <= 5000 AND finanzierungsmittel = 0
+            break;
+        case FEST:
+            // Formula needs to return FEST: ausgabe <= 5000 AND finanzierungsmittel = 0
             finanzierungsmittel.setBetrag(BigDecimal.ZERO);
             ausgabe.setBetrag(beantragtesBudget.min(new BigDecimal(5000)));
+            break;
         }
 
         Finanzierung finanzierung = Finanzierung.builder()
