@@ -41,3 +41,13 @@ all applications where all the following conditions are met:
 - The application was created between 27.10.2025 and 27.11.2025
 - The amount requested is greater than or equal to 1,000 EUR
 - The type of the application is "_Fehl_"
+
+## Sorting of the list
+
+The application list can be sorted by clicking on the column headers or through the according sort menu.
+This allows caseworkers to organize the applications based on different criteria.
+
+![Sorting of the application list](./application-list-sort.png)
+
+Only one column can be used for sorting at a time. An arrow icon next to the column header indicates the current sort
+order (ascending or descending).
