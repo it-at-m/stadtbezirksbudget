@@ -5,7 +5,8 @@ import { computed, readonly, ref } from "vue";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { useAntragListSort } from "@/composables/useAntragListSort.ts";
-import { STATUS_INDICATORS } from "@/constants.ts";
+import { ROUTES_DETAILS, STATUS_INDICATORS } from "@/constants.ts";
+import router from "@/plugins/router.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
@@ -84,6 +85,23 @@ export function useAntragSummaryList() {
     fetchItems();
   }
 
+  /**
+   * Navigates to the details view of a specific AntragSummary item.
+   * @param {MouseEvent} _
+   * @param {Object} props
+   * @param {AntragSummary} props.item - The AntragSummary item to view.
+   */
+  function goToDetails(_: MouseEvent, props: { item: AntragSummary }) {
+    router
+      .push({ name: ROUTES_DETAILS, params: { id: props.item.id } })
+      .catch(() => {
+        snackbarStore.showMessage({
+          message: "Fehler beim Öffnen der Detailansicht",
+          level: STATUS_INDICATORS.WARNING,
+        });
+      });
+  }
+
   filterStore.$subscribe(() => {
     page.value = 1;
     fetchItems();
@@ -100,8 +118,9 @@ export function useAntragSummaryList() {
     itemsPerPage: readonly(itemsPerPage),
     // Indicating whether data is currently being loaded.
     loading: readonly(loading),
-    fetchItems,
     sortBy,
+    fetchItems,
     updateOptions,
+    goToDetails,
   };
 }

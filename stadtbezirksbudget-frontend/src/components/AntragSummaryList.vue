@@ -17,6 +17,7 @@
     :page="page"
     data-test="antrag-summary-list"
     @update:options="updateOptions"
+    @click:row="goToDetails"
   >
     <template
       v-slot:[`header.beantragtesBudget`]="{
@@ -47,6 +48,8 @@
         :antrag-id="item.id"
         :initial-status="item.status"
         data-test="item-status"
+        @click.stop
+        @mousedown.stop
       />
     </template>
     <template v-slot:[`item.eingangDatum`]="{ item }">
@@ -95,8 +98,9 @@ const {
   page,
   itemsPerPage,
   loading,
-  updateOptions,
   sortBy,
+  updateOptions,
+  goToDetails,
 } = useAntragSummaryList();
 
 const screenWidth = ref(window.innerWidth);

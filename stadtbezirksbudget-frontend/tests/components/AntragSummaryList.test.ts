@@ -39,6 +39,7 @@ describe("AntragSummaryList", () => {
       itemsPerPage: ref(10),
       loading: ref(false),
       updateOptions: vi.fn(),
+      goToDetails: vi.fn(),
     };
 
     vi.mocked(useAntragSummaryList).mockReturnValue(mockUseAntragSummaryList);
@@ -219,5 +220,18 @@ describe("AntragSummaryList", () => {
       page: 3,
       itemsPerPage: 20,
     });
+  });
+
+  test("calls goToDetails on row click by emitting table event", async () => {
+    const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
+    dataTable.vm.$emit("click:row", new MouseEvent("click"), {
+      item: mockUseAntragSummaryList.items.value[0],
+    });
+    await wrapper.vm.$nextTick();
+
+    expect(mockUseAntragSummaryList.goToDetails).toHaveBeenCalledWith(
+      expect.any(MouseEvent),
+      { item: mockUseAntragSummaryList.items.value[0] }
+    );
   });
 });
