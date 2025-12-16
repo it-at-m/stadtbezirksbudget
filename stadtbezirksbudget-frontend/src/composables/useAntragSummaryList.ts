@@ -1,12 +1,15 @@
 import type AntragSummary from "@/types/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
-import { readonly, ref } from "vue";
+import { computed, readonly, ref } from "vue";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
+import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
+import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
+import { antragListSortToSortItem } from "@/types/AntragListSort.ts";
 
 /**
  * Composable function that manages the state and operations for a list of
@@ -19,12 +22,20 @@ import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 export function useAntragSummaryList() {
   const snackbarStore = useSnackbarStore();
   const filterStore = useAntragListFilterStore();
+  const sortingStore = useAntragListSortingStore();
+  const antragListSort = useAntragListSort();
 
   const items = ref<AntragSummary[]>([]);
   const totalItems = ref<number>(0);
   const page = ref<number>(1);
   const itemsPerPage = ref<number>(10);
   const loading = ref<boolean>(false);
+
+  // Computed property for the current sorting option
+  const sortBy = computed({
+    get: () => antragListSortToSortItem(sortingStore.sorting),
+    set: (value) => antragListSort.updateSortingWithSortItem(value),
+  });
 
   /**
    * Fetches the AntragSummary items from the API based on the current
@@ -36,7 +47,8 @@ export function useAntragSummaryList() {
     getAntragsSummaryList(
       page.value - 1,
       itemsPerPage.value,
-      filterStore.filters
+      filterStore.filters,
+      sortingStore.sorting
     )
       .then((content: Page<AntragSummary>) => {
         items.value = content.content;
@@ -89,6 +101,7 @@ export function useAntragSummaryList() {
     // Indicating whether data is currently being loaded.
     loading: readonly(loading),
     fetchItems,
+    sortBy,
     updateOptions,
   };
 }

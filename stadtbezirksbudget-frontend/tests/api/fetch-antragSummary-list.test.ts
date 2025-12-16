@@ -3,8 +3,16 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { BACKEND } from "@/constants.ts";
 import { defaultAntragListFilter } from "@/types/AntragListFilter";
+import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
 
 global.fetch = vi.fn();
+
+const testSorting: AntragListSort = {
+  ...createEmptyListSort(),
+  status: { sortBy: "status", sortDirection: "asc", title: "Status" },
+};
+
+const testSortingString = "sortBy=status&sortDirection=ASC";
 
 const mockResponse = {
   content: [],
@@ -22,7 +30,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    const result = await getAntragsSummaryList(1, 5, {});
+    const result = await getAntragsSummaryList(1, 5, {}, createEmptyListSort());
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5`,
@@ -37,10 +45,43 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    await getAntragsSummaryList(1, 5, { filter: "value" });
+    await getAntragsSummaryList(
+      1,
+      5,
+      { filter: "value" },
+      createEmptyListSort()
+    );
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5&filter=value`,
+      expect.any(Object)
+    );
+  });
+
+  test("fetches with correct parameters when sorting is applied", async () => {
+    (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    });
+
+    await getAntragsSummaryList(1, 5, {}, testSorting);
+
+    expect(fetch).toHaveBeenCalledWith(
+      `${BACKEND}/antrag?page=1&size=5&${testSortingString}`,
+      expect.any(Object)
+    );
+  });
+
+  test("fetches with correct parameters when both filters and sorting are applied", async () => {
+    (fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    });
+
+    await getAntragsSummaryList(1, 5, { filter: "value" }, testSorting);
+
+    expect(fetch).toHaveBeenCalledWith(
+      `${BACKEND}/antrag?page=1&size=5&filter=value&${testSortingString}`,
       expect.any(Object)
     );
   });
@@ -52,7 +93,12 @@ describe("fetch-antragSummary-list", () => {
     );
 
     await expect(
-      getAntragsSummaryList(1, 5, defaultAntragListFilter())
+      getAntragsSummaryList(
+        1,
+        5,
+        defaultAntragListFilter(),
+        createEmptyListSort()
+      )
     ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
   });
 
@@ -64,7 +110,12 @@ describe("fetch-antragSummary-list", () => {
     });
 
     await expect(
-      getAntragsSummaryList(1, 5, defaultAntragListFilter())
+      getAntragsSummaryList(
+        1,
+        5,
+        defaultAntragListFilter(),
+        createEmptyListSort()
+      )
     ).rejects.toThrow();
   });
 });
