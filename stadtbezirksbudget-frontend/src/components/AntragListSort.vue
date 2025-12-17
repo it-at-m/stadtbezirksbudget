@@ -29,7 +29,7 @@
             hide-details="auto"
             return-object
             variant="underlined"
-            @update:model-value="(v) => (v ? updateSorting(v) : resetSorting())"
+            @update:model-value="(v) => (v ? updateSorting(v) : clearSorting())"
           ></v-select>
         </v-col>
       </v-row>
@@ -42,5 +42,6 @@ import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { sortOptionsByField } from "@/types/AntragListSort.ts";
 import { sortDefinitions } from "@/types/AntragListSortDefinitions.ts";
 
-const { sorting, resetSorting, updateSorting } = useAntragListSort();
+const { sorting, resetSorting, clearSorting, updateSorting } =
+  useAntragListSort();
 </script>

@@ -8,6 +8,7 @@ import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
 import {
   AntragListSort,
   AntragListSortOption,
+  createDefaultListSort,
   createEmptyListSort,
 } from "@/types/AntragListSort";
 
@@ -47,9 +48,9 @@ describe("useAntragListSort", () => {
     const { resetSorting, sorting } = useAntragListSort();
 
     resetSorting();
-    expect(sorting.value).toStrictEqual(createEmptyListSort());
+    expect(sorting.value).toStrictEqual(createDefaultListSort());
     expect(sortingStoreMock.setSorting).toHaveBeenCalledWith(
-      createEmptyListSort()
+      createDefaultListSort()
     );
   });
 
@@ -69,7 +70,7 @@ describe("useAntragListSort", () => {
     });
   });
 
-  test("update sorting without new sort item resets store", () => {
+  test("update sorting without new sort item clears store", () => {
     const { updateSortingWithSortItem } = useAntragListSort();
 
     updateSortingWithSortItem(testEmptySortingItems);

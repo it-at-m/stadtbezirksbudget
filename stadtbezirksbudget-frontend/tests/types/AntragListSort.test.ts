@@ -1,11 +1,12 @@
 import type { DataTableSortItem } from "vuetify";
 
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 
 import {
   antragListSortOptionFromSortItems,
   antragListSortToSortDto,
   antragListSortToSortItem,
+  createDefaultListSort,
   createEmptyListSort,
   sortOptionsByField,
 } from "@/types/AntragListSort";
@@ -136,6 +137,35 @@ describe("AntragListSort", () => {
       sort["test"] = { title: "Test", sortBy: "test", sortDirection: "asc" };
       const res = antragListSortToSortItem(sort);
       expect(res).toEqual([{ key: "test", order: "asc" }]);
+    });
+  });
+
+  describe("createDefaultListSort", () => {
+    test("returns default sort with one entry", () => {
+      const defaultSort = createDefaultListSort();
+      const definedKeys = Object.keys(sortDefinitions);
+      const definedSortKeys = Object.keys(defaultSort).filter(
+        (key) => defaultSort[key as keyof typeof defaultSort] !== undefined
+      );
+      expect(definedSortKeys.length).toBe(1);
+      expect(definedKeys).toContain(definedSortKeys[0]);
+      expect(createDefaultListSort()).not.toStrictEqual(createEmptyListSort());
+    });
+
+    test("returns empty sort if no default sort is defined", async () => {
+      const spy = vi
+        .spyOn(
+          await import("@/types/AntragListSortDefinitions"),
+          "sortDefinitions",
+          "get"
+        )
+        .mockReturnValue({
+          testField: { label: "Test", dataTest: "test", options: [] },
+        });
+
+      expect(createDefaultListSort()).toStrictEqual(createEmptyListSort());
+
+      spy.mockRestore();
     });
   });
 });
