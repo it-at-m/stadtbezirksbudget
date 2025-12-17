@@ -43,9 +43,9 @@ public class SecurityConfiguration {
      * Creates an OAuth2AuthorizedClientManager bean.
      *
      * @param clientRegistrationRepository the repository of OAuth2 client registrations used to look up
-     *         client configurations
+     *            client configurations
      * @param authorizedClientService the service responsible for storing and retrieving authorized
-     *         OAuth2 clients (e.g. access and refresh tokens)
+     *            OAuth2 clients (e.g. access and refresh tokens)
      * @return the OAuth2AuthorizedClientManager
      */
     @Bean
@@ -58,7 +58,7 @@ public class SecurityConfiguration {
      * Creates a WebClient bean configured for OAuth2 authorization.
      *
      * @param authorizedClientManager the OAuth2AuthorizedClientManager used to manage authorized
-     *         clients
+     *            clients
      * @param registrationId the registration ID of the OAuth2 client to use for authorization
      * @param httpClient the HttpClient to be used by the WebClient
      * @return the authorized WebClient
@@ -89,27 +89,27 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests.requestMatchers(
-                                // allow access to /actuator/info
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/info"),
-                                // allow access to /actuator/health for OpenShift Health Check
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/health"),
-                                // allow access to /actuator/health/liveness for OpenShift Liveness Check
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/health/liveness"),
-                                // allow access to /actuator/health/readiness for OpenShift Readiness Check
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/health/readiness"),
-                                // allow access to SBOM overview
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/sbom"),
-                                // allow access to opean-api endpoints
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/v3/api-docs"),
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/v3/api-docs.yaml"),
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/v3/api-docs/**"),
-                                // allow access to swagger-ui
-                                PathPatternRequestMatcher.withDefaults().matcher("/swagger-ui/**"),
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/sbom"),
-                                // allow access to SBOM application data
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/sbom/application"),
-                                // allow access to /actuator/metrics for Prometheus monitoring in OpenShift
-                                PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/metrics"))
+                        // allow access to /actuator/info
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/info"),
+                        // allow access to /actuator/health for OpenShift Health Check
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/health"),
+                        // allow access to /actuator/health/liveness for OpenShift Liveness Check
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/health/liveness"),
+                        // allow access to /actuator/health/readiness for OpenShift Readiness Check
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/health/readiness"),
+                        // allow access to SBOM overview
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/sbom"),
+                        // allow access to opean-api endpoints
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/v3/api-docs"),
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/v3/api-docs.yaml"),
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/v3/api-docs/**"),
+                        // allow access to swagger-ui
+                        PathPatternRequestMatcher.withDefaults().matcher("/swagger-ui/**"),
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/sbom"),
+                        // allow access to SBOM application data
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/sbom/application"),
+                        // allow access to /actuator/metrics for Prometheus monitoring in OpenShift
+                        PathPatternRequestMatcher.withDefaults().matcher(HttpMethod.GET, "/actuator/metrics"))
                         .permitAll())
                 .authorizeHttpRequests((requests) -> requests
                         .anyRequest()
