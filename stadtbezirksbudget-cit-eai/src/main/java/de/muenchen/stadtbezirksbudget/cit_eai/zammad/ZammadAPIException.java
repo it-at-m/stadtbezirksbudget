@@ -9,14 +9,12 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
  */
 @Getter
 public class ZammadAPIException extends RuntimeException {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
     /**
      * Status code indicating that the status code is unknown.
      */
     public static final int STATUS_CODE_UNKNOWN = -1;
-
+    @Serial
+    private static final long serialVersionUID = 1L;
     private final int statusCode;
 
     /**
