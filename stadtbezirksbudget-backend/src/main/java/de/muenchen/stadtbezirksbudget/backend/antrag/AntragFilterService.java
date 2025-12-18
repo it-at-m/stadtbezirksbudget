@@ -18,11 +18,13 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AntragFilterService {
-
     /**
      * Builds a JPA Criteria Predicate that combines all non-null/non-empty filters from the provided
      * DTO.
@@ -36,6 +38,7 @@ public class AntragFilterService {
      */
     public Predicate filterAntrag(@NotNull final AntragFilterDTO filter, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return criteriaBuilder.and(
+                filterSearch(filter.search(), root, criteriaBuilder),
                 filterBezirksausschussNr(filter.bezirksausschussNr(), root, criteriaBuilder),
                 filterStatus(filter.status(), root, criteriaBuilder),
                 filterEingangsdatumVon(filter.eingangDatumVon(), root, criteriaBuilder),
@@ -48,6 +51,16 @@ public class AntragFilterService {
                 filterAktualisierungArt(filter.aktualisierungArt(), root, criteriaBuilder),
                 filterAktualisierungDatumVon(filter.aktualisierungDatumVon(), root, criteriaBuilder),
                 filterAktualisierungDatumBis(filter.aktualisierungDatumBis(), root, criteriaBuilder));
+    }
+
+    private Predicate filterSearch(final String search, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
+        if (search == null || search.isEmpty()) {
+            return criteriaBuilder.conjunction();
+        }
+        final String likePattern = "%" + search.toLowerCase(Locale.ROOT) + "%";
+        return criteriaBuilder.or(AntragFieldProvider.getSearchFields(root)
+                .map(field -> criteriaBuilder.like(criteriaBuilder.lower(field), likePattern))
+                .toArray(Predicate[]::new));
     }
 
     private Predicate filterStatus(final List<Status> statusList, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
