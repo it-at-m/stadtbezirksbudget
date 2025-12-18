@@ -7,6 +7,6 @@ import jakarta.validation.constraints.NotNull;
 /**
  * Data Transfer Object (DTO) for updating the status of an Antrag.
  */
-@ExcludedFromGeneratedCoverage // DTO is a pure data carrier (no logic) and therefore unreasonable to test.
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragStatusUpdateDTO(@NotNull Status status) {
 }
