@@ -20,5 +20,9 @@ export const useAntragListFilterStore = defineStore("antragListFilter", () => {
     filters.value = payload;
   }
 
-  return { filters, setFilters };
+  function setSearch(query: string | null) {
+    filters.value.search = query;
+  }
+
+  return { filters, setFilters, setSearch };
 });
