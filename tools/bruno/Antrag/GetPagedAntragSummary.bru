@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{backend}}/antrag?page=0&size=10&antragstellerName=Verein 10
+  url: {{backend}}/antrag?page=0&size=10&sortBy=status&sortDirection=ASC
   body: none
   auth: inherit
 }
@@ -13,7 +13,8 @@ get {
 params:query {
   page: 0
   size: 10
-  antragstellerName: Verein 10
+  sortBy: status
+  sortDirection: ASC
 }
 
 settings {

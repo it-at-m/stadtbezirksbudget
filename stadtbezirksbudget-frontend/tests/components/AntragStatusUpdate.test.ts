@@ -1,19 +1,14 @@
 import { mount } from "@vue/test-utils";
-import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
+import pinia from "@/plugins/pinia.ts";
+import vuetify from "@/plugins/vuetify.ts";
 import { statusOptions } from "../../src/types/Status";
 
 vi.mock("@/composables/useAntragStatusUpdate.ts");
-
-const pinia = createPinia();
-const vuetify = createVuetify({ components, directives });
 
 const createWrapper = () =>
   mount(AntragStatusUpdate, {

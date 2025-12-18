@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 
 import {
-  booleanToFestOrFehl,
   toDateString,
   toLocalISOString,
   toNumberString,
@@ -63,24 +62,6 @@ describe("formatter", () => {
     test("formats number with currency", () => {
       const amount = 1234.567;
       expect(toNumberString(amount, 2, "EUR")).toBe("1.234,57 €");
-    });
-  });
-
-  describe("booleanToFestOrFehl", () => {
-    test("formats true to 'Fehl'", () => {
-      expect(booleanToFestOrFehl(true)).toBe("Fehl");
-    });
-
-    test("formats false to 'Fest'", () => {
-      expect(booleanToFestOrFehl(false)).toBe("Fest");
-    });
-
-    test("formats null to empty string", () => {
-      expect(booleanToFestOrFehl(null)).toBe("");
-    });
-
-    test("formats undefined to empty string", () => {
-      expect(booleanToFestOrFehl(undefined)).toBe("");
     });
   });
 });

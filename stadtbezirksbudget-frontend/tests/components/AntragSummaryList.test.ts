@@ -1,29 +1,16 @@
 import { mount } from "@vue/test-utils";
-import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
 
 import AntragSummaryList from "@/components/AntragSummaryList.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import pinia from "@/plugins/pinia.ts";
+import vuetify from "@/plugins/vuetify.ts";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.mock("@/composables/useAntragSummaryList.ts");
 
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
-const pinia = createPinia();
-const vuetify = createVuetify({
-  components,
-  directives,
-});
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 describe("AntragSummaryList", () => {
   let wrapper;
@@ -42,7 +29,7 @@ describe("AntragSummaryList", () => {
           antragstellerName: "Test Antragsteller",
           projektTitel: "Test Projekt",
           beantragtesBudget: 5000,
-          istFehlbetrag: false,
+          finanzierungArt: "FEST",
           aktualisierung: "ZAMMAD",
           aktualisierungDatum: "2025-01-15",
         },
@@ -52,6 +39,7 @@ describe("AntragSummaryList", () => {
       itemsPerPage: ref(10),
       loading: ref(false),
       updateOptions: vi.fn(),
+      goToDetails: vi.fn(),
     };
 
     vi.mocked(useAntragSummaryList).mockReturnValue(mockUseAntragSummaryList);
@@ -80,7 +68,7 @@ describe("AntragSummaryList", () => {
     expect(wrapper.find('[data-test="item-beantragtes-budget"]').exists()).toBe(
       true
     );
-    expect(wrapper.find('[data-test="item-ist-fehlbetrag"]').exists()).toBe(
+    expect(wrapper.find('[data-test="item-finanzierung-art"]').exists()).toBe(
       true
     );
     expect(wrapper.find('[data-test="item-aktualisierung-art"]').exists()).toBe(
@@ -138,7 +126,7 @@ describe("AntragSummaryList", () => {
       "item-aktualisierung-art",
       "item-eingang-datum",
       "item-beantragtes-budget",
-      "item-ist-fehlbetrag",
+      "item-finanzierung-art",
     ];
 
     expectedItemSelectors.forEach((selector) => {
@@ -163,7 +151,7 @@ describe("AntragSummaryList", () => {
         antragstellerName: "Test Antragsteller 2",
         projektTitel: "Test Projekt 2",
         beantragtesBudget: 7500,
-        istFehlbetrag: false,
+        finanzierungArt: "FEST",
         aktualisierung: "FACHANWENDUNG",
         aktualisierungDatum: "2025-01-16",
       },
@@ -200,11 +188,11 @@ describe("AntragSummaryList", () => {
     expect(beantragtesBudgetElement.exists()).toBe(true);
     expect(beantragtesBudgetElement.text()).toBe("7.500");
 
-    const istFehlbetragElement = wrapper.find(
-      '[data-test="item-ist-fehlbetrag"]'
+    const finanzierungArtElement = wrapper.find(
+      '[data-test="item-finanzierung-art"]'
     );
-    expect(istFehlbetragElement.exists()).toBe(true);
-    expect(istFehlbetragElement.text()).toBe("Fest");
+    expect(finanzierungArtElement.exists()).toBe(true);
+    expect(finanzierungArtElement.text()).toBe("Fest");
   });
 
   test("updates props on pagination options change", async () => {
@@ -232,5 +220,18 @@ describe("AntragSummaryList", () => {
       page: 3,
       itemsPerPage: 20,
     });
+  });
+
+  test("calls goToDetails on row click by emitting table event", async () => {
+    const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
+    dataTable.vm.$emit("click:row", new MouseEvent("click"), {
+      item: mockUseAntragSummaryList.items.value[0],
+    });
+    await wrapper.vm.$nextTick();
+
+    expect(mockUseAntragSummaryList.goToDetails).toHaveBeenCalledWith(
+      expect.any(MouseEvent),
+      { item: mockUseAntragSummaryList.items.value[0] }
+    );
   });
 });

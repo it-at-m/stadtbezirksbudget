@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.stadtbezirksbudget</groupId>
     <artifactId>stadtbezirksbudget-cit-eai</artifactId>
-    <version>0.2.2-SNAPSHOT</version>
+    <version>0.3.1-SNAPSHOT</version>
 
     <name>stadtbezirksbudget-cit-eai</name>
     <description>In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more efficient. An online form is being introduced for citizens to submit their applications, along with a clear digital representation of the application for processing by administrative staff.
@@ -46,7 +46,7 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
 
         <!-- OpenAPI -->
-        <openapi-generator-maven-plugin.version>7.14.0</openapi-generator-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>7.17.0</openapi-generator-maven-plugin.version>
         <jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
 
         <!-- Core Frameworks -->
@@ -68,7 +68,7 @@
         <argLine /> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
 
         <!-- Release -->
-        <maven-release-plugin.version>3.2.0</maven-release-plugin.version>
+        <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
 
         <!-- Utility -->
         <refarch-tools.version>1.2.0</refarch-tools.version>
@@ -264,6 +264,44 @@
                             <goal>prepare-agent</goal>
                             <goal>report</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>*@de.muenchen.stadtbezirksbudget.cit_eai.common.ExcludedFromGeneratedCoverage*</exclude>
+                                <exclude>de/muenchen/stadtbezirksbudget/cit_eai/zammad/generated/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>check</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>*@de.muenchen.stadtbezirksbudget.cit_eai.common.ExcludedFromGeneratedCoverage*</exclude>
+                                <exclude>de/muenchen/stadtbezirksbudget/cit_eai/zammad/generated/**</exclude>
+                            </excludes>
+                            <rules>
+                                <rule>
+                                    <element>BUNDLE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>BRANCH</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.80</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

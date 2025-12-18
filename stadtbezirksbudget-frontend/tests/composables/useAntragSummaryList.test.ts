@@ -2,20 +2,31 @@ import type AntragSummary from "@/types/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
 import { beforeEach, describe, expect, test, vi } from "vitest";
+import { ref } from "vue";
+import { DataTableSortItem } from "vuetify/framework";
 
 import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
-import { STATUS_INDICATORS } from "@/constants.ts";
+import { ROUTES_DETAILS, STATUS_INDICATORS } from "@/constants.ts";
+import router from "@/plugins/router.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
+import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import {
   AntragListFilter,
-  emptyAntragListFilter,
+  defaultAntragListFilter,
 } from "@/types/AntragListFilter.ts";
+import {
+  AntragListSort,
+  antragListSortOptionFromSortItems,
+  createEmptyListSort,
+} from "@/types/AntragListSort";
 
 vi.mock("@/api/fetch-antragSummary-list.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
 vi.mock("@/stores/useAntragListFilterStore.ts");
+vi.mock("@/stores/useAntragListSortingStore.ts");
+vi.mock("@/plugins/router.ts", () => ({ default: { push: vi.fn() } }));
 
 describe("useAntragSummaryList", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
@@ -24,7 +35,12 @@ describe("useAntragSummaryList", () => {
     setFilters: ReturnType<typeof vi.fn>;
     $subscribe: ReturnType<typeof vi.fn>;
   };
-  const filtersValue = emptyAntragListFilter();
+  let sortingStoreMock: {
+    sorting: AntragListSort;
+    setSorting: ReturnType<typeof vi.fn>;
+  };
+  const filtersValue = defaultAntragListFilter();
+  const sortingValue = createEmptyListSort();
 
   beforeEach(() => {
     snackbarStoreMock = {
@@ -35,8 +51,14 @@ describe("useAntragSummaryList", () => {
       setFilters: vi.fn(),
       $subscribe: vi.fn(),
     };
+    sortingStoreMock = {
+      sorting: sortingValue,
+      setSorting: vi.fn(),
+    };
+
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
     (useAntragListFilterStore as vi.Mock).mockReturnValue(filterStoreMock);
+    (useAntragListSortingStore as vi.Mock).mockReturnValue(sortingStoreMock);
   });
 
   describe("fetchItems", () => {
@@ -53,7 +75,7 @@ describe("useAntragSummaryList", () => {
             antragstellerName: "Test Antragsteller 2",
             projektTitel: "Test Projekt 2",
             beantragtesBudget: 7500,
-            istFehlbetrag: false,
+            finanzierungArt: "FEST",
             aktualisierung: "Aktualisiert",
             aktualisierungDatum: "2025-01-16",
           },
@@ -120,7 +142,7 @@ describe("useAntragSummaryList", () => {
             antragstellerName: "Test Antragsteller",
             projektTitel: "Test Projekt",
             beantragtesBudget: 5000,
-            istFehlbetrag: false,
+            finanzierungArt: "FEST",
             aktualisierung: "Erstellt",
             aktualisierungDatum: "2025-01-15",
           },
@@ -134,7 +156,12 @@ describe("useAntragSummaryList", () => {
       updateOptions({ page: 2, itemsPerPage: 5 });
 
       await vi.waitFor(() => {
-        expect(getAntragsSummaryList).toHaveBeenCalledWith(1, 5, filtersValue);
+        expect(getAntragsSummaryList).toHaveBeenCalledWith(
+          1,
+          5,
+          filtersValue,
+          createEmptyListSort()
+        );
         expect(items.value).toEqual(mockResponse.content);
       });
     });
@@ -171,6 +198,61 @@ describe("useAntragSummaryList", () => {
     await vi.waitFor(() => {
       expect(page.value).toBe(1);
       expect(getAntragsSummaryList).toHaveBeenCalled();
+    });
+  });
+
+  test("updating computed value sortBy updates store", () => {
+    const { sortBy } = useAntragSummaryList();
+    const expectedSort = createEmptyListSort();
+    const sortItem: DataTableSortItem = { key: "status", order: "asc" };
+    expectedSort.status = antragListSortOptionFromSortItems([sortItem]);
+    sortBy.value = [sortItem];
+
+    expect(sortingStoreMock.setSorting).toHaveBeenCalled();
+    expect(sortingStoreMock.setSorting).toHaveBeenLastCalledWith(expectedSort);
+  });
+
+  test("getting computed value sortBy calls sorting store getter", () => {
+    const { sortBy } = useAntragSummaryList();
+    const sortingGetter = vi.fn(() => ref(createEmptyListSort()));
+    Object.defineProperty(sortingStoreMock, "sorting", {
+      get: sortingGetter,
+      configurable: true,
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    sortBy.value;
+
+    expect(sortingGetter).toHaveBeenCalled();
+  });
+
+  describe("goToDetails", () => {
+    test("calls router.push with the correct id", () => {
+      (router.push as vi.Mock).mockResolvedValue(undefined);
+      const { goToDetails } = useAntragSummaryList();
+
+      const item = { id: "42" } as AntragSummary;
+      goToDetails(null, { item });
+
+      expect(router.push).toHaveBeenCalledWith({
+        name: ROUTES_DETAILS,
+        params: { id: "42" },
+      });
+    });
+
+    test("shows snackbar on router error", async () => {
+      (router.push as vi.Mock).mockRejectedValue(new Error("fail"));
+      const { goToDetails } = useAntragSummaryList();
+
+      const item = { id: "99" } as AntragSummary;
+      goToDetails(null, { item });
+
+      await vi.waitFor(() => {
+        expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
+          message: "Fehler beim Öffnen der Detailansicht",
+          level: STATUS_INDICATORS.WARNING,
+        });
+      });
     });
   });
 });

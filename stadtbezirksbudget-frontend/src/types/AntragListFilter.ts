@@ -1,52 +1,52 @@
 import type { AktualisierungArt } from "@/types/AktualisierungArt.ts";
+import type { FinanzierungArt } from "@/types/FinanzierungArt.ts";
 import type { Status } from "@/types/Status.ts";
 
 // Interface for filtering Antrag list
 export interface AntragListFilter {
   status: Status[];
   bezirksausschussNr: number[];
-  eingangDatumVon?: Date;
-  eingangDatumBis?: Date;
-  antragstellerName?: string;
-  projektTitel?: string;
-  beantragtesBudgetVon?: number;
-  beantragtesBudgetBis?: number;
-  art?: string;
+  eingangDatumVon: Date | null;
+  eingangDatumBis: Date | null;
+  antragstellerName: string | null;
+  projektTitel: string | null;
+  beantragtesBudgetVon: number | null;
+  beantragtesBudgetBis: number | null;
+  finanzierungArt: FinanzierungArt | null;
   aktualisierungArt: AktualisierungArt[];
-  aktualisierungDatumVon?: Date;
-  aktualisierungDatumBis?: Date;
+  aktualisierungDatumVon: Date | null;
+  aktualisierungDatumBis: Date | null;
 }
 
-// Data Transfer Object for AntragListFilter
-export interface AntragListFilterDTO extends Omit<
-  AntragListFilter,
-  | "eingangDatumVon"
-  | "eingangDatumBis"
-  | "art"
-  | "aktualisierungDatumVon"
-  | "aktualisierungDatumBis"
-> {
-  eingangDatumVon?: string;
-  eingangDatumBis?: string;
-  istFehlbetrag?: boolean;
-  aktualisierungDatumVon?: string;
-  aktualisierungDatumBis?: string;
-}
+// Creates an AntragListFilter object with default values
+export const defaultAntragListFilter = (): AntragListFilter => ({
+  ...emptyAntragListFilter(),
+  status: [
+    "EINGEGANGEN",
+    "VOLLSTAENDIG",
+    "SITZUNGSVORLAGE_ERSTELLT",
+    "SITZUNGSVORLAGE_UEBERMITTELT",
+    "WARTEN_AUF_BUERGERRUECKMELDUNG",
+    "BESCHLUSS_ERHALTEN",
+    "ZUWENDUNGSBESCHEID_ERSTELLT",
+    "ZUWENDUNGSBESCHEID_VERSENDET",
+  ],
+});
 
 // Creates an empty AntragListFilter object
 export const emptyAntragListFilter = (): AntragListFilter => ({
   status: [],
   bezirksausschussNr: [],
-  eingangDatumVon: undefined,
-  eingangDatumBis: undefined,
-  antragstellerName: undefined,
-  projektTitel: undefined,
-  beantragtesBudgetVon: undefined,
-  beantragtesBudgetBis: undefined,
-  art: undefined,
+  eingangDatumVon: null,
+  eingangDatumBis: null,
+  antragstellerName: null,
+  projektTitel: null,
+  beantragtesBudgetVon: null,
+  beantragtesBudgetBis: null,
+  finanzierungArt: null,
   aktualisierungArt: [],
-  aktualisierungDatumVon: undefined,
-  aktualisierungDatumBis: undefined,
+  aktualisierungDatumVon: null,
+  aktualisierungDatumBis: null,
 });
 
 // Interface for Antrag list filter options

@@ -1,33 +1,19 @@
 import type { VueWrapper } from "@vue/test-utils";
 
 import { mount } from "@vue/test-utils";
-import { createPinia } from "pinia";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
-import { VDateInput } from "vuetify/labs/components";
 
 import AntragListFilter from "@/components/AntragListFilter.vue";
 import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
-import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
+import pinia from "@/plugins/pinia.ts";
+import vuetify from "@/plugins/vuetify.ts";
+import { defaultAntragListFilter } from "@/types/AntragListFilter.ts";
+import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
 
 vi.mock("@/composables/useAntragListFilter.ts");
-global.ResizeObserver = class {
-  observe() {
-    // Mock implementation: No action needed
-  }
-  disconnect() {
-    // Mock implementation: No action needed
-  }
-};
 
-const pinia = createPinia();
-const vuetify = createVuetify({
-  components: { ...components, VDateInput },
-  directives,
-});
+vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const inputFields = [
   {
@@ -51,7 +37,7 @@ const inputFields = [
     subFields: ["range-input-from", "range-input-to"],
   },
   {
-    dataTest: "antrag-list-filter-art",
+    dataTest: "antrag-list-filter-finanzierung-art",
   },
   {
     dataTest: "antrag-list-filter-aktualisierung-art",
@@ -70,7 +56,7 @@ describe("AntragListFilter", () => {
     mockUseAntragListFilter = {
       updateFilters: vi.fn(),
       resetFilters: vi.fn(),
-      filters: ref(emptyAntragListFilter()),
+      filters: ref(defaultAntragListFilter()),
     };
 
     vi.mocked(useAntragListFilter).mockReturnValue(mockUseAntragListFilter);

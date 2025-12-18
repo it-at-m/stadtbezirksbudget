@@ -1,5 +1,6 @@
 <template>
   <v-data-table-server
+    v-model:sortBy="sortBy"
     :cell-props="{
       style: {
         overflow: 'hidden',
@@ -15,15 +16,31 @@
     :loading="loading"
     :page="page"
     data-test="antrag-summary-list"
-    disable-sort
     @update:options="updateOptions"
+    @click:row="goToDetails"
   >
-    <template v-slot:[`header.beantragtesBudget`]>
+    <template
+      v-slot:[`header.beantragtesBudget`]="{
+        column,
+        toggleSort,
+        isSorted,
+        getSortIcon,
+      }"
+    >
       <div
-        class="text-left"
+        class="d-flex v-data-table-header__cell"
         data-test="header-beantragtes-budget"
+        style="cursor: pointer; align-items: center"
+        @click="() => toggleSort"
       >
-        Beantragtes<br />Budget [€]
+        <span class="mr-1 text-left"> Beantragtes <br />Budget [€] </span>
+        <v-icon
+          :class="[
+            'v-data-table-header__sort-icon',
+            { 'v-data-table-header__sort-icon--active': isSorted(column) },
+          ]"
+          :icon="getSortIcon(column)"
+        />
       </div>
     </template>
     <template v-slot:[`item.status`]="{ item }">
@@ -31,6 +48,8 @@
         :antrag-id="item.id"
         :initial-status="item.status"
         data-test="item-status"
+        @click.stop
+        @mousedown.stop
       />
     </template>
     <template v-slot:[`item.eingangDatum`]="{ item }">
@@ -53,9 +72,9 @@
         toNumberString(item.beantragtesBudget, 0)
       }}</span>
     </template>
-    <template v-slot:[`item.istFehlbetrag`]="{ item }">
-      <span data-test="item-ist-fehlbetrag">{{
-        booleanToFestOrFehl(item.istFehlbetrag)
+    <template v-slot:[`item.finanzierungArt`]="{ item }">
+      <span data-test="item-finanzierung-art">{{
+        FinanzierungArtText[item.finanzierungArt]
       }}</span>
     </template>
   </v-data-table-server>
@@ -70,14 +89,19 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
-import {
-  booleanToFestOrFehl,
-  toDateString,
-  toNumberString,
-} from "@/util/formatter.ts";
+import { FinanzierungArtText } from "@/types/FinanzierungArt.ts";
+import { toDateString, toNumberString } from "@/util/formatter.ts";
 
-const { items, totalItems, page, itemsPerPage, loading, updateOptions } =
-  useAntragSummaryList();
+const {
+  items,
+  totalItems,
+  page,
+  itemsPerPage,
+  loading,
+  sortBy,
+  updateOptions,
+  goToDetails,
+} = useAntragSummaryList();
 
 const screenWidth = ref(window.innerWidth);
 
@@ -139,7 +163,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
     },
     {
       title: "Art",
-      key: "istFehlbetrag",
+      key: "finanzierungArt",
       maxWidth: `${baseWidth}px`,
     },
     {

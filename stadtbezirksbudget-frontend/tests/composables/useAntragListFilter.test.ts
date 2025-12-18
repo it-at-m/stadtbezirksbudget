@@ -4,6 +4,7 @@ import { useAntragListFilter } from "@/composables/useAntragListFilter";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
+  defaultAntragListFilter,
   emptyAntragListFilter,
 } from "@/types/AntragListFilter";
 
@@ -21,7 +22,7 @@ const testFilters: AntragListFilter = {
   projektTitel: "TEST_TITEL",
   beantragtesBudgetVon: 537.25,
   beantragtesBudgetBis: 1098.98,
-  art: "Fest",
+  finanzierungArt: "FEST",
   aktualisierungArt: ["E_AKTE"],
   aktualisierungDatum: [new Date("2025-11-25T00:00:00Z")],
 };
@@ -56,7 +57,7 @@ describe("useAntragListFilter", () => {
       updateFilters();
       expect(filterStoreMock.setFilters).not.toHaveBeenCalled();
 
-      filters.value = emptyAntragListFilter();
+      filters.value = defaultAntragListFilter();
       updateFilters();
       expect(filterStoreMock.setFilters).toHaveBeenCalled();
     });

@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, test } from "vitest";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
-  emptyAntragListFilter,
+  defaultAntragListFilter,
 } from "@/types/AntragListFilter";
 
 const testFilters: AntragListFilter = {
@@ -19,7 +19,7 @@ const testFilters: AntragListFilter = {
   projektTitel: "TEST_TITEL",
   beantragtesBudgetVon: 537.25,
   beantragtesBudgetBis: 1098.98,
-  art: "Fest",
+  finanzierungArt: "FEST",
   aktualisierungArt: ["E_AKTE"],
   aktualisierungDatum: [new Date("2025-11-25T00:00:00Z")],
 };
@@ -29,9 +29,9 @@ describe("useAntragListFilterStore", () => {
     setActivePinia(createPinia());
   });
 
-  test("initially emptyAntragListFilter", () => {
+  test("initially defaultAntragListFilter", () => {
     const store = useAntragListFilterStore();
-    expect(store.filters).toStrictEqual(emptyAntragListFilter());
+    expect(store.filters).toStrictEqual(defaultAntragListFilter());
   });
 
   test("setFilters stores filter", () => {

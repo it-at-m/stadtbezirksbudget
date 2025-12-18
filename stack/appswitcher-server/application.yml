@@ -20,6 +20,6 @@ appswitcher.apps:
   kafka-ui:
     display-name: Kafka UI
     url: http://localhost:8089
-    image-url: https://raw.githubusercontent.com/provectus/kafka-ui/refs/heads/master/documentation/images/kafka-ui-logo.png
+    image-url: https://raw.githubusercontent.com/kafbat/kafka-ui/refs/heads/main/documentation/images/logo.png
     tags:
       - global

@@ -2,6 +2,8 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +12,11 @@ import java.io.Serial;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Formula;
 
@@ -21,9 +27,16 @@ import org.hibernate.annotations.Formula;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class Finanzierung extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
+    private static final String ART_FORMULA = "CASE " +
+            "WHEN (SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) > 5000 THEN 'FEHL' " +
+            "WHEN (SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) > 0 THEN 'FEHL' " +
+            "ELSE 'FEST' END";
 
     private boolean istProjektVorsteuerabzugsberechtigt;
     @NotNull private String kostenAnmerkung;
@@ -38,23 +51,14 @@ public class Finanzierung extends BaseEntity {
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @Builder.Default
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
     @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @Builder.Default
     private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
-    //TODO: Rewriting calculation for istFehlbetrag as it is currently wrong #356
-    //Ignored For Testing, as current calculation is wrong and will be changed.
-    /**
-     * This formula checks if the difference between the sum of anticipated expenditures
-     * (voraussichtliche_ausgabe)
-     * and the sum of financing means (finanzierungsmittel) equals the requested budget
-     * (beantragtes_budget).
-     * If they are equal, istFehlbetrag will be true; otherwise, it will be false.
-     */
-    @Formula(
-        "((SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) - " +
-                "(SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) = beantragtes_budget)"
-    )
-    private boolean istFehlbetrag;
+    @Formula(ART_FORMULA)
+    @Enumerated(EnumType.STRING)
+    private FinanzierungArt art;
 }

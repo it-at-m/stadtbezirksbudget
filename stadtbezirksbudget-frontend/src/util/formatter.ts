@@ -23,10 +23,12 @@ export function toTimeString(date: Date): string {
 /**
  * Formats the date to a local ISO string (YYYY-MM-DDTHH:mm:ss).
  * @param date - The date to format.
- * @returns The formatted date string or undefined if the date is invalid or undefined.
+ * @returns The formatted date string or undefined if the date is invalid.
  */
-export function toLocalISOString(date: Date | undefined): string | undefined {
-  if (date === undefined || !validateDate(date)) return undefined;
+export function toLocalISOString(
+  date: Date | undefined | null
+): string | undefined {
+  if (!date || !validateDate(date)) return undefined;
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
@@ -59,13 +61,4 @@ export function toNumberString(
  */
 function validateDate(date: Date): boolean {
   return date && !isNaN(date.getTime());
-}
-
-/**
- * Converts a boolean value to a string representation.
- * Returns "Fehl" for true, "Fest" for false, or an empty string for null/undefined.
- */
-export function booleanToFestOrFehl(value: boolean | null | undefined): string {
-  if (value == null) return "";
-  return value ? "Fehl" : "Fest";
 }
