@@ -20,8 +20,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepo
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,8 +66,6 @@ class AntragSearchIntegrationTest {
     private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     @Autowired
     private MockMvc mockMvc;
-    @PersistenceContext
-    private EntityManager entityManager;
 
     private AntragBuilder antragBuilder;
 
@@ -111,8 +107,6 @@ class AntragSearchIntegrationTest {
                 .build();
         antragBuilder.zammadNr("456000")
                 .build();
-        entityManager.flush();
-        entityManager.clear();
         mockMvc
                 .perform(get("/antrag")
                         .param("search", "123000")
