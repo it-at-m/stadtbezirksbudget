@@ -80,6 +80,7 @@
     <template v-slot:[`item.zammadNr`]="{ item }">
       <zammad-link
         :zammad-nr="item.zammadNr"
+        data-test="item-zammad-nr"
         @click.stop
         @mousedown.stop
       />
