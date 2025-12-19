@@ -57,9 +57,13 @@ public class AntragFilterService {
         if (search == null || search.isEmpty()) {
             return criteriaBuilder.conjunction();
         }
-        final String likePattern = "%" + search.toLowerCase(Locale.ROOT) + "%";
+        final String escapedSearch = search.toLowerCase(Locale.ROOT)
+                .replace("\\", "\\\\")
+                .replace("%", "\\%")
+                .replace("_", "\\_");
+        final String likePattern = "%" + escapedSearch + "%";
         return criteriaBuilder.or(AntragFieldProvider.getSearchFields(root)
-                .map(field -> criteriaBuilder.like(criteriaBuilder.lower(field), likePattern))
+                .map(field -> criteriaBuilder.like(criteriaBuilder.lower(field), likePattern, '\\'))
                 .toArray(Predicate[]::new));
     }
 
