@@ -19,11 +19,23 @@ import jakarta.validation.constraints.NotNull;
 import java.util.stream.Stream;
 
 /**
- * A record that lists the search fields for the {@link Antrag} entity.
- *
- * @param root The root entity representing the Antrag.
+ * A provider that lists the search fields for the {@link Antrag} entity.
  */
-public record AntragFieldProvider(@NotNull Root<Antrag> root) {
+public final class AntragFieldProvider {
+    private final Root<Antrag> root;
+    private final Join<Antrag, Vertretungsberechtigter> vertretungsberechtigter;
+    private final Join<Vertretungsberechtigter, Adresse> vertretungsberechtigterAdresse;
+
+    /**
+     * Constructor for AntragFieldProvider.
+     *
+     * @param root The root entity representing the Antrag.
+     */
+    private AntragFieldProvider(final @NotNull Root<Antrag> root) {
+        this.root = root;
+        this.vertretungsberechtigter = vertretungsberechtigterJoin();
+        this.vertretungsberechtigterAdresse = vertretungsberechtigterAdresseJoin();
+    }
 
     /**
      * Returns a stream of search fields for the {@link Antrag} entity.
@@ -41,9 +53,6 @@ public record AntragFieldProvider(@NotNull Root<Antrag> root) {
      * @return a stream of search fields.
      */
     public Stream<Expression<String>> getSearchFields() {
-        final Join<Antrag, Vertretungsberechtigter> vertretungsberechtigter = vertretungsberechtigter();
-        final Join<Vertretungsberechtigter, Adresse> vertretungsberechtigterAdresse = vertretungsberechtigterAdresse();
-
         return Stream.of(
                 root.get(Antrag_.zammadTicketNr),
                 root.get(Antrag_.aktenzeichen),
@@ -77,11 +86,11 @@ public record AntragFieldProvider(@NotNull Root<Antrag> root) {
                 vertretungsberechtigterAdresse.get(Adresse_.postleitzahl));
     }
 
-    private Join<Antrag, Vertretungsberechtigter> vertretungsberechtigter() {
+    private Join<Antrag, Vertretungsberechtigter> vertretungsberechtigterJoin() {
         return root.join(Antrag_.vertretungsberechtigter, JoinType.LEFT);
     }
 
-    private Join<Vertretungsberechtigter, Adresse> vertretungsberechtigterAdresse() {
-        return vertretungsberechtigter().join(Vertretungsberechtigter_.adresse, JoinType.LEFT);
+    private Join<Vertretungsberechtigter, Adresse> vertretungsberechtigterAdresseJoin() {
+        return vertretungsberechtigter.join(Vertretungsberechtigter_.adresse, JoinType.LEFT);
     }
 }
