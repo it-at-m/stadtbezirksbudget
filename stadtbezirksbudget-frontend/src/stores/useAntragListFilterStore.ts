@@ -20,6 +20,10 @@ export const useAntragListFilterStore = defineStore("antragListFilter", () => {
     filters.value = payload;
   }
 
+  /**
+   * Sets the search query.
+   * @param query - The new search query to apply.
+   */
   function setSearch(query: string | null) {
     filters.value.search = query;
   }
