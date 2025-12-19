@@ -19,11 +19,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class AntragFilterService {
     /**
      * Builds a JPA Criteria Predicate that combines all non-null/non-empty filters from the provided
