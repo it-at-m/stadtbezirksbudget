@@ -41,6 +41,9 @@ public record AntragFieldProvider(@NotNull Root<Antrag> root) {
      * @return a stream of search fields.
      */
     public Stream<Expression<String>> getSearchFields() {
+        final Join<Antrag, Vertretungsberechtigter> vertretungsberechtigter = vertretungsberechtigter();
+        final Join<Vertretungsberechtigter, Adresse> vertretungsberechtigterAdresse = vertretungsberechtigterAdresse();
+
         return Stream.of(
                 root.get(Antrag_.zammadTicketNr),
                 root.get(Antrag_.aktenzeichen),
@@ -63,15 +66,15 @@ public record AntragFieldProvider(@NotNull Root<Antrag> root) {
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.geldinstitut),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.iban),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.bic),
-                vertretungsberechtigter().get(Vertretungsberechtigter_.nachname),
-                vertretungsberechtigter().get(Vertretungsberechtigter_.vorname),
-                vertretungsberechtigter().get(Vertretungsberechtigter_.mobilNr),
-                vertretungsberechtigter().get(Vertretungsberechtigter_.telefonNr),
-                vertretungsberechtigter().get(Vertretungsberechtigter_.email),
-                vertretungsberechtigterAdresse().get(Adresse_.strasse),
-                vertretungsberechtigterAdresse().get(Adresse_.hausnummer),
-                vertretungsberechtigterAdresse().get(Adresse_.ort),
-                vertretungsberechtigterAdresse().get(Adresse_.postleitzahl));
+                vertretungsberechtigter.get(Vertretungsberechtigter_.nachname),
+                vertretungsberechtigter.get(Vertretungsberechtigter_.vorname),
+                vertretungsberechtigter.get(Vertretungsberechtigter_.mobilNr),
+                vertretungsberechtigter.get(Vertretungsberechtigter_.telefonNr),
+                vertretungsberechtigter.get(Vertretungsberechtigter_.email),
+                vertretungsberechtigterAdresse.get(Adresse_.strasse),
+                vertretungsberechtigterAdresse.get(Adresse_.hausnummer),
+                vertretungsberechtigterAdresse.get(Adresse_.ort),
+                vertretungsberechtigterAdresse.get(Adresse_.postleitzahl));
     }
 
     private Join<Antrag, Vertretungsberechtigter> vertretungsberechtigter() {
