@@ -46,6 +46,9 @@ class AntragSearchIntegrationTest {
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
+
+    private AntragBuilder antragBuilder;
+
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
@@ -66,8 +69,6 @@ class AntragSearchIntegrationTest {
     private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     @Autowired
     private MockMvc mockMvc;
-
-    private AntragBuilder antragBuilder;
 
     @BeforeEach
     public void setUp() {
