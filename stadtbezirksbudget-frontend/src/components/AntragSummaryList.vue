@@ -77,6 +77,13 @@
         FinanzierungArtText[item.finanzierungArt]
       }}</span>
     </template>
+    <template v-slot:[`item.zammadNr`]="{ item }">
+      <zammad-link
+        :zammad-nr="item.zammadNr"
+        @click.stop
+        @mousedown.stop
+      />
+    </template>
   </v-data-table-server>
 </template>
 
@@ -87,6 +94,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
+import ZammadLink from "@/components/ZammadLink.vue";
 import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
 import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
 import { FinanzierungArtText } from "@/types/FinanzierungArt.ts";
