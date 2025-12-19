@@ -71,8 +71,7 @@ public record AntragFieldProvider(@NotNull Root<Antrag> root) {
                 vertretungsberechtigterAdresse().get(Adresse_.strasse),
                 vertretungsberechtigterAdresse().get(Adresse_.hausnummer),
                 vertretungsberechtigterAdresse().get(Adresse_.ort),
-                vertretungsberechtigterAdresse().get(Adresse_.postleitzahl)
-        );
+                vertretungsberechtigterAdresse().get(Adresse_.postleitzahl));
     }
 
     private Join<Antrag, Vertretungsberechtigter> vertretungsberechtigter() {
