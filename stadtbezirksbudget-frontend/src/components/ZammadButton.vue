@@ -5,7 +5,7 @@
     target="_blank"
     variant="elevated"
   >
-    Zammadticket öffnen
+    Zammadticket
   </v-btn>
 </template>
 
