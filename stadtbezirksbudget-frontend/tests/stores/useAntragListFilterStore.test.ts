@@ -39,4 +39,11 @@ describe("useAntragListFilterStore", () => {
     store.setFilters(testFilters);
     expect(store.filters).toStrictEqual(testFilters);
   });
+
+  test("setSearch updates search", () => {
+    const store = useAntragListFilterStore();
+    const newSearch = "new search";
+    store.setSearch(newSearch);
+    expect(store.filters.search).toBe(newSearch);
+  });
 });

@@ -4,6 +4,7 @@ import type { Status } from "@/types/Status.ts";
 
 // Interface for filtering Antrag list
 export interface AntragListFilter {
+  search: string | null;
   status: Status[];
   bezirksausschussNr: number[];
   eingangDatumVon: Date | null;
@@ -35,6 +36,7 @@ export const defaultAntragListFilter = (): AntragListFilter => ({
 
 // Creates an empty AntragListFilter object
 export const emptyAntragListFilter = (): AntragListFilter => ({
+  search: null,
   status: [],
   bezirksausschussNr: [],
   eingangDatumVon: null,
