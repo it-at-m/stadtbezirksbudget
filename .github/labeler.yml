@@ -1,21 +1,21 @@
 "✨ Enhancement":
-  - head-branch: [ '^feat/' ]
+  - head-branch: ['^feat/']
 "🐛 Bug":
-  - head-branch: [ '^fix/' ]
+  - head-branch: ['^fix/']
 "🛠️ Maintenance":
-  - head-branch: [ '^chore/' ]
+  - head-branch: ['^chore/']
 "📝 Documentation":
-  - head-branch: [ '^docs/' ]
+  - head-branch: ['^docs/']
   - changed-files:
-      - any-glob-to-any-file: [ 'docs/**' ]
+      - any-glob-to-any-file: ['docs/**']
 "🔒️ Security":
-  - head-branch: [ '^security/' ]
+  - head-branch: ['^security/']
 "🏗️ Backend":
   - changed-files:
-      - any-glob-to-any-file: [ 'stadtbezirksbudget-backend/**' ]
+      - any-glob-to-any-file: ['stadtbezirksbudget-backend/**']
 "🏗️ CIT-EAI":
   - changed-files:
-      - any-glob-to-any-file: [ 'stadtbezirksbudget-cit-eai/**' ]
+      - any-glob-to-any-file: ['stadtbezirksbudget-cit-eai/**']
 "🏗️ Frontend":
   - changed-files:
-      - any-glob-to-any-file: [ 'stadtbezirksbudget-frontend/**' ]
+      - any-glob-to-any-file: ['stadtbezirksbudget-frontend/**']
