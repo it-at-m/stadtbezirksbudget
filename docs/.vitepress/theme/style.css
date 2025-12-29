@@ -19,6 +19,7 @@ footer.VPFooter {
     overflow: hidden;
     width: 23px;
   }
+
   /* Fixes compression of logo on phone screens */
   .VPNav div.logo a img {
     object-fit: cover;

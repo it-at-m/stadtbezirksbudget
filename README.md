@@ -1,3 +1,4 @@
+<!-- @formatter:off -->
 <!-- General project links -->
 [documentation]: https://it-at-m.github.io/stadtbezirksbudget/
 [itm-opensource]: https://opensource.muenchen.de/
@@ -19,12 +20,12 @@
 [architecture-decision-records]: https://it-at-m.github.io/stadtbezirksbudget/architecture/adr
 [conventions]: https://it-at-m.github.io/stadtbezirksbudget/development/conventions
 
-
 <!-- Shields.io links -->
 [documentation-shield]: https://img.shields.io/badge/documentation-blue?style=for-the-badge
 [new-issue-shield]: https://img.shields.io/badge/new%20issue-blue?style=for-the-badge
 [made-with-love-shield]: https://img.shields.io/badge/made%20with%20%E2%9D%A4%20by-it%40M-yellow?style=for-the-badge
 [license-shield]: https://img.shields.io/github/license/it-at-m/stadtbezirksbudget?style=for-the-badge
+<!-- @formatter:on -->
 
 # Stadtbezirksbudget
 
