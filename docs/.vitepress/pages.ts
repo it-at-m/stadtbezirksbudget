@@ -14,7 +14,7 @@ const pages: Page[] = [
   {
     text: "About",
     items: [
-      { text: "About", link: "/about/" },
+      { text: "Introduction", link: "/about/" },
       { text: "Status values", link: "/about/status-values" },
       { text: "Target process", link: "/about/target-process" },
       { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
@@ -41,7 +41,7 @@ const pages: Page[] = [
   {
     text: "Architecture",
     items: [
-      { text: "Architecture", link: "/architecture/" },
+      { text: "Architecture Description", link: "/architecture/" },
       {
         text: "Information Architecture",
         link: "/architecture/information-architecture",
