@@ -35,7 +35,7 @@ understanding the purpose of each branch at a glance.
 |-------------|---------|--------------------------------------------------------|-------------------------------|------------------|
 | `feature/`  | ✨       | Implementing a new feature or major functionality      | `feature/user-authentication` | ✨ Enhancement    |
 | `fix/`      | 🐛      | Fixing a non-critical bug, issue, or regression        | `fix/ui-button-display`       | 🐛 Bug           |
-| `hotfix/`   | 🚑️     | Fixing a critical issue that needs immediate resolving | `fix/crash-on-startup`        | 🚑️ Hotfix       |
+| `hotfix/`   | 🚑️     | Fixing a critical issue that needs immediate resolving | `hotfix/crash-on-startup`     | 🚑️ Hotfix       |
 | `docs/`     | 📝      | Documentation updates or improvements                  | `docs/api-usage-guide`        | 📝 Documentation |
 | `refactor/` | ♻️      | Code refactoring without changing existing behavior    | `refactor/database-layer`     | ♻️ Refactor      |
 | `ui/`       | 💄      | User interface or experience improvements              | `ui/button-alignment`         | 💄 UI/UX         |
