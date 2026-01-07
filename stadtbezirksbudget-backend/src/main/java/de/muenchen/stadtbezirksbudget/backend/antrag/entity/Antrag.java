@@ -6,7 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.io.Serial;
@@ -38,24 +37,22 @@ public class Antrag extends BaseEntity {
     @NotNull private LocalDateTime eingangDatum;
     private boolean istPersonVorsteuerabzugsberechtigt;
     private boolean istAndererZuwendungsantrag;
+    @NotNull private String zammadTicketNr;
+    @NotNull private LocalDateTime aktualisierungDatum;
+    @NotNull private String aktenzeichen;
+    @NotNull @Enumerated(EnumType.STRING)
+    private AktualisierungArt aktualisierungArt;
 
     @NotNull @Embedded
     @EmbeddedColumnNaming("bearbeitungsstand_%s")
     private Bearbeitungsstand bearbeitungsstand;
 
-    @NotNull @Enumerated(EnumType.STRING)
-    private AktualisierungArt aktualisierungArt;
-
-    @NotNull private String zammadTicketNr;
-
-    @NotNull private LocalDateTime aktualisierungDatum;
-
-    @NotNull private String aktenzeichen;
-
-    @NotNull @OneToOne
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("finanzierung_%s")
     private Finanzierung finanzierung;
 
     @NotNull @Embedded
+    @EmbeddedColumnNaming("projekt_%s")
     private Projekt projekt;
 
     @NotNull @Embedded
@@ -63,6 +60,7 @@ public class Antrag extends BaseEntity {
     private Antragsteller antragsteller;
 
     @NotNull @Embedded
+    @EmbeddedColumnNaming("bankverbindung_%s")
     private Bankverbindung bankverbindung;
 
     @Embedded
