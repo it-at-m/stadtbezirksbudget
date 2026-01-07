@@ -27,6 +27,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepo
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -167,6 +168,39 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.page.size", is(11)))
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(1)));
+        }
+    }
+
+    @Nested
+    class GetDetails {
+        @Test
+        void testGetDetails() throws Exception {
+            final Antrag antrag = antragBuilder.build();
+            final DateTimeFormatter isoFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS");
+
+            mockMvc
+                    .perform(get("/antrag/" + antrag.getId())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.projektTitel", is(antrag.getProjekt().getTitel())))
+                    .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().format(isoFormat))))
+                    .andExpect(jsonPath("$.antragstellerName", is(antrag.getAntragsteller().getName())))
+                    .andExpect(jsonPath("$.beantragtesBudget", is(antrag.getFinanzierung().getBeantragtesBudget().intValue())))
+                    .andExpect(jsonPath("$.rubrik", is("Rubrik")))
+                    .andExpect(jsonPath("$.status", is(antrag.getBearbeitungsstand().getStatus().name())))
+                    .andExpect(jsonPath("$.zammadNr", is(antrag.getZammadTicketNr())))
+                    .andExpect(jsonPath("$.aktenzeichen", is(antrag.getAktenzeichen())))
+                    .andExpect(jsonPath("$.istGegendert", is(true)))
+                    .andExpect(jsonPath("$.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
+        }
+
+        @Test
+        void testGetDetailsNotExisting() throws Exception {
+            mockMvc
+                    .perform(get("/antrag/80000000-0000-0000-0000-000000000013")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound());
         }
     }
 
