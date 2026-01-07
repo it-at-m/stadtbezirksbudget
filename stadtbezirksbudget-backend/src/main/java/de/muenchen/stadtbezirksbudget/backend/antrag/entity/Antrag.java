@@ -5,8 +5,8 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.io.Serial;
@@ -18,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.EmbeddedColumnNaming;
 
 /**
  * Represents a request that contains various attributes such as the date of receipt,
@@ -39,6 +40,7 @@ public class Antrag extends BaseEntity {
     private boolean istAndererZuwendungsantrag;
 
     @NotNull @Embedded
+    @EmbeddedColumnNaming("bearbeitungsstand_%s")
     private Bearbeitungsstand bearbeitungsstand;
 
     @NotNull @Enumerated(EnumType.STRING)
@@ -50,19 +52,21 @@ public class Antrag extends BaseEntity {
 
     @NotNull private String aktenzeichen;
 
-    @NotNull @Embedded
+    @NotNull @OneToOne
     private Finanzierung finanzierung;
 
-    @NotNull @ManyToOne
+    @NotNull @Embedded
     private Projekt projekt;
 
     @NotNull @Embedded
+    @EmbeddedColumnNaming("antragsteller_%s")
     private Antragsteller antragsteller;
 
     @NotNull @Embedded
     private Bankverbindung bankverbindung;
 
     @Embedded
+    @EmbeddedColumnNaming("vertretungsberechtigter_%s")
     private Vertretungsberechtigter vertretungsberechtigter;
 
     @OneToMany(mappedBy = "antrag")
