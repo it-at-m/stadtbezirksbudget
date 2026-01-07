@@ -23,7 +23,6 @@ const pages: Page[] = [
   {
     text: "Features",
     items: [
-      { text: "Data model", link: "/features/data-model" },
       {
         text: "Application list",
         link: "/features/application-list/",
@@ -52,6 +51,7 @@ const pages: Page[] = [
   {
     text: "Development",
     items: [
+      { text: "Data model", link: "/development/data-model" },
       { text: "Conventions", link: "/development/conventions" },
       { text: "Tools", link: "/development/tools" },
       { text: "Authorization", link: "/development/authorization" },
