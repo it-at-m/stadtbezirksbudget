@@ -1,4 +1,4 @@
-# Architecture
+# Architecture Description
 
 The following section presents the architecture diagram, illustrating the core systems and their interactions within the Stadtbezirksbudget application. This
 visual overview highlights how the form server, communication tools, documentation systems, and the specialized application work together to streamline the
