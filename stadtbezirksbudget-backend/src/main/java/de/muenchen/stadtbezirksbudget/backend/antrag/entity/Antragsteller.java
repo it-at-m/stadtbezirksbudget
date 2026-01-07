@@ -1,10 +1,12 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
-import jakarta.persistence.DiscriminatorValue;
+import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,15 +25,16 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@DiscriminatorValue("Antragsteller")
-public class Antragsteller extends Zahlungsempfaenger {
+public class Antragsteller extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @NotBlank private String name;
-
+    @NotBlank private String telefonNr;
+    @NotBlank private String email;
     @Enumerated(EnumType.STRING)
     private Rechtsform rechtsform;
-
     @NotBlank private String zielsetzung;
+    @NotNull @ManyToOne
+    private Adresse adresse;
 }
