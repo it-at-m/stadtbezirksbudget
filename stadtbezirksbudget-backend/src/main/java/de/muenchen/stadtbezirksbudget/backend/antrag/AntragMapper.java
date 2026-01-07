@@ -38,7 +38,7 @@ public interface AntragMapper {
     @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
     @Mapping(target = "rubrik", constant = "Rubrik") // Will be replaced in #356
     @Mapping(target = "zammadNr", source = "zammadTicketNr")
-    @Mapping(target = "istGegendert", constant = "true")// Will be replaced in #356
+    @Mapping(target = "istGegendert", constant = "true") // Will be replaced in #356
     @Mapping(target = "anmerkungen", source = "bearbeitungsstand.anmerkungen")
     AntragDetailsDTO toDetailsDTO(Antrag antrag);
 }
