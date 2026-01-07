@@ -30,16 +30,6 @@ import lombok.Setter;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
-@Table(
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "UniqueVertretungsberechtigter",
-                        columnNames = { "dtype", "telefonNr", "email", "adresse_id", "nachname", "vorname", "mobilNr" }
-                ),
-                @UniqueConstraint(
-                        name = "UniqueAntragsteller", columnNames = { "dtype", "telefonNr", "email", "adresse_id", "name", "zielsetzung", "rechtsform" }
-                ) }
-)
 public abstract class Zahlungsempfaenger extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;

@@ -27,7 +27,6 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "person", "geldinstitut", "iban", "bic", "zahlungsempfaenger_id" }))
 public class Bankverbindung extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;

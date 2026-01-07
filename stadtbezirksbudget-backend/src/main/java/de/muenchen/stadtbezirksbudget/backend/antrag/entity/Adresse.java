@@ -23,7 +23,6 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "strasse", "hausnummer", "ort", "postleitzahl" }))
 public class Adresse extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;

@@ -26,7 +26,6 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "titel", "beschreibung", "start", "ende" }))
 public class Projekt extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
