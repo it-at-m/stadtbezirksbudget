@@ -1,10 +1,11 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class Antragsteller extends BaseEntity {
@@ -35,6 +37,6 @@ public class Antragsteller extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Rechtsform rechtsform;
     @NotBlank private String zielsetzung;
-    @NotNull @ManyToOne
+    @NotNull @Embedded
     private Adresse adresse;
 }

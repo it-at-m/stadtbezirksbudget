@@ -1,13 +1,12 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.io.Serial;
@@ -39,7 +38,7 @@ public class Antrag extends BaseEntity {
     private boolean istPersonVorsteuerabzugsberechtigt;
     private boolean istAndererZuwendungsantrag;
 
-    @NotNull @OneToOne
+    @NotNull @Embedded
     private Bearbeitungsstand bearbeitungsstand;
 
     @NotNull @Enumerated(EnumType.STRING)
@@ -51,19 +50,19 @@ public class Antrag extends BaseEntity {
 
     @NotNull private String aktenzeichen;
 
-    @NotNull @OneToOne(fetch = FetchType.LAZY)
+    @NotNull @Embedded
     private Finanzierung finanzierung;
 
     @NotNull @ManyToOne
     private Projekt projekt;
 
-    @NotNull @ManyToOne
+    @NotNull @Embedded
     private Antragsteller antragsteller;
 
-    @NotNull @ManyToOne
+    @NotNull @Embedded
     private Bankverbindung bankverbindung;
 
-    @ManyToOne
+    @Embedded
     private Vertretungsberechtigter vertretungsberechtigter;
 
     @OneToMany(mappedBy = "antrag")
