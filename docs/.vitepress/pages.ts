@@ -30,7 +30,7 @@ const pages: Page[] = [
       },
       {
         text: "Zammad integration",
-        link: "/features/zammad-integration/",
+        link: "/features/zammad-integration",
       },
       {
         text: "Reliable communication",
