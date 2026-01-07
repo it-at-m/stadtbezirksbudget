@@ -28,7 +28,7 @@ public class Antragsteller {
     @NotBlank private String name;
     @NotBlank private String telefonNr;
     @NotBlank private String email;
-    @Enumerated(EnumType.STRING)
+    @NotNull @Enumerated(EnumType.STRING)
     private Rechtsform rechtsform;
     @NotBlank private String zielsetzung;
     @NotNull @Embedded

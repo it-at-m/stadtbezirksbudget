@@ -30,5 +30,5 @@ public class Vertretungsberechtigter {
     @NotNull @Embedded
     @EmbeddedColumnNaming("adresse_%s")
     private Adresse adresse;
-    private String mobilNr;
+    @NotNull private String mobilNr;
 }
