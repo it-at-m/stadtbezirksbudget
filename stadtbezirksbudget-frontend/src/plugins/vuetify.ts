@@ -10,6 +10,7 @@ import { VDateInput } from "vuetify/labs/components";
 import { createVueI18nAdapter } from "vuetify/locale/adapters/vue-i18n";
 
 import i18n from "@/plugins/i18n";
+import { virtualComponents } from "./virtual-components.ts";
 
 export default createVuetify({
   components: {
@@ -22,6 +23,8 @@ export default createVuetify({
       mdi,
     },
   },
+  aliases,
+  defaults: virtualComponents,
   theme: {
     themes: {
       light: {
