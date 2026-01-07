@@ -9,7 +9,7 @@ The Project is based on [Spring](https://spring.io/) and [Vue.js](https://vuejs.
 To learn more about the used reference architecture of IT@M, checkout its [documentation](https://refarch.oss.muenchen.de/)
 or [code](https://github.com/it-at-m/refarch).
 
-## Context
+## Introduction
 
 The application process within the city district is designed to facilitate effective communication between citizens and caseworkers, as well as among
 caseworkers, district committees, and other involved parties. This documentation outlines the intended workflow of our specialized application, which aims to
