@@ -37,5 +37,5 @@ public class Finanzierungsmittel extends BaseEntity {
     @NotNull private String direktoriumNotiz;
 
     @NotNull @ManyToOne
-    private Finanzierung finanzierung;
+    private Antrag antrag;
 }

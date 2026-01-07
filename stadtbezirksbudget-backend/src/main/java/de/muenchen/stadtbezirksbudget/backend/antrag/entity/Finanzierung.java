@@ -1,7 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
-import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
-import jakarta.persistence.Entity;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
@@ -23,16 +22,16 @@ import org.hibernate.annotations.Formula;
  * Represents the financing of a project.
  * Contains information about approved grants and various funding references.
  */
-@Entity
 @Getter
 @Setter
 @Builder
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Finanzierung extends BaseEntity {
+public class Finanzierung {
     private static final String ART_FORMULA = "CASE " +
-            "WHEN (SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) > 5000 THEN 'FEHL' " +
-            "WHEN (SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) > 0 THEN 'FEHL' " +
+            "WHEN (SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.antrag_id = id) > 5000 THEN 'FEHL' " +
+            "WHEN (SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.antrag_id = id) > 0 THEN 'FEHL' " +
             "ELSE 'FEST' END";
 
     private boolean istProjektVorsteuerabzugsberechtigt;
@@ -47,11 +46,11 @@ public class Finanzierung extends BaseEntity {
     @NotNull private String sonstigeFoerderhinweise;
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
-    @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @NotEmpty @OneToMany(mappedBy = "antrag")
     @Builder.Default
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
-    @NotEmpty @OneToMany(mappedBy = "finanzierung")
+    @NotEmpty @OneToMany(mappedBy = "antrag")
     @Builder.Default
     private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
