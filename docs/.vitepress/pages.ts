@@ -14,7 +14,7 @@ const pages: Page[] = [
   {
     text: "About",
     items: [
-      { text: "Introduction", link: "/about/" },
+      { text: "General", link: "/about/" },
       { text: "Status values", link: "/about/status-values" },
       { text: "Target process", link: "/about/target-process" },
       { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
