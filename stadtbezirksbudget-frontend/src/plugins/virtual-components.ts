@@ -20,4 +20,15 @@ export const defaults = {
   VBtnTertiary: {
     color: "#47617A",
   },
+  VNumberInput: {
+    variant: "outlined",
+    controlVariant: "hidden",
+  },
+  VTextField: {
+    variant: "outlined",
+  },
+  VTextarea: {
+    variant: "outlined",
+    autoGrow: true,
+  },
 };
