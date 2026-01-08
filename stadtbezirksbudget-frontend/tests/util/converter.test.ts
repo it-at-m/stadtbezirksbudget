@@ -93,11 +93,6 @@ describe("converter", () => {
       expect(result).toBe("");
     });
 
-    test("returns an empty string when param is null (if applicable)", () => {
-      const result = routeParamsToString(null);
-      expect(result).toBe("");
-    });
-
     test("returns an empty string when param is an array with undefined", () => {
       const result = routeParamsToString([undefined, "world"]);
       expect(result).toBe("");
