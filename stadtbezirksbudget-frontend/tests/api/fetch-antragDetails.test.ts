@@ -2,7 +2,7 @@ import type { AntragDetails } from "@/types/AntragDetails";
 
 import { afterEach, describe, expect, test, vi } from "vitest";
 
-import { getAntragDetails } from "@/api/fetch-AntragDetails.ts";
+import { getAntragDetails } from "@/api/fetch-antragDetails.ts";
 import { BACKEND } from "@/constants.ts";
 
 global.fetch = vi.fn();
