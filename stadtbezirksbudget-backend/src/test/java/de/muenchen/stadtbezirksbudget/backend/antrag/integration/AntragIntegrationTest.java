@@ -27,7 +27,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepo
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -176,7 +175,6 @@ class AntragIntegrationTest {
         @Test
         void testGetDetails() throws Exception {
             final Antrag antrag = antragBuilder.build();
-            final DateTimeFormatter isoFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS");
 
             mockMvc
                     .perform(get("/antrag/" + antrag.getId())
@@ -184,7 +182,7 @@ class AntragIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.projektTitel", is(antrag.getProjekt().getTitel())))
-                    .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().format(isoFormat))))
+                    .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().toString())))
                     .andExpect(jsonPath("$.antragstellerName", is(antrag.getAntragsteller().getName())))
                     .andExpect(jsonPath("$.beantragtesBudget", is(antrag.getFinanzierung().getBeantragtesBudget().intValue())))
                     .andExpect(jsonPath("$.rubrik", is("Rubrik")))
