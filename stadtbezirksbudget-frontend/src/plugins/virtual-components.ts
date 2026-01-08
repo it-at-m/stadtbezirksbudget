@@ -1,11 +1,11 @@
 import { VBtn } from "vuetify/components";
 
-export const aliases = {
+export const componentAliases = {
   VBtnPrimary: VBtn,
   VBtnSecondary: VBtn,
   VBtnTertiary: VBtn,
 };
-export const virtualComponents = {
+export const defaults = {
   VBtn: {
     density: "comfortable",
     rounded: "lg",
