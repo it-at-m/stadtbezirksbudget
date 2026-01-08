@@ -10,7 +10,7 @@ import { BACKEND } from "@/constants.ts";
 /**
  * Fetches the details of an Antrag by its id.
  * @param id - The id of the Antrag to get
- * @returns A promise that to the details of the requested Antrag
+ * @returns A promise that resolves to the details of the requested Antrag
  */
 export function getAntragDetails(id: string): Promise<AntragDetails> {
   return fetch(`${BACKEND}/antrag/${id}`, getConfig())

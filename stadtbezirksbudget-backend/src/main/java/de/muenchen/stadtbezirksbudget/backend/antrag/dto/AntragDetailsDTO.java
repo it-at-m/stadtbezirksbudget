@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Data Transfer Object (DTO) representing a details of an Antrag.
+ * Data Transfer Object (DTO) representing the details of an Antrag.
  */
 @ExcludedFromGeneratedCoverage // DTO is a pure data carrier (no logic) and therefore unreasonable to test.
 public record AntragDetailsDTO(
