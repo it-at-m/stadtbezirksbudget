@@ -184,7 +184,7 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.projektTitel", is(antrag.getProjekt().getTitel())))
                     .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().toString())))
                     .andExpect(jsonPath("$.antragstellerName", is(antrag.getAntragsteller().getName())))
-                    .andExpect(jsonPath("$.beantragtesBudget", is(antrag.getFinanzierung().getBeantragtesBudget().intValue())))
+                    .andExpect(jsonPath("$.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
                     .andExpect(jsonPath("$.rubrik", is("Rubrik")))
                     .andExpect(jsonPath("$.status", is(antrag.getBearbeitungsstand().getStatus().name())))
                     .andExpect(jsonPath("$.zammadNr", is(antrag.getZammadTicketNr())))
