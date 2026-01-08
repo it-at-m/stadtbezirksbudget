@@ -2,6 +2,8 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +21,10 @@ import lombok.Setter;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Adresse {
+public class Adresse implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @NotBlank private String strasse;
     @NotBlank private String hausnummer;
     @NotBlank private String ort;

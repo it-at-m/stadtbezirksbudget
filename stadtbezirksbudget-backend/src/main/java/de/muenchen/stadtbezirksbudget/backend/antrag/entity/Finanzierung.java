@@ -8,6 +8,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import java.io.Serial;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,10 @@ import org.hibernate.annotations.Formula;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Finanzierung {
+public class Finanzierung implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private static final String ART_FORMULA = "CASE " +
             "WHEN (SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.antrag_id = id) > 5000 THEN 'FEHL' " +
             "WHEN (SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.antrag_id = id) > 0 THEN 'FEHL' " +

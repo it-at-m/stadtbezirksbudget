@@ -6,6 +6,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +26,10 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Antragsteller {
+public class Antragsteller implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @NotBlank private String name;
     @NotBlank private String telefonNr;
     @NotBlank private String email;

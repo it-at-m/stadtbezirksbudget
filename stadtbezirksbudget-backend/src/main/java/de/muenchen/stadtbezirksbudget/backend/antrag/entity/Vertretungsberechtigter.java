@@ -4,6 +4,8 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +24,10 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Vertretungsberechtigter {
+public class Vertretungsberechtigter implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @NotBlank private String nachname;
     @NotBlank private String vorname;
     @NotBlank private String telefonNr;
