@@ -23,3 +23,19 @@ export function objectToSearchParams(
   });
   return params;
 }
+
+/**
+ * Converts a route parameter to a string.
+ *
+ * This function takes a route parameter which can be a string, an array of strings,
+ * or undefined. It returns the first string from the array, or the string itself,
+ * or an empty string if the parameter is undefined.
+ *
+ * @param {string | string[] | undefined} param - The route parameter to convert.
+ * @returns {string} The first string from the array, the string itself, or an empty string.
+ */
+export function routeParamsToString(
+  param: string | string[] | undefined
+): string {
+  return Array.isArray(param) ? (param[0] ?? "") : (param ?? "");
+}

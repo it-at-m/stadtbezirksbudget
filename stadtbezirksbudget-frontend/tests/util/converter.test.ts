@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 
-import { objectToSearchParams } from "@/util/converter.ts";
+import { objectToSearchParams, routeParamsToString } from "@/util/converter.ts";
 
 describe("converter", () => {
   describe("objectToSearchParams", () => {
@@ -69,6 +69,38 @@ describe("converter", () => {
     test("creates new URLSearchParams", () => {
       const params = objectToSearchParams({});
       expect(params).toBeInstanceOf(URLSearchParams);
+    });
+  });
+
+  describe("routeParamsToString", () => {
+    test("returns the string itself when param is a string", () => {
+      const result = routeParamsToString("hello");
+      expect(result).toBe("hello");
+    });
+
+    test("returns the first string from the array when param is an array", () => {
+      const result = routeParamsToString(["hello", "world"]);
+      expect(result).toBe("hello");
+    });
+
+    test("returns an empty string when param is an empty array", () => {
+      const result = routeParamsToString([]);
+      expect(result).toBe("");
+    });
+
+    test("returns an empty string when param is undefined", () => {
+      const result = routeParamsToString(undefined);
+      expect(result).toBe("");
+    });
+
+    test("returns an empty string when param is null (if applicable)", () => {
+      const result = routeParamsToString(null);
+      expect(result).toBe("");
+    });
+
+    test("returns an empty string when param is an array with undefined", () => {
+      const result = routeParamsToString([undefined, "world"]);
+      expect(result).toBe("");
     });
   });
 });
