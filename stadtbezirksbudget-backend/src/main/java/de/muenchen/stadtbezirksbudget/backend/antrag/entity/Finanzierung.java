@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -46,11 +47,11 @@ public class Finanzierung {
     @NotNull private String sonstigeFoerderhinweise;
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
-    @NotEmpty @OneToMany(mappedBy = "antrag")
+    @NotEmpty @OneToMany(mappedBy = "antrag", cascade = CascadeType.ALL)
     @Builder.Default
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
-    @NotEmpty @OneToMany(mappedBy = "antrag")
+    @NotEmpty @OneToMany(mappedBy = "antrag", cascade = CascadeType.ALL)
     @Builder.Default
     private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 
