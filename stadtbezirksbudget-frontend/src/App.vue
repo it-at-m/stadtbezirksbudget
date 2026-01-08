@@ -77,8 +77,8 @@ import { useToggle } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 
 import { getUser } from "@/api/user-client";
-import AntragListFilterMenu from "@/components/AntragListFilterMenu.vue";
-import AntragListSortMenu from "@/components/AntragListSortMenu.vue";
+import AntragListFilterMenu from "@/components/antragList/AntragListFilterMenu.vue";
+import AntragListSortMenu from "@/components/antragList/AntragListSortMenu.vue";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useInitializeStores } from "@/composables/useInitializeStores.ts";

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
 
-import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
+import { getAntragList } from "@/api/fetch-antragList.ts";
 import { BACKEND } from "@/constants.ts";
 import { defaultAntragListFilter } from "@/types/AntragListFilter";
 import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
@@ -19,7 +19,7 @@ const mockResponse = {
   page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
 };
 
-describe("fetch-antragSummary-list", () => {
+describe("fetch-antragList", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -30,7 +30,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    const result = await getAntragsSummaryList(1, 5, {}, createEmptyListSort());
+    const result = await getAntragList(1, 5, {}, createEmptyListSort());
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5`,
@@ -45,12 +45,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    await getAntragsSummaryList(
-      1,
-      5,
-      { filter: "value" },
-      createEmptyListSort()
-    );
+    await getAntragList(1, 5, { filter: "value" }, createEmptyListSort());
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5&filter=value`,
@@ -64,7 +59,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    await getAntragsSummaryList(1, 5, {}, testSorting);
+    await getAntragList(1, 5, {}, testSorting);
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5&${testSortingString}`,
@@ -78,7 +73,7 @@ describe("fetch-antragSummary-list", () => {
       json: async () => mockResponse,
     });
 
-    await getAntragsSummaryList(1, 5, { filter: "value" }, testSorting);
+    await getAntragList(1, 5, { filter: "value" }, testSorting);
 
     expect(fetch).toHaveBeenCalledWith(
       `${BACKEND}/antrag?page=1&size=5&filter=value&${testSortingString}`,
@@ -93,12 +88,7 @@ describe("fetch-antragSummary-list", () => {
     );
 
     await expect(
-      getAntragsSummaryList(
-        1,
-        5,
-        defaultAntragListFilter(),
-        createEmptyListSort()
-      )
+      getAntragList(1, 5, defaultAntragListFilter(), createEmptyListSort())
     ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
   });
 
@@ -110,12 +100,7 @@ describe("fetch-antragSummary-list", () => {
     });
 
     await expect(
-      getAntragsSummaryList(
-        1,
-        5,
-        defaultAntragListFilter(),
-        createEmptyListSort()
-      )
+      getAntragList(1, 5, defaultAntragListFilter(), createEmptyListSort())
     ).rejects.toThrow();
   });
 });

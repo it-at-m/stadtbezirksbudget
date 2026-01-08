@@ -5,8 +5,8 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 import { DataTableSortItem } from "vuetify/framework";
 
-import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
-import { useAntragSummaryList } from "@/composables/useAntragSummaryList";
+import { getAntragList } from "@/api/fetch-antragList.ts";
+import { useAntragList } from "@/composables/useAntragList";
 import { ROUTES_DETAILS, STATUS_INDICATORS } from "@/constants.ts";
 import router from "@/plugins/router.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
@@ -22,13 +22,13 @@ import {
   createEmptyListSort,
 } from "@/types/AntragListSort";
 
-vi.mock("@/api/fetch-antragSummary-list.ts");
+vi.mock("@/api/fetch-antragList.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
 vi.mock("@/stores/useAntragListFilterStore.ts");
 vi.mock("@/stores/useAntragListSortingStore.ts");
 vi.mock("@/plugins/router.ts", () => ({ default: { push: vi.fn() } }));
 
-describe("useAntragSummaryList", () => {
+describe("useAntragList", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
   let filterStoreMock: {
     filters: AntragListFilter;
@@ -83,8 +83,8 @@ describe("useAntragSummaryList", () => {
         page: { size: 5, number: 1, totalElements: 1, totalPages: 1 },
       };
 
-      (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
-      const { items, totalItems, fetchItems, loading } = useAntragSummaryList();
+      (getAntragList as vi.Mock).mockResolvedValue(mockResponse);
+      const { items, totalItems, fetchItems, loading } = useAntragList();
 
       fetchItems();
 
@@ -97,11 +97,9 @@ describe("useAntragSummaryList", () => {
 
     test("handles api errors when fetching items", async () => {
       const errorMessage = "API Error";
-      (getAntragsSummaryList as vi.Mock).mockRejectedValue(
-        new Error(errorMessage)
-      );
+      (getAntragList as vi.Mock).mockRejectedValue(new Error(errorMessage));
 
-      const { fetchItems, loading } = useAntragSummaryList();
+      const { fetchItems, loading } = useAntragList();
       fetchItems();
 
       await vi.waitFor(() => {
@@ -114,9 +112,9 @@ describe("useAntragSummaryList", () => {
     });
 
     test("handles generic errors when fetching items", async () => {
-      (getAntragsSummaryList as vi.Mock).mockRejectedValue(new Error());
+      (getAntragList as vi.Mock).mockRejectedValue(new Error());
 
-      const { fetchItems } = useAntragSummaryList();
+      const { fetchItems } = useAntragList();
       fetchItems();
 
       await vi.waitFor(() => {
@@ -150,13 +148,13 @@ describe("useAntragSummaryList", () => {
         page: { size: 10, number: 0, totalElements: 1, totalPages: 1 },
       };
 
-      (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
-      const { updateOptions, items } = useAntragSummaryList();
+      (getAntragList as vi.Mock).mockResolvedValue(mockResponse);
+      const { updateOptions, items } = useAntragList();
 
       updateOptions({ page: 2, itemsPerPage: 5 });
 
       await vi.waitFor(() => {
-        expect(getAntragsSummaryList).toHaveBeenCalledWith(
+        expect(getAntragList).toHaveBeenCalledWith(
           1,
           5,
           filtersValue,
@@ -167,7 +165,7 @@ describe("useAntragSummaryList", () => {
     });
 
     test("updates options correctly", () => {
-      const { updateOptions, page, itemsPerPage } = useAntragSummaryList();
+      const { updateOptions, page, itemsPerPage } = useAntragList();
 
       updateOptions({ page: 3, itemsPerPage: 15 });
 
@@ -186,9 +184,9 @@ describe("useAntragSummaryList", () => {
       content: [],
       page: { size: 10, number: 0, totalElements: 0, totalPages: 0 },
     };
-    (getAntragsSummaryList as vi.Mock).mockResolvedValue(mockResponse);
+    (getAntragList as vi.Mock).mockResolvedValue(mockResponse);
 
-    const { page, updateOptions } = useAntragSummaryList();
+    const { page, updateOptions } = useAntragList();
 
     updateOptions({ page: 5, itemsPerPage: 10 });
     expect(page.value).toBe(5);
@@ -197,12 +195,12 @@ describe("useAntragSummaryList", () => {
 
     await vi.waitFor(() => {
       expect(page.value).toBe(1);
-      expect(getAntragsSummaryList).toHaveBeenCalled();
+      expect(getAntragList).toHaveBeenCalled();
     });
   });
 
   test("updating computed value sortBy updates store", () => {
-    const { sortBy } = useAntragSummaryList();
+    const { sortBy } = useAntragList();
     const expectedSort = createEmptyListSort();
     const sortItem: DataTableSortItem = { key: "status", order: "asc" };
     expectedSort.status = antragListSortOptionFromSortItems([sortItem]);
@@ -213,7 +211,7 @@ describe("useAntragSummaryList", () => {
   });
 
   test("getting computed value sortBy calls sorting store getter", () => {
-    const { sortBy } = useAntragSummaryList();
+    const { sortBy } = useAntragList();
     const sortingGetter = vi.fn(() => ref(createEmptyListSort()));
     Object.defineProperty(sortingStoreMock, "sorting", {
       get: sortingGetter,
@@ -229,7 +227,7 @@ describe("useAntragSummaryList", () => {
   describe("goToDetails", () => {
     test("calls router.push with the correct id", () => {
       (router.push as vi.Mock).mockResolvedValue(undefined);
-      const { goToDetails } = useAntragSummaryList();
+      const { goToDetails } = useAntragList();
 
       const item = { id: "42" } as AntragSummary;
       goToDetails(null, { item });
@@ -242,7 +240,7 @@ describe("useAntragSummaryList", () => {
 
     test("shows snackbar on router error", async () => {
       (router.push as vi.Mock).mockRejectedValue(new Error("fail"));
-      const { goToDetails } = useAntragSummaryList();
+      const { goToDetails } = useAntragList();
 
       const item = { id: "99" } as AntragSummary;
       goToDetails(null, { item });
