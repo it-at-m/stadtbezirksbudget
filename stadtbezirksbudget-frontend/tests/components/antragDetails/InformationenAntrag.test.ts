@@ -1,6 +1,9 @@
-import { mount } from "@vue/test-utils";
-import { describe, expect, test, vi } from "vitest";
+import type { VueWrapper } from "@vue/test-utils";
 
+import { mount } from "@vue/test-utils";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+
+import DetailsCard from "@/components/antragDetails/DetailsCard.vue";
 import InformationenAntrag from "@/components/antragDetails/InformationenAntrag.vue";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
@@ -79,11 +82,16 @@ const fields = [
 ];
 
 describe("InformationenAntrag.vue", () => {
-  const wrapper = mount(InformationenAntrag, {
-    global: { plugins: [pinia, vuetify] },
-    props: { antrag: mockAntrag },
+  let wrapper: VueWrapper<InstanceType<typeof InformationenAntrag>>;
+  let card: VueWrapper<InstanceType<typeof DetailsCard>>;
+
+  beforeEach(() => {
+    wrapper = mount(InformationenAntrag, {
+      global: { plugins: [pinia, vuetify] },
+      props: { antrag: mockAntrag },
+    });
+    card = wrapper.findComponent({ name: "DetailsCard" });
   });
-  const card = wrapper.findComponent({ name: "DetailsCard" });
 
   test("renders details card", () => {
     expect(card.exists()).toBe(true);

@@ -1,19 +1,28 @@
+import type { VueWrapper } from "@vue/test-utils";
+
 import { mount } from "@vue/test-utils";
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test } from "vitest";
 
 import DetailsCard from "@/components/antragDetails/DetailsCard.vue";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
 
 describe("DetailsCard.vue", () => {
-  const wrapper = mount(DetailsCard, {
-    global: { plugins: [pinia, vuetify] },
-    props: { title: "Test Titel" },
-    slots: { default: '<p data-test="slot">Slot Content</p>' },
+  let wrapper: VueWrapper<InstanceType<typeof DetailsCard>>;
+  let vCard: VueWrapper<Element>;
+  let vCardTitle: VueWrapper<Element>;
+  let vCardText: VueWrapper<Element>;
+
+  beforeEach(() => {
+    wrapper = mount(DetailsCard, {
+      global: { plugins: [pinia, vuetify] },
+      props: { title: "Test Titel" },
+      slots: { default: '<p data-test="slot">Slot Content</p>' },
+    });
+    vCard = wrapper.findComponent({ name: "VCard" });
+    vCardTitle = vCard.findComponent({ name: "VCardTitle" });
+    vCardText = vCard.findComponent({ name: "VCardText" });
   });
-  const vCard = wrapper.findComponent({ name: "VCard" });
-  const vCardTitle = vCard.findComponent({ name: "VCardTitle" });
-  const vCardText = vCard.findComponent({ name: "VCardText" });
 
   test("renders v-card", () => {
     expect(vCard.exists()).toBe(true);
