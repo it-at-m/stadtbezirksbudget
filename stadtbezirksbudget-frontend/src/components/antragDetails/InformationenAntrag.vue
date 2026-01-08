@@ -127,7 +127,10 @@ const props = defineProps<{ antrag: AntragDetails }>();
 
 const antrag = ref<AntragDetails>(props.antrag);
 
-watch(props.antrag, () => {
-  antrag.value = props.antrag;
-});
+watch(
+  () => props.antrag,
+  (newAntrag) => {
+    antrag.value = newAntrag;
+  }
+);
 </script>
