@@ -1,6 +1,9 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.repository;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
+import de.muenchen.stadtbezirksbudget.backend.common.NameView;
+import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -15,4 +18,14 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AntragRepository extends PagingAndSortingRepository<Antrag, UUID>, CrudRepository<Antrag, UUID>, JpaSpecificationExecutor<Antrag> {
+
+    /**
+     * Retrieves all distinct antragsteller_name as List of NameView
+     */
+    List<NameView> findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc();
+
+    /**
+     * Retrieves all distinct projekt_title as List of TitelView
+     */
+    List<TitelView> findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc();
 }

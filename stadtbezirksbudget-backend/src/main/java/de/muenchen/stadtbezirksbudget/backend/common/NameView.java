@@ -1,5 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.common;
 
 public interface NameView {
-    String getName();
+    String getAntragsteller_Name();
 }
