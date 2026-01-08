@@ -22,10 +22,14 @@ public interface AntragRepository extends PagingAndSortingRepository<Antrag, UUI
     /**
      * Retrieves all distinct antragsteller_name as List of NameView
      */
+    @SuppressWarnings("PMD.MethodNamingConventions")
     List<NameView> findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc();
 
     /**
      * Retrieves all distinct projekt_title as List of TitelView
      */
+    @SuppressWarnings("PMD.MethodNamingConventions")
     List<TitelView> findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc();
+
+    List<Antrag> getAntragById(UUID id);
 }
