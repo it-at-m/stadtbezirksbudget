@@ -43,18 +43,13 @@ class AntragSortingIntegrationTest {
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
     private MockMvc mockMvc;
 
     private AntragBuilder antragBuilder;
 
     @BeforeEach
     public void setUp() {
-        antragBuilder = new AntragBuilder(antragRepository,
-                finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        antragBuilder = new AntragBuilder(antragRepository);
     }
 
     @Test

@@ -50,10 +50,6 @@ class AntragFilteringIntegrationTest {
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
     private MockMvc mockMvc;
     @PersistenceContext
     private EntityManager entityManager;
@@ -62,7 +58,7 @@ class AntragFilteringIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        antragBuilder = new AntragBuilder(antragRepository, finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        antragBuilder = new AntragBuilder(antragRepository);
     }
 
     @Test

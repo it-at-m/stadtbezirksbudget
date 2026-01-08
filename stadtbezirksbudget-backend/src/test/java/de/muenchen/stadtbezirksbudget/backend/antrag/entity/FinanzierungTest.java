@@ -45,10 +45,6 @@ class FinanzierungTest {
 
     @Autowired
     private AntragRepository antragRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
 
     private Finanzierung createFinanzierung(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final Antrag antrag) {
         final Finanzierung finanzierung = Finanzierung.builder()
@@ -111,7 +107,7 @@ class FinanzierungTest {
 
         @BeforeEach
         public void setUp() {
-            antragBuilder = new AntragBuilder(antragRepository, finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+            antragBuilder = new AntragBuilder(antragRepository);
         }
 
         @ParameterizedTest

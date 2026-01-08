@@ -57,10 +57,6 @@ class AntragIntegrationTest {
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
@@ -70,8 +66,7 @@ class AntragIntegrationTest {
     @BeforeEach
     public void setUp() {
         antragList.clear();
-        antragBuilder = new AntragBuilder(antragRepository,
-                finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        antragBuilder = new AntragBuilder(antragRepository);
     }
 
     @Nested

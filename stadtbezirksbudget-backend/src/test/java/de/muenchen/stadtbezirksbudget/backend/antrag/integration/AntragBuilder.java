@@ -53,10 +53,7 @@ public class AntragBuilder {
     private String antragstellerName;
     private String projektTitel;
 
-    public AntragBuilder(
-            final AntragRepository antragRepository,
-            final FinanzierungsmittelRepository finanzierungsmittelRepository,
-            final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository) {
+    public AntragBuilder(final AntragRepository antragRepository) {
         this.antragRepository = antragRepository;
         setRandomValues();
     }

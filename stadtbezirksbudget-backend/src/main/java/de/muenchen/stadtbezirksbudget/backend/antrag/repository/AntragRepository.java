@@ -30,6 +30,4 @@ public interface AntragRepository extends PagingAndSortingRepository<Antrag, UUI
      */
     @SuppressWarnings("PMD.MethodNamingConventions")
     List<TitelView> findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc();
-
-    List<Antrag> getAntragById(UUID id);
 }
