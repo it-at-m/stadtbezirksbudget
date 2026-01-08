@@ -5,7 +5,8 @@ import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_P
 import static org.assertj.core.api.Assertions.assertThat;
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.integration.AntragBuilder;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import jakarta.persistence.EntityManager;
@@ -13,6 +14,7 @@ import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -42,13 +44,13 @@ class FinanzierungTest {
     private EntityManager entityManager;
 
     @Autowired
-    private FinanzierungRepository finanzierungRepository;
+    private AntragRepository antragRepository;
     @Autowired
     private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
 
-    private Finanzierung createFinanzierung(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen) {
+    private Finanzierung createFinanzierung(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final Antrag antrag) {
         final Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(false)
                 .kostenAnmerkung("Kosten Anmerkung")
@@ -67,31 +69,26 @@ class FinanzierungTest {
                 .kategorie("Kategorie")
                 .betrag(betrag)
                 .direktoriumNotiz("Notiz")
-                .finanzierung(finanzierung)
+                .antrag(antrag)
                 .build()).toList();
 
         final List<Finanzierungsmittel> finanzierungsmittel = finanzierungen.stream().map(betrag -> Finanzierungsmittel.builder()
                 .kategorie(Kategorie.EIGENMITTEL)
                 .betrag(betrag)
                 .direktoriumNotiz("Notiz")
-                .finanzierung(finanzierung)
+                .antrag(antrag)
                 .build()).toList();
 
         finanzierung.setVoraussichtlicheAusgaben(voraussichtlicheAusgaben);
         finanzierung.setFinanzierungsmittel(finanzierungsmittel);
 
-        final Finanzierung savedFinanzierung = finanzierungRepository.save(finanzierung);
-        voraussichtlicheAusgabeRepository.saveAll(voraussichtlicheAusgaben);
-        finanzierungsmittelRepository.saveAll(finanzierungsmittel);
-
-        entityManager.flush();
-        entityManager.clear();
-
-        return savedFinanzierung;
+        return finanzierung;
     }
 
     @Nested
     class Art {
+        private AntragBuilder antragBuilder;
+
         private static Arguments args(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final FinanzierungArt art) {
             return Arguments.of(ausgaben, finanzierungen, art);
         }
@@ -112,12 +109,20 @@ class FinanzierungTest {
                             FinanzierungArt.FEHL));
         }
 
+        @BeforeEach
+        public void setUp() {
+            antragBuilder = new AntragBuilder(antragRepository, finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        }
+
         @ParameterizedTest
         @MethodSource("artTestData")
         void testArtDetermination(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final FinanzierungArt expectedArt) {
-            final Finanzierung created = createFinanzierung(ausgaben, finanzierungen);
-            final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
-            assertThat(loaded.getArt()).isEqualTo(expectedArt);
+            Antrag antrag = antragBuilder.getAntrag();
+            antrag.setFinanzierung(createFinanzierung(ausgaben, finanzierungen, antrag));
+            antrag = antragRepository.save(antrag);
+            entityManager.flush();
+            entityManager.clear();
+            assertThat(antragRepository.findById(antrag.getId()).orElseThrow().getFinanzierung().getArt()).isEqualTo(expectedArt);
         }
     }
 }
