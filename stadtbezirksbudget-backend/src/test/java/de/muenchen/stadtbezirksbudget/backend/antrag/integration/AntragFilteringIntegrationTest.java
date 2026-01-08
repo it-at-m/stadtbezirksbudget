@@ -11,12 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
@@ -203,7 +200,7 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByFinanzierungArt() throws Exception {
-        Antrag a = antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
+        antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .build();
         antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .build();
