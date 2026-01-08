@@ -19,6 +19,7 @@ const mockResponse: AntragDetails = {
   istGegendert: true,
   anmerkungen: "Test Anmerkungen",
 };
+const id = "80000000-0000-0000-0000-000000000013";
 
 describe("fetch-antragDetails", () => {
   afterEach(() => {
@@ -31,7 +32,6 @@ describe("fetch-antragDetails", () => {
       json: async () => mockResponse,
     });
 
-    const id = "80000000-0000-0000-0000-000000000013";
     const result = await getAntragDetails(id);
 
     expect(fetch).toHaveBeenCalledWith(
@@ -47,7 +47,7 @@ describe("fetch-antragDetails", () => {
       new Error(errorMessage)
     );
 
-    await expect(getAntragDetails()).rejects.toThrow();
+    expect(getAntragDetails(id)).rejects.toThrow();
   });
 
   test("handles http errors", async () => {
@@ -57,6 +57,6 @@ describe("fetch-antragDetails", () => {
       statusText: "Not Found",
     });
 
-    await expect(getAntragDetails()).rejects.toThrow();
+    expect(getAntragDetails(id)).rejects.toThrow();
   });
 });
