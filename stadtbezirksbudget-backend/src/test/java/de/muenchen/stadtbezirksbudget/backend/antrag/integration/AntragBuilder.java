@@ -14,14 +14,8 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Rechtsform;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -42,19 +36,11 @@ import java.util.UUID;
  * Antrag second = builder.setBezirksausschussNr(2).build(); // starts from defaults
  * </pre>
  */
-@SuppressWarnings({ "PMD.CouplingBetweenObjects", "PMD.AvoidFieldNameMatchingMethodName" })
+@SuppressWarnings({ "PMD.AvoidFieldNameMatchingMethodName" })
 public class AntragBuilder {
     private static final int LIMIT = 100_000;
     private static final Random RANDOM = new Random();
     private final AntragRepository antragRepository;
-    private final AdresseRepository adresseRepository;
-    private final FinanzierungRepository finanzierungRepository;
-    private final AntragstellerRepository antragstellerRepository;
-    private final ProjektRepository projektRepository;
-    private final BearbeitungsstandRepository bearbeitungsstandRepository;
-    private final BankverbindungRepository bankverbindungRepository;
-    private final FinanzierungsmittelRepository finanzierungsmittelRepository;
-    private final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     private Status status;
     private int bezirksausschussNr;
     private LocalDateTime eingangDatum;
@@ -69,23 +55,9 @@ public class AntragBuilder {
 
     public AntragBuilder(
             final AntragRepository antragRepository,
-            final AdresseRepository adresseRepository,
-            final FinanzierungRepository finanzierungRepository,
-            final AntragstellerRepository antragstellerRepository,
-            final ProjektRepository projektRepository,
-            final BearbeitungsstandRepository bearbeitungsstandRepository,
-            final BankverbindungRepository bankverbindungRepository,
             final FinanzierungsmittelRepository finanzierungsmittelRepository,
             final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository) {
         this.antragRepository = antragRepository;
-        this.adresseRepository = adresseRepository;
-        this.finanzierungRepository = finanzierungRepository;
-        this.antragstellerRepository = antragstellerRepository;
-        this.projektRepository = projektRepository;
-        this.bearbeitungsstandRepository = bearbeitungsstandRepository;
-        this.bankverbindungRepository = bankverbindungRepository;
-        this.finanzierungsmittelRepository = finanzierungsmittelRepository;
-        this.voraussichtlicheAusgabeRepository = voraussichtlicheAusgabeRepository;
         setRandomValues();
     }
 
@@ -163,14 +135,13 @@ public class AntragBuilder {
     }
 
     private Adresse initializeAdresse() {
-        return adresseRepository.save(
-                Adresse.builder()
-                        // Generate random UUIDs to ensure unique strasse
-                        .strasse("Musterstraße 1 " + generateRandomUuidString())
-                        .hausnummer("1")
-                        .postleitzahl("12345")
-                        .ort("München")
-                        .build());
+        return Adresse.builder()
+                // Generate random UUIDs to ensure unique strasse
+                .strasse("Musterstraße 1 " + generateRandomUuidString())
+                .hausnummer("1")
+                .postleitzahl("12345")
+                .ort("München")
+                .build();
     }
 
     private Antragsteller initializeAntragsteller(final Adresse adresse, final String name) {
@@ -183,31 +154,29 @@ public class AntragBuilder {
         antragsteller.setTelefonNr("0123456789");
         antragsteller.setAdresse(adresse);
         antragsteller.setEmail("max@mustermann.de");
-        return antragstellerRepository.save(antragsteller);
+        return antragsteller;
     }
 
     private Projekt initializeProjekt(final String titel) {
-        return projektRepository.save(
-                Projekt.builder()
-                        .titel(titel)
-                        // Generate random UUIDs to ensure unique beschreibung
-                        .beschreibung("Beschreibung des Projekts, Titel: " + generateRandomUuidString())
-                        .start(LocalDate.now())
-                        .ende(LocalDate.now().plusMonths(6))
-                        .fristBruchBegruendung("")
-                        .build());
+        return Projekt.builder()
+                .titel(titel)
+                // Generate random UUIDs to ensure unique beschreibung
+                .beschreibung("Beschreibung des Projekts, Titel: " + generateRandomUuidString())
+                .start(LocalDate.now())
+                .ende(LocalDate.now().plusMonths(6))
+                .fristBruchBegruendung("")
+                .build();
     }
 
     private Bearbeitungsstand initializeBearbeitungsstand(final Status status) {
-        return bearbeitungsstandRepository.save(
-                Bearbeitungsstand.builder()
-                        .anmerkungen("Antrag in Bearbeitung")
-                        .istMittelabruf(false)
-                        .status(status)
-                        .build());
+        return Bearbeitungsstand.builder()
+                .anmerkungen("Antrag in Bearbeitung")
+                .istMittelabruf(false)
+                .status(status)
+                .build();
     }
 
-    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final FinanzierungArt finanzierungArt) {
+    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final FinanzierungArt finanzierungArt, final Antrag antrag) {
         final Finanzierungsmittel finanzierungsmittel = Finanzierungsmittel.builder()
                 .kategorie(Kategorie.EIGENMITTEL)
                 .direktoriumNotiz("Notiz zu Finanzierungsmitteln")
@@ -237,7 +206,7 @@ public class AntragBuilder {
             break;
         }
 
-        Finanzierung finanzierung = Finanzierung.builder()
+        final Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(true)
                 .sonstigeFoerderhinweise("Keine")
                 .summeAusgaben(ausgabe.getBetrag())
@@ -247,51 +216,49 @@ public class AntragBuilder {
                 .begruendungEigenmittel("")
                 .build();
 
-        finanzierungsmittel.setFinanzierung(finanzierung);
-        ausgabe.setFinanzierung(finanzierung);
+        finanzierungsmittel.setAntrag(antrag);
+        ausgabe.setAntrag(antrag);
 
         finanzierung.setFinanzierungsmittel(List.of(finanzierungsmittel));
         finanzierung.setVoraussichtlicheAusgaben(List.of(ausgabe));
 
-        finanzierung = finanzierungRepository.save(finanzierung);
-        voraussichtlicheAusgabeRepository.save(ausgabe);
-        finanzierungsmittelRepository.save(finanzierungsmittel);
-
         return finanzierung;
     }
 
-    private Bankverbindung initializeBankverbindung(final Antragsteller antragsteller) {
-        return bankverbindungRepository.save(
-                Bankverbindung.builder()
-                        .person("Max Mustermann")
-                        .geldinstitut("Musterbank")
-                        .iban("DE00123456789012345678")
-                        .bic("DUMMYBIC123")
-                        .zahlungsempfaenger(antragsteller)
-                        .build());
+    private Bankverbindung initializeBankverbindung() {
+        return Bankverbindung.builder()
+                .person("Max Mustermann")
+                .geldinstitut("Musterbank")
+                .iban("DE00123456789012345678")
+                .bic("DUMMYBIC123")
+                .build();
     }
 
     public Antrag build() {
         try {
-            final Adresse adresse = initializeAdresse();
-            final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
-            final Antrag antrag = Antrag.builder()
-                    .eingangDatum(eingangDatum)
-                    .bezirksausschussNr(bezirksausschussNr)
-                    .bearbeitungsstand(initializeBearbeitungsstand(status))
-                    .aktualisierungArt(aktualisierungArt)
-                    .zammadTicketNr(zammadNr)
-                    .aktualisierungDatum(aktualisierungDatum)
-                    .aktenzeichen(aktenzeichen)
-                    .finanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt))
-                    .projekt(initializeProjekt(projektTitel))
-                    .antragsteller(antragsteller)
-                    .bankverbindung(initializeBankverbindung(antragsteller))
-                    .andereZuwendungsantraege(new ArrayList<>())
-                    .build();
-            return antragRepository.save(antrag);
+            return antragRepository.save(getAntrag());
         } finally {
             setRandomValues();
         }
+    }
+
+    public Antrag getAntrag() {
+        final Adresse adresse = initializeAdresse();
+        final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
+        final Antrag antrag = Antrag.builder()
+                .eingangDatum(eingangDatum)
+                .bezirksausschussNr(bezirksausschussNr)
+                .bearbeitungsstand(initializeBearbeitungsstand(status))
+                .aktualisierungArt(aktualisierungArt)
+                .zammadTicketNr(zammadNr)
+                .aktualisierungDatum(aktualisierungDatum)
+                .aktenzeichen(aktenzeichen)
+                .projekt(initializeProjekt(projektTitel))
+                .antragsteller(antragsteller)
+                .bankverbindung(initializeBankverbindung())
+                .andereZuwendungsantraege(new ArrayList<>())
+                .build();
+        antrag.setFinanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt, antrag));
+        return antrag;
     }
 }

@@ -18,14 +18,8 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,18 +57,6 @@ class AntragIntegrationTest {
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
-    private AdresseRepository adresseRepository;
-    @Autowired
-    private FinanzierungRepository finanzierungRepository;
-    @Autowired
-    private AntragstellerRepository antragstellerRepository;
-    @Autowired
-    private ProjektRepository projektRepository;
-    @Autowired
-    private BearbeitungsstandRepository bearbeitungsstandRepository;
-    @Autowired
-    private BankverbindungRepository bankverbindungRepository;
-    @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
     @Autowired
     private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
@@ -88,8 +70,7 @@ class AntragIntegrationTest {
     @BeforeEach
     public void setUp() {
         antragList.clear();
-        antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
-                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
+        antragBuilder = new AntragBuilder(antragRepository,
                 finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
     }
 

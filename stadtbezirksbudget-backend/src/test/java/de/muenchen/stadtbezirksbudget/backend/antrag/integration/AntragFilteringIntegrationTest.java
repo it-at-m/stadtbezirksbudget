@@ -11,16 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -55,18 +50,6 @@ class AntragFilteringIntegrationTest {
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
-    private AdresseRepository adresseRepository;
-    @Autowired
-    private FinanzierungRepository finanzierungRepository;
-    @Autowired
-    private AntragstellerRepository antragstellerRepository;
-    @Autowired
-    private ProjektRepository projektRepository;
-    @Autowired
-    private BearbeitungsstandRepository bearbeitungsstandRepository;
-    @Autowired
-    private BankverbindungRepository bankverbindungRepository;
-    @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
     @Autowired
     private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
@@ -79,9 +62,7 @@ class AntragFilteringIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
-                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
-                finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        antragBuilder = new AntragBuilder(antragRepository, finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
     }
 
     @Test
@@ -226,7 +207,7 @@ class AntragFilteringIntegrationTest {
 
     @Test
     void testFilterByFinanzierungArt() throws Exception {
-        antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
+        Antrag a = antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .build();
         antragBuilder.finanzierungArt(FinanzierungArt.FEHL)
                 .build();
