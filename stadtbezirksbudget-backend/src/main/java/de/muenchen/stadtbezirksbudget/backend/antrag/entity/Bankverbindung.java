@@ -14,7 +14,6 @@ import lombok.Setter;
 /**
  * Represents a payee's bank details.
  * Contains information about the person, the financial institution, IBAN, and BIC.
- * The bank details are uniquely identified by the combination of person, financial institution,
  * IBAN, and BIC.
  */
 @Getter
