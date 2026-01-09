@@ -74,6 +74,7 @@ describe("AntragSummaryList", () => {
     expect(wrapper.find('[data-test="item-aktualisierung-art"]').exists()).toBe(
       true
     );
+    expect(wrapper.find('[data-test="item-zammad-nr"]').exists()).toBe(true);
   });
 
   test("updates ui on screen size change", async () => {
