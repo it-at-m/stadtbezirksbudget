@@ -247,28 +247,25 @@ public class AntragBuilder {
 
     public Antrag build() {
         try {
-            return antragRepository.save(getAntrag());
+            final Adresse adresse = initializeAdresse();
+            final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
+            final Antrag antrag = Antrag.builder()
+                    .eingangDatum(eingangDatum)
+                    .bezirksausschussNr(bezirksausschussNr)
+                    .bearbeitungsstand(initializeBearbeitungsstand(status))
+                    .aktualisierungArt(aktualisierungArt)
+                    .zammadTicketNr(zammadNr)
+                    .aktualisierungDatum(aktualisierungDatum)
+                    .aktenzeichen(aktenzeichen)
+                    .finanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt))
+                    .projekt(initializeProjekt(projektTitel))
+                    .antragsteller(antragsteller)
+                    .bankverbindung(initializeBankverbindung())
+                    .andereZuwendungsantraege(new ArrayList<>())
+                    .build();
+            return antragRepository.save(antrag);
         } finally {
             setRandomValues();
         }
-    }
-
-    public Antrag getAntrag() {
-        final Adresse adresse = initializeAdresse();
-        final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
-        return Antrag.builder()
-                .eingangDatum(eingangDatum)
-                .bezirksausschussNr(bezirksausschussNr)
-                .bearbeitungsstand(initializeBearbeitungsstand(status))
-                .aktualisierungArt(aktualisierungArt)
-                .zammadTicketNr(zammadNr)
-                .aktualisierungDatum(aktualisierungDatum)
-                .aktenzeichen(aktenzeichen)
-                .projekt(initializeProjekt(projektTitel))
-                .antragsteller(antragsteller)
-                .finanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt))
-                .bankverbindung(initializeBankverbindung())
-                .andereZuwendungsantraege(new ArrayList<>())
-                .build();
     }
 }
