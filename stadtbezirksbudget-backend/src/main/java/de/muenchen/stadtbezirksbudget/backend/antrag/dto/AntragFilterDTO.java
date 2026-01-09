@@ -14,7 +14,7 @@ import java.util.List;
  * including status, Bezirksausschuss number, date ranges, Antragsteller name, Projekt title,
  * budget ranges, and update information.
  */
-@ExcludedFromGeneratedCoverage // DTO is a pure data carrier (no logic) and therefore unreasonable to test.
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragFilterDTO(
         String search,
         List<Status> status,

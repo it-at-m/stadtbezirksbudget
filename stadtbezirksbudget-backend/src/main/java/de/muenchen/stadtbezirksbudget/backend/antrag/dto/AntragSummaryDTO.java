@@ -10,7 +10,7 @@ import java.util.UUID;
 /**
  * Data Transfer Object (DTO) representing a summary of an Antrag.
  */
-@ExcludedFromGeneratedCoverage // DTO is a pure data carrier (no logic) and therefore unreasonable to test.
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragSummaryDTO(
         UUID id,
         Status status,
