@@ -1,7 +1,8 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
+import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
@@ -9,7 +10,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,19 +25,19 @@ import org.hibernate.annotations.Formula;
  * Represents the financing of a project.
  * Contains information about approved grants and various funding references.
  */
+@Entity
 @Getter
 @Setter
 @Builder
-@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Finanzierung implements Serializable {
+public class Finanzierung extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
     private static final String ART_FORMULA = "CASE " +
-            "WHEN (SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.antrag_id = id) > 5000 THEN 'FEHL' " +
-            "WHEN (SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.antrag_id = id) > 0 THEN 'FEHL' " +
+            "WHEN (SELECT COALESCE(SUM(a.betrag), 0) FROM voraussichtliche_ausgabe a WHERE a.finanzierung_id = id) > 5000 THEN 'FEHL' " +
+            "WHEN (SELECT COALESCE(SUM(m.betrag), 0) FROM finanzierungsmittel m WHERE m.finanzierung_id = id) > 0 THEN 'FEHL' " +
             "ELSE 'FEST' END";
 
     private boolean istProjektVorsteuerabzugsberechtigt;
@@ -52,11 +52,11 @@ public class Finanzierung implements Serializable {
     @NotNull private String sonstigeFoerderhinweise;
     @PositiveOrZero private BigDecimal bewilligterZuschuss;
 
-    @NotEmpty @OneToMany(mappedBy = "antrag", cascade = CascadeType.ALL)
+    @NotEmpty @OneToMany(mappedBy = "finanzierung")
     @Builder.Default
     private List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = new ArrayList<>();
 
-    @NotEmpty @OneToMany(mappedBy = "antrag", cascade = CascadeType.ALL)
+    @NotEmpty @OneToMany(mappedBy = "finanzierung")
     @Builder.Default
     private List<Finanzierungsmittel> finanzierungsmittel = new ArrayList<>();
 

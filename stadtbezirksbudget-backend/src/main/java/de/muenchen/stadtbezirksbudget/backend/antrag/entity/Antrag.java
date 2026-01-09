@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.io.Serial;
@@ -47,8 +48,7 @@ public class Antrag extends BaseEntity {
     @EmbeddedColumnNaming("bearbeitungsstand_%s")
     private Bearbeitungsstand bearbeitungsstand;
 
-    @NotNull @Embedded
-    @EmbeddedColumnNaming("finanzierung_%s")
+    @NotNull @OneToOne
     private Finanzierung finanzierung;
 
     @NotNull @Embedded
