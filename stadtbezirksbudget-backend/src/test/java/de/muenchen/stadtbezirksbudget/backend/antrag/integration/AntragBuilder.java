@@ -15,6 +15,9 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Rechtsform;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -39,6 +42,9 @@ public class AntragBuilder {
     private static final int LIMIT = 100_000;
     private static final Random RANDOM = new Random();
     private final AntragRepository antragRepository;
+    private final FinanzierungRepository finanzierungRepository;
+    private final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
+    private final FinanzierungsmittelRepository finanzierungsmittelRepository;
     private Status status;
     private int bezirksausschussNr;
     private LocalDateTime eingangDatum;
@@ -51,8 +57,14 @@ public class AntragBuilder {
     private String antragstellerName;
     private String projektTitel;
 
-    public AntragBuilder(final AntragRepository antragRepository) {
+    public AntragBuilder(final AntragRepository antragRepository,
+            final FinanzierungRepository finanzierungRepository,
+            final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository,
+            final FinanzierungsmittelRepository finanzierungsmittelRepository) {
         this.antragRepository = antragRepository;
+        this.finanzierungRepository = finanzierungRepository;
+        this.voraussichtlicheAusgabeRepository = voraussichtlicheAusgabeRepository;
+        this.finanzierungsmittelRepository = finanzierungsmittelRepository;
         setRandomValues();
     }
 
@@ -171,7 +183,7 @@ public class AntragBuilder {
                 .build();
     }
 
-    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final FinanzierungArt finanzierungArt, final Antrag antrag) {
+    private Finanzierung initializeFinanzierung(final BigDecimal beantragtesBudget, final FinanzierungArt finanzierungArt) {
         final Finanzierungsmittel finanzierungsmittel = Finanzierungsmittel.builder()
                 .kategorie(Kategorie.EIGENMITTEL)
                 .direktoriumNotiz("Notiz zu Finanzierungsmitteln")
@@ -201,7 +213,7 @@ public class AntragBuilder {
             break;
         }
 
-        final Finanzierung finanzierung = Finanzierung.builder()
+        Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(true)
                 .sonstigeFoerderhinweise("Keine")
                 .summeAusgaben(ausgabe.getBetrag())
@@ -211,11 +223,15 @@ public class AntragBuilder {
                 .begruendungEigenmittel("")
                 .build();
 
-        finanzierungsmittel.setAntrag(antrag);
-        ausgabe.setAntrag(antrag);
+        finanzierungsmittel.setFinanzierung(finanzierung);
+        ausgabe.setFinanzierung(finanzierung);
 
         finanzierung.setFinanzierungsmittel(List.of(finanzierungsmittel));
         finanzierung.setVoraussichtlicheAusgaben(List.of(ausgabe));
+
+        finanzierung = finanzierungRepository.save(finanzierung);
+        voraussichtlicheAusgabeRepository.save(ausgabe);
+        finanzierungsmittelRepository.save(finanzierungsmittel);
 
         return finanzierung;
     }
@@ -240,7 +256,7 @@ public class AntragBuilder {
     public Antrag getAntrag() {
         final Adresse adresse = initializeAdresse();
         final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
-        final Antrag antrag = Antrag.builder()
+        return Antrag.builder()
                 .eingangDatum(eingangDatum)
                 .bezirksausschussNr(bezirksausschussNr)
                 .bearbeitungsstand(initializeBearbeitungsstand(status))
@@ -250,10 +266,9 @@ public class AntragBuilder {
                 .aktenzeichen(aktenzeichen)
                 .projekt(initializeProjekt(projektTitel))
                 .antragsteller(antragsteller)
+                .finanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt))
                 .bankverbindung(initializeBankverbindung())
                 .andereZuwendungsantraege(new ArrayList<>())
                 .build();
-        antrag.setFinanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt, antrag));
-        return antrag;
     }
 }
