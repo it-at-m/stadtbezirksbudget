@@ -18,20 +18,10 @@ CREATE TABLE antrag
     aktualisierung_datum                               TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     aktenzeichen                                       VARCHAR(256)                NOT NULL,
     aktualisierung_art                                 VARCHAR(256)                NOT NULL CHECK (antrag.aktualisierung_art <> ''),
+    finanzierung_id                      UUID         NOT NULL,
     bearbeitungsstand_anmerkungen                      VARCHAR(256)                NOT NULL,
     bearbeitungsstand_ist_mittelabruf                  BOOLEAN                     NOT NULL,
     bearbeitungsstand_status                           VARCHAR(256)                NOT NULL CHECK (antrag.bearbeitungsstand_status <> ''),
-    finanzierung_ist_projekt_vorsteuerabzugsberechtigt BOOLEAN                     NOT NULL,
-    finanzierung_kosten_anmerkung                      VARCHAR(256)                NOT NULL,
-    finanzierung_summe_ausgaben                        DECIMAL(19, 2)              NOT NULL,
-    finanzierung_summe_finanzierungsmittel             DECIMAL(19, 2)              NOT NULL,
-    finanzierung_begruendung_eigenmittel               VARCHAR(256),
-    finanzierung_beantragtes_budget                    DECIMAL(19, 2)              NOT NULL,
-    finanzierung_ist_einladung_foerderhinweis          BOOLEAN                     NOT NULL,
-    finanzierung_ist_website_foerderhinweis            BOOLEAN                     NOT NULL,
-    finanzierung_ist_sonstiger_foerderhinweis          BOOLEAN                     NOT NULL,
-    finanzierung_sonstige_foerderhinweise              VARCHAR(256)                NOT NULL,
-    finanzierung_bewilligter_zuschuss                  DECIMAL(19, 2),
     projekt_titel                                      VARCHAR(256)                NOT NULL CHECK (antrag.projekt_titel <> ''),
     projekt_start                                      date                        NOT NULL,
     projekt_ist_start_frist                            BOOLEAN                     NOT NULL,
@@ -63,13 +53,30 @@ CREATE TABLE antrag
     CONSTRAINT pk_antrag PRIMARY KEY (id)
 );
 
+CREATE TABLE finanzierung
+(
+    id                                      UUID            NOT NULL,
+    ist_projekt_vorsteuerabzugsberechtigt   BOOLEAN         NOT NULL,
+    kosten_anmerkung                        VARCHAR(256)    NOT NULL,
+    summe_ausgaben                          DECIMAL(19, 2)  NOT NULL,
+    summe_finanzierungsmittel               DECIMAL(19, 2)  NOT NULL,
+    begruendung_eigenmittel                 VARCHAR(256),
+    beantragtes_budget                      DECIMAL(19, 2)  NOT NULL,
+    ist_einladung_foerderhinweis            BOOLEAN         NOT NULL,
+    ist_website_foerderhinweis              BOOLEAN         NOT NULL,
+    ist_sonstiger_foerderhinweis            BOOLEAN         NOT NULL,
+    sonstige_foerderhinweise                VARCHAR(256)    NOT NULL,
+    bewilligter_zuschuss                    DECIMAL(19, 2),
+    CONSTRAINT pk_finanzierung PRIMARY KEY (id)
+);
+
 CREATE TABLE finanzierungsmittel
 (
     id                UUID           NOT NULL,
     kategorie         VARCHAR(256)   NOT NULL CHECK (finanzierungsmittel.kategorie <> ''),
     betrag            DECIMAL(19, 2) NOT NULL,
     direktorium_notiz VARCHAR(256)   NOT NULL,
-    antrag_id         UUID           NOT NULL,
+    finanzierung_id         UUID           NOT NULL,
     CONSTRAINT pk_finanzierungsmittel PRIMARY KEY (id)
 );
 
@@ -79,15 +86,18 @@ CREATE TABLE voraussichtliche_ausgabe
     kategorie         VARCHAR(256)   NOT NULL CHECK (voraussichtliche_ausgabe.kategorie <> ''),
     betrag            DECIMAL(19, 2) NOT NULL,
     direktorium_notiz VARCHAR(256)   NOT NULL,
-    antrag_id         UUID           NOT NULL,
+    finanzierung_id         UUID           NOT NULL,
     CONSTRAINT pk_voraussichtlicheausgabe PRIMARY KEY (id)
 );
 
 ALTER TABLE anderer_zuwendungsantrag
     ADD CONSTRAINT FK_ANDERERZUWENDUNGSANTRAG_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id);
 
+ALTER TABLE antrag
+    ADD CONSTRAINT FK_ANTRAG_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
+
 ALTER TABLE finanzierungsmittel
-    ADD CONSTRAINT FK_FINANZIERUNGSMITTEL_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id);
+    ADD CONSTRAINT FK_FINANZIERUNGSMITTEL_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
 
 ALTER TABLE voraussichtliche_ausgabe
-    ADD CONSTRAINT FK_VORAUSSICHTLICHEAUSGABE_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id);
+    ADD CONSTRAINT FK_VORAUSSICHTLICHEAUSGABE_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
