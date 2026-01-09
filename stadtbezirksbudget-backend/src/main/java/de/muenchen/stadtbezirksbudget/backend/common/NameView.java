@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.common;
 
 public interface NameView {
-    String getName();
+    @SuppressWarnings("PMD.MethodNamingConventions")
+    String getAntragsteller_Name();
 }

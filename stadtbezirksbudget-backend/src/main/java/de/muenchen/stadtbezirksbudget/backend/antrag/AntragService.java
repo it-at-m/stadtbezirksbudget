@@ -5,8 +5,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
@@ -26,8 +24,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
-    private final ProjektRepository projektRepository;
-    private final AntragstellerRepository antragstellerRepository;
     private final AntragFilterService antragFilterService;
 
     /**
@@ -51,8 +47,10 @@ public class AntragService {
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        final List<String> antragstellerNameList = antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc().stream().map(NameView::getName).toList();
-        final List<String> projektTitelList = projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc().stream().map(TitelView::getTitel).toList();
+        final List<String> antragstellerNameList = antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc().stream()
+                .map(NameView::getAntragsteller_Name).toList();
+        final List<String> projektTitelList = antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc().stream()
+                .map(TitelView::getProjekt_Titel).toList();
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
