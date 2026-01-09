@@ -42,6 +42,6 @@ export function getAntragsSummaryList(
       return response.json();
     })
     .catch((err) => {
-      return defaultCatchHandler(err, "Fehler beim Laden der Antragsliste.");
+      return defaultCatchHandler(err);
     });
 }

@@ -19,9 +19,9 @@ export function useInitializeStores() {
       .then((options: AntragListFilterOptions) => {
         antragListFilterOptionsStore.setFilterOptions(options);
       })
-      .catch((error) => {
+      .catch(() => {
         snackbarStore.showMessage({
-          message: error?.message || "Fehler beim Laden der Filteroptionen",
+          message: "Fehler beim Laden der Filteroptionen",
           level: STATUS_INDICATORS.WARNING,
         });
       });

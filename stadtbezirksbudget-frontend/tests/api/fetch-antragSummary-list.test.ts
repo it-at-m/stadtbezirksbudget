@@ -99,7 +99,7 @@ describe("fetch-antragSummary-list", () => {
         defaultAntragListFilter(),
         createEmptyListSort()
       )
-    ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
+    ).rejects.toThrow("Es ist ein unbekannter Fehler aufgetreten.");
   });
 
   test("handles http errors", async () => {

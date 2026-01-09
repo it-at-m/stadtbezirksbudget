@@ -55,9 +55,9 @@ export function useAntragSummaryList() {
         items.value = content.content;
         totalItems.value = content.page.totalElements;
       })
-      .catch((error) => {
+      .catch(() => {
         snackbarStore.showMessage({
-          message: error?.message || "Fehler beim Laden der Anträge",
+          message: "Fehler beim Laden der Anträge",
           level: STATUS_INDICATORS.WARNING,
         });
       })
