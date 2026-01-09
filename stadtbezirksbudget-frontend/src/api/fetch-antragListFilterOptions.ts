@@ -18,6 +18,6 @@ export function getAntragListFilterOptions(): Promise<AntragListFilterOptions> {
       return response.json();
     })
     .catch((err) => {
-      return defaultCatchHandler(err, "Fehler beim Laden der Filteroptionen.");
+      return defaultCatchHandler(err);
     });
 }

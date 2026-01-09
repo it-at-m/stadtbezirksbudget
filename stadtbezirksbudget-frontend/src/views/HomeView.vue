@@ -2,15 +2,15 @@
   <v-container fluid>
     <v-row>
       <v-col
-        cols="12"
         class="text-left"
+        cols="12"
       >
-        <v-card rounded="lg"><antrag-summary-list /></v-card>
+        <v-card rounded="lg"><antrag-list /></v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
-<script setup lang="ts">
-import AntragSummaryList from "@/components/AntragSummaryList.vue";
+<script lang="ts" setup>
+import AntragList from "@/components/antragList/AntragList.vue";
 </script>

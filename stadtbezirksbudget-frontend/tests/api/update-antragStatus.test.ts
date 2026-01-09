@@ -36,7 +36,7 @@ describe("update-antragStatus", () => {
     );
 
     await expect(updateAntragStatus("456", "ABGELEHNT")).rejects.toThrow(
-      "Fehler beim Aktualisieren des Antragsstatus"
+      "Es ist ein unbekannter Fehler aufgetreten."
     );
   });
 
@@ -48,7 +48,7 @@ describe("update-antragStatus", () => {
     });
 
     await expect(updateAntragStatus("789", "ABGELEHNT")).rejects.toThrow(
-      "Fehler beim Aktualisieren des Antragsstatus"
+      "Es ist ein unbekannter Fehler aufgetreten."
     );
   });
 });
