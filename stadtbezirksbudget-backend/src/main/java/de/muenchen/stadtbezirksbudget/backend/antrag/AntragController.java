@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragDetailsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
@@ -65,6 +66,13 @@ public class AntragController {
                 .map(antragMapper::toAntragSummaryDTO)
                 .toList();
         return new PageImpl<>(summaryList, antragPage.getPageable(), antragPage.getTotalElements());
+    }
+
+    @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize(Authorities.ANTRAG_GET_DETAILS)
+    public AntragDetailsDTO getDetails(@PathVariable final UUID id) {
+        return antragMapper.toDetailsDTO(antragService.getAntrag(id));
     }
 
     /**

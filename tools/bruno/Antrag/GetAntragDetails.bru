@@ -1,0 +1,19 @@
+meta {
+  name: GetAntragDetails
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{backend}}/antrag/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 80000000-0000-0000-0000-000000000016
+}
+
+settings {
+  encodeUrl: true
+}

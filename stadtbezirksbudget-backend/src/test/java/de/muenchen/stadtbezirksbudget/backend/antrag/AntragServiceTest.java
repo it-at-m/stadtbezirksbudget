@@ -161,6 +161,31 @@ class AntragServiceTest {
     }
 
     @Nested
+    class GetAntrag {
+        @Test
+        void testGetAntrag() {
+            final Antrag antrag = createAntrag(new Bearbeitungsstand(), new Antragsteller(), new Finanzierung(), "T", "B", Status.VOLLSTAENDIG);
+            final UUID id = antrag.getId();
+
+            when(antragRepository.findById(id)).thenReturn(Optional.of(antrag));
+
+            final Antrag receivedAntrag = antragService.getAntrag(id);
+
+            verify(antragRepository).findById(id);
+            assertThat(receivedAntrag).isEqualTo(antrag);
+        }
+
+        @Test
+        void testGetAntragNotExisting() {
+            final UUID randomId = UUID.randomUUID();
+            when(antragRepository.findById(randomId)).thenReturn(Optional.empty());
+
+            assertThrows(NotFoundException.class, () -> antragService.getAntrag(randomId));
+            verify(antragRepository).findById(randomId);
+        }
+    }
+
+    @Nested
     class GetFilterOptions {
         @Test
         void testEmptyLists() {

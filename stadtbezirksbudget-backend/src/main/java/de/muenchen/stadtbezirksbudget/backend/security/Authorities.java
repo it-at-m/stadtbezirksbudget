@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
  */
 public final class Authorities {
     public static final String ANTRAG_GET_SUMMARY = "hasAnyRole('sbb-sachbearbeiter')";
+    public static final String ANTRAG_GET_DETAILS = "hasAnyRole('sbb-sachbearbeiter')";
     public static final String ANTRAG_UPDATE_STATUS = "hasAnyRole('sbb-sachbearbeiter')";
 
     private Authorities() {
