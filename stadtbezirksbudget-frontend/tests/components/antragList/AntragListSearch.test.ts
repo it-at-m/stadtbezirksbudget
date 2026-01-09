@@ -4,7 +4,7 @@ import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 
-import AntragListSearch from "@/components/AntragListSearch.vue";
+import AntragListSearch from "@/components/antragList/AntragListSearch.vue";
 import { useAntragListSearch } from "@/composables/useAntragListSearch.ts";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";

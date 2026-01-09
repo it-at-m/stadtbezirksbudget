@@ -67,7 +67,7 @@ import { onMounted } from "vue";
 
 import { getUser } from "@/api/user-client";
 import AntragListFilterMenu from "@/components/antragList/AntragListFilterMenu.vue";
-import AntragListSearch from "@/components/AntragListSearch.vue";
+import AntragListSearch from "@/components/antragList/AntragListSearch.vue";
 import AntragListSortMenu from "@/components/antragList/AntragListSortMenu.vue";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
