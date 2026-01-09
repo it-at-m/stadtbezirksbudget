@@ -49,6 +49,7 @@
         <spring-cloud-dependencies.version>2025.0.1</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
         <hibernate-core.version>7.0.10.Final</hibernate-core.version>
         <jakarta.persistence-api.version>3.2.0</jakarta.persistence-api.version>
+        <hibernate-processor.version>7.2.0.Final</hibernate-processor.version>
 
         <!-- Linting & Formatting -->
         <spotless-maven-plugin.version>3.1.0</spotless-maven-plugin.version>
@@ -328,7 +329,8 @@
                         </path>
                         <path>
                             <groupId>org.hibernate.orm</groupId>
-                            <artifactId>hibernate-jpamodelgen</artifactId> <!-- Needs to be changed to hibernate-processor on hibernate v7 upgrade -->
+                            <artifactId>hibernate-processor</artifactId>
+                            <version>${hibernate-processor.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <showDeprecation>true</showDeprecation>
