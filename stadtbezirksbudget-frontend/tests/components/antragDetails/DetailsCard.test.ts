@@ -7,7 +7,7 @@ import DetailsCard from "@/components/antragDetails/DetailsCard.vue";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
 
-describe("DetailsCard.vue", () => {
+describe("DetailsCard", () => {
   let wrapper: VueWrapper<InstanceType<typeof DetailsCard>>;
   let vCard: VueWrapper<Element>;
   let vCardTitle: VueWrapper<Element>;
