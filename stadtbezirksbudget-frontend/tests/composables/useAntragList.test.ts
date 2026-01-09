@@ -96,15 +96,14 @@ describe("useAntragList", () => {
     });
 
     test("handles api errors when fetching items", async () => {
-      const errorMessage = "API Error";
-      (getAntragList as vi.Mock).mockRejectedValue(new Error(errorMessage));
+      (getAntragList as vi.Mock).mockRejectedValue(new Error("API Error"));
 
       const { fetchItems, loading } = useAntragList();
       fetchItems();
 
       await vi.waitFor(() => {
         expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-          message: errorMessage,
+          message: "Fehler beim Laden der Anträge",
           level: STATUS_INDICATORS.WARNING,
         });
         expect(loading.value).toBe(false);

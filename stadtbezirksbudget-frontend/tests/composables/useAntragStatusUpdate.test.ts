@@ -63,7 +63,7 @@ describe("useAntragStatusUpdate", () => {
       await vi.waitFor(() => {
         expect(status.value).toBe("EINGEGANGEN");
         expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-          message: "API Error",
+          message: "Fehler beim Aktualisieren des Antragsstatus",
           level: STATUS_INDICATORS.WARNING,
         });
       });

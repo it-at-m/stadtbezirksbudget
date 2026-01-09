@@ -89,7 +89,7 @@ describe("fetch-antragList", () => {
 
     await expect(
       getAntragList(1, 5, defaultAntragListFilter(), createEmptyListSort())
-    ).rejects.toThrow("Fehler beim Laden der Antragsliste.");
+    ).rejects.toThrow("Es ist ein unbekannter Fehler aufgetreten.");
   });
 
   test("handles http errors", async () => {
