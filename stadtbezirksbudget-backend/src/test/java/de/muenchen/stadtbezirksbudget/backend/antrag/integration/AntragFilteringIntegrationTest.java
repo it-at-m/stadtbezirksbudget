@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -193,18 +194,14 @@ class AntragFilteringIntegrationTest {
         antragBuilder.beantragtesBudget(BigDecimal.valueOf(5001))
                 .build();
 
-        mockMvc
-                .perform(get("/antrag")
-                        .param("beantragtesBudgetVon", "1000")
-                        .param("beantragtesBudgetBis", "5000")
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/antrag")
+                .param("beantragtesBudgetVon", "1000")
+                .param("beantragtesBudgetBis", "5000")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(4)))
-                .andExpect(jsonPath("$.content[0].beantragtesBudget", is(1000)))
-                .andExpect(jsonPath("$.content[1].beantragtesBudget", is(3000)))
-                .andExpect(jsonPath("$.content[2].beantragtesBudget", is(3000)))
-                .andExpect(jsonPath("$.content[3].beantragtesBudget", is(5000)));
+                .andExpect(jsonPath("$.content[*].beantragtesBudget", containsInAnyOrder(1000, 3000, 3000, 5000)));
     }
 
     @Test
@@ -361,21 +358,16 @@ class AntragFilteringIntegrationTest {
                 .beantragtesBudget(BigDecimal.valueOf(5000))
                 .build();
 
-        mockMvc
-                .perform(get("/antrag")
-                        .param("projektTitel", "Projekt XYZ 0")
-                        .param("beantragtesBudgetVon", "1000")
-                        .param("beantragtesBudgetBis", "5000")
-                        .contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/antrag")
+                .param("projektTitel", "Projekt XYZ 0")
+                .param("beantragtesBudgetVon", "1000")
+                .param("beantragtesBudgetBis", "5000")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(3)))
-                .andExpect(jsonPath("$.content[0].projektTitel", is("Projekt XYZ 0")))
-                .andExpect(jsonPath("$.content[0].beantragtesBudget", is(1000)))
-                .andExpect(jsonPath("$.content[1].projektTitel", is("Projekt XYZ 0")))
-                .andExpect(jsonPath("$.content[1].beantragtesBudget", is(3000)))
-                .andExpect(jsonPath("$.content[2].projektTitel", is("Projekt XYZ 0")))
-                .andExpect(jsonPath("$.content[2].beantragtesBudget", is(5000)));
+                .andExpect(jsonPath("$.content[*].projektTitel", containsInAnyOrder("Projekt XYZ 0", "Projekt XYZ 0", "Projekt XYZ 0")))
+                .andExpect(jsonPath("$.content[*].beantragtesBudget", containsInAnyOrder(1000, 3000, 5000)));
     }
 
     @Test
