@@ -39,15 +39,14 @@ export function useAntragStatusUpdate(
         status.value = newStatus;
         oldStatus.value = newStatus;
         snackbarStore.showMessage({
-          message: `Antragsstatus aktualisiert`,
+          message: "Antragsstatus aktualisiert",
           level: STATUS_INDICATORS.SUCCESS,
         });
       })
-      .catch((error) => {
+      .catch(() => {
         status.value = oldStatus.value;
         snackbarStore.showMessage({
-          message:
-            error?.message || "Fehler beim Aktualisieren des Antragsstatus",
+          message: "Fehler beim Aktualisieren des Antragsstatus",
           level: STATUS_INDICATORS.WARNING,
         });
       })

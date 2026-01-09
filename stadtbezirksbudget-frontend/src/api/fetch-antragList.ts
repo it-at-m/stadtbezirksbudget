@@ -21,7 +21,7 @@ import { objectToSearchParams } from "@/util/converter.ts";
  * @param sorting - The sorting to apply to the Antrag list.
  * @returns A promise that resolves to a paginated list of Antrag summaries.
  */
-export function getAntragsSummaryList(
+export function getAntragList(
   page: number,
   size: number,
   filters: AntragListFilter,
@@ -42,6 +42,6 @@ export function getAntragsSummaryList(
       return response.json();
     })
     .catch((err) => {
-      return defaultCatchHandler(err, "Fehler beim Laden der Antragsliste.");
+      return defaultCatchHandler(err);
     });
 }

@@ -52,27 +52,11 @@ describe("useInitializeStores", () => {
       expect(setFilterOptions).toHaveBeenCalledWith(apiResult);
     });
 
-    test("shows snackbar with error.message if API throws error with message", async () => {
+    test("shows snackbar with error message if API throws error ", async () => {
       const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
       const showMessage = useSnackbarStore().showMessage as vi.Mock;
       const error = new Error("network error");
       apiMock.mockRejectedValue(error);
-
-      mount(Comp);
-
-      await Promise.resolve();
-      await nextTick();
-
-      expect(showMessage).toHaveBeenCalledWith({
-        message: error.message,
-        level: STATUS_INDICATORS.WARNING,
-      });
-    });
-
-    test("shows snackbar with fallback message if error has no message", async () => {
-      const apiMock = getAntragListFilterOptions as unknown as vi.Mock;
-      const showMessage = useSnackbarStore().showMessage as vi.Mock;
-      apiMock.mockRejectedValue({});
 
       mount(Comp);
 
