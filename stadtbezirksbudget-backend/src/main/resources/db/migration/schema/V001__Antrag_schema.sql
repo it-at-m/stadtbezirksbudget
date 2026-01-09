@@ -91,13 +91,21 @@ CREATE TABLE voraussichtliche_ausgabe
 );
 
 ALTER TABLE anderer_zuwendungsantrag
-    ADD CONSTRAINT FK_ANDERERZUWENDUNGSANTRAG_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id);
+    ADD CONSTRAINT FK_ANDERERZUWENDUNGSANTRAG_ON_ANTRAG FOREIGN KEY (antrag_id) REFERENCES antrag (id) ON DELETE CASCADE;
 
 ALTER TABLE antrag
-    ADD CONSTRAINT FK_ANTRAG_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
+    ADD CONSTRAINT FK_ANTRAG_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id) ON DELETE RESTRICT;
 
 ALTER TABLE finanzierungsmittel
-    ADD CONSTRAINT FK_FINANZIERUNGSMITTEL_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
+    ADD CONSTRAINT FK_FINANZIERUNGSMITTEL_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id) ON DELETE CASCADE;
 
 ALTER TABLE voraussichtliche_ausgabe
-    ADD CONSTRAINT FK_VORAUSSICHTLICHEAUSGABE_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id);
+    ADD CONSTRAINT FK_VORAUSSICHTLICHEAUSGABE_ON_FINANZIERUNG FOREIGN KEY (finanzierung_id) REFERENCES finanzierung (id) ON DELETE CASCADE;
+
+CREATE INDEX idx_anderer_zuwendungsantrag_antrag_id ON anderer_zuwendungsantrag(antrag_id);
+
+CREATE INDEX idx_antrag_finanzierung_id ON antrag(finanzierung_id);
+
+CREATE INDEX idx_finanzierungsmittel_finanzierung_id ON finanzierungsmittel(finanzierung_id);
+
+CREATE INDEX idx_voraussichtliche_ausgabe_finanzierung_id ON voraussichtliche_ausgabe(finanzierung_id);
