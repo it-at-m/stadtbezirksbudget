@@ -96,9 +96,8 @@ describe("useAntragSummaryList", () => {
     });
 
     test("handles api errors when fetching items", async () => {
-      const errorMessage = "API Error";
       (getAntragsSummaryList as vi.Mock).mockRejectedValue(
-        new Error(errorMessage)
+        new Error("API Error")
       );
 
       const { fetchItems, loading } = useAntragSummaryList();
@@ -106,7 +105,7 @@ describe("useAntragSummaryList", () => {
 
       await vi.waitFor(() => {
         expect(snackbarStoreMock.showMessage).toHaveBeenCalledWith({
-          message: errorMessage,
+          message: "Fehler beim Laden der Anträge",
           level: STATUS_INDICATORS.WARNING,
         });
         expect(loading.value).toBe(false);
