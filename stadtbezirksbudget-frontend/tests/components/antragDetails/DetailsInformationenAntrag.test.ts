@@ -4,7 +4,7 @@ import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import DetailsCard from "@/components/antragDetails/DetailsCard.vue";
-import InformationenAntrag from "@/components/antragDetails/InformationenAntrag.vue";
+import DetailsInformationenAntrag from "@/components/antragDetails/DetailsInformationenAntrag.vue";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
 import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock";
@@ -81,12 +81,12 @@ const fields = [
   },
 ];
 
-describe("InformationenAntrag.vue", () => {
-  let wrapper: VueWrapper<InstanceType<typeof InformationenAntrag>>;
+describe("DetailsInformationenAntrag", () => {
+  let wrapper: VueWrapper<InstanceType<typeof DetailsInformationenAntrag>>;
   let card: VueWrapper<InstanceType<typeof DetailsCard>>;
 
   beforeEach(() => {
-    wrapper = mount(InformationenAntrag, {
+    wrapper = mount(DetailsInformationenAntrag, {
       global: { plugins: [pinia, vuetify] },
       props: { antrag: mockAntrag },
     });

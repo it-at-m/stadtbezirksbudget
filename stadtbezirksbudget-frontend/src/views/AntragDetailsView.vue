@@ -19,12 +19,12 @@ import type { Component } from "vue";
 
 import { useRoute } from "vue-router";
 
-import InformationenAntrag from "@/components/antragDetails/InformationenAntrag.vue";
+import DetailsInformationenAntrag from "@/components/antragDetails/DetailsInformationenAntrag.vue";
 import { useAntragDetails } from "@/composables/useAntragDetails.ts";
 import { routeParamsToString } from "@/util/converter.ts";
 
 const route = useRoute();
 const { details } = useAntragDetails(routeParamsToString(route.params.id));
 
-const cards: Component[] = [InformationenAntrag];
+const cards: Component[] = [DetailsInformationenAntrag];
 </script>

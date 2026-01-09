@@ -19,7 +19,7 @@ vi.mock("vue-router", async (importOriginal) => {
 
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
-const cards = ["InformationenAntrag"];
+const cards = ["DetailsInformationenAntrag"];
 
 function createCardStub(name: string) {
   return {
