@@ -328,6 +328,7 @@
                         <path>
                             <groupId>org.hibernate.orm</groupId>
                             <artifactId>hibernate-processor</artifactId>
+                            <!-- TODO: Remove version after Spring Boot v4 version update -->
                             <version>${hibernate-processor.version}</version>
                         </path>
                     </annotationProcessorPaths>
