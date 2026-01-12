@@ -102,7 +102,7 @@ class AntragServiceTest {
             final Pageable pageable = PageRequest.of(0, 10);
             final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
             final Finanzierung finanzierung = new Finanzierung();
-            //finanzierung.setId(UUID.randomUUID());
+            finanzierung.setId(UUID.randomUUID());
 
             final Antragsteller antragsteller = new Antragsteller();
             antragsteller.setName("Max Mustermann");
@@ -130,7 +130,7 @@ class AntragServiceTest {
             final Pageable pageable = PageRequest.of(0, 5);
             final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
             final Finanzierung finanzierung = new Finanzierung();
-            //finanzierung.setId(UUID.randomUUID());
+            finanzierung.setId(UUID.randomUUID());
 
             final Antragsteller antragsteller1 = new Antragsteller();
             antragsteller1.setName("Max Mustermann");
