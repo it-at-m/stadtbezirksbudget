@@ -21,9 +21,8 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.common.NameView;
+import de.muenchen.stadtbezirksbudget.backend.common.AntragView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
-import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +38,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
 class AntragServiceTest {
@@ -87,14 +85,14 @@ class AntragServiceTest {
             final Pageable pageable = PageRequest.of(0, 10);
             final AntragFilterDTO antragFilterDTO = mock(AntragFilterDTO.class);
 
-            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+            when(antragRepository.findAll(any(), any(Pageable.class)))
                     .thenReturn(new PageImpl<>(Collections.emptyList(), pageable, 0));
 
             final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).isEmpty();
-            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
+            verify(antragRepository).findAll(any(), any(Pageable.class));
         }
 
         @Test
@@ -115,14 +113,14 @@ class AntragServiceTest {
             final Antrag antrag = createAntrag(bearbeitungsstand, antragsteller, finanzierung, "Projekt Titel", "Projekt Beschreibung",
                     Status.ABGELEHNT_VON_BA);
 
-            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+            when(antragRepository.findAll(any(), any(Pageable.class)))
                     .thenReturn(new PageImpl<>(Collections.singletonList(antrag), pageable, 1));
 
             final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(1);
-            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
+            verify(antragRepository).findAll(any(), any(Pageable.class));
         }
 
         @Test
@@ -143,14 +141,14 @@ class AntragServiceTest {
 
             final Antrag antrag2 = createAntrag(new Bearbeitungsstand(), antragsteller2, finanzierung, "Projekt 2", "Beschreibung 2", Status.ABGESCHLOSSEN);
 
-            when(antragRepository.findAll(any(Specification.class), any(Pageable.class)))
+            when(antragRepository.findAll(any(), any(Pageable.class)))
                     .thenReturn(new PageImpl<>(List.of(antrag1, antrag2), pageable, 2));
 
             final Page<Antrag> result = antragService.getAntragPage(pageable, antragFilterDTO);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent()).hasSize(2);
-            verify(antragRepository).findAll(any(Specification.class), any(Pageable.class));
+            verify(antragRepository).findAll(any(), any(Pageable.class));
         }
     }
 
@@ -173,8 +171,9 @@ class AntragServiceTest {
             final List<String> antragstellerNames = List.of("Antragsteller1", "Antragsteller2");
             final List<String> projektTitles = List.of("Projekt1", "Projekt2");
 
-            final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
-            final List<TitelView> titelViews = projektTitles.stream().map(titel -> (TitelView) () -> titel).toList();
+            final List<AntragView> nameViews = antragstellerNames.stream().map(this::mockAntragViewWithAntragstellerName).toList();
+
+            final List<AntragView> titelViews = projektTitles.stream().map(this::mockAntragViewWithProjektTitel).toList();
 
             when(antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc()).thenReturn(nameViews);
             when(antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc()).thenReturn(titelViews);
@@ -190,8 +189,8 @@ class AntragServiceTest {
         void testPartialEmptyLists() {
             final List<String> antragstellerNames = List.of("Antragsteller1");
 
-            final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
-            final List<TitelView> titelViews = Collections.emptyList();
+            final List<AntragView> nameViews = antragstellerNames.stream().map(this::mockAntragViewWithAntragstellerName).toList();
+            final List<AntragView> titelViews = Collections.emptyList();
 
             when(antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc()).thenReturn(nameViews);
             when(antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc()).thenReturn(titelViews);
@@ -201,6 +200,22 @@ class AntragServiceTest {
             assertThat(filterOptions).isNotNull();
             assertThat(filterOptions.antragstellerNamen()).containsExactlyElementsOf(antragstellerNames);
             assertThat(filterOptions.projektTitel()).isEmpty();
+        }
+
+        private AntragView mockAntragViewWithAntragstellerName(String name) {
+            final AntragView antragView = mock(AntragView.class);
+            final AntragView.AntragstellerView antragstellerView = mock(AntragView.AntragstellerView.class);
+            when(antragstellerView.getName()).thenReturn(name);
+            when(antragView.getAntragsteller()).thenReturn(antragstellerView);
+            return antragView;
+        }
+
+        private AntragView mockAntragViewWithProjektTitel(String titel) {
+            final AntragView antragView = mock(AntragView.class);
+            final AntragView.ProjektView projektView = mock(AntragView.ProjektView.class);
+            when(projektView.getTitel()).thenReturn(titel);
+            when(antragView.getProjekt()).thenReturn(projektView);
+            return antragView;
         }
     }
 

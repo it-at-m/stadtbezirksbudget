@@ -5,9 +5,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
-import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -48,9 +46,9 @@ public class AntragService {
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
         final List<String> antragstellerNameList = antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc().stream()
-                .map(NameView::getAntragsteller_Name).toList();
+                .map(antrag -> antrag.getAntragsteller().getName()).toList();
         final List<String> projektTitelList = antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc().stream()
-                .map(TitelView::getProjekt_Titel).toList();
+                .map(antrag -> antrag.getProjekt().getTitel()).toList();
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
