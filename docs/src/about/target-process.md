@@ -7,4 +7,3 @@ The target process provides a visual representation of the intended workflow and
 ::: info
 The colored boxes in the diagram represent different statuses within the process, which correspond to the internal statuses in our data model.
 :::
-
