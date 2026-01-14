@@ -72,7 +72,7 @@
           v-model="antrag.zammadNr"
           data-test="zammad-nr"
           hide-details="auto"
-          label="Zammad - Nummer"
+          label="Zammad-Nummer"
           readonly
           variant="outlined"
         />
