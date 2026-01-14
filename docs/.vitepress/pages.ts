@@ -14,7 +14,7 @@ const pages: Page[] = [
   {
     text: "About",
     items: [
-      { text: "About", link: "/about/" },
+      { text: "General", link: "/about/" },
       { text: "Status values", link: "/about/status-values" },
       { text: "Target process", link: "/about/target-process" },
       { text: "Dataflow diagram", link: "/about/dataflow-diagram" },
@@ -23,14 +23,13 @@ const pages: Page[] = [
   {
     text: "Features",
     items: [
-      { text: "Data model", link: "/features/data-model" },
       {
         text: "Application list",
         link: "/features/application-list/",
       },
       {
         text: "Zammad integration",
-        link: "/features/zammad-integration/",
+        link: "/features/zammad-integration",
       },
       {
         text: "Reliable communication",
@@ -41,7 +40,7 @@ const pages: Page[] = [
   {
     text: "Architecture",
     items: [
-      { text: "Architecture", link: "/architecture/" },
+      { text: "Architecture Description", link: "/architecture/" },
       {
         text: "Information Architecture",
         link: "/architecture/information-architecture",
@@ -52,6 +51,7 @@ const pages: Page[] = [
   {
     text: "Development",
     items: [
+      { text: "Data model", link: "/development/data-model" },
       { text: "Conventions", link: "/development/conventions" },
       { text: "Tools", link: "/development/tools" },
       { text: "Authorization", link: "/development/authorization" },

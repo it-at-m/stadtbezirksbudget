@@ -39,7 +39,7 @@ describe("fetch-antragListFilterOptions", () => {
     );
 
     await expect(getAntragListFilterOptions()).rejects.toThrow(
-      "Fehler beim Laden der Filteroptionen."
+      "Es ist ein unbekannter Fehler aufgetreten."
     );
   });
 
