@@ -8,6 +8,7 @@
         <v-col cols="auto">
           <v-btn
             :icon="mdiPencil"
+            aria-label="Bearbeiten"
             color="#006A63"
             density="comfortable"
             variant="elevated"
