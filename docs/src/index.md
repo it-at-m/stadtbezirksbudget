@@ -14,7 +14,7 @@ hero:
       link: /architecture/
     - theme: alt
       text: Development
-      link: /development/data-model
+      link: /development/data-model/
 features:
   - icon: 📋
     title: Application list
