@@ -51,7 +51,7 @@ const pages: Page[] = [
   {
     text: "Development",
     items: [
-      { text: "Data model", link: "/development/data-model" },
+      { text: "Data model", link: "/development/data-model/" },
       { text: "Conventions", link: "/development/conventions" },
       { text: "Tools", link: "/development/tools" },
       { text: "Authorization", link: "/development/authorization" },
