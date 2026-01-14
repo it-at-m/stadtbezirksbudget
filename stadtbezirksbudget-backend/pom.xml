@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.9</version>
-        <relativePath />
+        <relativePath/>
     </parent>
 
     <groupId>de.muenchen.stadtbezirksbudget</groupId>
@@ -14,7 +15,9 @@
     <version>0.3.1-SNAPSHOT</version>
 
     <name>stadtbezirksbudget-backend</name>
-    <description>In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more efficient. An online form is being introduced for citizens to submit their applications, along with a clear digital representation of the application for processing by administrative staff.
+    <description>In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby
+        making it more efficient. An online form is being introduced for citizens to submit their applications, along with a clear digital representation of the
+        application for processing by administrative staff.
     </description>
     <url>https://github.com/it-at-m/stadtbezirksbudget</url>
     <licenses>
@@ -47,6 +50,9 @@
 
         <!-- Core Frameworks -->
         <spring-cloud-dependencies.version>2025.0.1</spring-cloud-dependencies.version> <!-- Must match the chosen Spring Boot version -->
+        <hibernate-core.version>7.0.10.Final</hibernate-core.version>
+        <jakarta.persistence-api.version>3.2.0</jakarta.persistence-api.version>
+        <hibernate-processor.version>7.0.10.Final</hibernate-processor.version>
 
         <!-- Linting & Formatting -->
         <spotless-maven-plugin.version>3.1.0</spotless-maven-plugin.version>
@@ -58,7 +64,7 @@
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
-        <argLine /> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
+        <argLine/> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
 
         <!-- Release -->
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
@@ -83,8 +89,8 @@
         <flyway.locations>classpath:db/migration/schema,classpath:db/migration/testdata</flyway.locations>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
-        <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
-        <p2.password /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.username/> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.password/> <!-- must be empty, override via Maven settings.xml if needed -->
         <p2.mirror>download.eclipse.org</p2.mirror>
     </properties>
 
@@ -108,6 +114,17 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <!-- TODO: Remove hibernate-core and jakarta.persistence-api version overrides on Spring Boot v4 version update-->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>${jakarta.persistence-api.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -268,11 +285,6 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-            <optional>true</optional>
-        </dependency>
 
     </dependencies>
 
@@ -315,7 +327,9 @@
                         </path>
                         <path>
                             <groupId>org.hibernate.orm</groupId>
-                            <artifactId>hibernate-jpamodelgen</artifactId> <!-- Needs to be changed to hibernate-processor on hibernate v7 upgrade -->
+                            <artifactId>hibernate-processor</artifactId>
+                            <!-- TODO: Remove version after Spring Boot v4 version update -->
+                            <version>${hibernate-processor.version}</version>
                         </path>
                     </annotationProcessorPaths>
                     <showDeprecation>true</showDeprecation>
@@ -462,12 +476,12 @@
                                 </p2Mirror>
                             </p2Mirrors>
                         </eclipse>
-                        <trimTrailingWhitespace />
-                        <endWithNewline />
-                        <importOrder />
-                        <removeUnusedImports />
-                        <forbidWildcardImports />
-                        <formatAnnotations />
+                        <trimTrailingWhitespace/>
+                        <endWithNewline/>
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <forbidWildcardImports/>
+                        <formatAnnotations/>
                     </java>
                 </configuration>
                 <executions>
@@ -519,7 +533,8 @@
                 <configuration>
                     <effort>Max</effort>
                     <excludeFilterFile>spotbugs-exclude-rules.xml</excludeFilterFile>
-                    <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs-results</spotbugsXmlOutputDirectory> <!-- required to ensure only the artifact jar is on top level when building -->
+                    <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs-results
+                    </spotbugsXmlOutputDirectory> <!-- required to ensure only the artifact jar is on top level when building -->
                     <plugins>
                         <plugin>
                             <groupId>com.h3xstream.findsecbugs</groupId>

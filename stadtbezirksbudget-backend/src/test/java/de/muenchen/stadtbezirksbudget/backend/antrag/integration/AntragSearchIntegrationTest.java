@@ -11,14 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,17 +47,7 @@ class AntragSearchIntegrationTest {
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
-    private AdresseRepository adresseRepository;
-    @Autowired
     private FinanzierungRepository finanzierungRepository;
-    @Autowired
-    private AntragstellerRepository antragstellerRepository;
-    @Autowired
-    private ProjektRepository projektRepository;
-    @Autowired
-    private BearbeitungsstandRepository bearbeitungsstandRepository;
-    @Autowired
-    private BankverbindungRepository bankverbindungRepository;
     @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
     @Autowired
@@ -72,9 +57,7 @@ class AntragSearchIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
-                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
-                finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository);
     }
 
     @Test
