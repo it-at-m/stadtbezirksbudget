@@ -1,11 +1,9 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
-import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import java.io.Serial;
+import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,14 +15,13 @@ import lombok.Setter;
  * Represents an address with street, house number, city, and postal code.
  * The address is unique based on the combination of street, house number, city, and postal code.
  */
-@Entity
 @Getter
 @Setter
 @Builder
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "strasse", "hausnummer", "ort", "postleitzahl" }))
-public class Adresse extends BaseEntity {
+public class Adresse implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

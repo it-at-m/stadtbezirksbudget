@@ -21,8 +21,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
@@ -49,10 +47,6 @@ class AntragServiceTest {
 
     @Mock
     private AntragRepository antragRepository;
-    @Mock
-    private AntragstellerRepository antragstellerRepository;
-    @Mock
-    private ProjektRepository projektRepository;
     @InjectMocks
     private AntragService antragService;
 
@@ -164,8 +158,8 @@ class AntragServiceTest {
     class GetFilterOptions {
         @Test
         void testEmptyLists() {
-            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(Collections.emptyList());
-            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(Collections.emptyList());
+            when(antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc()).thenReturn(Collections.emptyList());
+            when(antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc()).thenReturn(Collections.emptyList());
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 
@@ -182,8 +176,8 @@ class AntragServiceTest {
             final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
             final List<TitelView> titelViews = projektTitles.stream().map(titel -> (TitelView) () -> titel).toList();
 
-            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(nameViews);
-            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(titelViews);
+            when(antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc()).thenReturn(nameViews);
+            when(antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc()).thenReturn(titelViews);
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 
@@ -199,8 +193,8 @@ class AntragServiceTest {
             final List<NameView> nameViews = antragstellerNames.stream().map(name -> (NameView) () -> name).toList();
             final List<TitelView> titelViews = Collections.emptyList();
 
-            when(antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc()).thenReturn(nameViews);
-            when(projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc()).thenReturn(titelViews);
+            when(antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc()).thenReturn(nameViews);
+            when(antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc()).thenReturn(titelViews);
 
             final FilterOptionsDTO filterOptions = antragService.getFilterOptions();
 
