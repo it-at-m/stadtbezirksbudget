@@ -28,8 +28,8 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 
 @ExcludedFromGeneratedCoverage(
         reason = "This configuration class is considered too complex to test effectively.\n" +
-                " * As a result, it is excluded from unit testing for branch coverage to maintain focus on simpler,\n" +
-                " * more testable components of the application."
+                " As a result, it is excluded from unit testing for branch coverage to maintain focus on simpler,\n" +
+                " more testable components of the application."
 )
 @RequiredArgsConstructor
 @Configuration
