@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -10,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
@@ -35,24 +35,25 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class AntragSortingIntegrationTest {
+class AntragSearchIntegrationTest {
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
+
+    private AntragBuilder antragBuilder;
+
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
     private FinanzierungRepository finanzierungRepository;
     @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
     @Autowired
+    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
+    @Autowired
     private MockMvc mockMvc;
-
-    private AntragBuilder antragBuilder;
 
     @BeforeEach
     public void setUp() {
@@ -60,80 +61,106 @@ class AntragSortingIntegrationTest {
     }
 
     @Test
-    void testGivenSortAscThenReturnSortedResults() throws Exception {
-        antragBuilder.status(Status.VOLLSTAENDIG)
-                .build();
-        antragBuilder.status(Status.VOLLSTAENDIG)
-                .build();
-        final Antrag antrag = antragBuilder.status(Status.EINGEGANGEN)
-                .build();
-
+    void testNullSearch() throws Exception {
+        final Antrag antrag = antragBuilder.build();
         mockMvc
                 .perform(get("/antrag")
-                        .param("sortBy", "status")
-                        .param("sortDirection", "ASC")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].id", is(antrag.getId().toString())));
     }
 
     @Test
-    void testGivenSortDescThenReturnSortedResults() throws Exception {
-        antragBuilder.zammadNr("1")
-                .build();
-        antragBuilder.zammadNr("2")
-                .build();
-        final Antrag antrag = antragBuilder.zammadNr("3")
-                .build();
-
+    void testEmptySearch() throws Exception {
+        final Antrag antrag = antragBuilder.build();
         mockMvc
                 .perform(get("/antrag")
-                        .param("sortBy", "zammadNr")
-                        .param("sortDirection", "DESC")
+                        .param("search", "")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].id", is(antrag.getId().toString())));
     }
 
     @Test
-    void testGivenSortUnpagedThenReturnSortedResults() throws Exception {
-        antragBuilder.projektTitel("2")
+    void testSearchZammadNr() throws Exception {
+        final Antrag antrag = antragBuilder.zammadNr("123000")
                 .build();
-        antragBuilder.projektTitel("3")
+        antragBuilder.zammadNr("456000")
                 .build();
-        final Antrag antrag = antragBuilder.projektTitel("1")
-                .build();
-
         mockMvc
                 .perform(get("/antrag")
-                        .param("size", "-1")
-                        .param("sortBy", "projektTitel")
-                        .param("sortDirection", "ASC")
+                        .param("search", "123000")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].id", is(antrag.getId().toString())));
     }
 
     @Test
-    void testGivenInvalidSortByThenReturnBadRequest() throws Exception {
+    void testSearchAktenzeichen() throws Exception {
+        final Antrag antrag = antragBuilder.aktenzeichen("A-27")
+                .build();
+        antragBuilder.aktenzeichen("B-30")
+                .build();
         mockMvc
                 .perform(get("/antrag")
-                        .param("sortBy", "invalidField")
-                        .param("sortDirection", "ASC")
+                        .param("search", "A-27")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id", is(antrag.getId().toString())));
     }
 
     @Test
-    void testGivenInvalidSortDirectionThenReturnBadRequest() throws Exception {
+    void testSearchAntragstellerName() throws Exception {
+        final Antrag antrag = antragBuilder.antragstellerName("Ursula Müller")
+                .build();
+        antragBuilder.antragstellerName("Hans Müller")
+                .build();
         mockMvc
                 .perform(get("/antrag")
-                        .param("sortBy", "beantragtesBudget")
-                        .param("sortDirection", "INVALID_DIRECTION")
+                        .param("search", "Müller")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(2)));
+        mockMvc
+                .perform(get("/antrag")
+                        .param("search", "Ursula")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id", is(antrag.getId().toString())));
     }
+
+    @Test
+    void testSearchProjektTitel() throws Exception {
+        final Antrag antrag = antragBuilder.projektTitel("Hausfest")
+                .build();
+        antragBuilder.projektTitel("Weihnachtsfest")
+                .build();
+        mockMvc
+                .perform(get("/antrag")
+                        .param("search", "fest")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(2)));
+        mockMvc
+                .perform(get("/antrag")
+                        .param("search", "Haus")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id", is(antrag.getId().toString())));
+    }
+
 }

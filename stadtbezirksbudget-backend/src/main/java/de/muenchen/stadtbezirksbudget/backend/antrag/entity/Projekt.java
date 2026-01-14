@@ -1,12 +1,10 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
-import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,20 +14,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Represents a project with a title, description, start date, and end date.
- * The project is uniquely identified by the combination of its title, description, start date, and
- * end date.
+ * This class represents a project that includes a title, description, start date, and end date.
+ *
  */
-@Entity
 @Getter
 @Setter
 @Builder
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "titel", "beschreibung", "start", "ende" }))
-public class Projekt extends BaseEntity {
+public class Projekt implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
     @NotBlank private String titel;
     @NotNull private LocalDate start;
     private boolean istStartFrist;

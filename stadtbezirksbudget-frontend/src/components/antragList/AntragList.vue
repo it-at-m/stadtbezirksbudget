@@ -15,7 +15,7 @@
     :items-per-page="itemsPerPage"
     :loading="loading"
     :page="page"
-    data-test="antrag-summary-list"
+    data-test="antrag-list"
     @update:options="updateOptions"
     @click:row="goToDetails"
   >
@@ -87,7 +87,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
-import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import { useAntragList } from "@/composables/useAntragList.ts";
 import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
 import { FinanzierungArtText } from "@/types/FinanzierungArt.ts";
 import { toDateString, toNumberString } from "@/util/formatter.ts";
@@ -101,7 +101,7 @@ const {
   sortBy,
   updateOptions,
   goToDetails,
-} = useAntragSummaryList();
+} = useAntragList();
 
 const screenWidth = ref(window.innerWidth);
 

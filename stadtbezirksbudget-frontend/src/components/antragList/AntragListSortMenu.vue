@@ -15,5 +15,5 @@
 <script lang="ts" setup>
 import { mdiSort } from "@mdi/js";
 
-import AntragListSort from "@/components/AntragListSort.vue";
+import AntragListSort from "@/components/antragList/AntragListSort.vue";
 </script>
