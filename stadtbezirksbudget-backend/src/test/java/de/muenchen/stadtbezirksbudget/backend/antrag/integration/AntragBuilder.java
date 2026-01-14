@@ -75,8 +75,8 @@ public class AntragBuilder {
     private void setRandomValues() {
         status = Status.values()[RANDOM.nextInt(Status.values().length)];
         bezirksausschussNr = RANDOM.nextInt(LIMIT);
-        eingangDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
-        aktualisierungDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
+        eingangDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
+        aktualisierungDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
         beantragtesBudget = BigDecimal.valueOf(RANDOM.nextInt(LIMIT) / 100);
         finanzierungArt = FinanzierungArt.values()[RANDOM.nextInt(FinanzierungArt.values().length)];
         aktualisierungArt = AktualisierungArt.values()[RANDOM.nextInt(AktualisierungArt.values().length)];

@@ -154,6 +154,38 @@ class AntragIntegrationTest {
     }
 
     @Nested
+    class GetDetails {
+        @Test
+        void testGetDetails() throws Exception {
+            final Antrag antrag = antragBuilder.build();
+
+            mockMvc
+                    .perform(get("/antrag/" + antrag.getId())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.projektTitel", is(antrag.getProjekt().getTitel())))
+                    .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().toString())))
+                    .andExpect(jsonPath("$.antragstellerName", is(antrag.getAntragsteller().getName())))
+                    .andExpect(jsonPath("$.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
+                    .andExpect(jsonPath("$.rubrik", is("Rubrik")))
+                    .andExpect(jsonPath("$.status", is(antrag.getBearbeitungsstand().getStatus().name())))
+                    .andExpect(jsonPath("$.zammadNr", is(antrag.getZammadTicketNr())))
+                    .andExpect(jsonPath("$.aktenzeichen", is(antrag.getAktenzeichen())))
+                    .andExpect(jsonPath("$.istGegendert", is(true)))
+                    .andExpect(jsonPath("$.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
+        }
+
+        @Test
+        void testGetDetailsNotExisting() throws Exception {
+            mockMvc
+                    .perform(get("/antrag/80000000-0000-0000-0000-000000000013")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound());
+        }
+    }
+
+    @Nested
     class GetFilterOptions {
         @Test
         void testGetFilterOptionsReturnsAlphabeticallySortedLists() throws Exception {

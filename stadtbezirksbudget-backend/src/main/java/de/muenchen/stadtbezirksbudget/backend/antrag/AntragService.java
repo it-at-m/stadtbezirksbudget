@@ -41,6 +41,18 @@ public class AntragService {
     }
 
     /**
+     * Retrieves a single Antrag by its id.
+     *
+     * @param id id of the Antrag to get
+     * @return the antrag with the id
+     * @throws NotFoundException if no Antrag was found for the given id
+     */
+    public Antrag getAntrag(final UUID id) {
+        log.info("Get antrag with id {}", id);
+        return antragRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Could not find antrag with id %s", id)));
+    }
+
+    /**
      * Retrieves all Antragsteller names and Projekt titles.
      *
      * @return a FilterOptionsDTO containing lists of Antragsteller names and Projekt titles
