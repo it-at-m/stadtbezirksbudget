@@ -2,22 +2,22 @@ import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 
-import AntragSummaryList from "@/components/AntragSummaryList.vue";
-import { useAntragSummaryList } from "@/composables/useAntragSummaryList.ts";
+import AntragList from "@/components/antragList/AntragList.vue";
+import { useAntragList } from "@/composables/useAntragList.ts";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
-import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock.ts";
+import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock.ts";
 
-vi.mock("@/composables/useAntragSummaryList.ts");
+vi.mock("@/composables/useAntragList.ts");
 
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
-describe("AntragSummaryList", () => {
+describe("AntragList", () => {
   let wrapper;
-  let mockUseAntragSummaryList;
+  let mockUseAntragList;
 
   beforeEach(() => {
-    mockUseAntragSummaryList = {
+    mockUseAntragList = {
       items: ref([
         {
           id: "1",
@@ -42,9 +42,9 @@ describe("AntragSummaryList", () => {
       goToDetails: vi.fn(),
     };
 
-    vi.mocked(useAntragSummaryList).mockReturnValue(mockUseAntragSummaryList);
+    vi.mocked(useAntragList).mockReturnValue(mockUseAntragList);
 
-    wrapper = mount(AntragSummaryList, {
+    wrapper = mount(AntragList, {
       global: {
         plugins: [pinia, vuetify],
       },
@@ -52,9 +52,7 @@ describe("AntragSummaryList", () => {
   });
 
   test("renders antrag summary list", () => {
-    expect(wrapper.find('[data-test="antrag-summary-list"]').exists()).toBe(
-      true
-    );
+    expect(wrapper.find('[data-test="antrag-list"]').exists()).toBe(true);
     expect(
       wrapper.find('[data-test="header-beantragtes-budget"]').exists()
     ).toBe(true);
@@ -85,7 +83,7 @@ describe("AntragSummaryList", () => {
       value: initialWidth,
     });
 
-    wrapper = mount(AntragSummaryList, {
+    wrapper = mount(AntragList, {
       global: {
         plugins: [vuetify],
       },
@@ -140,7 +138,7 @@ describe("AntragSummaryList", () => {
   });
 
   test("renders antrag summary items", async () => {
-    mockUseAntragSummaryList.items.value = [
+    mockUseAntragList.items.value = [
       {
         id: "2",
         status: "EINGEGANGEN",
@@ -196,8 +194,8 @@ describe("AntragSummaryList", () => {
   });
 
   test("updates props on pagination options change", async () => {
-    mockUseAntragSummaryList.page.value = 2;
-    mockUseAntragSummaryList.itemsPerPage.value = 5;
+    mockUseAntragList.page.value = 2;
+    mockUseAntragList.itemsPerPage.value = 5;
 
     await wrapper.vm.$nextTick();
 
@@ -216,7 +214,7 @@ describe("AntragSummaryList", () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(mockUseAntragSummaryList.updateOptions).toHaveBeenCalledWith({
+    expect(mockUseAntragList.updateOptions).toHaveBeenCalledWith({
       page: 3,
       itemsPerPage: 20,
     });
@@ -225,13 +223,13 @@ describe("AntragSummaryList", () => {
   test("calls goToDetails on row click by emitting table event", async () => {
     const dataTable = wrapper.findComponent({ name: "VDataTableServer" });
     dataTable.vm.$emit("click:row", new MouseEvent("click"), {
-      item: mockUseAntragSummaryList.items.value[0],
+      item: mockUseAntragList.items.value[0],
     });
     await wrapper.vm.$nextTick();
 
-    expect(mockUseAntragSummaryList.goToDetails).toHaveBeenCalledWith(
+    expect(mockUseAntragList.goToDetails).toHaveBeenCalledWith(
       expect.any(MouseEvent),
-      { item: mockUseAntragSummaryList.items.value[0] }
+      { item: mockUseAntragList.items.value[0] }
     );
   });
 });

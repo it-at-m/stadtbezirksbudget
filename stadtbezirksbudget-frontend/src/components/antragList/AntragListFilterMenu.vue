@@ -15,5 +15,5 @@
 <script lang="ts" setup>
 import { mdiFilter } from "@mdi/js";
 
-import AntragListFilter from "@/components/AntragListFilter.vue";
+import AntragListFilter from "@/components/antragList/AntragListFilter.vue";
 </script>

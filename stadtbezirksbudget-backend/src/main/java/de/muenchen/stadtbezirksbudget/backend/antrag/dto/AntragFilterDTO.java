@@ -16,6 +16,7 @@ import java.util.List;
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragFilterDTO(
+        String search,
         List<Status> status,
         List<Integer> bezirksausschussNr,
         LocalDateTime eingangDatumVon,

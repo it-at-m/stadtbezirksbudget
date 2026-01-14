@@ -4,12 +4,12 @@ import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
 
-import AntragListSort from "@/components/AntragListSort.vue";
+import AntragListSort from "@/components/antragList/AntragListSort.vue";
 import { useAntragListSort } from "@/composables/useAntragListSort";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
 import { createEmptyListSort } from "@/types/AntragListSort";
-import { ResizeObserverMock } from "../_testUtils/ResizeObserverMock";
+import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock";
 
 vi.mock("@/composables/useAntragListSort.ts", () => ({
   useAntragListSort: vi.fn(),

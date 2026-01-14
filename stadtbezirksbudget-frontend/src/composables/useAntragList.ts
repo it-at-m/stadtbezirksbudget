@@ -3,7 +3,7 @@ import type Page from "@/types/Page.ts";
 
 import { computed, readonly, ref } from "vue";
 
-import { getAntragsSummaryList } from "@/api/fetch-antragSummary-list.ts";
+import { getAntragList } from "@/api/fetch-antragList.ts";
 import { useAntragListSort } from "@/composables/useAntragListSort.ts";
 import { ROUTES_DETAILS, STATUS_INDICATORS } from "@/constants.ts";
 import router from "@/plugins/router.ts";
@@ -20,7 +20,7 @@ import { antragListSortToSortItem } from "@/types/AntragListSort.ts";
  * @returns {Object} An object exposing the state and methods for managing
  * AntragSummary items.
  */
-export function useAntragSummaryList() {
+export function useAntragList() {
   const snackbarStore = useSnackbarStore();
   const filterStore = useAntragListFilterStore();
   const sortingStore = useAntragListSortingStore();
@@ -45,7 +45,7 @@ export function useAntragSummaryList() {
    */
   function fetchItems() {
     loading.value = true;
-    getAntragsSummaryList(
+    getAntragList(
       page.value - 1,
       itemsPerPage.value,
       filterStore.filters,
@@ -55,9 +55,9 @@ export function useAntragSummaryList() {
         items.value = content.content;
         totalItems.value = content.page.totalElements;
       })
-      .catch((error) => {
+      .catch(() => {
         snackbarStore.showMessage({
-          message: error?.message || "Fehler beim Laden der Anträge",
+          message: "Fehler beim Laden der Anträge",
           level: STATUS_INDICATORS.WARNING,
         });
       })

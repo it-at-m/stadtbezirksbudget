@@ -1,8 +1,6 @@
 import { ApiError } from "@/api/ApiError";
 import { STATUS_INDICATORS } from "@/constants";
 
-// TODO: muss auf mind. 80% branch coverage getestet werden, derzeit excluded da scope eines anderen Issues
-
 /**
  * Returns a default GET-Config for fetch
  */
