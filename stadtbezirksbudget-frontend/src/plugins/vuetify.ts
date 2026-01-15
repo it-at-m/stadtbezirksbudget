@@ -28,8 +28,8 @@ export default createVuetify({
         colors: {
           background: "#F4FBF9",
           surface: "#FFFFFF",
-          "surface-dim": "D5DBD9",
-          "surface-variant": "333333",
+          "surface-dim": "#D5DBD9",
+          "surface-variant": "#333333",
           primary: "#006A63",
           "primary-container": "#D4F9F4", // custom
           secondary: "#4A6360",
