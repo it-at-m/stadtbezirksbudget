@@ -144,8 +144,7 @@ public class AntragBuilder {
     private Adresse initializeAdresse() {
         return Adresse.builder()
                 // Generate random UUIDs to ensure unique strasse
-                .strasse("Musterstraße 1 " + generateRandomUuidString())
-                .hausnummer("1")
+                .strasseHausnummer("Musterstraße 1 " + generateRandomUuidString())
                 .postleitzahl("12345")
                 .ort("München")
                 .build();
@@ -216,8 +215,6 @@ public class AntragBuilder {
         Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(true)
                 .sonstigeFoerderhinweise("Keine")
-                .summeAusgaben(ausgabe.getBetrag())
-                .summeFinanzierungsmittel(finanzierungsmittel.getBetrag())
                 .beantragtesBudget(beantragtesBudget)
                 .kostenAnmerkung("KostenAnmerkung")
                 .begruendungEigenmittel("")
@@ -238,7 +235,7 @@ public class AntragBuilder {
 
     private Bankverbindung initializeBankverbindung() {
         return Bankverbindung.builder()
-                .person("Max Mustermann")
+                .istVonVertretungsberechtigtem(false)
                 .geldinstitut("Musterbank")
                 .iban("DE00123456789012345678")
                 .bic("DUMMYBIC123")
