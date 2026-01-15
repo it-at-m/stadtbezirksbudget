@@ -1,11 +1,10 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.EmbeddedColumnNaming;
 
 /**
  * Represents a request that contains various attributes such as the date of receipt,
@@ -38,32 +38,33 @@ public class Antrag extends BaseEntity {
     @NotNull private LocalDateTime eingangDatum;
     private boolean istPersonVorsteuerabzugsberechtigt;
     private boolean istAndererZuwendungsantrag;
-
-    @NotNull @OneToOne
-    private Bearbeitungsstand bearbeitungsstand;
-
+    @NotNull private String zammadTicketNr;
+    @NotNull private LocalDateTime aktualisierungDatum;
+    @NotNull private String aktenzeichen;
     @NotNull @Enumerated(EnumType.STRING)
     private AktualisierungArt aktualisierungArt;
 
-    @NotNull private String zammadTicketNr;
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("bearbeitungsstand_%s")
+    private Bearbeitungsstand bearbeitungsstand;
 
-    @NotNull private LocalDateTime aktualisierungDatum;
-
-    @NotNull private String aktenzeichen;
-
-    @NotNull @OneToOne(fetch = FetchType.LAZY)
+    @NotNull @OneToOne
     private Finanzierung finanzierung;
 
-    @NotNull @ManyToOne
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("projekt_%s")
     private Projekt projekt;
 
-    @NotNull @ManyToOne
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("antragsteller_%s")
     private Antragsteller antragsteller;
 
-    @NotNull @ManyToOne
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("bankverbindung_%s")
     private Bankverbindung bankverbindung;
 
-    @ManyToOne
+    @Embedded
+    @EmbeddedColumnNaming("vertretungsberechtigter_%s")
     private Vertretungsberechtigter vertretungsberechtigter;
 
     @OneToMany(mappedBy = "antrag")

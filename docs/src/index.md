@@ -8,10 +8,13 @@ hero:
   actions:
     - theme: brand
       text: About
-      link: /about
+      link: /about/
     - theme: alt
       text: Architecture
       link: /architecture/
+    - theme: alt
+      text: Development
+      link: /development/data-model/
 features:
   - icon: 📋
     title: Application list

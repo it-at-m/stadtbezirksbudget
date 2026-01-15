@@ -38,7 +38,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
      * the kind of HTTP-Request, the targeted URI and the response http status code.
      * {@inheritDoc}
      */
-    @ExcludedFromGeneratedCoverage //Excluded from coverage due to the complexity of testing logging
+    @ExcludedFromGeneratedCoverage(reason = "Excluded from coverage due to the complexity of testing logging")
     @Override
     protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {
