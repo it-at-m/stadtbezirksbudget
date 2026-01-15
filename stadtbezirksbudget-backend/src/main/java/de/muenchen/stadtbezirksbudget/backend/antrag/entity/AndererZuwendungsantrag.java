@@ -2,10 +2,13 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import de.muenchen.stadtbezirksbudget.backend.common.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,6 +33,9 @@ public class AndererZuwendungsantrag extends BaseEntity {
 
     @NotNull private LocalDate antragsdatum;
     @NotBlank private String stelle;
+    private BigDecimal betrag;
+    @Enumerated(EnumType.STRING)
+    private AndererZuwendungsantragStatus status;
 
     @NotNull @ManyToOne
     private Antrag antrag;

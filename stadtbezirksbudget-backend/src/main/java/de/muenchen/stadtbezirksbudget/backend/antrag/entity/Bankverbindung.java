@@ -26,7 +26,7 @@ public class Bankverbindung implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotBlank private String person;
+    private boolean istVonVertretungsberechtigtem;
     @NotBlank private String geldinstitut;
     @NotBlank private String iban;
     @NotBlank private String bic;

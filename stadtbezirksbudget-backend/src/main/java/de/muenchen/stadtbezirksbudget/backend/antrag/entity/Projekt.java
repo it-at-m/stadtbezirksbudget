@@ -29,7 +29,6 @@ public class Projekt implements Serializable {
 
     @NotBlank private String titel;
     @NotNull private LocalDate start;
-    private boolean istStartFrist;
     @NotNull private String fristBruchBegruendung;
     @NotNull private LocalDate ende;
     @NotBlank private String beschreibung;
