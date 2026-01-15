@@ -15,7 +15,6 @@ import lombok.Setter;
 
 /**
  * This class represents a project that includes a title, description, start date, and end date.
- *
  */
 @Getter
 @Setter

@@ -14,7 +14,6 @@ import lombok.Setter;
 
 /**
  * Represents an address with street, house number, city, and postal code.
- * The address is unique based on the combination of street, house number, city, and postal code.
  */
 @Getter
 @Setter
