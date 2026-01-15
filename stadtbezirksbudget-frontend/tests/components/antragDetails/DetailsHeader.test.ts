@@ -45,11 +45,11 @@ describe("DetailsHeader", () => {
   });
 
   test("updates zammadNr when antrag prop changes", async () => {
-    const newAntrag = { ...mockAntrag, zammadNr: "1234" };
+    const newAntrag = { ...mockAntrag, zammadNr: "4567" };
     await wrapper.setProps({ antrag: newAntrag });
     await nextTick();
 
     const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
-    expect(zammadButton.props("zammadNr")).toBe("1234");
+    expect(zammadButton.props("zammadNr")).toBe("4567");
   });
 });
