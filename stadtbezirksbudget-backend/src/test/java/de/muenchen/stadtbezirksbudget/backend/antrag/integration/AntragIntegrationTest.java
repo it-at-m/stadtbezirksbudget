@@ -18,14 +18,9 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AdresseRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BankverbindungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.BearbeitungsstandRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,21 +58,11 @@ class AntragIntegrationTest {
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
-    private AdresseRepository adresseRepository;
-    @Autowired
     private FinanzierungRepository finanzierungRepository;
     @Autowired
-    private AntragstellerRepository antragstellerRepository;
-    @Autowired
-    private ProjektRepository projektRepository;
-    @Autowired
-    private BearbeitungsstandRepository bearbeitungsstandRepository;
-    @Autowired
-    private BankverbindungRepository bankverbindungRepository;
+    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -88,9 +73,7 @@ class AntragIntegrationTest {
     @BeforeEach
     public void setUp() {
         antragList.clear();
-        antragBuilder = new AntragBuilder(antragRepository, adresseRepository,
-                finanzierungRepository, antragstellerRepository, projektRepository, bearbeitungsstandRepository, bankverbindungRepository,
-                finanzierungsmittelRepository, voraussichtlicheAusgabeRepository);
+        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository);
     }
 
     @Nested
@@ -167,6 +150,38 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.page.size", is(11)))
                     .andExpect(jsonPath("$.page.number", is(0)))
                     .andExpect(jsonPath("$.page.totalPages", is(1)));
+        }
+    }
+
+    @Nested
+    class GetDetails {
+        @Test
+        void testGetDetails() throws Exception {
+            final Antrag antrag = antragBuilder.build();
+
+            mockMvc
+                    .perform(get("/antrag/" + antrag.getId())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.projektTitel", is(antrag.getProjekt().getTitel())))
+                    .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().toString())))
+                    .andExpect(jsonPath("$.antragstellerName", is(antrag.getAntragsteller().getName())))
+                    .andExpect(jsonPath("$.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
+                    .andExpect(jsonPath("$.rubrik", is("Rubrik")))
+                    .andExpect(jsonPath("$.status", is(antrag.getBearbeitungsstand().getStatus().name())))
+                    .andExpect(jsonPath("$.zammadNr", is(antrag.getZammadTicketNr())))
+                    .andExpect(jsonPath("$.aktenzeichen", is(antrag.getAktenzeichen())))
+                    .andExpect(jsonPath("$.istGegendert", is(true)))
+                    .andExpect(jsonPath("$.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
+        }
+
+        @Test
+        void testGetDetailsNotExisting() throws Exception {
+            mockMvc
+                    .perform(get("/antrag/80000000-0000-0000-0000-000000000013")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound());
         }
     }
 

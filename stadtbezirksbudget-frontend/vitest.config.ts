@@ -24,7 +24,6 @@ export default defineConfig((configEnv) =>
             "**/views/**",
             "**/stores/**",
             "**/plugins/**",
-            "src/api/fetch-utils.ts",
           ],
           thresholds: {
             branches: 80,

@@ -8,10 +8,13 @@ hero:
   actions:
     - theme: brand
       text: About
-      link: /about
+      link: /about/
     - theme: alt
       text: Architecture
       link: /architecture/
+    - theme: alt
+      text: Development
+      link: /development/data-model/
 features:
   - icon: 📋
     title: Application list
@@ -20,7 +23,7 @@ features:
   - icon: 📇
     title: Zammad integration
     details: The Zammad integration is utilized to create tickets, users and more within the Zammad system.
-    link: /features/zammad-integration/
+    link: /features/zammad-integration
   - icon: 📨
     title: Reliable communication
     details: The project uses a robust communication architecture to ensure reliable data exchange between all connected systems. To achieve this, the event bus Kafka is used.

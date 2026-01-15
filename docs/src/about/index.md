@@ -1,4 +1,4 @@
-# About
+# General
 
 In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby making it more
 efficient. An online form is being introduced for citizens to submit their applications, along with a clear digital representation of the application for

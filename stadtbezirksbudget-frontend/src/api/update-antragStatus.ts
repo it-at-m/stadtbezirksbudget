@@ -25,9 +25,6 @@ export function updateAntragStatus(
   )
     .then(defaultResponseHandler)
     .catch((err) => {
-      return defaultCatchHandler(
-        err,
-        "Fehler beim Aktualisieren des Antragsstatus"
-      );
+      return defaultCatchHandler(err);
     });
 }

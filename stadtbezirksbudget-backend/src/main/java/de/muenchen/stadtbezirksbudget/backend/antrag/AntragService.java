@@ -5,8 +5,6 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragstellerRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.ProjektRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
@@ -26,8 +24,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AntragService {
     private final AntragRepository antragRepository;
-    private final ProjektRepository projektRepository;
-    private final AntragstellerRepository antragstellerRepository;
     private final AntragFilterService antragFilterService;
 
     /**
@@ -45,14 +41,28 @@ public class AntragService {
     }
 
     /**
+     * Retrieves a single Antrag by its id.
+     *
+     * @param id id of the Antrag to get
+     * @return the antrag with the id
+     * @throws NotFoundException if no Antrag was found for the given id
+     */
+    public Antrag getAntrag(final UUID id) {
+        log.info("Get antrag with id {}", id);
+        return antragRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Could not find antrag with id %s", id)));
+    }
+
+    /**
      * Retrieves all Antragsteller names and Projekt titles.
      *
      * @return a FilterOptionsDTO containing lists of Antragsteller names and Projekt titles
      */
     public FilterOptionsDTO getFilterOptions() {
         log.info("Get FilterOptions");
-        final List<String> antragstellerNameList = antragstellerRepository.findDistinctByNameIsNotNullOrderByNameAsc().stream().map(NameView::getName).toList();
-        final List<String> projektTitelList = projektRepository.findDistinctByTitelIsNotNullOrderByTitelAsc().stream().map(TitelView::getTitel).toList();
+        final List<String> antragstellerNameList = antragRepository.findDistinctByAntragsteller_nameIsNotNullOrderByAntragsteller_nameAsc().stream()
+                .map(NameView::getAntragsteller_Name).toList();
+        final List<String> projektTitelList = antragRepository.findDistinctByProjekt_titelIsNotNullOrderByProjekt_titelAsc().stream()
+                .map(TitelView::getProjekt_Titel).toList();
         return new FilterOptionsDTO(antragstellerNameList, projektTitelList);
     }
 
