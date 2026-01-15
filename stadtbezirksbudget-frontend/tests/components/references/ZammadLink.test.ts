@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, test } from "vitest";
 
-import ZammadLink from "@/components/ZammadLink.vue";
+import ZammadLink from "@/components/references/ZammadLink.vue";
 import vuetify from "@/plugins/vuetify.ts";
 import { zammadNrToLink } from "@/util/formatter";
 

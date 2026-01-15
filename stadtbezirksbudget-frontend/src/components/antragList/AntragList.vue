@@ -95,7 +95,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
-import ZammadLink from "@/components/ZammadLink.vue";
+import ZammadLink from "@/components/references/ZammadLink.vue";
 import { useAntragList } from "@/composables/useAntragList.ts";
 import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
 import { FinanzierungArtText } from "@/types/FinanzierungArt.ts";
