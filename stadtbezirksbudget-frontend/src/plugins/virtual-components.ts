@@ -8,13 +8,14 @@ export const componentAliases = {
 export const defaults = {
   VBtn: {
     density: "comfortable",
+    size: "default",
     rounded: "lg",
+    variant: "elevated",
   },
   VBtnPrimary: {
     color: "#006A63",
   },
   VBtnSecondary: {
-    variants: "tonal",
     color: "#D4F9F4",
   },
   VBtnTertiary: {
@@ -30,5 +31,9 @@ export const defaults = {
   VTextarea: {
     variant: "outlined",
     autoGrow: true,
+  },
+  VDateInput: {
+    variant: "outlined",
+    prependIcon: "",
   },
 };
