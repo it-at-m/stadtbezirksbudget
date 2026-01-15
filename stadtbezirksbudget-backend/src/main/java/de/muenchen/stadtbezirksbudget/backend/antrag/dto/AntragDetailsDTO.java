@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 /**
  * Data Transfer Object (DTO) representing the details of an Antrag.
  */
-@ExcludedFromGeneratedCoverage // DTO is a pure data carrier (no logic) and therefore unreasonable to test.
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragDetailsDTO(
         String projektTitel,
         LocalDateTime eingangDatum,
