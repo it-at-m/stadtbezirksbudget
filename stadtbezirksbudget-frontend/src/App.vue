@@ -8,7 +8,10 @@
           cols="3"
         >
           <v-app-bar-nav-icon @click.stop="toggleDrawer()" />
-          <router-link class="text-decoration-none" to="/">
+          <router-link
+            class="text-decoration-none"
+            to="/"
+          >
             <v-toolbar-title class="font-weight-bold">
               <span class="text-white">Stadt</span>
               <span class="text-primary">bezirks</span>
