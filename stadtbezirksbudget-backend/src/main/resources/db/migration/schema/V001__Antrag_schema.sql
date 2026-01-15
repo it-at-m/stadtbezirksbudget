@@ -48,7 +48,7 @@ CREATE TABLE antrag
     vertretungsberechtigter_telefon_nr                 VARCHAR(256),
     vertretungsberechtigter_email                      VARCHAR(256),
     vertretungsberechtigter_adresse_strasse_hausnummer VARCHAR(256),
-    vertretungsberechtigter_adresse_weitere_angaben    VARCHAR(256)                NOT NULL,
+    vertretungsberechtigter_adresse_weitere_angaben    VARCHAR(256),
     vertretungsberechtigter_adresse_ort                VARCHAR(256),
     vertretungsberechtigter_adresse_postleitzahl       VARCHAR(256),
     CONSTRAINT pk_antrag PRIMARY KEY (id)
