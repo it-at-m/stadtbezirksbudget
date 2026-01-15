@@ -70,7 +70,7 @@ describe("formatter", () => {
     test("formats zammad number to zammad link", () => {
       const zammadNr = "00000018";
       expect(zammadNrToLink(zammadNr)).toBe(
-        "https://zammad.muenchen.de/#ticket/zoom/number/00000018"
+        "https://zammad.muenchen.de/#ticket/zoom/00000018"
       );
     });
   });
