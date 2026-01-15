@@ -15,7 +15,6 @@ CREATE TABLE antrag
     bezirksausschuss_nr                                INTEGER                     NOT NULL,
     eingang_datum                                      TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     ist_person_vorsteuerabzugsberechtigt               BOOLEAN                     NOT NULL,
-    ist_anderer_zuwendungsantrag                       BOOLEAN                     NOT NULL,
     zammad_ticket_nr                                   VARCHAR(256)                NOT NULL,
     aktualisierung_datum                               TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     aktenzeichen                                       VARCHAR(256)                NOT NULL,
