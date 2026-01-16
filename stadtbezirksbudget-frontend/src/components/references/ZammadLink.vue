@@ -1,7 +1,7 @@
 <template>
   <a
     :href="zammadNrToLink(zammadNr)"
-    class="text-black text-decoration-none custom-link"
+    class="text-black text-decoration-none"
     rel="noopener noreferrer"
     target="_blank"
   >
@@ -20,8 +20,9 @@ import { zammadNrToLink } from "@/util/formatter.ts";
 
 const { zammadNr } = defineProps<{ zammadNr: string }>();
 </script>
+
 <style scoped>
-.custom-link:hover {
+a:hover {
   text-decoration: underline !important;
 }
 </style>
