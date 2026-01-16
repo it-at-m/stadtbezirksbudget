@@ -31,7 +31,7 @@ public class Antragsteller implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank private String name;
-    @NotBlank private String telefonNr;
+    @NotNull private String telefonNr;
     @NotBlank private String email;
     @NotNull @Enumerated(EnumType.STRING)
     private Rechtsform rechtsform;

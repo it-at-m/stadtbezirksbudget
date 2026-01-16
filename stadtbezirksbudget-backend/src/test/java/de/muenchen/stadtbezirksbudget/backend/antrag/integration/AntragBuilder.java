@@ -75,8 +75,8 @@ public class AntragBuilder {
     private void setRandomValues() {
         status = Status.values()[RANDOM.nextInt(Status.values().length)];
         bezirksausschussNr = RANDOM.nextInt(LIMIT);
-        eingangDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
-        aktualisierungDatum = LocalDateTime.now().minusDays(RANDOM.nextInt(LIMIT));
+        eingangDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
+        aktualisierungDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
         beantragtesBudget = BigDecimal.valueOf(RANDOM.nextInt(LIMIT) / 100);
         finanzierungArt = FinanzierungArt.values()[RANDOM.nextInt(FinanzierungArt.values().length)];
         aktualisierungArt = AktualisierungArt.values()[RANDOM.nextInt(AktualisierungArt.values().length)];
@@ -143,9 +143,7 @@ public class AntragBuilder {
 
     private Adresse initializeAdresse() {
         return Adresse.builder()
-                // Generate random UUIDs to ensure unique strasse
-                .strasse("Musterstraße 1 " + generateRandomUuidString())
-                .hausnummer("1")
+                .strasseHausnummer("Musterstraße 1")
                 .postleitzahl("12345")
                 .ort("München")
                 .build();
@@ -154,8 +152,7 @@ public class AntragBuilder {
     private Antragsteller initializeAntragsteller(final Adresse adresse, final String name) {
         final Antragsteller antragsteller = Antragsteller.builder()
                 .name(name)
-                // Generate random UUIDs to ensure unique zielsetzung
-                .zielsetzung("Förderung von Projekten " + generateRandomUuidString())
+                .zielsetzung("Förderung von Projekten ")
                 .rechtsform(Rechtsform.NATUERLICHE_PERSON)
                 .build();
         antragsteller.setTelefonNr("0123456789");
@@ -167,8 +164,7 @@ public class AntragBuilder {
     private Projekt initializeProjekt(final String titel) {
         return Projekt.builder()
                 .titel(titel)
-                // Generate random UUIDs to ensure unique beschreibung
-                .beschreibung("Beschreibung des Projekts, Titel: " + generateRandomUuidString())
+                .beschreibung("Beschreibung des Projekts")
                 .start(LocalDate.now())
                 .ende(LocalDate.now().plusMonths(6))
                 .fristBruchBegruendung("")
@@ -216,8 +212,6 @@ public class AntragBuilder {
         Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(true)
                 .sonstigeFoerderhinweise("Keine")
-                .summeAusgaben(ausgabe.getBetrag())
-                .summeFinanzierungsmittel(finanzierungsmittel.getBetrag())
                 .beantragtesBudget(beantragtesBudget)
                 .kostenAnmerkung("KostenAnmerkung")
                 .begruendungEigenmittel("")
@@ -238,7 +232,7 @@ public class AntragBuilder {
 
     private Bankverbindung initializeBankverbindung() {
         return Bankverbindung.builder()
-                .person("Max Mustermann")
+                .istVonVertretungsberechtigtem(false)
                 .geldinstitut("Musterbank")
                 .iban("DE00123456789012345678")
                 .bic("DUMMYBIC123")

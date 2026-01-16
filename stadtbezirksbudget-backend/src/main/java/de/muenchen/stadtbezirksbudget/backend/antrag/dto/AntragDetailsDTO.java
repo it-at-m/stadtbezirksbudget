@@ -1,27 +1,23 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.dto;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
- * Data Transfer Object (DTO) representing a summary of an Antrag.
+ * Data Transfer Object (DTO) representing the details of an Antrag.
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
-public record AntragSummaryDTO(
-        UUID id,
+public record AntragDetailsDTO(
+        String projektTitel,
+        LocalDateTime eingangDatum,
+        String antragstellerName,
+        BigDecimal beantragtesBudget,
+        String rubrik,
         Status status,
         String zammadNr,
         String aktenzeichen,
-        int bezirksausschussNr,
-        LocalDateTime eingangDatum,
-        String antragstellerName,
-        String projektTitel,
-        BigDecimal beantragtesBudget,
-        FinanzierungArt finanzierungArt,
-        String aktualisierung,
-        LocalDateTime aktualisierungDatum) {
+        boolean istGegendert,
+        String anmerkungen) {
 }
