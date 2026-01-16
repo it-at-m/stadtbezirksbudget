@@ -88,7 +88,8 @@ VALUES ('20000000-0000-0000-0000-000000000001', false, 'Kosten für Dekoration, 
        ('20000000-0000-0000-0000-000000000049', true, 'Film- und Techniklizenzkosten.', NULL, 15023.50, false, true, true,
         'Auf Kinoflyern beim Open-Air-Kinoabend für Familien', NULL),
        ('20000000-0000-0000-0000-000000000050', false, 'Materialkosten für Bastelaktion.', NULL, 152.77, true, false, true,
-        'Auf Bastelmaterialien beim Dorffest sichtbar', 152.77);
+        'Auf Bastelmaterialien beim Dorffest sichtbar', 152.77)
+ON CONFLICT (id) DO NOTHING;
 
 
 INSERT INTO antrag (id, bezirksausschuss_nr, eingang_datum, ist_person_vorsteuerabzugsberechtigt, zammad_ticket_nr, aktualisierung_datum, aktenzeichen,
@@ -423,7 +424,8 @@ VALUES ('10000000-0000-0000-0000-000000000001', 16, '2025-01-02 08:15:00', false
         'Bastelaktion für das Dorffest, bei der Kinder gemeinsam Dekorationen herstellen und diese am Fest präsentieren.', 'Nachbarschaftsgartenverein',
         '0589 000000000', 'gartenverein@nachbarschaft.invalid', 'SONSTIGE_VEREINIGUNGEN',
         'Freizeitangebote, Sport und Kultur für Kinder und Familien bereitstellen.', 'Straße des Friedens 20', 'zu Händen: Büro Müller', 'Unterschleißheim',
-        '85716', false, 'Münchner Bürgerbank', 'DE24999000500000000050', 'BANKDEFF390', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        '85716', false, 'Münchner Bürgerbank', 'DE24999000500000000050', 'BANKDEFF390', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)
+ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO finanzierungsmittel (id, kategorie, betrag, direktorium_notiz, finanzierung_id)
 VALUES ('30000000-0000-0000-0000-000000000001', 'EINNAHMEN', 700, 'Einnahmen aus Teilnehmerbeiträgen entsprechen den Erwartungen.',
@@ -585,7 +587,8 @@ VALUES ('30000000-0000-0000-0000-000000000001', 'EINNAHMEN', 700, 'Einnahmen aus
        ('30000000-0000-0000-0000-000000000147', 'ZUWENDUNGEN_DRITTER', 0, '', '20000000-0000-0000-0000-000000000049'),
        ('30000000-0000-0000-0000-000000000148', 'EINNAHMEN', 0, '', '20000000-0000-0000-0000-000000000050'),
        ('30000000-0000-0000-0000-000000000149', 'EIGENMITTEL', 0, '', '20000000-0000-0000-0000-000000000050'),
-       ('30000000-0000-0000-0000-000000000150', 'ZUWENDUNGEN_DRITTER', 0, '', '20000000-0000-0000-0000-000000000050');
+       ('30000000-0000-0000-0000-000000000150', 'ZUWENDUNGEN_DRITTER', 0, '', '20000000-0000-0000-0000-000000000050')
+ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO voraussichtliche_ausgabe (id, kategorie, betrag, direktorium_notiz, finanzierung_id)
 VALUES ('40000000-0000-0000-0000-000000000001', 'Personalausgaben', 5023.00, '', '20000000-0000-0000-0000-000000000001'),
@@ -745,7 +748,8 @@ VALUES ('40000000-0000-0000-0000-000000000001', 'Personalausgaben', 5023.00, '',
        ('40000000-0000-0000-0000-000000000151', 'Sachkosten', 5023.50, '', '20000000-0000-0000-0000-000000000049'),
        ('40000000-0000-0000-0000-000000000152', 'Personalausgaben', 0.00, '', '20000000-0000-0000-0000-000000000050'),
        ('40000000-0000-0000-0000-000000000153', 'Ausgaben für Honorarkräfte', 0.00, '', '20000000-0000-0000-0000-000000000050'),
-       ('40000000-0000-0000-0000-000000000154', 'Sachkosten', 152.77, '', '20000000-0000-0000-0000-000000000050');
+       ('40000000-0000-0000-0000-000000000154', 'Sachkosten', 152.77, '', '20000000-0000-0000-0000-000000000050')
+ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO anderer_zuwendungsantrag (id, antragsdatum, stelle, betrag, status, antrag_id)
 VALUES ('50000000-0000-0000-0000-000000000001', '2025-03-15', 'Stadtförderung Kultur & Soziales', 1000.00, 'BEANTRAGT', '10000000-0000-0000-0000-000000000007'),
@@ -754,4 +758,5 @@ VALUES ('50000000-0000-0000-0000-000000000001', '2025-03-15', 'Stadtförderung K
        ('50000000-0000-0000-0000-000000000004', '2025-11-19', 'Kulturfonds des Landes', NULL, NULL, '10000000-0000-0000-0000-000000000012'),
        ('50000000-0000-0000-0000-000000000005', '2025-05-07', 'Umwelt- und Naturschutzstiftung', 200.00, NULL, '10000000-0000-0000-0000-000000000025'),
        ('50000000-0000-0000-0000-000000000006', '2025-09-23', 'Sportförderverein der Kommune', NULL, NULL, '10000000-0000-0000-0000-000000000031'),
-       ('50000000-0000-0000-0000-000000000007', '2025-12-11', 'Bildungs- und Sozialfonds', 100.00, 'BEANTRAGT', '10000000-0000-0000-0000-000000000043');
+       ('50000000-0000-0000-0000-000000000007', '2025-12-11', 'Bildungs- und Sozialfonds', 100.00, 'BEANTRAGT', '10000000-0000-0000-0000-000000000043')
+ON CONFLICT (id) DO NOTHING;
