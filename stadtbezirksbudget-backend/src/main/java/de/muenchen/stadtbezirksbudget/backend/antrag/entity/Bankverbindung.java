@@ -13,8 +13,7 @@ import lombok.Setter;
 
 /**
  * Represents a payee's bank details.
- * Contains information about the person, the financial institution, IBAN, and BIC.
- * IBAN, and BIC.
+ * Contains information about the financial institution, IBAN, and BIC.
  */
 @Getter
 @Setter
@@ -26,7 +25,7 @@ public class Bankverbindung implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotBlank private String person;
+    private boolean istVonVertretungsberechtigtem;
     @NotBlank private String geldinstitut;
     @NotBlank private String iban;
     @NotBlank private String bic;

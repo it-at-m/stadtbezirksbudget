@@ -52,8 +52,6 @@ class FinanzierungTest {
         final Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(false)
                 .kostenAnmerkung("Kosten Anmerkung")
-                .summeAusgaben(BigDecimal.ZERO)
-                .summeFinanzierungsmittel(BigDecimal.ZERO)
                 .begruendungEigenmittel("Begründung")
                 .beantragtesBudget(BigDecimal.ZERO)
                 .istEinladungFoerderhinweis(false)
