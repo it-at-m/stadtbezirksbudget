@@ -37,7 +37,6 @@ public class Antrag extends BaseEntity {
     @Positive private int bezirksausschussNr;
     @NotNull private LocalDateTime eingangDatum;
     private boolean istPersonVorsteuerabzugsberechtigt;
-    private boolean istAndererZuwendungsantrag;
     @NotNull private String zammadTicketNr;
     @NotNull private LocalDateTime aktualisierungDatum;
     @NotNull private String aktenzeichen;

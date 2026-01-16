@@ -67,11 +67,9 @@ public final class AntragFieldProvider {
                 root.get(Antrag_.antragsteller).get(Antragsteller_.zielsetzung),
                 root.get(Antrag_.antragsteller).get(Antragsteller_.telefonNr),
                 root.get(Antrag_.antragsteller).get(Antragsteller_.email),
-                root.get(Antrag_.antragsteller).get(Antragsteller_.adresse).get(Adresse_.strasse),
-                root.get(Antrag_.antragsteller).get(Antragsteller_.adresse).get(Adresse_.hausnummer),
+                root.get(Antrag_.antragsteller).get(Antragsteller_.adresse).get(Adresse_.strasseHausnummer),
                 root.get(Antrag_.antragsteller).get(Antragsteller_.adresse).get(Adresse_.ort),
                 root.get(Antrag_.antragsteller).get(Antragsteller_.adresse).get(Adresse_.postleitzahl),
-                root.get(Antrag_.bankverbindung).get(Bankverbindung_.person),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.geldinstitut),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.iban),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.bic),
@@ -80,8 +78,7 @@ public final class AntragFieldProvider {
                 vertretungsberechtigter.get(Vertretungsberechtigter_.mobilNr),
                 vertretungsberechtigter.get(Vertretungsberechtigter_.telefonNr),
                 vertretungsberechtigter.get(Vertretungsberechtigter_.email),
-                vertretungsberechtigterAdresse.get(Adresse_.strasse),
-                vertretungsberechtigterAdresse.get(Adresse_.hausnummer),
+                vertretungsberechtigterAdresse.get(Adresse_.strasseHausnummer),
                 vertretungsberechtigterAdresse.get(Adresse_.ort),
                 vertretungsberechtigterAdresse.get(Adresse_.postleitzahl));
     }
