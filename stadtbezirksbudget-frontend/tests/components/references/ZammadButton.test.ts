@@ -18,7 +18,7 @@ describe("ZammadButton", () => {
   test("renders zammad button with correct label and href", () => {
     const button = wrapper.findComponent({ name: "v-btn" });
     expect(button.exists()).toBe(true);
-    expect(button.text()).toBe("Zammadticket");
+    expect(button.text()).toBe("Zammad Ticket");
     expect(button.attributes("href")).toBe(zammadNrToLink(zammadNr));
   });
 });
