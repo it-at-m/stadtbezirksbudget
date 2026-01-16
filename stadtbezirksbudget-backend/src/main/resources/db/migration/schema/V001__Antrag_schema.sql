@@ -58,7 +58,7 @@ CREATE TABLE finanzierung
     id                                    UUID           NOT NULL,
     ist_projekt_vorsteuerabzugsberechtigt BOOLEAN        NOT NULL,
     kosten_anmerkung                      VARCHAR(2000)  NOT NULL,
-    begruendung_eigenmittel               VARCHAR(2000),
+    begruendung_eigenmittel               VARCHAR(2000)  NOT NULL,
     beantragtes_budget                    DECIMAL(19, 2) NOT NULL,
     ist_einladung_foerderhinweis          BOOLEAN        NOT NULL,
     ist_website_foerderhinweis            BOOLEAN        NOT NULL,
