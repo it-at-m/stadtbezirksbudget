@@ -19,6 +19,7 @@ import type { Component } from "vue";
 
 import { useRoute } from "vue-router";
 
+import DetailsHeader from "@/components/antragDetails/DetailsHeader.vue";
 import DetailsInformationenAntrag from "@/components/antragDetails/DetailsInformationenAntrag.vue";
 import { useAntragDetails } from "@/composables/useAntragDetails.ts";
 import { routeParamsToString } from "@/util/converter.ts";
@@ -26,5 +27,5 @@ import { routeParamsToString } from "@/util/converter.ts";
 const route = useRoute();
 const { details } = useAntragDetails(routeParamsToString(route.params.id));
 
-const cards: Component[] = [DetailsInformationenAntrag];
+const cards: Component[] = [DetailsHeader, DetailsInformationenAntrag];
 </script>

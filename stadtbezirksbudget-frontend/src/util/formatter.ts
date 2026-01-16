@@ -1,3 +1,5 @@
+import { ZAMMAD_BASE_URL, ZAMMAD_TICKET_PATH } from "@/constants.ts";
+
 /**
  * Formats the date to a string in the German locale (de-DE).
  * Returns an empty string if the date is invalid.
@@ -61,4 +63,12 @@ export function toNumberString(
  */
 function validateDate(date: Date): boolean {
   return date && !isNaN(date.getTime());
+}
+
+/**
+ * Formats zammadNr to a link to the corresponding zammad ticket.
+ * @param zammadNr - The zammad ticket number.
+ */
+export function zammadNrToLink(zammadNr: string) {
+  return `${ZAMMAD_BASE_URL}${ZAMMAD_TICKET_PATH}${zammadNr}`;
 }
