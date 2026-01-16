@@ -41,8 +41,6 @@ public class Finanzierung extends BaseEntity {
 
     private boolean istProjektVorsteuerabzugsberechtigt;
     @NotNull private String kostenAnmerkung;
-    @NotNull @PositiveOrZero private BigDecimal summeAusgaben;
-    @NotNull @PositiveOrZero private BigDecimal summeFinanzierungsmittel;
     @NotNull private String begruendungEigenmittel;
     @NotNull @PositiveOrZero private BigDecimal beantragtesBudget;
     private boolean istEinladungFoerderhinweis;
