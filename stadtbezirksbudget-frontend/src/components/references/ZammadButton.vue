@@ -2,6 +2,7 @@
   <v-btn
     :href="zammadNrToLink(zammadNr)"
     color="primary"
+    rel="noreferrer"
     target="_blank"
     variant="elevated"
   >
