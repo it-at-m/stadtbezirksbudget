@@ -23,7 +23,8 @@ public class NoSecurityConfiguration {
      * Configures the security filter chain to disable frame options, permit all requests, and disable
      * CSRF protection.
      *
-     * @param http the HttpSecurity object used to configure web-based security for specific HTTP requests
+     * @param http the HttpSecurity object used to configure web-based security for specific HTTP
+     *            requests
      * @return the configured SecurityFilterChain
      * @throws Exception if an error occurs during configuration
      */
