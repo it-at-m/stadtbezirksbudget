@@ -9,7 +9,7 @@
           <v-btn
             :icon="mdiPencil"
             aria-label="Bearbeiten"
-            color="#006A63"
+            color="primary"
             density="comfortable"
             variant="elevated"
           />
