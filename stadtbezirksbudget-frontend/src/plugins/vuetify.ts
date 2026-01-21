@@ -29,11 +29,12 @@ export default createVuetify({
     themes: {
       light: {
         colors: {
-          primary: "#333333",
-          secondary: "#FFCC00",
-          accent: "#7BA4D9",
+          primary: "#006A63",
+          "primary-variant": "#1ec6ba",
+          secondary: "#D4F9F4",
+          tertiary: "#47617A",
           success: "#69BE28",
-          error: "#FF0000",
+          error: "#C62828",
         },
       },
     },
