@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.9</version>
-        <relativePath/>
+        <relativePath />
     </parent>
 
     <groupId>de.muenchen.stadtbezirksbudget</groupId>
     <artifactId>stadtbezirksbudget-backend</artifactId>
-    <version>0.3.1-SNAPSHOT</version>
+    <version>0.4.1-SNAPSHOT</version>
 
     <name>stadtbezirksbudget-backend</name>
     <description>In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby
@@ -64,7 +63,7 @@
 
         <!-- Testing -->
         <jacoco-maven-plugin.version>0.8.14</jacoco-maven-plugin.version>
-        <argLine/> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
+        <argLine /> <!-- Must be empty, definition needed for integration of Jacoco and Surefire via @{argLine} lazy property evaluation -->
 
         <!-- Release -->
         <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
@@ -89,8 +88,8 @@
         <flyway.locations>classpath:db/migration/schema,classpath:db/migration/testdata</flyway.locations>
 
         <!-- Spotless P2 Mirror configuration (e.g. required when using company internal registry -->
-        <p2.username/> <!-- must be empty, override via Maven settings.xml if needed -->
-        <p2.password/> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.username /> <!-- must be empty, override via Maven settings.xml if needed -->
+        <p2.password /> <!-- must be empty, override via Maven settings.xml if needed -->
         <p2.mirror>download.eclipse.org</p2.mirror>
     </properties>
 
@@ -476,12 +475,12 @@
                                 </p2Mirror>
                             </p2Mirrors>
                         </eclipse>
-                        <trimTrailingWhitespace/>
-                        <endWithNewline/>
-                        <importOrder/>
-                        <removeUnusedImports/>
-                        <forbidWildcardImports/>
-                        <formatAnnotations/>
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
+                        <importOrder />
+                        <removeUnusedImports />
+                        <forbidWildcardImports />
+                        <formatAnnotations />
                     </java>
                 </configuration>
                 <executions>
