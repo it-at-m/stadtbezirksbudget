@@ -5,21 +5,24 @@ export const componentAliases = {
   VBtnSecondary: VBtn,
   VBtnTertiary: VBtn,
 };
+const commonBtnStyle = {
+  density: "comfortable",
+  size: "default",
+  rounded: "lg",
+  variant: "elevated",
+};
 export const defaults = {
-  VBtn: {
-    density: "comfortable",
-    size: "default",
-    rounded: "lg",
-    variant: "elevated",
-  },
   VBtnPrimary: {
     color: "#006A63",
+    ...commonBtnStyle,
   },
   VBtnSecondary: {
     color: "#D4F9F4",
+    ...commonBtnStyle,
   },
   VBtnTertiary: {
     color: "#47617A",
+    ...commonBtnStyle,
   },
   VNumberInput: {
     variant: "outlined",
