@@ -20,3 +20,11 @@ import { useAntragListSearch } from "@/composables/useAntragListSearch.ts";
 
 const { query, search } = useAntragListSearch();
 </script>
+
+<style scoped>
+/*noinspection CssUnusedSymbol*/
+:deep(.v-icon),
+:deep(.v-label) {
+  opacity: 1;
+}
+</style>
