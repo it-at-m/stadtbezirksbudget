@@ -6,12 +6,9 @@
           <h2>{{ title }}</h2>
         </v-col>
         <v-col cols="auto">
-          <v-btn
+          <v-btn-primary
             :icon="mdiPencil"
             aria-label="Bearbeiten"
-            color="primary"
-            density="comfortable"
-            variant="elevated"
           />
         </v-col>
       </v-row>
