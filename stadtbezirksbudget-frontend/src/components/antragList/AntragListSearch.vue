@@ -3,11 +3,10 @@
     v-model="query"
     :prepend-inner-icon="mdiMagnify"
     clearable
-    flat
+    density="comfortable"
     hide-details
     label="Suche"
-    theme="dark"
-    variant="solo-inverted"
+    variant="underlined"
     @focusout="search"
     @keyup.enter="search"
     @click:clear="search"
