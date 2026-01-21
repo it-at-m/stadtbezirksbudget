@@ -1,14 +1,14 @@
 <template>
   <a
     :href="zammadNrToLink(zammadNr)"
-    class="text-black text-decoration-none"
+    class="text-black text-decoration-none d-flex align-center ga-1"
     rel="noopener noreferrer"
     target="_blank"
   >
     {{ zammadNr }}
     <v-icon
       :icon="mdiOpenInNew"
-      size="17"
+      size="16"
     />
   </a>
 </template>
