@@ -5,7 +5,7 @@
 <configuration>
 
 
-    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name" />
 
 
     <springProfile name="local | test">
@@ -53,7 +53,7 @@
         <appender name="JSON_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder class="net.logstash.logback.encoder.LogstashEncoder">
                 <throwableConverter
-                    class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
                     <!-- default max size of one log line in docker is 16kb - UTF8 ~ 1 Character = 1 Byte -->
                     <!-- therefore limit stack_traces to a maximum of 8192 characters (to leave room for the rest of the message) -->
                     <maxLength>8192</maxLength>

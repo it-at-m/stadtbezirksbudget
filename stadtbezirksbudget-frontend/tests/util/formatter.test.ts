@@ -5,6 +5,7 @@ import {
   toLocalISOString,
   toNumberString,
   toTimeString,
+  zammadNrToLink,
 } from "@/util/formatter.ts";
 
 describe("formatter", () => {
@@ -62,6 +63,15 @@ describe("formatter", () => {
     test("formats number with currency", () => {
       const amount = 1234.567;
       expect(toNumberString(amount, 2, "EUR")).toBe("1.234,57 €");
+    });
+  });
+
+  describe("zammadNrToLink", () => {
+    test("formats zammad number to zammad link", () => {
+      const zammadNr = "00000018";
+      expect(zammadNrToLink(zammadNr)).toBe(
+        "https://zammad.muenchen.de/#ticket/zoom/00000018"
+      );
     });
   });
 });
