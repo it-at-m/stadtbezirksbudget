@@ -1,13 +1,11 @@
 <template>
-  <v-btn
+  <v-btn-primary
     :href="zammadNrToLink(zammadNr)"
-    color="primary"
     rel="noopener noreferrer"
     target="_blank"
-    variant="elevated"
   >
     Zammad Ticket
-  </v-btn>
+  </v-btn-primary>
 </template>
 
 <script lang="ts" setup>
