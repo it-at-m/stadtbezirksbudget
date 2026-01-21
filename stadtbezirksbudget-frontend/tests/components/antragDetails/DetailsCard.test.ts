@@ -37,7 +37,7 @@ describe("DetailsCard", () => {
   });
 
   test("renders edit button", () => {
-    const btn = vCardTitle.findComponent({ name: "VBtn" });
+    const btn = vCardTitle.findComponent({ name: "VBtnPrimary" });
     expect(btn.exists()).toBe(true);
   });
 
