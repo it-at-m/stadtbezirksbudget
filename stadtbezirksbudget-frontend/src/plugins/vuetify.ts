@@ -29,16 +29,10 @@ export default createVuetify({
     themes: {
       light: {
         colors: {
-          background: "#F4FBF9",
-          surface: "#FFFFFF",
-          "surface-dim": "#D5DBD9",
-          "surface-variant": "#333333",
           primary: "#006A63",
-          "primary-container": "#D4F9F4", // custom
-          secondary: "#4A6360",
-          "secondary-container": "#CBDCE3", // custom
-          tertiary: "#47617A", // custom
-          "tertiary-container": "#CEE5FF", // custom
+          "primary-variant": "#1ec6ba",
+          secondary: "#D4F9F4",
+          tertiary: "#47617A",
           success: "#69BE28",
           error: "#C62828",
         },

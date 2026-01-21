@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <the-snackbar />
-    <v-app-bar color="surface-variant">
+    <v-app-bar color="primary">
       <v-row align="center">
         <v-col
           class="d-flex align-center justify-start"
@@ -14,7 +14,7 @@
           >
             <v-toolbar-title class="font-weight-bold">
               <span class="text-white">Stadt</span>
-              <span class="text-primary">bezirks</span>
+              <span class="text-primary-variant">bezirks</span>
               <span class="text-white">budget</span>
             </v-toolbar-title>
           </router-link>
