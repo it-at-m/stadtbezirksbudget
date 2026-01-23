@@ -33,7 +33,7 @@ public interface AntragMapper {
      * @param antrag the Antrag entity
      * @return the corresponding AntragDetailsDTO
      */
-    @Mapping(target = "allgemeineInformationen", source = ".")
+    @Mapping(target = "allgemein", source = ".")
     AntragDetailsDTO toDetailsDTO(Antrag antrag);
 
     /**
@@ -50,5 +50,5 @@ public interface AntragMapper {
     @Mapping(target = "zammadNr", source = "zammadTicketNr")
     @Mapping(target = "istGegendert", constant = "true") // Will be replaced in #356
     @Mapping(target = "anmerkungen", source = "bearbeitungsstand.anmerkungen")
-    AntragDetailsAllgemeinDTO toAllgemeineInformationenDTO(Antrag antrag);
+    AntragDetailsAllgemeinDTO toAllgemeinDTO(Antrag antrag);
 }
