@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragDetailsAllgemeinDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragDetailsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
@@ -32,6 +33,15 @@ public interface AntragMapper {
      * @param antrag the Antrag entity
      * @return the corresponding AntragDetailsDTO
      */
+    @Mapping(target = "allgemeineInformationen", source = ".")
+    AntragDetailsDTO toDetailsDTO(Antrag antrag);
+
+    /**
+     * Maps an Antrag entity to an AntragDetailsAllgemeinDTO.
+     *
+     * @param antrag the Antrag entity
+     * @return the corresponding AntragDetailsAllgemeinDTO
+     */
     @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
@@ -40,5 +50,5 @@ public interface AntragMapper {
     @Mapping(target = "zammadNr", source = "zammadTicketNr")
     @Mapping(target = "istGegendert", constant = "true") // Will be replaced in #356
     @Mapping(target = "anmerkungen", source = "bearbeitungsstand.anmerkungen")
-    AntragDetailsDTO toDetailsDTO(Antrag antrag);
+    AntragDetailsAllgemeinDTO toAllgemeineInformationenDTO(Antrag antrag);
 }
