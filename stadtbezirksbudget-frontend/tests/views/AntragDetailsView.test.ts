@@ -24,7 +24,7 @@ const cards = ["DetailsHeader", "DetailsInformationenAntrag"];
 function createCardStub(name: string) {
   return {
     props: ["antrag"],
-    template: `<div data-test="card-${name}">{{ antrag?.allgemeineInformationen.projektTitel }}</div>`,
+    template: `<div data-test="card-${name}">{{ antrag?.allgemein.projektTitel }}</div>`,
   };
 }
 
@@ -47,10 +47,12 @@ describe("AntragDetailsView", () => {
   });
 
   test("calls useAntragDetails with correct parameters", () => {
-    const mockDetails = ref({ projektTitel: "Projekt Test" });
+    const mockDetails = ref({
+      allgemein: { projektTitel: "Projekt Test" },
+    });
 
     vi.mocked(useAntragDetails).mockReturnValue({
-      allgemeineInformationen: { details: mockDetails },
+      details: mockDetails,
     });
     vi.mocked(useRoute).mockReturnValue({
       params: { id: "123" },
@@ -63,7 +65,7 @@ describe("AntragDetailsView", () => {
 
   test("renders container and cards when details are available", () => {
     const mockDetails = ref({
-      allgemeineInformationen: { projektTitel: "Projekt Test" },
+      allgemein: { projektTitel: "Projekt Test" },
     });
 
     vi.mocked(useAntragDetails).mockReturnValue({ details: mockDetails });
@@ -84,7 +86,7 @@ describe("AntragDetailsView", () => {
 
   test.each(cards)("renders %s when details are available", (cardName) => {
     const mockDetails = ref({
-      allgemeineInformationen: { projektTitel: "Projekt Test" },
+      allgemein: { projektTitel: "Projekt Test" },
     });
 
     vi.mocked(useAntragDetails).mockReturnValue({ details: mockDetails });
