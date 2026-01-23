@@ -86,23 +86,5 @@ const [drawer, toggleDrawer] = useToggle();
 
 useInitializeStores();
 
-onMounted(() => {
-  loadUser();
-});
-
-/**
- * Loads UserInfo from the backend and sets it in the store.
- */
-function loadUser(): void {
-  getUser()
-    .then((user: User) => userStore.setUser(user))
-    .catch(() => {
-      // No user info received, so fallback
-      if (import.meta.env.DEV) {
-        userStore.setUser(UserLocalDevelopment());
-      } else {
-        userStore.setUser(null);
-      }
-    });
-}
+const [navigationDrawer, toggleNavigationDrawer] = useToggle();
 </script>
