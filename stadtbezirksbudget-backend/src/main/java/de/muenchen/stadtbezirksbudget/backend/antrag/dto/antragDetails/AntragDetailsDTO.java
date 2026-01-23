@@ -1,4 +1,4 @@
-package de.muenchen.stadtbezirksbudget.backend.antrag.dto;
+package de.muenchen.stadtbezirksbudget.backend.antrag.dto.antragDetails;
 
 import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 

@@ -116,7 +116,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { AntragDetails } from "@/types/AntragDetails.ts";
+import type { AntragDetails } from "@/types/antragDetails/AntragDetails.ts";
 
 import { ref, watch } from "vue";
 

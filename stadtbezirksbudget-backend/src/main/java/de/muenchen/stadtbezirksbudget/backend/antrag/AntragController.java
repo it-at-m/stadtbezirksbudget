@@ -1,6 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragDetailsDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antragDetails.AntragDetailsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;

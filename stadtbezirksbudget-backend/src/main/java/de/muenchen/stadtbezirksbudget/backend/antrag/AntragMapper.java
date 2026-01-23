@@ -1,7 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragDetailsAllgemeinDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragDetailsDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antragDetails.AntragDetailsAllgemeinDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antragDetails.AntragDetailsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import org.mapstruct.Mapper;
