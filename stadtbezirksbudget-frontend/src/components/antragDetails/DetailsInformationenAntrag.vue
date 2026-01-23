@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <v-text-field
-          v-model="antrag.projektTitel"
+          v-model="antrag.allgemeineInformationen.projektTitel"
           data-test="projekt-titel"
           hide-details="auto"
           label="Projekttitel"
@@ -13,7 +13,7 @@
       </v-col>
       <v-col cols="3">
         <v-date-input
-          v-model="antrag.eingangDatum"
+          v-model="antrag.allgemeineInformationen.eingangDatum"
           data-test="eingang-datum"
           hide-details="auto"
           label="Antragsdatum"
@@ -26,7 +26,7 @@
     <v-row>
       <v-col>
         <v-text-field
-          v-model="antrag.antragstellerName"
+          v-model="antrag.allgemeineInformationen.antragstellerName"
           data-test="antragsteller-name"
           hide-details="auto"
           label="Antragsteller/in"
@@ -36,7 +36,7 @@
       </v-col>
       <v-col cols="3">
         <v-number-input
-          v-model="antrag.beantragtesBudget"
+          v-model="antrag.allgemeineInformationen.beantragtesBudget"
           control-variant="hidden"
           data-test="beantragtes-budget"
           hide-details="auto"
@@ -47,7 +47,7 @@
       </v-col>
       <v-col cols="3">
         <v-text-field
-          v-model="antrag.rubrik"
+          v-model="antrag.allgemeineInformationen.rubrik"
           data-test="rubrik"
           hide-details="auto"
           label="Rubrik"
@@ -59,7 +59,7 @@
     <v-row>
       <v-col>
         <status-select
-          v-model="antrag.status"
+          v-model="antrag.allgemeineInformationen.status"
           data-test="status"
           hide-details="auto"
           label="Status"
@@ -69,7 +69,7 @@
       </v-col>
       <v-col cols="3">
         <v-text-field
-          v-model="antrag.zammadNr"
+          v-model="antrag.allgemeineInformationen.zammadNr"
           data-test="zammad-nr"
           hide-details="auto"
           label="Zammad-Nummer"
@@ -79,7 +79,7 @@
       </v-col>
       <v-col cols="3">
         <v-text-field
-          v-model="antrag.aktenzeichen"
+          v-model="antrag.allgemeineInformationen.aktenzeichen"
           data-test="aktenzeichen"
           hide-details="auto"
           label="Aktenzeichen"
@@ -91,7 +91,7 @@
     <v-row class="mt-2">
       <v-col class="pt-0 pb-0">
         <v-checkbox
-          v-model="antrag.istGegendert"
+          v-model="antrag.allgemeineInformationen.istGegendert"
           data-test="ist-gegendert"
           hide-details="auto"
           label="In dem Antrag wurde gegendert"
@@ -102,7 +102,7 @@
     <v-row>
       <v-col>
         <v-textarea
-          v-model="antrag.anmerkungen"
+          v-model="antrag.allgemeineInformationen.anmerkungen"
           auto-grow
           data-test="anmerkungen"
           hide-details="auto"
