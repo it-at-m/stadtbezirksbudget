@@ -1,6 +1,6 @@
 import type { Status } from "@/types/Status.ts";
 
-export interface AntragDetails {
+export interface AntragDetailsAllgemein {
   projektTitel: string;
   eingangDatum: string; // ISO date string from API
   antragstellerName: string;

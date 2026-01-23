@@ -12,7 +12,9 @@ import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock";
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const mockAntrag = {
-  zammadNr: "1234",
+  allgemein: {
+    zammadNr: "1234",
+  },
 };
 
 describe("DetailsHeader", () => {
@@ -40,12 +42,17 @@ describe("DetailsHeader", () => {
 
   test("passes zammadNr to zammad button", () => {
     const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
-    expect(zammadButton.props("zammadNr")).toBe(mockAntrag.zammadNr);
-    expect(zammadButton.text()).toBe(mockAntrag.zammadNr);
+    expect(zammadButton.props("zammadNr")).toBe(mockAntrag.allgemein.zammadNr);
+    expect(zammadButton.text()).toBe(mockAntrag.allgemein.zammadNr);
   });
 
   test("updates zammadNr when antrag prop changes", async () => {
-    const newAntrag = { ...mockAntrag, zammadNr: "4567" };
+    const newAntrag = {
+      allgemein: {
+        ...mockAntrag.allgemein,
+        zammadNr: "4567",
+      },
+    };
     await wrapper.setProps({ antrag: newAntrag });
     await nextTick();
 

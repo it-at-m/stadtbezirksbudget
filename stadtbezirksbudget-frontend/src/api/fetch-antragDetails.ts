@@ -1,4 +1,4 @@
-import type { AntragDetails } from "@/types/AntragDetails.ts";
+import type { AntragDetails } from "@/types/antragDetails/AntragDetails.ts";
 
 import {
   defaultCatchHandler,

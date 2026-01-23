@@ -12,71 +12,76 @@ import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock";
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const mockAntrag = {
-  projektTitel: "Projekt Titel",
-  eingangDatum: "2024-10-01",
-  antragstellerName: "Max Mustermann",
-  beantragtesBudget: 1234,
-  rubrik: "Rubrik",
-  status: "EINGEGANGEN",
-  zammadNr: "Z-123",
-  aktenzeichen: "AZ-456",
-  istGegendert: true,
-  anmerkungen: "Anmerkungen",
+  allgemein: {
+    projektTitel: "Projekt Titel",
+    eingangDatum: "2024-10-01",
+    antragstellerName: "Max Mustermann",
+    beantragtesBudget: 1234,
+    rubrik: "Rubrik",
+    status: "EINGEGANGEN",
+    zammadNr: "Z-123",
+    aktenzeichen: "AZ-456",
+    istGegendert: true,
+    anmerkungen: "Anmerkungen",
+  },
 };
 
 const fields = [
   {
     dataTest: "projekt-titel",
-    expected: mockAntrag.projektTitel,
+    expected: mockAntrag.allgemein.projektTitel,
     component: "VTextField",
   },
   {
     dataTest: "eingang-datum",
-    expected: new Date(mockAntrag.eingangDatum).toLocaleDateString("de-DE", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    }),
+    expected: new Date(mockAntrag.allgemein.eingangDatum).toLocaleDateString(
+      "de-DE",
+      {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }
+    ),
     component: "VDateInput",
   },
   {
     dataTest: "antragsteller-name",
-    expected: mockAntrag.antragstellerName,
+    expected: mockAntrag.allgemein.antragstellerName,
     component: "VTextField",
   },
   {
     dataTest: "beantragtes-budget",
-    expected: String(mockAntrag.beantragtesBudget),
+    expected: String(mockAntrag.allgemein.beantragtesBudget),
     component: "VNumberInput",
   },
   {
     dataTest: "rubrik",
-    expected: mockAntrag.rubrik,
+    expected: mockAntrag.allgemein.rubrik,
     component: "VTextField",
   },
   {
     dataTest: "status",
-    expected: mockAntrag.status,
+    expected: mockAntrag.allgemein.status,
     component: "StatusSelect",
   },
   {
     dataTest: "zammad-nr",
-    expected: mockAntrag.zammadNr,
+    expected: mockAntrag.allgemein.zammadNr,
     component: "VTextField",
   },
   {
     dataTest: "aktenzeichen",
-    expected: mockAntrag.aktenzeichen,
+    expected: mockAntrag.allgemein.aktenzeichen,
     component: "VTextField",
   },
   {
     dataTest: "ist-gegendert",
-    expected: mockAntrag.istGegendert,
+    expected: mockAntrag.allgemein.istGegendert,
     component: "VCheckbox",
   },
   {
     dataTest: "anmerkungen",
-    expected: mockAntrag.anmerkungen,
+    expected: mockAntrag.allgemein.anmerkungen,
     component: "VTextarea",
   },
 ];

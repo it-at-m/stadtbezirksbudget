@@ -164,16 +164,16 @@ class AntragIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.projektTitel", is(antrag.getProjekt().getTitel())))
-                    .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().toString())))
-                    .andExpect(jsonPath("$.antragstellerName", is(antrag.getAntragsteller().getName())))
-                    .andExpect(jsonPath("$.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
-                    .andExpect(jsonPath("$.rubrik", is("Rubrik")))
-                    .andExpect(jsonPath("$.status", is(antrag.getBearbeitungsstand().getStatus().name())))
-                    .andExpect(jsonPath("$.zammadNr", is(antrag.getZammadTicketNr())))
-                    .andExpect(jsonPath("$.aktenzeichen", is(antrag.getAktenzeichen())))
-                    .andExpect(jsonPath("$.istGegendert", is(true)))
-                    .andExpect(jsonPath("$.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
+                    .andExpect(jsonPath("$.allgemein.projektTitel", is(antrag.getProjekt().getTitel())))
+                    .andExpect(jsonPath("$.allgemein.eingangDatum", is(antrag.getEingangDatum().toString())))
+                    .andExpect(jsonPath("$.allgemein.antragstellerName", is(antrag.getAntragsteller().getName())))
+                    .andExpect(jsonPath("$.allgemein.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
+                    .andExpect(jsonPath("$.allgemein.rubrik", is("Rubrik")))
+                    .andExpect(jsonPath("$.allgemein.status", is(antrag.getBearbeitungsstand().getStatus().name())))
+                    .andExpect(jsonPath("$.allgemein.zammadNr", is(antrag.getZammadTicketNr())))
+                    .andExpect(jsonPath("$.allgemein.aktenzeichen", is(antrag.getAktenzeichen())))
+                    .andExpect(jsonPath("$.allgemein.istGegendert", is(true)))
+                    .andExpect(jsonPath("$.allgemein.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
         }
 
         @Test

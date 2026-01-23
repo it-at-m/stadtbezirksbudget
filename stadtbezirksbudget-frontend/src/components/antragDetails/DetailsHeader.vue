@@ -2,13 +2,13 @@
   <v-row>
     <v-col></v-col>
     <v-col cols="auto">
-      <zammad-button :zammad-nr="antrag.zammadNr" />
+      <zammad-button :zammad-nr="antrag.allgemein.zammadNr" />
     </v-col>
   </v-row>
 </template>
 
 <script lang="ts" setup>
-import type { AntragDetails } from "@/types/AntragDetails.ts";
+import type { AntragDetails } from "@/types/antragDetails/AntragDetails.ts";
 
 import { ref, watch } from "vue";
 
