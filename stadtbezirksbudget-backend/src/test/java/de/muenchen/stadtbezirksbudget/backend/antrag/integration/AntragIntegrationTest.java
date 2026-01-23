@@ -164,16 +164,16 @@ class AntragIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.projektTitel", is(antrag.getProjekt().getTitel())))
-                    .andExpect(jsonPath("$.eingangDatum", is(antrag.getEingangDatum().toString())))
-                    .andExpect(jsonPath("$.antragstellerName", is(antrag.getAntragsteller().getName())))
-                    .andExpect(jsonPath("$.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
-                    .andExpect(jsonPath("$.rubrik", is("Rubrik")))
-                    .andExpect(jsonPath("$.status", is(antrag.getBearbeitungsstand().getStatus().name())))
-                    .andExpect(jsonPath("$.zammadNr", is(antrag.getZammadTicketNr())))
-                    .andExpect(jsonPath("$.aktenzeichen", is(antrag.getAktenzeichen())))
-                    .andExpect(jsonPath("$.istGegendert", is(true)))
-                    .andExpect(jsonPath("$.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
+                    .andExpect(jsonPath("$.allgemeineInformationen.projektTitel", is(antrag.getProjekt().getTitel())))
+                    .andExpect(jsonPath("$.allgemeineInformationen.eingangDatum", is(antrag.getEingangDatum().toString())))
+                    .andExpect(jsonPath("$.allgemeineInformationen.antragstellerName", is(antrag.getAntragsteller().getName())))
+                    .andExpect(jsonPath("$.allgemeineInformationen.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
+                    .andExpect(jsonPath("$.allgemeineInformationen.rubrik", is("Rubrik")))
+                    .andExpect(jsonPath("$.allgemeineInformationen.status", is(antrag.getBearbeitungsstand().getStatus().name())))
+                    .andExpect(jsonPath("$.allgemeineInformationen.zammadNr", is(antrag.getZammadTicketNr())))
+                    .andExpect(jsonPath("$.allgemeineInformationen.aktenzeichen", is(antrag.getAktenzeichen())))
+                    .andExpect(jsonPath("$.allgemeineInformationen.istGegendert", is(true)))
+                    .andExpect(jsonPath("$.allgemeineInformationen.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
         }
 
         @Test
