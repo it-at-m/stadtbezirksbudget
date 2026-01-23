@@ -2,7 +2,7 @@
   <v-row>
     <v-col></v-col>
     <v-col cols="auto">
-      <zammad-button :zammad-nr="antrag.zammadNr" />
+      <zammad-button :zammad-nr="antrag.allgemeineInformationen.zammadNr" />
     </v-col>
   </v-row>
 </template>
