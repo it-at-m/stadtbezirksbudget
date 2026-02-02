@@ -85,6 +85,12 @@
         @mousedown.stop
       />
     </template>
+    <template v-slot:[`item.aktenzeichen`]="{ item }">
+      <eakte-list
+        :aktenzeichen="item.aktenzeichen"
+        data-test="item-aktenzeichen"
+      />
+    </template>
   </v-data-table-server>
 </template>
 
@@ -95,6 +101,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
+import EakteList from "@/components/references/EakteList.vue";
 import ZammadLink from "@/components/references/ZammadLink.vue";
 import { useAntragList } from "@/composables/useAntragList.ts";
 import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
