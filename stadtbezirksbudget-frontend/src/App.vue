@@ -2,7 +2,15 @@
   <v-app>
     <the-snackbar />
     <the-app-bar @toggle-navigation-drawer="toggleNavigationDrawer" />
-    <v-navigation-drawer v-model="navigationDrawer"></v-navigation-drawer>
+    <v-navigation-drawer v-model="navigationDrawer">
+      <div class="pas-4 d-flex justify-center">
+        <img
+          :src="logo"
+          alt="Logo"
+          style="height: 100px"
+        />
+      </div>
+    </v-navigation-drawer>
     <v-main>
       <v-container fluid>
         <router-view v-slot="{ Component }">
@@ -18,6 +26,7 @@
 <script lang="ts" setup>
 import { useToggle } from "@vueuse/core";
 
+import logo from "@/assets/logo.png";
 import TheAppBar from "@/components/TheAppBar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useInitializeStores } from "@/composables/useInitializeStores.ts";
