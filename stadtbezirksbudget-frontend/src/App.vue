@@ -7,7 +7,7 @@
         <img
           :src="logo"
           alt="Logo"
-          style="height: 100px"
+          width="100%"
         />
       </div>
     </v-navigation-drawer>
