@@ -10,6 +10,7 @@ interface ImportMetaEnv {
   readonly VITE_AD2IMAGE_URL: string;
   readonly VITE_APPSWITCHER_SERVER_URL: string;
   readonly VITE_ZAMMAD_BASE_URL: string;
+  readonly VITE_EAKTE_BASE_URL: string;
 }
 
 interface ImportMeta {

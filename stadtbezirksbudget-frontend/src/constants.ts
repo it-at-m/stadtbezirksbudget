@@ -3,7 +3,9 @@ export const ROUTES_DETAILS = "details";
 
 export const BACKEND = "/api/backend-service";
 export const ZAMMAD_TICKET_PATH = "/#ticket/zoom/";
+export const EAKTE_PATH = "/fsc/fscasp/content/bin/fscvext.dll?bx=";
 export const ZAMMAD_BASE_URL = import.meta.env.VITE_ZAMMAD_BASE_URL;
+export const EAKTE_BASE_URL = import.meta.env.VITE_EAKTE_BASE_URL;
 export const AD2IMAGE_URL = import.meta.env.VITE_AD2IMAGE_URL;
 export const APPSWITCHER_URL = import.meta.env.VITE_APPSWITCHER_URL;
 
