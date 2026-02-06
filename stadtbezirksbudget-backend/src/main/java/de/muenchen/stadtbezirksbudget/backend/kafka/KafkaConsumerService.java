@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.kafka;
 
+import de.muenchen.stadtbezirksbudget.backend.antrag.AntragService;
 import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,13 @@ import org.springframework.stereotype.Service;
         reason = "Excluded because no further implementation exists, tests will be implemented later. TODO: #414 Add tests and remove exclusion to reach branch coverage"
 )
 public class KafkaConsumerService {
+    private final AntragService antragService;
     @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
+
+    public KafkaConsumerService(AntragService antragService) {
+        this.antragService = antragService;
+    }
 
     /**
      * Receives and processes messages from the Kafka topic <i>spring.kafka.template.default-topic</i>
@@ -47,14 +53,18 @@ public class KafkaConsumerService {
             return;
         }
         try {
-            final UUID uuidKey = UUID.fromString(key);
-            if (!uuidKey.equals(content.id())) {
-                log.warn("Message key {} does not match content ID {}. Skipping message.", key, content.id());
-                return;
-            }
-            log.info("Received message in group {} with key {}: {}", groupId, uuidKey, content);
+            //            final UUID uuidKey = UUID.fromString(key);
+            //            if (!uuidKey.equals(content.id())) {
+            //                log.warn("Message key {} does not match content ID {}. Skipping message.", key, content.id());
+            //                return;
+            //            }
+            //            log.info("Received message in group {} with key {}: {}", groupId, uuidKey, content);
+            log.info("Received message in group {} with key {}: {}", groupId, 1234, content);
         } catch (IllegalArgumentException e) {
             log.error("Failed to parse message key as UUID: {}. Skipping message.", key, e);
         }
+
+        UUID id = UUID.fromString(key);
+        antragService.createFromKafka(id, content);
     }
 }

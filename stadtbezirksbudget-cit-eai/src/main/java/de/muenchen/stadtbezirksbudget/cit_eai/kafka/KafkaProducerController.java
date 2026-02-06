@@ -33,4 +33,12 @@ public class KafkaProducerController {
         kafkaProducerService.publishMessage(message);
         return "Message published successfully";
     }
+
+    @PreAuthorize(Authorities.KAFKA_PUBLISH_MESSAGE)
+    @PostMapping("/publish-antrag")
+    public String fkPublishMessage(@RequestBody @Valid final KafkaDTO message) {
+        kafkaProducerService.publishMessage(message);
+        return "Antrag published successfully";
+    }
+
 }
