@@ -13,9 +13,13 @@ export function useEakteList(
   cooNumberValue: Ref<string | null>,
   cooMenuActivator: Ref<HTMLElement | null>
 ) {
-  function openAktenzeichen(e: MouseEvent): boolean {
+  function openAktenzeichen(
+    e: MouseEvent,
+    aktenzeichen: string | null
+  ): boolean {
     const el = e.currentTarget;
     if (!(el instanceof HTMLElement)) return false;
+    aktenzeichenNumberValue.value = aktenzeichen ?? "";
     aktenzeichenMenuActivator.value = el;
     aktenzeichenMenu.value = true;
     return true;
