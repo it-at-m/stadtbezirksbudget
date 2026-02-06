@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.cit_eai.kafka;
 
 import jakarta.validation.constraints.NotNull;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,8 +31,12 @@ public class KafkaProducerService {
      *
      * @param content the message to be published as KafkaDTO
      */
+    //    public void publishMessage(@NotNull final KafkaDTO content) {
+    //        kafkaTemplate.send(topic, UUID.randomUUID().toString(), content);
+    //        log.info("Published message to topic {} with key {}: {}", topic, content);
+    //    }
     public void publishMessage(@NotNull final KafkaDTO content) {
-        kafkaTemplate.send(topic, content.id().toString(), content);
-        log.info("Published message to topic {} with key {}: {}", topic, content.id(), content);
+        kafkaTemplate.send(topic, "10000000-0000-0000-0000-000000000050", content);
+        log.info("Published message to topic {} with key {}: {}", topic, content);
     }
 }
