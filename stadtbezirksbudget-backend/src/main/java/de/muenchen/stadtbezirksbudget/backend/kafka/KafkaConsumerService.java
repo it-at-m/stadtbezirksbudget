@@ -53,13 +53,7 @@ public class KafkaConsumerService {
             return;
         }
         try {
-            //            final UUID uuidKey = UUID.fromString(key);
-            //            if (!uuidKey.equals(content.id())) {
-            //                log.warn("Message key {} does not match content ID {}. Skipping message.", key, content.id());
-            //                return;
-            //            }
-            //            log.info("Received message in group {} with key {}: {}", groupId, uuidKey, content);
-            log.info("Received message in group {} with key {}: {}", groupId, 1234, content);
+            log.info("Received message in group {} with key {}: {}", groupId, key, content);
         } catch (IllegalArgumentException e) {
             log.error("Failed to parse message key as UUID: {}. Skipping message.", key, e);
         }
