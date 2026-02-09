@@ -760,3 +760,159 @@ VALUES ('50000000-0000-0000-0000-000000000001', '2025-03-15', 'Stadtförderung K
        ('50000000-0000-0000-0000-000000000006', '2025-09-23', 'Sportförderverein der Kommune', NULL, NULL, '10000000-0000-0000-0000-000000000031'),
        ('50000000-0000-0000-0000-000000000007', '2025-12-11', 'Bildungs- und Sozialfonds', 100.00, 'BEANTRAGT', '10000000-0000-0000-0000-000000000043')
 ON CONFLICT (id) DO NOTHING;
+
+UPDATE antrag
+SET bezirksinformationen_sitzungs_datum        = '2023-01-01',
+    bezirksinformationen_ris_nr                = 'RIS-001',
+    bezirksinformationen_bewilligte_foerderung = 1000,
+    bezirksinformationen_bescheid_datum        = '2023-01-02'
+WHERE id IN (
+             '10000000-0000-0000-0000-000000000001',
+             '10000000-0000-0000-0000-000000000002',
+             '10000000-0000-0000-0000-000000000003',
+             '10000000-0000-0000-0000-000000000004',
+             '10000000-0000-0000-0000-000000000005',
+             '10000000-0000-0000-0000-000000000006',
+             '10000000-0000-0000-0000-000000000007',
+             '10000000-0000-0000-0000-000000000008',
+             '10000000-0000-0000-0000-000000000009',
+             '10000000-0000-0000-0000-000000000010'
+    );
+
+UPDATE antrag
+SET verwendungsnachweis_vn_betrag          = 2000,
+    verwendungsnachweis_ist_gegendert      = true,
+    verwendungsnachweis_vn_status          = 'Status-001',
+    verwendungsnachweis_vn_pruefung_betrag = 1500,
+    verwendungsnachweis_buchungs_datum     = '2023-02-01',
+    verwendungsnachweis_sap_eingangsdatum  = '2023-02-02'
+WHERE id IN (
+             '10000000-0000-0000-0000-000000000011',
+             '10000000-0000-0000-0000-000000000012',
+             '10000000-0000-0000-0000-000000000013',
+             '10000000-0000-0000-0000-000000000014',
+             '10000000-0000-0000-0000-000000000015',
+             '10000000-0000-0000-0000-000000000016',
+             '10000000-0000-0000-0000-000000000017',
+             '10000000-0000-0000-0000-000000000018',
+             '10000000-0000-0000-0000-000000000019',
+             '10000000-0000-0000-0000-000000000020'
+    );
+
+UPDATE antrag
+SET zahlung_auszahlungs_betrag = 3000,
+    zahlung_auszahlungs_datum  = '2023-03-01',
+    zahlung_anlageav           = 'Anlage-001',
+    zahlung_anlage_nr          = 'AnlageNr-001',
+    zahlung_kreditor           = 'Kreditor-001',
+    zahlung_rechnungs_nr       = 'RechnungNr-001',
+    zahlung_fi_beleg_nr        = 'BelegNr-001',
+    zahlung_bestellung         = 'Bestellung-001'
+WHERE id IN (
+             '10000000-0000-0000-0000-000000000021',
+             '10000000-0000-0000-0000-000000000022',
+             '10000000-0000-0000-0000-000000000023',
+             '10000000-0000-0000-0000-000000000024',
+             '10000000-0000-0000-0000-000000000025',
+             '10000000-0000-0000-0000-000000000026',
+             '10000000-0000-0000-0000-000000000027',
+             '10000000-0000-0000-0000-000000000028',
+             '10000000-0000-0000-0000-000000000029',
+             '10000000-0000-0000-0000-000000000030'
+    );
+
+UPDATE antrag
+SET projekt_rubrik = 'Rubrik-001'
+WHERE id IN (
+             '10000000-0000-0000-0000-000000000001',
+             '10000000-0000-0000-0000-000000000002',
+             '10000000-0000-0000-0000-000000000003',
+             '10000000-0000-0000-0000-000000000004',
+             '10000000-0000-0000-0000-000000000005',
+             '10000000-0000-0000-0000-000000000006',
+             '10000000-0000-0000-0000-000000000007',
+             '10000000-0000-0000-0000-000000000008',
+             '10000000-0000-0000-0000-000000000009',
+             '10000000-0000-0000-0000-000000000010',
+             '10000000-0000-0000-0000-000000000011',
+             '10000000-0000-0000-0000-000000000012',
+             '10000000-0000-0000-0000-000000000013',
+             '10000000-0000-0000-0000-000000000014',
+             '10000000-0000-0000-0000-000000000015',
+             '10000000-0000-0000-0000-000000000016',
+             '10000000-0000-0000-0000-000000000017',
+             '10000000-0000-0000-0000-000000000018',
+             '10000000-0000-0000-0000-000000000019',
+             '10000000-0000-0000-0000-000000000020',
+             '10000000-0000-0000-0000-000000000021',
+             '10000000-0000-0000-0000-000000000022',
+             '10000000-0000-0000-0000-000000000023',
+             '10000000-0000-0000-0000-000000000024',
+             '10000000-0000-0000-0000-000000000025'
+    );
+
+UPDATE antrag
+SET zahlung_auszahlungs_betrag                 = 4000,
+    zahlung_auszahlungs_datum                  = '2023-04-01',
+    zahlung_anlageav                           = 'Anlage-002',
+    zahlung_anlage_nr                          = 'AnlageNr-002',
+    zahlung_kreditor                           = 'Kreditor-002',
+    zahlung_rechnungs_nr                       = 'RechnungNr-002',
+    zahlung_fi_beleg_nr                        = 'BelegNr-002',
+    zahlung_bestellung                         = 'Bestellung-002',
+    verwendungsnachweis_vn_betrag              = 2500,
+    verwendungsnachweis_ist_gegendert          = false,
+    verwendungsnachweis_vn_status              = 'Status-002',
+    verwendungsnachweis_vn_pruefung_betrag     = 2000,
+    verwendungsnachweis_buchungs_datum         = '2023-05-01',
+    verwendungsnachweis_sap_eingangsdatum      = '2023-05-02',
+    bezirksinformationen_sitzungs_datum        = '2023-06-01',
+    bezirksinformationen_ris_nr                = 'RIS-002',
+    bezirksinformationen_bewilligte_foerderung = 5000,
+    bezirksinformationen_bescheid_datum        = '2023-06-02',
+    projekt_rubrik                             = 'Rubrik-002'
+WHERE id IN (
+             '10000000-0000-0000-0000-000000000031',
+             '10000000-0000-0000-0000-000000000032',
+             '10000000-0000-0000-0000-000000000033',
+             '10000000-0000-0000-0000-000000000034',
+             '10000000-0000-0000-0000-000000000035',
+             '10000000-0000-0000-0000-000000000036',
+             '10000000-0000-0000-0000-000000000037',
+             '10000000-0000-0000-0000-000000000038',
+             '10000000-0000-0000-0000-000000000039',
+             '10000000-0000-0000-0000-000000000040'
+    );
+
+UPDATE antrag
+SET zahlung_auszahlungs_betrag                 = NULL,
+    zahlung_auszahlungs_datum                  = NULL,
+    zahlung_anlageav                           = '',
+    zahlung_anlage_nr                          = '',
+    zahlung_kreditor                           = '',
+    zahlung_rechnungs_nr                       = '',
+    zahlung_fi_beleg_nr                        = '',
+    zahlung_bestellung                         = '',
+    verwendungsnachweis_vn_betrag              = NULL,
+    verwendungsnachweis_ist_gegendert          = false,
+    verwendungsnachweis_vn_status              = '',
+    verwendungsnachweis_vn_pruefung_betrag     = NULL,
+    verwendungsnachweis_buchungs_datum         = NULL,
+    verwendungsnachweis_sap_eingangsdatum      = NULL,
+    bezirksinformationen_sitzungs_datum        = NULL,
+    bezirksinformationen_ris_nr                = '',
+    bezirksinformationen_bewilligte_foerderung = NULL,
+    bezirksinformationen_bescheid_datum        = NULL,
+    projekt_rubrik                             = ''
+WHERE id IN (
+             '10000000-0000-0000-0000-000000000041',
+             '10000000-0000-0000-0000-000000000042',
+             '10000000-0000-0000-0000-000000000043',
+             '10000000-0000-0000-0000-000000000044',
+             '10000000-0000-0000-0000-000000000045',
+             '10000000-0000-0000-0000-000000000046',
+             '10000000-0000-0000-0000-000000000047',
+             '10000000-0000-0000-0000-000000000048',
+             '10000000-0000-0000-0000-000000000049',
+             '10000000-0000-0000-0000-000000000050'
+    );
