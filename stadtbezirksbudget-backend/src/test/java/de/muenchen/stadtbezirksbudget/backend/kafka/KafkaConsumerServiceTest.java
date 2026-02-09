@@ -46,9 +46,10 @@ class KafkaConsumerServiceTest {
     class Listen {
         @Test
         void testListen() {
-            final KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
-            kafkaTemplate.send(topic, kafkaDTO.id().toString(), kafkaDTO);
-            verify(kafkaConsumerService, timeout(5000)).listen(kafkaDTO.id().toString(), kafkaDTO);
+            final KafkaDTO kafkaDTO = new KafkaDTO("test name", "test message", 123);
+            final String key = UUID.randomUUID().toString();
+            kafkaTemplate.send(topic, key, kafkaDTO);
+            verify(kafkaConsumerService, timeout(5000)).listen(key, kafkaDTO);
         }
     }
 }
