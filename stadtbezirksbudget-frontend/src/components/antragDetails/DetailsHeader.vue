@@ -6,7 +6,7 @@
         :zammad-nr="antrag.allgemein.zammadNr"
         class="me-5"
       />
-      <eakte-button coo-adresse="a" />
+      <eakte-button :eakte-coo-adresse="antrag.allgemein.eakteCooAdresse" />
     </v-col>
   </v-row>
 </template>
