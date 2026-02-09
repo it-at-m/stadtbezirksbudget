@@ -4,6 +4,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NameView;
@@ -58,6 +59,8 @@ public class AntragService {
 
     public Antrag createFromKafka(final KafkaDTO kafkaDTO) {
         final Antrag antrag = antragMapper.toAntrag(kafkaDTO);
+        final Finanzierung finanzierung = antrag.getFinanzierung();
+        finanzierungRepository.save(finanzierung);
         return antragRepository.save(antrag);
     }
 
