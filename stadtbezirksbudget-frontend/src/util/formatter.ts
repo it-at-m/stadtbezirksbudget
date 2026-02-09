@@ -77,6 +77,11 @@ function validateDate(date: Date): boolean {
 export function zammadNrToLink(zammadNr: string) {
   return `${ZAMMAD_BASE_URL}${ZAMMAD_TICKET_PATH}${zammadNr}`;
 }
-export function EakteToLink(cooAdresse: string) {
+
+/**
+ * Formats cooAdresse to a link to the corresponding eakte.
+ * @param cooAdresse - The eakte coo address.
+ */
+export function eakteToLink(cooAdresse: string) {
   return `${EAKTE_BASE_URL}${EAKTE_PATH}${cooAdresse}`;
 }
