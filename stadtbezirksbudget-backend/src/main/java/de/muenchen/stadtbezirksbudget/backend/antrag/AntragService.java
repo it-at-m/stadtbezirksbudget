@@ -73,12 +73,8 @@ public class AntragService {
         return antragRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Could not find antrag with id %s", id)));
     }
 
-    public Antrag createFromKafka(UUID id, KafkaDTO kafkaDTO) {
-        Antrag antrag = antragRepository.findById(id).orElseGet(() -> {
-            Antrag newAntrag = new Antrag();
-            newAntrag.setId(id);
-            return newAntrag;
-        });
+    public Antrag createFromKafka(KafkaDTO kafkaDTO) {
+        Antrag antrag = new Antrag();
 
         antrag.setBezirksausschussNr(kafkaDTO.bezirksausschussNr());
 
@@ -125,7 +121,7 @@ public class AntragService {
         musterFinanzierung.setFinanzierungsmittel(List.of(musterFinanzierungsmittel));
 
         Finanzierung savedFinanzierung = finanzierungRepository.save(musterFinanzierung);
-        
+
         antrag.setFinanzierung(savedFinanzierung);
 
         Projekt musterProjekt = new Projekt();

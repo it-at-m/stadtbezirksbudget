@@ -64,7 +64,6 @@ public class KafkaConsumerService {
             log.error("Failed to parse message key as UUID: {}. Skipping message.", key, e);
         }
 
-        UUID id = UUID.fromString(key);
-        antragService.createFromKafka(id, content);
+        antragService.createFromKafka(content);
     }
 }
