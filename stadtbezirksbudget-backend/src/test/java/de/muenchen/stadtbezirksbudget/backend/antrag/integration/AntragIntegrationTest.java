@@ -172,7 +172,7 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.allgemein.status", is(antrag.getBearbeitungsstand().getStatus().name())))
                     .andExpect(jsonPath("$.allgemein.zammadNr", is(antrag.getZammadTicketNr())))
                     .andExpect(jsonPath("$.allgemein.aktenzeichen", is(antrag.getAktenzeichen())))
-                    .andExpect(jsonPath("$.allgemein.istGegendert", is(true)))
+                    .andExpect(jsonPath("$.allgemein.istGegendert", is(false)))
                     .andExpect(jsonPath("$.allgemein.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
         }
 
