@@ -2,7 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.kafka;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.AntragService;
 import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -27,14 +27,11 @@ import org.springframework.stereotype.Service;
 @ExcludedFromGeneratedCoverage(
         reason = "Excluded because no further implementation exists, tests will be implemented later. TODO: #414 Add tests and remove exclusion to reach branch coverage"
 )
+@RequiredArgsConstructor
 public class KafkaConsumerService {
     private final AntragService antragService;
     @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
-
-    public KafkaConsumerService(AntragService antragService) {
-        this.antragService = antragService;
-    }
 
     /**
      * Receives and processes messages from the Kafka topic <i>spring.kafka.template.default-topic</i>
