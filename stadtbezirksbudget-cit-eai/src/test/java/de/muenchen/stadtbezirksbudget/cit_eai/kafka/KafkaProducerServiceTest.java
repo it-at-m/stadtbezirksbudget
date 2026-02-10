@@ -36,9 +36,9 @@ class KafkaProducerServiceTest {
         void testPublishMessageCallsSend() {
             final KafkaDTO kafkaDTO = new KafkaDTO("test name", "test message", 123);
             kafkaProducerService.publishMessage(kafkaDTO);
-            ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+            final ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
             verify(kafkaTemplate).send(eq(TOPIC), captor.capture(), eq(kafkaDTO));
-            String usedKey = captor.getValue();
+            final String usedKey = captor.getValue();
             assertNotNull(usedKey);
             assertDoesNotThrow(() -> UUID.fromString(usedKey));
         }
