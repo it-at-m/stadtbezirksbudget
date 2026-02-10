@@ -36,7 +36,8 @@ public class KafkaProducerService {
     //        log.info("Published message to topic {} with key {}: {}", topic, content);
     //    }
     public void publishMessage(@NotNull final KafkaDTO content) {
-        kafkaTemplate.send(topic, "10000000-0000-0000-0000-000000000050", content);
-        log.info("Published message to topic {} with key {}: {}", topic, content);
+        String id = UUID.randomUUID().toString();
+        kafkaTemplate.send(topic, id, content);
+        log.info("Published message to topic {} with key {}: {}", topic, id, content);
     }
 }
