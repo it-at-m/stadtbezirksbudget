@@ -9,8 +9,6 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    template:
-      default-topic: stadtbezirksbudget-cit-backend-local
 
 logging:
   include-application-group: false # disabled because application group is only relevant when deployed
@@ -24,3 +22,5 @@ refarch:
     # Currently only dummy values, will later be changed for testing security.
     user-info-uri: NotNeeded
     logging-mode: all
+
+kafka.topic: stadtbezirksbudget-cit-backend-local
