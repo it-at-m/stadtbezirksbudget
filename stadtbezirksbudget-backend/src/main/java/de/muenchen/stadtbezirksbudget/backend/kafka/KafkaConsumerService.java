@@ -49,12 +49,11 @@ public class KafkaConsumerService {
             log.error("Received null message key. Skipping message: {}", content);
             return;
         }
+        log.info("Received message in group {} with key {}: {}", groupId, key, content);
         try {
-            log.info("Received message in group {} with key {}: {}", groupId, key, content);
-        } catch (IllegalArgumentException e) {
-            log.error("Failed to parse message key as UUID: {}. Skipping message.", key, e);
+            antragService.createFromKafka(content);
+        } catch (Exception e) {
+            log.error("Error processing message with key {}: {}", key, e.getMessage(), e);
         }
-
-        antragService.createFromKafka(content);
     }
 }
