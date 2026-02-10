@@ -16,6 +16,7 @@ public record AntragSummaryDTO(
         Status status,
         String zammadNr,
         String aktenzeichen,
+        String eakteCooAdresse,
         int bezirksausschussNr,
         LocalDateTime eingangDatum,
         String antragstellerName,

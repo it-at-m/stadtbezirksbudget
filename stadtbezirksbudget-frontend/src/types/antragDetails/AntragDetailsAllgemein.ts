@@ -9,6 +9,7 @@ export interface AntragDetailsAllgemein {
   status: Status;
   zammadNr: string;
   aktenzeichen: string;
+  eakteCooAdresse: string;
   istGegendert: boolean;
   anmerkungen: string;
 }
