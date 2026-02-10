@@ -37,13 +37,13 @@ Version numbers are typically in the format `X.Y.Z` where each component has spe
 - Select your release branch
 - Select your desired option in "Select version increment type (follow Semantic Versioning)"
 - Select the service in "Select the node service to release"-field that you want to release
-- Make sure to tick the box of "skip deployment to npm registry" if not desired otherwise.
+- Make sure to tick the box of "skip deployment to npm registry" if you dont want to deploy to npm registry.
 - Click on "Run workflow"
 - Wait for workflow to finish
 - For reference, here is an example with release-Branch `release/v0.5.0`, version increment type `minor` for service `stadtbezirksbudget-frontend`:
   ![example of Npm Release](exampleNpmRelease.png)
 
-### 3. Merge release branch
+### 4. Merge release branch
 
 - Open [compare view](https://github.com/it-at-m/stadtbezirksbudget/compare) of the repository
 - Click on "compare"-field and select your release branch
@@ -56,6 +56,6 @@ Version numbers are typically in the format `X.Y.Z` where each component has spe
 - For reference, here is an example with release-Branch `release/v0.5.0`:
   ![example of create/view pull request view](exampleMergeRequest.png)
 
-### 4. Additional information
+### 5. Additional information
 
 Depending on your company infrastructure, there might be additional steps to take such as editing version-numbers or -tags in other connected repositories and merging these changes by pull-request. Also depending on pipeline settings there may be extra steps to the release process.
