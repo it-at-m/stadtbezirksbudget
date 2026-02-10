@@ -58,4 +58,4 @@ Version numbers are typically in the format `X.Y.Z` where each component has spe
 
 ### 4. Additional information
 
-Depending on your company infrastructure, there might be additional steps to take such as editing version-numbers or -tags in other connected repositories and merging these changes by pull-request. Also depending on pipeline settings there may be extra steps to the release process.  
+Depending on your company infrastructure, there might be additional steps to take such as editing version-numbers or -tags in other connected repositories and merging these changes by pull-request. Also depending on pipeline settings there may be extra steps to the release process.
