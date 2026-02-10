@@ -100,7 +100,7 @@ INSERT INTO antrag (id, bezirksausschuss_nr, eingang_datum, ist_person_vorsteuer
                     bankverbindung_bic, vertretungsberechtigter_nachname, vertretungsberechtigter_vorname, vertretungsberechtigter_mobil_nr,
                     vertretungsberechtigter_telefon_nr, vertretungsberechtigter_email, vertretungsberechtigter_adresse_strasse_hausnummer,
                     vertretungsberechtigter_adresse_weitere_angaben, vertretungsberechtigter_adresse_ort, vertretungsberechtigter_adresse_postleitzahl,
-                    zahlung_auszahlung_betrag, zahlung_auszahlung_datum, zahlung_anlageav, zahlung_anlage_nr, zahlung_kreditor, zahlung_rechnung_nr,
+                    zahlung_auszahlung_betrag, zahlung_auszahlung_datum, zahlung_anlage_av, zahlung_anlage_nr, zahlung_kreditor, zahlung_rechnung_nr,
                     zahlung_fi_beleg_nr, zahlung_bestellung, verwendungsnachweis_betrag, ist_gegendert,
                     verwendungsnachweis_status, verwendungsnachweis_pruefung_betrag, verwendungsnachweis_buchungs_datum,
                     verwendungsnachweis_sap_eingangsdatum, bezirksinformationen_sitzung_datum, bezirksinformationen_ris_nr,

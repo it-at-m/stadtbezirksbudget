@@ -1,7 +1,7 @@
 ALTER TABLE antrag
     ADD zahlung_auszahlung_betrag DECIMAL(19, 2),
     ADD zahlung_auszahlung_datum  date,
-    ADD zahlung_anlageav           VARCHAR(256) NOT NULL default '',
+    ADD zahlung_anlage_av           VARCHAR(256) NOT NULL default '',
     ADD zahlung_anlage_nr          VARCHAR(256) NOT NULL default '',
     ADD zahlung_kreditor           VARCHAR(256) NOT NULL default '',
     ADD zahlung_rechnung_nr       VARCHAR(256) NOT NULL default '',

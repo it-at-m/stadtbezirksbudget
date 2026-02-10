@@ -28,7 +28,7 @@ public class Zahlung implements Serializable {
 
     private BigDecimal auszahlungBetrag;
     private LocalDate auszahlungDatum;
-    @NotNull private String anlageAV;
+    @NotNull private String anlageAv;
     @NotNull private String anlageNr;
     @NotNull private String kreditor;
     @NotNull private String rechnungNr;

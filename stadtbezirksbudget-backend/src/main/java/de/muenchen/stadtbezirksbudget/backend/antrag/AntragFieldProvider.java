@@ -78,7 +78,7 @@ public final class AntragFieldProvider {
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.iban),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.bic),
                 root.get(Antrag_.bezirksinformationen).get(Bezirksinformationen_.risNr),
-                root.get(Antrag_.zahlung).get(Zahlung_.anlageAV),
+                root.get(Antrag_.zahlung).get(Zahlung_.anlageAv),
                 root.get(Antrag_.zahlung).get(Zahlung_.anlageNr),
                 root.get(Antrag_.zahlung).get(Zahlung_.bestellung),
                 root.get(Antrag_.zahlung).get(Zahlung_.fiBelegNr),
