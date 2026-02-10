@@ -28,7 +28,7 @@ Version numbers are typically in the format `X.Y.Z` where each component has spe
 - Click on "Run workflow"
 - Wait for workflow to finish
 - For reference, here is an example with release-Branch `release/v0.5.0`, version number `0.5.0`, therefore "Version to use for new local working copy" is `0.5.1-SNAPSHOT`, for service `stadtbezirksbudget-backend`:
-  ![example of Maven Release](./exampleMavenRelease.png)
+  ![example of Maven Release](exampleMavenRelease.png)
 
 ### 3. NPM release
 
@@ -41,7 +41,7 @@ Version numbers are typically in the format `X.Y.Z` where each component has spe
 - Click on "Run workflow"
 - Wait for workflow to finish
 - For reference, here is an example with release-Branch `release/v0.5.0`, version increment type `minor` for service `stadtbezirksbudget-frontend`:
-  ![example of Npm Release](./exampleNpmRelease.png)
+  ![example of Npm Release](exampleNpmRelease.png)
 
 ### 3. Merge release branch
 
