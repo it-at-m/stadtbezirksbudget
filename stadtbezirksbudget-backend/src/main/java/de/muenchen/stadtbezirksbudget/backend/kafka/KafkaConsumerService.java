@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.kafka;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.AntragService;
 import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -49,9 +50,13 @@ public class KafkaConsumerService {
             log.error("Received null message key. Skipping message: {}", content);
             return;
         }
-        log.info("Received message in group {} with key {}: {}", groupId, key, content);
+
         try {
+            final UUID uuid = UUID.fromString(key);
+            log.info("Received message in group {} with key {}", groupId, uuid);
             antragService.createFromKafka(content);
+        } catch (IllegalArgumentException e) {
+            log.error("Received an invalid message key. Skipping message: {}", key);
         } catch (Exception e) {
             log.error("Error processing message with key {}: {}", key, e.getMessage(), e);
         }
