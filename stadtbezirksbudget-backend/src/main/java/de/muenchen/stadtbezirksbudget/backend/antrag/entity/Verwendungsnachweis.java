@@ -25,7 +25,7 @@ import lombok.Setter;
 public class Verwendungsnachweis implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
-    
+
     @NotNull private String status;
     private BigDecimal betrag;
     private BigDecimal pruefungBetrag;
