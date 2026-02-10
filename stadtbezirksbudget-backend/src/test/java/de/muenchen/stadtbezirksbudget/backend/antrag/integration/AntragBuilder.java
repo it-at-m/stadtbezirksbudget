@@ -249,7 +249,7 @@ public class AntragBuilder {
     private Zahlung initializeZahlung() {
         return Zahlung.builder()
                 .anlageNr("")
-                .anlageAV("")
+                .anlageAv("")
                 .auszahlungBetrag(null)
                 .auszahlungDatum(null)
                 .bestellung("")
