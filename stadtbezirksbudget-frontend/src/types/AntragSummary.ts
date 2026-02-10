@@ -7,6 +7,7 @@ export default interface AntragSummary {
   status: Status;
   zammadNr: string;
   aktenzeichen: string;
+  eakteCooAdresse: string;
   bezirksausschussNr: number;
   eingangDatum: string; // ISO date string from API
   antragstellerName: string;

@@ -14,6 +14,7 @@ vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 const mockAntrag = {
   allgemein: {
     zammadNr: "1234",
+    eakteCooAdresse: "COO.1234.5678.9.0123456",
   },
 };
 
@@ -29,34 +30,74 @@ describe("DetailsHeader", () => {
             props: ["zammadNr"],
             template: "<div>{{ zammadNr }}</div>",
           },
+          EakteButton: {
+            name: "EakteButton",
+            props: ["eakteCooAdresse"],
+            template: "<div>{{ eakteCooAdresse }}</div>",
+          },
         },
       },
       props: { antrag: mockAntrag },
     });
   });
 
-  test("renders zammad button", () => {
-    const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
-    expect(zammadButton.exists()).toBe(true);
+  describe("ZammadButton", () => {
+    test("renders zammad button", () => {
+      const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
+      expect(zammadButton.exists()).toBe(true);
+    });
+
+    test("passes zammadNr to zammad button", () => {
+      const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
+      expect(zammadButton.props("zammadNr")).toBe(
+        mockAntrag.allgemein.zammadNr
+      );
+      expect(zammadButton.text()).toBe(mockAntrag.allgemein.zammadNr);
+    });
+
+    test("updates zammadNr when antrag prop changes", async () => {
+      const newAntrag = {
+        allgemein: {
+          ...mockAntrag.allgemein,
+          zammadNr: "4567",
+        },
+      };
+      await wrapper.setProps({ antrag: newAntrag });
+      await nextTick();
+
+      const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
+      expect(zammadButton.props("zammadNr")).toBe("4567");
+    });
   });
 
-  test("passes zammadNr to zammad button", () => {
-    const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
-    expect(zammadButton.props("zammadNr")).toBe(mockAntrag.allgemein.zammadNr);
-    expect(zammadButton.text()).toBe(mockAntrag.allgemein.zammadNr);
-  });
+  describe("EakteButton", () => {
+    test("renders eakte button", () => {
+      const eakteButton = wrapper.findComponent({ name: "EakteButton" });
+      expect(eakteButton.exists()).toBe(true);
+    });
 
-  test("updates zammadNr when antrag prop changes", async () => {
-    const newAntrag = {
-      allgemein: {
-        ...mockAntrag.allgemein,
-        zammadNr: "4567",
-      },
-    };
-    await wrapper.setProps({ antrag: newAntrag });
-    await nextTick();
+    test("passes eakteCooAdresse to eakte button", () => {
+      const eakteButton = wrapper.findComponent({ name: "EakteButton" });
+      expect(eakteButton.props("eakteCooAdresse")).toBe(
+        mockAntrag.allgemein.eakteCooAdresse
+      );
+      expect(eakteButton.text()).toBe(mockAntrag.allgemein.eakteCooAdresse);
+    });
 
-    const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
-    expect(zammadButton.props("zammadNr")).toBe("4567");
+    test("updates eakteCooAdresse when antrag prop changes", async () => {
+      const newAntrag = {
+        allgemein: {
+          ...mockAntrag.allgemein,
+          eakteCooAdresse: "COO.2234.5678.9.0123456",
+        },
+      };
+      await wrapper.setProps({ antrag: newAntrag });
+      await nextTick();
+
+      const eakteButton = wrapper.findComponent({ name: "EakteButton" });
+      expect(eakteButton.props("eakteCooAdresse")).toBe(
+        "COO.2234.5678.9.0123456"
+      );
+    });
   });
 });

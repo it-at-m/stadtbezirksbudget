@@ -58,6 +58,7 @@ public class AntragBuilder {
     private AktualisierungArt aktualisierungArt;
     private String zammadNr;
     private String aktenzeichen;
+    private String eakteCooAdresse;
     private String antragstellerName;
     private String projektTitel;
 
@@ -86,6 +87,7 @@ public class AntragBuilder {
         aktualisierungArt = AktualisierungArt.values()[RANDOM.nextInt(AktualisierungArt.values().length)];
         zammadNr = String.valueOf(RANDOM.nextInt(LIMIT));
         aktenzeichen = String.valueOf(RANDOM.nextInt(LIMIT));
+        eakteCooAdresse = String.valueOf(RANDOM.nextInt(LIMIT));
         antragstellerName = generateRandomUuidString();
         projektTitel = generateRandomUuidString();
     }
@@ -288,6 +290,7 @@ public class AntragBuilder {
                     .zammadTicketNr(zammadNr)
                     .aktualisierungDatum(aktualisierungDatum)
                     .aktenzeichen(aktenzeichen)
+                    .eakteCooAdresse(eakteCooAdresse)
                     .finanzierung(initializeFinanzierung(beantragtesBudget, finanzierungArt))
                     .projekt(initializeProjekt(projektTitel))
                     .antragsteller(antragsteller)

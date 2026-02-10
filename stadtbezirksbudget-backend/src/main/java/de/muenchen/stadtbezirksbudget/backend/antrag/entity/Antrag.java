@@ -42,6 +42,7 @@ public class Antrag extends BaseEntity {
     @NotNull private String zammadTicketNr;
     @NotNull private LocalDateTime aktualisierungDatum;
     @NotNull private String aktenzeichen;
+    @NotNull private String eakteCooAdresse;
     @NotNull @Enumerated(EnumType.STRING)
     private AktualisierungArt aktualisierungArt;
 
