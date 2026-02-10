@@ -8,7 +8,7 @@ COPY dist .
 COPY docker/nginx/*.conf "${NGINX_DEFAULT_CONF_PATH}"
 
 # Runtime environment variables
-COPY runtime-env.template.js .
+COPY runtime-env.template.js ..
 COPY docker-entrypoint.sh ..
 
 # Start the web server
