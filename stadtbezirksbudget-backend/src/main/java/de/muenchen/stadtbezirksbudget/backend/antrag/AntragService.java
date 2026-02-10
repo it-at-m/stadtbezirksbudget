@@ -57,6 +57,12 @@ public class AntragService {
         return antragRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Could not find antrag with id %s", id)));
     }
 
+    /**
+     * Creates an Antrag from a KafkaDTO and saves it to the database.
+     *
+     * @param kafkaDTO the KafkaDTO containing the data to create the Antrag
+     * @return the created Antrag
+     */
     public Antrag createFromKafka(final KafkaDTO kafkaDTO) {
         final Antrag antrag = antragMapper.toAntrag(kafkaDTO);
         final Finanzierung finanzierung = antrag.getFinanzierung();
