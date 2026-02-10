@@ -36,7 +36,7 @@ class KafkaProducerIntegrationTest {
     class PublishMessage {
         @Test
         void testValidPublishMessageReturnOK() throws Exception {
-            final KafkaDTO message = new KafkaDTO(UUID.randomUUID(), "test", 123);
+            final KafkaDTO message = new KafkaDTO("test", "test", 123);
             mockMvc
                     .perform(post("/kafka/publish")
                             .contentType(MediaType.APPLICATION_JSON)
