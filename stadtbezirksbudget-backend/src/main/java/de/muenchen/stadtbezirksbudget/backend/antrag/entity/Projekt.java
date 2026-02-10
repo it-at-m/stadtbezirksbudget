@@ -31,5 +31,5 @@ public class Projekt implements Serializable {
     @NotNull private String fristBruchBegruendung;
     @NotNull private LocalDate ende;
     @NotBlank private String beschreibung;
-    @NotBlank private String rubrik;
+    @NotNull private String rubrik;
 }

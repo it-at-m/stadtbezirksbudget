@@ -2,7 +2,6 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,9 +26,9 @@ public class Verwendungsnachweis implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotNull @PositiveOrZero private BigDecimal betrag;
+    private BigDecimal betrag;
     @NotNull private String status;
-    @NotNull @PositiveOrZero private BigDecimal pruefungBetrag;
+    private BigDecimal pruefungBetrag;
     private LocalDate buchungsDatum;
     private LocalDate sapEingangsdatum;
 }

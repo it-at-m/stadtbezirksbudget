@@ -2,7 +2,6 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,7 +26,7 @@ public class Zahlung implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotNull @PositiveOrZero private BigDecimal auszahlungBetrag;
+    private BigDecimal auszahlungBetrag;
     private LocalDate auszahlungDatum;
     @NotNull private String anlageAV;
     @NotNull private String anlageNr;
