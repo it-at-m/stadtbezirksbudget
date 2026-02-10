@@ -245,15 +245,35 @@ public class AntragBuilder {
     }
 
     private Zahlung initializeZahlung() {
-        return Zahlung.builder().build();
+        return Zahlung.builder()
+                .anlageNr("")
+                .anlageAV("")
+                .auszahlungBetrag(null)
+                .auszahlungDatum(null)
+                .bestellung("")
+                .kreditor("")
+                .fiBelegNr("")
+                .rechnungNr("")
+                .build();
     }
 
     private Verwendungsnachweis initializeVerwendungsnachweis() {
-        return Verwendungsnachweis.builder().build();
+        return Verwendungsnachweis.builder()
+                .betrag(null)
+                .buchungsDatum(null)
+                .pruefungBetrag(null)
+                .sapEingangsdatum(null)
+                .status("")
+                .build();
     }
 
     private Bezirksinformationen initializeBezirksinformationen() {
-        return Bezirksinformationen.builder().build();
+        return Bezirksinformationen.builder()
+                .bescheidDatum(null)
+                .risNr("")
+                .bewilligteFoerderung(null)
+                .sitzungDatum(null)
+                .build();
     }
 
     public Antrag build() {
