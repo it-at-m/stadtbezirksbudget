@@ -26,8 +26,8 @@ public class Bezirksinformationen implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private LocalDate sitzungDatum;
     @NotNull private String risNr;
     private BigDecimal bewilligteFoerderung;
+    private LocalDate sitzungDatum;
     private LocalDate bescheidDatum;
 }

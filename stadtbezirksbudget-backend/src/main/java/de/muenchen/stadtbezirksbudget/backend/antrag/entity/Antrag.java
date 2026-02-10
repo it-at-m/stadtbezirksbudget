@@ -34,10 +34,10 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    private boolean istGegendert;
+    
     @Positive private int bezirksausschussNr;
     @NotNull private LocalDateTime eingangDatum;
+    private boolean istGegendert;
     private boolean istPersonVorsteuerabzugsberechtigt;
     @NotNull private String zammadTicketNr;
     @NotNull private LocalDateTime aktualisierungDatum;
