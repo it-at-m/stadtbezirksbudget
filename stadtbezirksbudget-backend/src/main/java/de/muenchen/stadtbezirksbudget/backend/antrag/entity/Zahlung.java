@@ -24,12 +24,12 @@ public class Zahlung implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotNull @PositiveOrZero private BigDecimal auszahlungsBetrag;
-    private LocalDate auszahlungsDatum;
+    @NotNull @PositiveOrZero private BigDecimal auszahlungBetrag;
+    private LocalDate auszahlungDatum;
     @NotNull private String anlageAV;
     @NotNull private String anlageNr;
     @NotNull private String kreditor;
-    @NotNull private String rechnungsNr;
+    @NotNull private String rechnungNr;
     @NotNull private String fiBelegNr;
     @NotNull private String bestellung;
 }

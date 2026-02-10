@@ -35,6 +35,7 @@ public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private boolean istGegendert;
     @Positive private int bezirksausschussNr;
     @NotNull private LocalDateTime eingangDatum;
     private boolean istPersonVorsteuerabzugsberechtigt;

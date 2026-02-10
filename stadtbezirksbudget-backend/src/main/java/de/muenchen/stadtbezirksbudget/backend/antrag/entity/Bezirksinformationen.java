@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,7 +25,7 @@ public class Bezirksinformationen implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private LocalDate sitzungsDatum;
+    private LocalDate sitzungDatum;
     @NotNull private String risNr;
     @NotNull @PositiveOrZero private BigDecimal bewilligteFoerderung;
     private LocalDate bescheidDatum;

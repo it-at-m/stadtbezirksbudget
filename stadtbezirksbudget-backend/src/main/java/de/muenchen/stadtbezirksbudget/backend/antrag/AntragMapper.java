@@ -48,7 +48,7 @@ public interface AntragMapper {
     @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
     @Mapping(target = "rubrik", source = "antrag.projekt.rubrik")
     @Mapping(target = "zammadNr", source = "zammadTicketNr")
-    @Mapping(target = "istGegendert", source = "antrag.verwendungsnachweis.istGegendert")
+    @Mapping(target = "istGegendert", source = "antrag.istGegendert")
     @Mapping(target = "anmerkungen", source = "bearbeitungsstand.anmerkungen")
     AntragDetailsAllgemeinDTO toAllgemeinDTO(Antrag antrag);
 }

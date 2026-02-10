@@ -24,10 +24,9 @@ public class Verwendungsnachweis implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotNull @PositiveOrZero private BigDecimal vnBetrag;
-    private boolean istGegendert;
-    @NotNull private String vnStatus;
-    @NotNull @PositiveOrZero private BigDecimal vnPruefungBetrag;
+    @NotNull @PositiveOrZero private BigDecimal betrag;
+    @NotNull private String status;
+    @NotNull @PositiveOrZero private BigDecimal pruefungBetrag;
     private LocalDate buchungsDatum;
     private LocalDate sapEingangsdatum;
 }
