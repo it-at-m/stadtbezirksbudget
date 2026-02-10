@@ -7,5 +7,10 @@ COPY dist .
 # Copy custom nginx configurations
 COPY docker/nginx/*.conf "${NGINX_DEFAULT_CONF_PATH}"
 
+# Runtime environment variables
+COPY runtime-env.template.js .
+COPY docker-entrypoint.sh ..
+
 # Start the web server
+ENTRYPOINT ["sh", "../docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
