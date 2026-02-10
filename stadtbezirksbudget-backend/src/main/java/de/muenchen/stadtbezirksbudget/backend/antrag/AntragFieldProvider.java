@@ -7,10 +7,13 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bankverbindung_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bezirksinformationen_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Vertretungsberechtigter;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Vertretungsberechtigter_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Verwendungsnachweis_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Zahlung_;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
@@ -63,6 +66,7 @@ public final class AntragFieldProvider {
                 root.get(Antrag_.projekt).get(Projekt_.titel),
                 root.get(Antrag_.projekt).get(Projekt_.fristBruchBegruendung),
                 root.get(Antrag_.projekt).get(Projekt_.beschreibung),
+                root.get(Antrag_.projekt).get(Projekt_.rubrik),
                 root.get(Antrag_.antragsteller).get(Antragsteller_.name),
                 root.get(Antrag_.antragsteller).get(Antragsteller_.zielsetzung),
                 root.get(Antrag_.antragsteller).get(Antragsteller_.telefonNr),
@@ -73,6 +77,14 @@ public final class AntragFieldProvider {
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.geldinstitut),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.iban),
                 root.get(Antrag_.bankverbindung).get(Bankverbindung_.bic),
+                root.get(Antrag_.bezirksinformationen).get(Bezirksinformationen_.risNr),
+                root.get(Antrag_.zahlung).get(Zahlung_.anlageAV),
+                root.get(Antrag_.zahlung).get(Zahlung_.anlageNr),
+                root.get(Antrag_.zahlung).get(Zahlung_.bestellung),
+                root.get(Antrag_.zahlung).get(Zahlung_.fiBelegNr),
+                root.get(Antrag_.zahlung).get(Zahlung_.kreditor),
+                root.get(Antrag_.zahlung).get(Zahlung_.rechnungNr),
+                root.get(Antrag_.verwendungsnachweis).get(Verwendungsnachweis_.status),
                 vertretungsberechtigter.get(Vertretungsberechtigter_.nachname),
                 vertretungsberechtigter.get(Vertretungsberechtigter_.vorname),
                 vertretungsberechtigter.get(Vertretungsberechtigter_.mobilNr),
