@@ -15,6 +15,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents district information related to the budget application.
+ */
 @Getter
 @Setter
 @Builder

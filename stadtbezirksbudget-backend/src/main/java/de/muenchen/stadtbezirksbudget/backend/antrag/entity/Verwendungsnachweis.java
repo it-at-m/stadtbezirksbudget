@@ -14,6 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents a proof of use entity with various attributes related to the usage of funds.
+ */
 @Getter
 @Setter
 @Builder

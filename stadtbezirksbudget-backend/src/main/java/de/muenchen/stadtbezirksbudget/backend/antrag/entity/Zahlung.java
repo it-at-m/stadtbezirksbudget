@@ -14,6 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Represents a payment entity with various attributes related to the payment.
+ */
 @Getter
 @Setter
 @Builder
