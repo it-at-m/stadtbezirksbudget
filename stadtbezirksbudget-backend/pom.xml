@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.stadtbezirksbudget</groupId>
     <artifactId>stadtbezirksbudget-backend</artifactId>
-    <version>0.4.1-SNAPSHOT</version>
+    <version>0.5.1-SNAPSHOT</version>
 
     <name>stadtbezirksbudget-backend</name>
     <description>In the context of this project, we are digitizing the process of applying for the Stadtbezirksbudget (district budget) in Munich, thereby
