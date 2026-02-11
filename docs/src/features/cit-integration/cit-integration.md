@@ -42,4 +42,3 @@ The backend consumes the Kafka messages produced by the CIT-EAI and performs the
 The CIT integration ensures a reliable end-to-end data flow from the online form to the Stadtbezirksbudget database:
 
 This integration enables scalable, asynchronous processing while keeping the Stadtbezirksbudget application decoupled from the online form infrastructure.
- 
