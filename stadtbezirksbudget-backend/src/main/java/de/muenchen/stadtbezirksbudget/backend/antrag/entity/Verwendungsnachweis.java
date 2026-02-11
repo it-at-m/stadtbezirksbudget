@@ -1,10 +1,10 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
 import jakarta.persistence.Embeddable;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * This class represents a project that includes a title, description, start date, and end date.
+ * Represents a proof of use entity with various attributes related to the usage of funds.
  */
 @Getter
 @Setter
@@ -22,14 +22,13 @@ import lombok.Setter;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Projekt implements Serializable {
+public class Verwendungsnachweis implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @NotBlank private String titel;
-    @NotNull private LocalDate start;
-    @NotNull private String fristBruchBegruendung;
-    @NotNull private LocalDate ende;
-    @NotBlank private String beschreibung;
-    @NotNull private String rubrik;
+    @NotNull private String status;
+    private BigDecimal betrag;
+    private BigDecimal pruefungBetrag;
+    private LocalDate buchungsDatum;
+    private LocalDate sapEingangsdatum;
 }

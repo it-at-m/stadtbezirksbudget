@@ -73,6 +73,7 @@ describe("AntragList", () => {
       true
     );
     expect(wrapper.find('[data-test="item-zammad-nr"]').exists()).toBe(true);
+    expect(wrapper.find('[data-test="item-aktenzeichen"]').exists()).toBe(true);
   });
 
   test("updates ui on screen size change", async () => {

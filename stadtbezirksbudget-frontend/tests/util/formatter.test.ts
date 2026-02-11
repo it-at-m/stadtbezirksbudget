@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import {
+  eakteToLink,
   toDateString,
   toLocalISOString,
   toNumberString,
@@ -71,6 +72,15 @@ describe("formatter", () => {
       const zammadNr = "00000018";
       expect(zammadNrToLink(zammadNr)).toBe(
         "https://zammad.muenchen.de/#ticket/zoom/00000018"
+      );
+    });
+  });
+
+  describe("eakteToLink", () => {
+    test("formats eakte coo address to eakte link", () => {
+      const eakteCooAdresse = "COO.1234.5678.9.0123456";
+      expect(eakteToLink(eakteCooAdresse)).toBe(
+        "https://akte.muenchen.de/fsc/fscasp/content/bin/fscvext.dll?bx=COO.1234.5678.9.0123456"
       );
     });
   });
