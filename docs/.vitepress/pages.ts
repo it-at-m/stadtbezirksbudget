@@ -33,7 +33,7 @@ const pages: Page[] = [
       },
       {
         text: "CIT integration",
-        link: "/features/cit-integration",
+        link: "/features/cit-integration/",
       },
       {
         text: "Reliable communication",
