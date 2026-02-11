@@ -2,16 +2,16 @@
 
 The CIT integration is used to transfer application data from the online form infrastructure to the Stadtbezirksbudget application.
 
-![Diagram showing the data flow between CIT, CIT-EAI and Stadtbezirksbudget.](./cit-integration.png)
+![Diagram showing the data flow between CIT, FOR-EAI and Stadtbezirksbudget.](./cit-integration.png)
 
-## CIT-EAI
+## FOR-EAI
 
-The CIT-EAI acts as the integration layer between the online form infrastructure and the Stadtbezirksbudget application.
+The FOR-EAI acts as the integration layer between the online form infrastructure and the Stadtbezirksbudget application.
 
 After submission of the online form, the form server sends the application data as an XML message to a queue.
-The routing component forwards the message as an **exchange via a stream** to the CIT-EAI.
+The routing component forwards the message as an **exchange via a stream** to the FOR-EAI.
 
-Within the CIT-EAI the application data is processed as follows:
+Within the FOR-EAI the application data is processed as follows:
 
 - The incoming exchange containing the XML payload is received via a stream.
 - The XML message is parsed and mapped to an internal Data Transfer Object (DTO).
@@ -22,7 +22,7 @@ After successful processing, the JSON message is published to Kafka.
 
 ## Kafka
 
-Kafka is used as the messaging layer between the CIT-EAI and the Stadtbezirksbudget application.
+Kafka is used as the messaging layer between the FOR-EAI and the Stadtbezirksbudget application.
 
 The processed application data is sent as a Kafka message, enabling asynchronous and decoupled communication between the systems.
 
@@ -30,7 +30,7 @@ The processed application data is sent as a Kafka message, enabling asynchronous
 
 The Stadtbezirksbudget application is the main system responsible for processing and persisting application data.
 
-The backend consumes the Kafka messages produced by the CIT-EAI and performs the following steps:
+The backend consumes the Kafka messages produced by the FOR-EAI and performs the following steps:
 
 - The JSON message is received from Kafka.
 - The payload is mapped to domain objects.
