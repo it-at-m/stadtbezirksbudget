@@ -10,6 +10,8 @@ Version numbers are typically in the format `X.Y.Z`, where each component has a 
 - **Minor (Y)**: Incremented when new, backward-compatible features are added. Minor updates enhance functionality without changing the core architecture.
 - **Patch (Z)**: Incremented for small changes such as bug fixes, security patches, or minor improvements that do not add new features.
 
+For our project, we have decided to release a new minor version after each sprint (a period of 3 weeks) and no patch releases except for urgent bug fixes. A new major version will be released when we have implemented our project's MVP goals.
+
 ## 1. Create a release branch
 
 - Open the repository's [branches](https://github.com/it-at-m/stadtbezirksbudget/branches).
