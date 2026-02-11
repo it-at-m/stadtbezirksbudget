@@ -6,6 +6,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bankverbindung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bezirksinformationen;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierungsmittel;
@@ -13,7 +14,9 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Kategorie;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Rechtsform;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Verwendungsnachweis;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Zahlung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
@@ -37,7 +40,8 @@ import java.util.UUID;
  * Antrag second = builder.setBezirksausschussNr(2).build(); // starts from defaults
  * </pre>
  */
-@SuppressWarnings({ "PMD.AvoidFieldNameMatchingMethodName" })
+
+@SuppressWarnings({ "PMD.AvoidFieldNameMatchingMethodName", "PMD.CouplingBetweenObjects" })
 public class AntragBuilder {
     private static final int LIMIT = 100_000;
     private static final Random RANDOM = new Random();
@@ -170,6 +174,7 @@ public class AntragBuilder {
                 .start(LocalDate.now())
                 .ende(LocalDate.now().plusMonths(6))
                 .fristBruchBegruendung("")
+                .rubrik("Rubrik")
                 .build();
     }
 
@@ -241,6 +246,38 @@ public class AntragBuilder {
                 .build();
     }
 
+    private Zahlung initializeZahlung() {
+        return Zahlung.builder()
+                .anlageNr("")
+                .anlageAv("")
+                .auszahlungBetrag(null)
+                .auszahlungDatum(null)
+                .bestellung("")
+                .kreditor("")
+                .fiBelegNr("")
+                .rechnungNr("")
+                .build();
+    }
+
+    private Verwendungsnachweis initializeVerwendungsnachweis() {
+        return Verwendungsnachweis.builder()
+                .betrag(null)
+                .buchungsDatum(null)
+                .pruefungBetrag(null)
+                .sapEingangsdatum(null)
+                .status("")
+                .build();
+    }
+
+    private Bezirksinformationen initializeBezirksinformationen() {
+        return Bezirksinformationen.builder()
+                .bescheidDatum(null)
+                .risNr("")
+                .bewilligteFoerderung(null)
+                .sitzungDatum(null)
+                .build();
+    }
+
     public Antrag build() {
         try {
             final Adresse adresse = initializeAdresse();
@@ -259,6 +296,9 @@ public class AntragBuilder {
                     .antragsteller(antragsteller)
                     .bankverbindung(initializeBankverbindung())
                     .andereZuwendungsantraege(new ArrayList<>())
+                    .zahlung(initializeZahlung())
+                    .verwendungsnachweis(initializeVerwendungsnachweis())
+                    .bezirksinformationen(initializeBezirksinformationen())
                     .build();
             return antragRepository.save(antrag);
         } finally {

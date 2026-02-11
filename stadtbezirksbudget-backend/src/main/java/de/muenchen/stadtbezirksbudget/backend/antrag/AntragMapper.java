@@ -46,9 +46,9 @@ public interface AntragMapper {
     @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
     @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
-    @Mapping(target = "rubrik", constant = "Rubrik") // Will be replaced in #356
+    @Mapping(target = "rubrik", source = "antrag.projekt.rubrik")
     @Mapping(target = "zammadNr", source = "zammadTicketNr")
-    @Mapping(target = "istGegendert", constant = "true") // Will be replaced in #356
+    @Mapping(target = "istGegendert", source = "antrag.istGegendert")
     @Mapping(target = "anmerkungen", source = "bearbeitungsstand.anmerkungen")
     AntragDetailsAllgemeinDTO toAllgemeinDTO(Antrag antrag);
 }
