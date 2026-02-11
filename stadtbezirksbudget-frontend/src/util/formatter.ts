@@ -1,9 +1,4 @@
-import {
-  EAKTE_BASE_URL,
-  EAKTE_PATH,
-  ZAMMAD_BASE_URL,
-  ZAMMAD_TICKET_PATH,
-} from "@/constants.ts";
+import { EAKTE_PATH, ZAMMAD_TICKET_PATH } from "@/constants.ts";
 
 /**
  * Formats the date to a string in the German locale (de-DE).
@@ -68,20 +63,4 @@ export function toNumberString(
  */
 function validateDate(date: Date): boolean {
   return date && !isNaN(date.getTime());
-}
-
-/**
- * Formats zammadNr to a link to the corresponding zammad ticket.
- * @param zammadNr - The zammad ticket number.
- */
-export function zammadNrToLink(zammadNr: string) {
-  return `${ZAMMAD_BASE_URL}${ZAMMAD_TICKET_PATH}${zammadNr}`;
-}
-
-/**
- * Formats cooAdresse to a link to the corresponding eakte.
- * @param cooAdresse - The eakte coo address.
- */
-export function eakteToLink(cooAdresse: string) {
-  return `${EAKTE_BASE_URL}${EAKTE_PATH}${cooAdresse}`;
 }
