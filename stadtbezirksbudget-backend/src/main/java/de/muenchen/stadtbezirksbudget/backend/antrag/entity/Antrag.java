@@ -30,22 +30,37 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@SuppressWarnings("PMD.TooManyFields")
 public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Positive private int bezirksausschussNr;
     @NotNull private LocalDateTime eingangDatum;
+    private boolean istGegendert;
     private boolean istPersonVorsteuerabzugsberechtigt;
     @NotNull private String zammadTicketNr;
     @NotNull private LocalDateTime aktualisierungDatum;
     @NotNull private String aktenzeichen;
+    @NotNull private String eakteCooAdresse;
     @NotNull @Enumerated(EnumType.STRING)
     private AktualisierungArt aktualisierungArt;
 
     @NotNull @Embedded
     @EmbeddedColumnNaming("bearbeitungsstand_%s")
     private Bearbeitungsstand bearbeitungsstand;
+
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("bezirksinformationen_%s")
+    private Bezirksinformationen bezirksinformationen;
+
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("verwendungsnachweis_%s")
+    private Verwendungsnachweis verwendungsnachweis;
+
+    @NotNull @Embedded
+    @EmbeddedColumnNaming("zahlung_%s")
+    private Zahlung zahlung;
 
     @NotNull @OneToOne
     private Finanzierung finanzierung;

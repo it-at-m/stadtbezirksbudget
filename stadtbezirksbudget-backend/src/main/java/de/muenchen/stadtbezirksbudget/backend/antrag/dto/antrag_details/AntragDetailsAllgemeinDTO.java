@@ -18,6 +18,7 @@ public record AntragDetailsAllgemeinDTO(
         Status status,
         String zammadNr,
         String aktenzeichen,
+        String eakteCooAdresse,
         boolean istGegendert,
         String anmerkungen) {
 }
