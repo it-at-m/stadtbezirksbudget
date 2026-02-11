@@ -42,7 +42,7 @@ This is necessary because the workflows check out the branch and commit to it; t
 
 For reference: with branch `release/v0.5.0` and release version `0.5.0`, the "Version to use for new local working copy" would be `0.5.1-SNAPSHOT`. Example service: `stadtbezirksbudget-backend`.
 
-![example of Maven Release](./exampleMavenRelease.png){width=250px}
+![example of Maven Release](maven-release.png){width=250px}
 
 ### Npm release
 
@@ -57,7 +57,7 @@ For reference: with branch `release/v0.5.0` and release version `0.5.0`, the "Ve
 
 For reference: with branch `release/v0.5.0` and a "minor" increment for the `stadtbezirksbudget-frontend` service, the workflow will prepare the appropriate version bump.
 
-![example of Npm Release](exampleNpmRelease.png){width=250px}
+![example of Npm Release](npm-release.png){width=250px}
 
 ## 3. Merge the release branch
 
@@ -72,7 +72,7 @@ For reference: with branch `release/v0.5.0` and a "minor" increment for the `sta
 
 For reference: here is an example with branch `release/v0.5.0`:
 
-![example of create/view pull request view](./exampleMergeRequest.png)
+![example of create/view pull request view](pull-request.png)
 
 ## 4. Update deployment (internal)
 
@@ -89,7 +89,7 @@ The following steps are performed in the internal infrastructure repository and 
 - Commit to a new branch named `release/vX.Y.Z`.
 - Check "Create a merge request for this change" (internal workflow).
 
-![example of commit changes view](./exampleDeploymentCommit.png){width=400px}
+![example of commit changes view](deployment-commit.png){width=400px}
 
 ### Merge and deploy changes
 
@@ -100,4 +100,4 @@ The following steps are performed in the internal infrastructure repository and 
 - Open the pipeline details and start the `deploy-test` job (click the play icon).
 - Wait for the deployment pipeline to complete.
 
-![example of pipeline view](./exampleDeploymentPipeline.png){width=500px}
+![example of pipeline view](deployment-pipeline.png){width=500px}
