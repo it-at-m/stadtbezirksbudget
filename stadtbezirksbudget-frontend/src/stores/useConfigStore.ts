@@ -10,8 +10,6 @@ export const useConfigStore = defineStore("config", () => {
   // State: The frontend configuration, which can be null if it has not been loaded yet.
   const config = ref<FrontendConfig | null>(null);
 
-  const getConfig = computed((): FrontendConfig | null => config.value);
-
   /**
    * Sets the frontend configuration in the store.
    * @param payload - The new frontend configuration to store.
@@ -36,5 +34,5 @@ export const useConfigStore = defineStore("config", () => {
     (): string | undefined => config.value?.eakteBaseUrl
   );
 
-  return { getConfig, setConfig, getZammadBaseUrl, getEakteBaseUrl };
+  return { config, setConfig, getZammadBaseUrl, getEakteBaseUrl };
 });
