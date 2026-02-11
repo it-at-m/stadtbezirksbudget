@@ -1,5 +1,3 @@
-import { EAKTE_PATH, ZAMMAD_TICKET_PATH } from "@/constants.ts";
-
 /**
  * Formats the date to a string in the German locale (de-DE).
  * Returns an empty string if the date is invalid.
