@@ -1,24 +1,36 @@
 import { mount } from "@vue/test-utils";
-import { describe, expect, test } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { computed, MaybeRefOrGetter, toValue } from "vue";
 
 import EakteButton from "@/components/references/EakteButton.vue";
+import { useReferenceLink } from "@/composables/useReferenceLink.ts";
 import vuetify from "@/plugins/vuetify.ts";
-import { eakteToLink } from "@/util/formatter";
+
+vi.mock("@/composables/useReferenceLink.ts");
+const mockUseReferenceLink = {
+  getEakteLink: (adresse: MaybeRefOrGetter<string>) =>
+    computed(() => `https://akte.muenchen.invalid?coo=${toValue(adresse)}`),
+};
 
 const eakteCooAdresse = "COO.1234.5678.9.0123456";
-
-describe("EakteButton", () => {
-  const wrapper = mount(EakteButton, {
-    global: {
-      plugins: [vuetify],
-    },
+const createWrapper = () =>
+  mount(EakteButton, {
+    global: { plugins: [vuetify] },
     props: { eakteCooAdresse },
   });
 
+describe("EakteButton", () => {
+  beforeEach(() => {
+    useReferenceLink.mockReturnValue(mockUseReferenceLink);
+  });
+
   test("renders eakte button with correct label and href", () => {
+    const wrapper = createWrapper();
     const button = wrapper.findComponent({ name: "v-btn-primary" });
     expect(button.exists()).toBe(true);
     expect(button.text()).toBe("E-Akte öffnen");
-    expect(button.attributes("href")).toBe(eakteToLink(eakteCooAdresse));
+    expect(button.attributes("href")).toBe(
+      "https://akte.muenchen.invalid?coo=COO.1234.5678.9.0123456"
+    );
   });
 });
