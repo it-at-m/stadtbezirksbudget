@@ -29,7 +29,7 @@ vi.mock("@/stores/useUserStore.ts", () => {
   const setUser = vi.fn();
   return { useUserStore: () => ({ setUser }) };
 });
-vi.mock("@/api/fetch-frontendConfig", () => {
+vi.mock("@/api/fetch-frontendConfig.ts", () => {
   const getFrontendConfig = vi.fn();
   return { getFrontendConfig };
 });
