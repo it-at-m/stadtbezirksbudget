@@ -13,4 +13,3 @@ public record FrontendConfigDTO(
         String zammadBaseUrl,
         String eakteBaseUrl) {
 }
-

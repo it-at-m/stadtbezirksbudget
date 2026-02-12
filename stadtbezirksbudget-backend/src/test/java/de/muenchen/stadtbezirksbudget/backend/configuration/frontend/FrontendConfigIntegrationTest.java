@@ -44,7 +44,8 @@ class FrontendConfigIntegrationTest {
 
         @Test
         void testReturnsZammadBaseUrl() throws Exception {
-            mockMvc.perform(get("/frontend-config")
+            mockMvc
+                    .perform(get("/frontend-config")
                             .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.zammadBaseUrl").value("https://zammad.example.local"));
@@ -52,7 +53,8 @@ class FrontendConfigIntegrationTest {
 
         @Test
         void testReturnsEakteBaseUrl() throws Exception {
-            mockMvc.perform(get("/frontend-config")
+            mockMvc
+                    .perform(get("/frontend-config")
                             .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.eakteBaseUrl").value("https://eakte.example.local"));
@@ -68,7 +70,8 @@ class FrontendConfigIntegrationTest {
 
         @Test
         void testReturnsZammadBaseUrl() throws Exception {
-            mockMvc.perform(get("/frontend-config")
+            mockMvc
+                    .perform(get("/frontend-config")
                             .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.zammadBaseUrl").value("https://zammad.muenchen.de"));
@@ -76,7 +79,8 @@ class FrontendConfigIntegrationTest {
 
         @Test
         void testReturnsEakteBaseUrl() throws Exception {
-            mockMvc.perform(get("/frontend-config")
+            mockMvc
+                    .perform(get("/frontend-config")
                             .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.eakteBaseUrl").value("https://akte.muenchen.de"));

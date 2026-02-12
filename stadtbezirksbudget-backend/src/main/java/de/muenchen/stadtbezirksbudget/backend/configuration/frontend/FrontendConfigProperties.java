@@ -13,9 +13,7 @@ import org.springframework.validation.annotation.Validated;
 @Data
 public class FrontendConfigProperties {
 
-    @NotBlank
-    private String zammadBaseUrl;
+    @NotBlank private String zammadBaseUrl;
 
-    @NotBlank
-    private String eakteBaseUrl;
+    @NotBlank private String eakteBaseUrl;
 }
