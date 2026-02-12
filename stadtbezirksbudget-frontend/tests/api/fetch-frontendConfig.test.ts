@@ -1,4 +1,4 @@
-import type { FrontendConfig } from "@/types/FrontendConfig.ts";
+import type FrontendConfig from "@/types/FrontendConfig";
 
 import { afterEach, describe, expect, test, vi } from "vitest";
 
