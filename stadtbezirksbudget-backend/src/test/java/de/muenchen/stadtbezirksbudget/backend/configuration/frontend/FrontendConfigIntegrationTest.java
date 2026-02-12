@@ -21,14 +21,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = {
-                "frontend.config.zammad-base-url=https://zammad.example.local",
-                "frontend.config.eakte-base-url=https://eakte.example.local"
-        }
-)
-@AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class FrontendConfigIntegrationTest {
     @Container
@@ -37,11 +29,19 @@ class FrontendConfigIntegrationTest {
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
 
-    @Autowired
-    private MockMvc mockMvc;
-
     @Nested
+    @AutoConfigureMockMvc
+    @SpringBootTest(
+            webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+            properties = {
+                    "frontend.config.zammad-base-url=https://zammad.example.local",
+                    "frontend.config.eakte-base-url=https://eakte.example.local"
+            }
+    )
     class GetFrontendConfig {
+        @Autowired
+        private MockMvc mockMvc;
+
         @Test
         void testReturnsZammadBaseUrl() throws Exception {
             mockMvc.perform(get("/frontend-config")
@@ -56,6 +56,30 @@ class FrontendConfigIntegrationTest {
                             .accept(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.eakteBaseUrl").value("https://eakte.example.local"));
+        }
+    }
+
+    @Nested
+    @AutoConfigureMockMvc
+    @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+    class GetFrontendConfigDefault {
+        @Autowired
+        private MockMvc mockMvc;
+
+        @Test
+        void testReturnsZammadBaseUrl() throws Exception {
+            mockMvc.perform(get("/frontend-config")
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.zammadBaseUrl").value("https://zammad.muenchen.de"));
+        }
+
+        @Test
+        void testReturnsEakteBaseUrl() throws Exception {
+            mockMvc.perform(get("/frontend-config")
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.eakteBaseUrl").value("https://akte.muenchen.de"));
         }
     }
 }
