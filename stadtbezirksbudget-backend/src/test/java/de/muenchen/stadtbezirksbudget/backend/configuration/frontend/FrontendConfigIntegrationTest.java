@@ -22,6 +22,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class FrontendConfigIntegrationTest {
     @Container
     @ServiceConnection
