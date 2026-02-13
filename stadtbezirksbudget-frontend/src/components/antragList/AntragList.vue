@@ -48,6 +48,7 @@
         :antrag-id="item.id"
         :initial-status="item.status"
         data-test="item-status"
+        @status-updated="fetchItems"
         @click.stop
         @mousedown.stop
       />
@@ -118,6 +119,7 @@ const {
   itemsPerPage,
   loading,
   sortBy,
+  fetchItems,
   updateOptions,
   goToDetails,
 } = useAntragList();
