@@ -6,12 +6,12 @@ import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.antrag.AntragService;
 import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -25,30 +25,42 @@ import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
-@EmbeddedKafka(partitions = 1, topics = "${spring.kafka.template.default-topic}")
-class KafkaConsumerServiceTest {
+@EmbeddedKafka(partitions = 1, topics = "${kafka.topic}")
+class KafkaBinderIntegrationTest {
+
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
             DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
 
-    @Value("${spring.kafka.template.default-topic}")
-    private String topic;
     @Autowired
     private KafkaTemplate<String, KafkaDTO> kafkaTemplate;
+
     @MockitoSpyBean
-    private KafkaConsumerService kafkaConsumerService;
+    private AntragService antragService;
+
+    @Value("${kafka.topic}")
+    private String topic;
 
     @Nested
-    class Listen {
+    class AntragConsumer {
         @Test
-        void testListen() {
-            final KafkaDTO kafkaDTO = new KafkaDTO(UUID.randomUUID(), "test message", 123);
-            kafkaTemplate.send(topic, kafkaDTO.id().toString(), kafkaDTO);
-            verify(kafkaConsumerService, timeout(5000)).listen(kafkaDTO.id().toString(), kafkaDTO);
+        void testValidMessage() throws Exception {
+            final KafkaDTO validMessage = new KafkaDTO("Max Mustermann", "Münchner Bank", 1);
+            kafkaTemplate.send(topic, UUID.randomUUID().toString(), validMessage).get();
+            verify(antragService, timeout(5000)).createFromKafka(validMessage);
+
+        }
+
+        @Test
+        void testInvalidMessageThrowsValidationException() {
+            final KafkaDTO invalidMessage = new KafkaDTO("", "", 0);
+
+            kafkaTemplate.send(topic, UUID.randomUUID().toString(), invalidMessage);
+            verify(antragService, timeout(5000).times(0)).createFromKafka(invalidMessage);
         }
     }
+
 }

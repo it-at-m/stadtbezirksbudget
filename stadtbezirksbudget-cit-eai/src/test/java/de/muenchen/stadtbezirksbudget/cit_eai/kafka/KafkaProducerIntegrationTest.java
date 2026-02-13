@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ class KafkaProducerIntegrationTest {
     class PublishMessage {
         @Test
         void testValidPublishMessageReturnOK() throws Exception {
-            final KafkaDTO message = new KafkaDTO(UUID.randomUUID(), "test", 123);
+            final KafkaDTO message = new KafkaDTO("test", "test", 123);
             mockMvc
                     .perform(post("/kafka/publish")
                             .contentType(MediaType.APPLICATION_JSON)
