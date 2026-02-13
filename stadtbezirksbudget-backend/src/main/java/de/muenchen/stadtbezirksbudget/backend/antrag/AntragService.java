@@ -88,7 +88,7 @@ public class AntragService {
      * @param antrag the Antrag entity to save
      * @param aktualisierungArt the type of update being performed
      */
-    public void saveAntrag(final Antrag antrag, final AktualisierungArt aktualisierungArt) {
+    void saveAntrag(final Antrag antrag, final AktualisierungArt aktualisierungArt) {
         antrag.setAktualisierungArt(aktualisierungArt);
         antrag.setAktualisierungDatum(LocalDateTime.now());
         log.info("Save antrag with id {}", antrag.getId());
