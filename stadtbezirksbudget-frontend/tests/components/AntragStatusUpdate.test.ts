@@ -17,7 +17,9 @@ const createWrapper = () =>
   });
 
 describe("AntragStatusUpdate", () => {
-  let mockUseAntragStatusUpdate: ReturnType<typeof useAntragStatusUpdate>;
+  let mockUseAntragStatusUpdate: ReturnType<typeof useAntragStatusUpdate> & {
+    onStatusUpdated: (newStatus: Status) => void;
+  };
 
   beforeEach(() => {
     mockUseAntragStatusUpdate = {
