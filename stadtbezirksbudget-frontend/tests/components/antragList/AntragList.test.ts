@@ -38,6 +38,7 @@ describe("AntragList", () => {
       page: ref(1),
       itemsPerPage: ref(10),
       loading: ref(false),
+      fetchItems: vi.fn(),
       updateOptions: vi.fn(),
       goToDetails: vi.fn(),
     };
@@ -233,5 +234,17 @@ describe("AntragList", () => {
       expect.any(MouseEvent),
       { item: mockUseAntragList.items.value[0] }
     );
+  });
+
+  test("calls fetchItems on status updated emit", async () => {
+    const statusComponent = wrapper.findComponent({
+      name: "AntragStatusUpdate",
+    });
+    expect(statusComponent.exists()).toBe(true);
+
+    statusComponent.vm.$emit("status-updated");
+    await wrapper.vm.$nextTick();
+
+    expect(mockUseAntragList.fetchItems).toHaveBeenCalled();
   });
 });

@@ -15,12 +15,14 @@ import { StatusText } from "@/types/Status.ts";
  *
  * @param antragId - The ID of the Antrag whose status is being managed.
  * @param initialStatus - The initial status value of the Antrag.
+ * @param onUpdate - A callback function that is called after the status is successfully updated.
  * @returns {Object} An object exposing the current status, available
  * status options, and a method to update the status.
  */
 export function useAntragStatusUpdate(
   antragId: Ref<string>,
-  initialStatus: Ref<Status>
+  initialStatus: Ref<Status>,
+  onUpdate: (newStatus: Status) => void
 ) {
   const snackbarStore = useSnackbarStore();
 
@@ -42,6 +44,7 @@ export function useAntragStatusUpdate(
           message: "Antragsstatus aktualisiert",
           level: STATUS_INDICATORS.SUCCESS,
         });
+        onUpdate(newStatus);
       })
       .catch(() => {
         status.value = oldStatus.value;
