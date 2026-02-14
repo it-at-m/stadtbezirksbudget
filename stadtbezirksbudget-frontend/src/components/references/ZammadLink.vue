@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="zammadNrToLink(zammadNr)"
+    :href="zammadLink"
     class="text-black text-decoration-none d-flex align-center ga-1"
     rel="noopener noreferrer"
     target="_blank"
@@ -16,9 +16,10 @@
 <script lang="ts" setup>
 import { mdiOpenInNew } from "@mdi/js";
 
-import { zammadNrToLink } from "@/util/formatter.ts";
+import { useReferenceLink } from "@/composables/useReferenceLink.ts";
 
 const { zammadNr } = defineProps<{ zammadNr: string }>();
+const zammadLink = useReferenceLink().getZammadLink(() => zammadNr);
 </script>
 
 <style scoped>

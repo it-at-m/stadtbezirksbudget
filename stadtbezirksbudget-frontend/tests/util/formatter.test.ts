@@ -1,12 +1,10 @@
 import { describe, expect, test } from "vitest";
 
 import {
-  eakteToLink,
   toDateString,
   toLocalISOString,
   toNumberString,
   toTimeString,
-  zammadNrToLink,
 } from "@/util/formatter.ts";
 
 describe("formatter", () => {
@@ -64,24 +62,6 @@ describe("formatter", () => {
     test("formats number with currency", () => {
       const amount = 1234.567;
       expect(toNumberString(amount, 2, "EUR")).toBe("1.234,57 €");
-    });
-  });
-
-  describe("zammadNrToLink", () => {
-    test("formats zammad number to zammad link", () => {
-      const zammadNr = "00000018";
-      expect(zammadNrToLink(zammadNr)).toBe(
-        "https://zammad.muenchen.de/#ticket/zoom/00000018"
-      );
-    });
-  });
-
-  describe("eakteToLink", () => {
-    test("formats eakte coo address to eakte link", () => {
-      const eakteCooAdresse = "COO.1234.5678.9.0123456";
-      expect(eakteToLink(eakteCooAdresse)).toBe(
-        "https://akte.muenchen.de/fsc/fscasp/content/bin/fscvext.dll?bx=COO.1234.5678.9.0123456"
-      );
     });
   });
 });

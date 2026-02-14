@@ -1,6 +1,6 @@
 <template>
   <v-btn-primary
-    :href="eakteToLink(eakteCooAdresse)"
+    :href="eakteLink"
     rel="noopener noreferrer"
     target="_blank"
   >
@@ -9,7 +9,8 @@
 </template>
 
 <script lang="ts" setup>
-import { eakteToLink } from "@/util/formatter.ts";
+import { useReferenceLink } from "@/composables/useReferenceLink.ts";
 
 const { eakteCooAdresse } = defineProps<{ eakteCooAdresse: string }>();
+const eakteLink = useReferenceLink().getEakteLink(() => eakteCooAdresse);
 </script>
