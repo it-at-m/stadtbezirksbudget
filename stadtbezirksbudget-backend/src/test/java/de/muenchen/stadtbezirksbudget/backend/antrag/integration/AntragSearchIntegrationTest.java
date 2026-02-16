@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
@@ -53,11 +54,14 @@ class AntragSearchIntegrationTest {
     @Autowired
     private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     @Autowired
+    private AndererZuwendungsantragRepository andereZuwendungsantragRepository;
+    @Autowired
     private MockMvc mockMvc;
 
     @BeforeEach
     public void setUp() {
-        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository);
+        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository,
+                andereZuwendungsantragRepository);
     }
 
     @Test
