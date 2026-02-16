@@ -35,7 +35,7 @@ public enum BA {
         this.name = name;
     }
 
-    public static String getNameByBerzirksausschussNr(final int bezirksausschussNr) {
+    public static String getNameByBezirksausschussNr(final int bezirksausschussNr) {
         for (final BA ba : values()) {
             if (ba.nummer == bezirksausschussNr) {
                 return ba.name;
