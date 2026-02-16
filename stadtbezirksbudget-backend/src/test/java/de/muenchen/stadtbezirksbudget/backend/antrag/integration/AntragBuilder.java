@@ -307,15 +307,12 @@ public class AntragBuilder {
                     .projekt(initializeProjekt(projektTitel))
                     .antragsteller(antragsteller)
                     .bankverbindung(initializeBankverbindung())
-                    .andereZuwendungsantraege(andereZuwendungsantraege)
                     .zahlung(initializeZahlung())
                     .verwendungsnachweis(initializeVerwendungsnachweis())
                     .bezirksinformationen(initializeBezirksinformationen())
                     .build();
-            if (!andereZuwendungsantraege.isEmpty()) {
-                for (final AndererZuwendungsantrag andererZuwendungsantrag : andereZuwendungsantraege) {
-                    andererZuwendungsantrag.setAntrag(antrag);
-                }
+            for (final AndererZuwendungsantrag andererZuwendungsantrag : andereZuwendungsantraege) {
+                andererZuwendungsantrag.setAntrag(antrag);
             }
             antrag.setAndereZuwendungsantraege(andereZuwendungsantraege);
             final Antrag savedAntrag = antragRepository.save(antrag);
