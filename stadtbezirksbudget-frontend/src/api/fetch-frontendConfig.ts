@@ -17,5 +17,7 @@ export function getFrontendConfig(): Promise<FrontendConfig> {
       defaultResponseHandler(response);
       return response.json();
     })
-    .catch((error) => defaultCatchHandler(error));
+    .catch((err) => {
+      return defaultCatchHandler(err);
+    });
 }
