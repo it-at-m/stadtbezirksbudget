@@ -19,16 +19,16 @@ export const useConfigStore = defineStore("config", () => {
   }
 
   /**
-   * Computed property to get the base URL for Zammad from the configuration. It returns undefined if the configuration is not set or if the base URL is not defined.
-   * @returns The Zammad base URL or undefined.
+   * Computed property to get the base URL for Zammad from the configuration.
+   * @returns The Zammad base URL or undefined if not set.
    */
   const getZammadBaseUrl = computed(
     (): string | undefined => config.value?.zammadBaseUrl
   );
 
   /**
-   * Computed property to get the base URL for Eakte from the configuration. It returns undefined if the configuration is not set or if the base URL is not defined.
-   * @returns The Eakte base URL or undefined.
+   * Computed property to get the base URL for Eakte from the configuration.
+   * @returns The Eakte base URL or undefined if not set.
    */
   const getEakteBaseUrl = computed(
     (): string | undefined => config.value?.eakteBaseUrl

@@ -7,7 +7,6 @@ import { useConfigStore } from "@/stores/useConfigStore.ts";
 
 /**
  * Composable to generate reference links for Zammad tickets and Eakte documents based on the frontend configuration.
- * It provides functions to create computed properties for the respective links, which will update automatically when the configuration changes.
  */
 export function useReferenceLink() {
   const configStore = useConfigStore();
