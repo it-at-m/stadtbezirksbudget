@@ -1,6 +1,6 @@
 <template>
   <a
-    :href="eakteToLink(eakteCooAdresse)"
+    :href="eakteLink"
     class="text-black text-decoration-none"
     rel="noopener noreferrer"
     target="_blank"
@@ -10,12 +10,13 @@
 </template>
 
 <script lang="ts" setup>
-import { eakteToLink } from "@/util/formatter.ts";
+import { useReferenceLink } from "@/composables/useReferenceLink.ts";
 
 const { aktenzeichen, eakteCooAdresse } = defineProps<{
   aktenzeichen: string;
   eakteCooAdresse: string;
 }>();
+const eakteLink = useReferenceLink().getEakteLink(() => eakteCooAdresse);
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <v-btn-primary
-    :href="zammadNrToLink(zammadNr)"
+    :href="zammadLink"
     rel="noopener noreferrer"
     target="_blank"
   >
@@ -9,7 +9,8 @@
 </template>
 
 <script lang="ts" setup>
-import { zammadNrToLink } from "@/util/formatter.ts";
+import { useReferenceLink } from "@/composables/useReferenceLink.ts";
 
 const { zammadNr } = defineProps<{ zammadNr: string }>();
+const zammadLink = useReferenceLink().getZammadLink(() => zammadNr);
 </script>
