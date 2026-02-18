@@ -29,9 +29,9 @@ Application data, except for attachments, is stored in a PostgreSQL database.
 The Form Server is the platform where citizens enter their application data. It serves as the initial point of contact for users, providing a user-friendly
 interface for submitting requests.
 
-### SBB-CIT-EAI
+### SBB-FOR-EAI
 
-The SBB-CIT-EAI component acts as an intermediary, managing the flow of data between the Form Server and the Stadtbezirksbudget application. It ensures that
+The SBB-FOR-EAI component acts as an intermediary, managing the flow of data between the Form Server and the Stadtbezirksbudget application. It ensures that
 information is accurately transmitted via the event bus and an S3 storage.
 
 ### DBS (Zammad)
