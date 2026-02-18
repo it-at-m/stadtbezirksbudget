@@ -14,10 +14,12 @@ vi.mock("@/stores/useSnackbarStore.ts");
 
 describe("useAntragStatusUpdate", () => {
   let snackbarStoreMock: { showMessage: ReturnType<typeof vi.fn> };
+  const onUpdate = vi.fn();
 
   beforeEach(() => {
     snackbarStoreMock = { showMessage: vi.fn() };
     (useSnackbarStore as vi.Mock).mockReturnValue(snackbarStoreMock);
+    onUpdate.mockReset();
   });
 
   describe("updateStatus", () => {
@@ -26,7 +28,8 @@ describe("useAntragStatusUpdate", () => {
 
       const { status, updateStatus } = useAntragStatusUpdate(
         ref("1"),
-        ref("EINGEGANGEN")
+        ref("EINGEGANGEN"),
+        onUpdate
       );
 
       expect(status.value).toBe("EINGEGANGEN");
@@ -43,6 +46,7 @@ describe("useAntragStatusUpdate", () => {
           message: `Antragsstatus aktualisiert`,
           level: STATUS_INDICATORS.SUCCESS,
         });
+        expect(onUpdate).toHaveBeenCalledWith("ABGELEHNT_KEINE_RUECKMELDUNG");
       });
     });
 
@@ -51,7 +55,8 @@ describe("useAntragStatusUpdate", () => {
 
       const { status, updateStatus } = useAntragStatusUpdate(
         ref("1"),
-        ref("EINGEGANGEN")
+        ref("EINGEGANGEN"),
+        onUpdate
       );
 
       updateStatus("ABGELEHNT_NICHT_ZUSTAENDIG");
@@ -66,6 +71,7 @@ describe("useAntragStatusUpdate", () => {
           message: "Fehler beim Aktualisieren des Antragsstatus",
           level: STATUS_INDICATORS.WARNING,
         });
+        expect(onUpdate).not.toHaveBeenCalled();
       });
     });
 
@@ -74,7 +80,8 @@ describe("useAntragStatusUpdate", () => {
 
       const { status, updateStatus } = useAntragStatusUpdate(
         ref("1"),
-        ref("EINGEGANGEN")
+        ref("EINGEGANGEN"),
+        onUpdate
       );
 
       updateStatus("ABGELEHNT_VON_BA");
@@ -86,13 +93,15 @@ describe("useAntragStatusUpdate", () => {
           message: "Fehler beim Aktualisieren des Antragsstatus",
           level: STATUS_INDICATORS.WARNING,
         });
+        expect(onUpdate).not.toHaveBeenCalled();
       });
     });
 
     test("doesn't update status when new status is not set", () => {
       const { status, updateStatus } = useAntragStatusUpdate(
         ref("1"),
-        ref("EINGEGANGEN")
+        ref("EINGEGANGEN"),
+        onUpdate
       );
 
       (updateAntragStatus as vi.Mock).mockClear();
@@ -103,6 +112,7 @@ describe("useAntragStatusUpdate", () => {
       expect(updateAntragStatus).not.toHaveBeenCalled();
       expect(status.value).toBe("EINGEGANGEN");
       expect(snackbarStoreMock.showMessage).not.toHaveBeenCalled();
+      expect(onUpdate).not.toHaveBeenCalled();
     });
 
     test("handles concurrent status updates", async () => {
@@ -123,7 +133,8 @@ describe("useAntragStatusUpdate", () => {
 
       const { status, updateStatus } = useAntragStatusUpdate(
         ref("1"),
-        ref("EINGEGANGEN")
+        ref("EINGEGANGEN"),
+        onUpdate
       );
 
       updateStatus("VOLLSTAENDIG");
@@ -149,17 +160,24 @@ describe("useAntragStatusUpdate", () => {
         "1",
         "ABGELEHNT_VON_BA"
       );
+      expect(onUpdate).toHaveBeenNthCalledWith(1, "ABGELEHNT_VON_BA");
+      expect(onUpdate).toHaveBeenNthCalledWith(2, "VOLLSTAENDIG");
       expect(snackbarStoreMock.showMessage).toHaveBeenCalled();
     });
 
     test("updates status on initial status change", async () => {
       const initialStatus = ref("EINGEGANGEN");
-      const { status } = useAntragStatusUpdate(ref("1"), initialStatus);
+      const { status } = useAntragStatusUpdate(
+        ref("1"),
+        initialStatus,
+        onUpdate
+      );
 
       expect(status.value).toBe("EINGEGANGEN");
       initialStatus.value = "VOLLSTAENDIG";
       await vi.waitFor(() => {
         expect(status.value).toBe("VOLLSTAENDIG");
+        expect(onUpdate).not.toHaveBeenCalled();
       });
     });
   });
@@ -168,7 +186,8 @@ describe("useAntragStatusUpdate", () => {
     test("toggles status and search when unfocused", () => {
       const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
         ref("1"),
-        ref("EINGEGANGEN")
+        ref("EINGEGANGEN"),
+        onUpdate
       );
 
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
@@ -177,12 +196,14 @@ describe("useAntragStatusUpdate", () => {
 
       expect(status.value).toBe("EINGEGANGEN");
       expect(search.value).toBe("");
+      expect(onUpdate).not.toHaveBeenCalled();
     });
 
     test("toggles status and search when focused", () => {
       const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
         ref("1"),
-        ref("EINGEGANGEN")
+        ref("EINGEGANGEN"),
+        onUpdate
       );
 
       status.value = "ABGELEHNT_NICHT_ZUSTAENDIG";
@@ -191,6 +212,7 @@ describe("useAntragStatusUpdate", () => {
 
       expect(status.value).toBeUndefined();
       expect(search.value).toBe(StatusText["EINGEGANGEN"].shortText);
+      expect(onUpdate).not.toHaveBeenCalled();
     });
   });
 });

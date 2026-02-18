@@ -21,8 +21,12 @@ import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 
 const props = defineProps<{ antragId: string; initialStatus: Status }>();
 const { antragId, initialStatus } = toRefs(props);
+const emit = defineEmits<(e: "status-updated", newStatus: Status) => void>();
+const onStatusUpdated = (newStatus: Status) =>
+  emit("status-updated", newStatus);
+
 const { updateStatus, toggleStatusAndSearch, status, search } =
-  useAntragStatusUpdate(antragId, initialStatus);
+  useAntragStatusUpdate(antragId, initialStatus, onStatusUpdated);
 </script>
 
 <style scoped>

@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand;
@@ -25,6 +27,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +35,11 @@ import java.util.UUID;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -47,6 +53,8 @@ class AntragServiceTest {
 
     @Mock
     private AntragRepository antragRepository;
+
+    @Spy
     @InjectMocks
     private AntragService antragService;
 
@@ -250,9 +258,12 @@ class AntragServiceTest {
 
             verify(antragRepository).findById(id);
             verify(antragRepository).save(antrag);
+            verify(antragService).saveAntrag(eq(antrag), eq(AktualisierungArt.FACHANWENDUNG));
             assertThat(antrag.getBearbeitungsstand().getStatus()).isEqualTo(Status.AUSZAHLUNG);
             assertThat(antrag).usingRecursiveComparison()
                     .ignoringFields("bearbeitungsstand.status")
+                    .ignoringFields("aktualisierungDatum")
+                    .ignoringFields("aktualisierungArt")
                     .isEqualTo(originalCopy);
         }
 
@@ -264,6 +275,28 @@ class AntragServiceTest {
             assertThrows(NotFoundException.class, () -> antragService.updateAntragStatus(randomId, new AntragStatusUpdateDTO(Status.AUSZAHLUNG)));
             verify(antragRepository).findById(randomId);
             verify(antragRepository, never()).save(any());
+        }
+    }
+
+    @Nested
+    class SaveAntrag {
+        @ParameterizedTest
+        @EnumSource(AktualisierungArt.class)
+        void testSaveAntrag(final AktualisierungArt aktualisierungArt) throws Exception {
+            final Antrag antrag = createAntrag(new Bearbeitungsstand(), new Antragsteller(), new Finanzierung(), "T", "B", Status.VOLLSTAENDIG);
+            final Antrag originalCopy = objectMapper.readValue(objectMapper.writeValueAsString(antrag), Antrag.class);
+
+            final LocalDateTime before = LocalDateTime.now();
+            antragService.saveAntrag(antrag, aktualisierungArt);
+            final LocalDateTime after = LocalDateTime.now();
+
+            assertThat(antrag.getAktualisierungArt()).isEqualTo(aktualisierungArt);
+            assertThat(antrag.getAktualisierungDatum()).isAfterOrEqualTo(before).isBeforeOrEqualTo(after);
+
+            assertThat(antrag).usingRecursiveComparison()
+                    .ignoringFields("aktualisierungDatum")
+                    .ignoringFields("aktualisierungArt")
+                    .isEqualTo(originalCopy);
         }
     }
 }

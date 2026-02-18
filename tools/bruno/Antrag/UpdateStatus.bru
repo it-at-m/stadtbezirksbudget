@@ -1,0 +1,26 @@
+meta {
+  name: UpdateStatus
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{backend}}/antrag/:id/status
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 10000000-0000-0000-0000-000000000001
+}
+
+body:json {
+  {
+    "status": "EINGEGANGEN"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
