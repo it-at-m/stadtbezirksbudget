@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { nextTick, ref } from "vue";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import { ref } from "vue";
 
 import { updateAntragReference } from "@/api/update-antragReference.ts";
 import { useEakteCooAdresseEdit } from "@/composables/useEakteCooAdresseEdit.ts";
