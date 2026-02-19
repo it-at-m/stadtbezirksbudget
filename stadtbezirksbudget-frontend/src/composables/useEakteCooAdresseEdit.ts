@@ -68,8 +68,7 @@ export function useEakteCooAdresseEdit(
    * @returns Returns true if valid, or an error message if invalid.
    */
   function validateCoo(value: string) {
-    if (!value) return true;
-    if (!cooRegex.test(value))
+    if (value && !cooRegex.test(value))
       return 'Muss dem Format "COO.XXXX.XXXX.X.XXXXXXX" entsprechen';
     return true;
   }
