@@ -147,6 +147,11 @@ public class AntragBuilder {
         return this;
     }
 
+    public AntragBuilder eakteCooAdresse(final String eakteCooAdresse) {
+        this.eakteCooAdresse = eakteCooAdresse;
+        return this;
+    }
+
     private Adresse initializeAdresse() {
         return Adresse.builder()
                 .strasseHausnummer("Musterstraße 1")

@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragReferenceUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
@@ -183,6 +184,58 @@ class AntragUpdateIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(nullStatusDto))
                     .andExpect(status().isBadRequest());
+        }
+    }
+
+    @Nested
+    class UpdateAntragReference {
+
+        @Test
+        void testUpdateReferenceNotFound() throws Exception {
+            final UUID randomId = UUID.randomUUID();
+            final AntragReferenceUpdateDTO dto = new AntragReferenceUpdateDTO("COO.6804.7915.3.3210877");
+
+            mockMvc
+                    .perform(patch("/antrag/" + randomId + "/reference")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(dto)))
+                    .andExpect(status().isNotFound());
+        }
+
+        @Test
+        void testUpdateReferenceCooAdresse() throws Exception {
+            antragList.add(antragBuilder
+                    .eakteCooAdresse("COO.6804.7915.3.3210800")
+                    .build());
+            final UUID antragId = antragList.getFirst().getId();
+            final AntragReferenceUpdateDTO dto = new AntragReferenceUpdateDTO("COO.6804.7915.3.3210877");
+
+            mockMvc
+                    .perform(patch("/antrag/" + antragId + "/reference")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(dto)))
+                    .andExpect(status().isNoContent());
+
+            final Antrag updated = antragRepository.findById(antragId).orElseThrow();
+            assertThat(updated.getEakteCooAdresse()).isEqualTo("COO.6804.7915.3.3210877");
+        }
+
+        @Test
+        void testUpdateReferenceCooAdresseUnchanged() throws Exception {
+            antragList.add(antragBuilder
+                    .eakteCooAdresse("COO.6804.7915.3.3210800")
+                    .build());
+            final UUID antragId = antragList.getFirst().getId();
+            final AntragReferenceUpdateDTO dto = new AntragReferenceUpdateDTO("COO.6804.7915.3.3210800");
+
+            mockMvc
+                    .perform(patch("/antrag/" + antragId + "/reference")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(dto)))
+                    .andExpect(status().isNotModified());
+
+            final Antrag updated = antragRepository.findById(antragId).orElseThrow();
+            assertThat(updated.getEakteCooAdresse()).isEqualTo("COO.6804.7915.3.3210800");
         }
     }
 }
