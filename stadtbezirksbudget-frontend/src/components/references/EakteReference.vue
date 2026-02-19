@@ -26,7 +26,6 @@
             density="compact"
             v-bind="props"
             variant="flat"
-            @click.stop
           />
         </v-col>
       </v-row>
