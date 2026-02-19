@@ -1,0 +1,25 @@
+meta {
+  name: UpdateReference
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{backend}}/antrag/:id/reference
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 10000000-0000-0000-0000-000000000001
+}
+
+body:json {
+  {
+    "eakteCooAdresse": "COO.6804.7915.3.3210877"
+  }
+}
+
+settings {
+  encodeUrl: true
+}

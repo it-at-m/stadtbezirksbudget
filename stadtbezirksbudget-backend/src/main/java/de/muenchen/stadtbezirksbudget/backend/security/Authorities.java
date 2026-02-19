@@ -8,10 +8,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * {@link org.springframework.stereotype.Service} classes in the method security annotations
  * (e.g. {@link PreAuthorize}).
  */
+@SuppressWarnings({ "PMD.DataClass", "PMD.AvoidDuplicateLiterals" })
 public final class Authorities {
     public static final String ANTRAG_GET_SUMMARY = "hasAnyRole('sbb-sachbearbeiter')";
     public static final String ANTRAG_GET_DETAILS = "hasAnyRole('sbb-sachbearbeiter')";
     public static final String ANTRAG_UPDATE_STATUS = "hasAnyRole('sbb-sachbearbeiter')";
+    public static final String ANTRAG_UPDATE_REFERENCES = "hasAnyRole('sbb-sachbearbeiter')";
 
     private Authorities() {
         throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
