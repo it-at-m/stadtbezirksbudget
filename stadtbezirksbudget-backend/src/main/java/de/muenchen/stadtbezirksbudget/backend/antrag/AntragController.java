@@ -111,7 +111,7 @@ public class AntragController {
      */
     @PatchMapping("{id}/reference")
     @PreAuthorize(Authorities.ANTRAG_UPDATE_REFERENCES)
-    public ResponseEntity<Void> updateAntragReferences(@PathVariable final UUID id, @RequestBody @Valid final AntragReferenceUpdateDTO referenceUpdateDTO) {
+    public ResponseEntity<Void> updateAntragReference(@PathVariable final UUID id, @RequestBody @Valid final AntragReferenceUpdateDTO referenceUpdateDTO) {
         return antragService.updateAntragReference(id, referenceUpdateDTO)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
