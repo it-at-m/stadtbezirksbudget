@@ -1,0 +1,20 @@
+package de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details;
+
+import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+/**
+ * Data Transfer Object (DTO) representing the information of Verwendungsnachweis.
+ */
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
+public record VerwendungDetailsDTO(
+        BigDecimal betrag,
+        boolean istGegendert, // Dopplung mit AllgemeinDTO
+        BigDecimal auszahlungBetrag,
+        LocalDate auszahlungsDatum,
+        String status,
+        BigDecimal pruefungBetrag,
+        LocalDate buchungsdatum,
+        LocalDate sapEingangsdatum) {
+}
