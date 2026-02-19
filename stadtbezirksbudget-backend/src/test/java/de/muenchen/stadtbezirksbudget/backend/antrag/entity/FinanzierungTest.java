@@ -13,7 +13,6 @@ import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
@@ -98,7 +97,7 @@ class FinanzierungTest {
                         .direktoriumNotiz("Notiz")
                         .finanzierung(finanzierung)
                         .build())
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Nested
