@@ -8,6 +8,15 @@ import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 
 const cooRegex = /^COO\.\d{4}\.\d{4}\.\d\.\d{7}$/;
 
+/**
+ * A custom composition function for editing the COO address of an Antrag.
+ * It provides the necessary reactive state and methods to handle the editing process.
+ *
+ * @param antragId - The ID of the Antrag to update.
+ * @param initialEakteCooAdresse - The initial COO address value.
+ * @param onSave - A callback function to execute after saving the updated COO address.
+ * @returns An object containing reactive properties and methods for managing the COO address edit.
+ */
 export function useEakteCooAdresseEdit(
   antragId: MaybeRefOrGetter<string>,
   initialEakteCooAdresse: MaybeRefOrGetter<string>,
@@ -22,6 +31,9 @@ export function useEakteCooAdresseEdit(
   );
   const isSaveable = computed(() => isValid.value && isDirty.value);
 
+  /**
+   * Saves the updated COO address and shows a success or error message based on the outcome.
+   */
   function save() {
     if (!isSaveable.value) return;
     updateAntragReference(toValue(antragId), {
@@ -43,10 +55,18 @@ export function useEakteCooAdresseEdit(
       });
   }
 
+  /**
+   * Cancels the editing of the COO address and closes the edit menu.
+   */
   function cancel() {
     menu.value = false;
   }
 
+  /**
+   * Validates the COO address format.
+   * @param value - The COO address to validate.
+   * @returns Returns true if valid, or an error message if invalid.
+   */
   function validateCoo(value: string) {
     if (!value) return true;
     if (!cooRegex.test(value))
@@ -55,9 +75,13 @@ export function useEakteCooAdresseEdit(
   }
 
   return {
+    // Controls the visibility of the edit menu
     menu,
+    // COO address being edited
     eakteCooAdresse,
+    // Indicates if the COO address is valid
     isValid,
+    // Indicates if changes are saveable
     isSaveable,
     save,
     cancel,
