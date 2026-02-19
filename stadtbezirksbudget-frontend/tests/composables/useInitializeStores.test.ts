@@ -3,10 +3,12 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { nextTick } from "vue";
 
 import { getAntragListFilterOptions } from "@/api/fetch-antragListFilterOptions";
+import { getFrontendConfig } from "@/api/fetch-frontendConfig.ts";
 import { getUser } from "@/api/user-client.ts";
 import { useInitializeStores } from "@/composables/useInitializeStores.ts";
 import { STATUS_INDICATORS } from "@/constants";
 import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
+import { useConfigStore } from "@/stores/useConfigStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import { useUserStore } from "@/stores/useUserStore.ts";
 import { UserLocalDevelopment } from "@/types/User.ts";
@@ -27,6 +29,14 @@ vi.mock("@/stores/useUserStore.ts", () => {
   const setUser = vi.fn();
   return { useUserStore: () => ({ setUser }) };
 });
+vi.mock("@/api/fetch-frontendConfig.ts", () => {
+  const getFrontendConfig = vi.fn();
+  return { getFrontendConfig };
+});
+vi.mock("@/stores/useConfigStore.ts", () => {
+  const setConfig = vi.fn();
+  return { useConfigStore: () => ({ setConfig }) };
+});
 vi.mock("@/stores/useSnackbarStore.ts", () => {
   const showMessage = vi.fn();
   return { useSnackbarStore: () => ({ showMessage }) };
@@ -45,6 +55,7 @@ describe("useInitializeStores", () => {
     vi.clearAllMocks();
     getAntragListFilterOptions.mockResolvedValue({});
     getUser.mockResolvedValue({});
+    getFrontendConfig.mockResolvedValue({});
   });
 
   describe("AntragListFilterOptionsStore initialization", () => {
@@ -119,6 +130,36 @@ describe("useInitializeStores", () => {
 
       expect(getUser).toHaveBeenCalled();
       expect(useUserStore().setUser).toHaveBeenCalledWith(null);
+    });
+  });
+
+  describe("FrontendConfigStore initialization", () => {
+    test("calls fetch and sets store on success", async () => {
+      const apiResult = { some: "data" };
+      getFrontendConfig.mockResolvedValue(apiResult);
+
+      mount(Comp);
+
+      await Promise.resolve();
+      await nextTick();
+
+      expect(getFrontendConfig).toHaveBeenCalled();
+      expect(useConfigStore().setConfig).toHaveBeenCalledWith(apiResult);
+    });
+
+    test("shows snackbar with error message if API throws error ", async () => {
+      const error = new Error("network error");
+      getFrontendConfig.mockRejectedValue(error);
+
+      mount(Comp);
+
+      await Promise.resolve();
+      await nextTick();
+
+      expect(useSnackbarStore().showMessage).toHaveBeenCalledWith({
+        message: "Fehler beim Laden der Frontend-Konfiguration",
+        level: STATUS_INDICATORS.WARNING,
+      });
     });
   });
 });

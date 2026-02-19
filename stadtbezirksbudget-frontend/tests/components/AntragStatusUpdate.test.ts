@@ -1,12 +1,12 @@
 import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, test, vi } from "vitest";
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
-import { statusOptions } from "../../src/types/Status";
+import { Status, statusOptions } from "@/types/Status";
 
 vi.mock("@/composables/useAntragStatusUpdate.ts");
 
@@ -17,7 +17,9 @@ const createWrapper = () =>
   });
 
 describe("AntragStatusUpdate", () => {
-  let mockUseAntragStatusUpdate;
+  let mockUseAntragStatusUpdate: ReturnType<typeof useAntragStatusUpdate> & {
+    onStatusUpdated: (newStatus: Status) => void;
+  };
 
   beforeEach(() => {
     mockUseAntragStatusUpdate = {
@@ -25,9 +27,19 @@ describe("AntragStatusUpdate", () => {
       search: ref(""),
       updateStatus: vi.fn(),
       toggleStatusAndSearch: vi.fn(),
+      onStatusUpdated: vi.fn(),
     };
 
-    vi.mocked(useAntragStatusUpdate).mockReturnValue(mockUseAntragStatusUpdate);
+    vi.mocked(useAntragStatusUpdate).mockImplementation(
+      (
+        _antragId: string,
+        _initialStatus: Status,
+        onStatusUpdated: (newStatus: Status) => void
+      ) => {
+        mockUseAntragStatusUpdate.onStatusUpdated = onStatusUpdated;
+        return mockUseAntragStatusUpdate;
+      }
+    );
   });
 
   test("renders antrag status select", () => {
@@ -81,5 +93,16 @@ describe("AntragStatusUpdate", () => {
     expect(
       mockUseAntragStatusUpdate.toggleStatusAndSearch
     ).toHaveBeenCalledWith(false);
+  });
+
+  test("emits status-updated on callback call", async () => {
+    const wrapper = createWrapper();
+
+    mockUseAntragStatusUpdate.onStatusUpdated("ABGELEHNT");
+    await nextTick();
+
+    const emitted = wrapper.emitted("status-updated");
+    expect(emitted).toBeTruthy();
+    expect(emitted?.[0]).toEqual(["ABGELEHNT"]);
   });
 });

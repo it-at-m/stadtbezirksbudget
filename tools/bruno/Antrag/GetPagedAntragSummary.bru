@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{backend}}/antrag?page=0&size=10&sortBy=status&sortDirection=ASC
+  url: {{backend}}/antrag?page=0&size=10&sortBy=aktualisierungDatum&sortDirection=DESC
   body: none
   auth: inherit
 }
@@ -13,10 +13,11 @@ get {
 params:query {
   page: 0
   size: 10
-  sortBy: status
-  sortDirection: ASC
+  sortBy: aktualisierungDatum
+  sortDirection: DESC
 }
 
 settings {
   encodeUrl: true
+  timeout: 0
 }

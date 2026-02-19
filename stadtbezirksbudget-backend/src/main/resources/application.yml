@@ -116,3 +116,7 @@ info:
   build:
     java.version: "@java.version@"
     spring-cloud.version: "@spring-cloud-dependencies.version@"
+
+frontend.config:
+  zammad-base-url: https://zammad.muenchen.de
+  eakte-base-url: https://akte.muenchen.de
