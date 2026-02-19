@@ -5,7 +5,10 @@
     location="bottom end"
   >
     <template #activator="{ props }">
-      <v-row no-gutters>
+      <v-row
+        align="center"
+        no-gutters
+      >
         <v-col
           :style="{
             overflow: 'hidden',
@@ -21,10 +24,9 @@
         <v-col cols="auto">
           <v-btn
             :icon="mdiDotsVertical"
-            elevation="0"
-            height="25"
+            density="compact"
             v-bind="props"
-            width="25"
+            variant="flat"
             @click.stop
           />
         </v-col>
