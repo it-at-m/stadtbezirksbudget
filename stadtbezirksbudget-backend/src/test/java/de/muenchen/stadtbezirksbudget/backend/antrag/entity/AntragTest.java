@@ -72,7 +72,7 @@ class AntragTest {
         }
         final List<AndererZuwendungsantrag> andereZuwendungsantraege = betraege.stream()
                 .map(betrag -> AndererZuwendungsantrag.builder().betrag(betrag).stelle("A").antragsdatum(LocalDate.now()).build())
-                .collect(Collectors.toList());
+                .toList();
         return antragBuilder.andererZuwendungsantrag(andereZuwendungsantraege).build();
     }
 
