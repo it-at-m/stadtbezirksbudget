@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragReferenceUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -98,5 +100,20 @@ public class AntragController {
     @PreAuthorize(Authorities.ANTRAG_UPDATE_STATUS)
     public void updateAntragStatus(@PathVariable final UUID id, @RequestBody @Valid final AntragStatusUpdateDTO statusUpdateDTO) {
         antragService.updateAntragStatus(id, statusUpdateDTO);
+    }
+
+    /**
+     * Updates the references of an Antrag.
+     *
+     * @param id the ID of the Antrag to update
+     * @param referenceUpdateDTO the DTO containing the new references
+     * @return ResponseEntity with appropriate status
+     */
+    @PatchMapping("{id}/reference")
+    @PreAuthorize(Authorities.ANTRAG_UPDATE_REFERENCES)
+    public ResponseEntity<Void> updateAntragReferences(@PathVariable final UUID id, @RequestBody @Valid final AntragReferenceUpdateDTO referenceUpdateDTO) {
+        return antragService.updateAntragReference(id, referenceUpdateDTO)
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
     }
 }

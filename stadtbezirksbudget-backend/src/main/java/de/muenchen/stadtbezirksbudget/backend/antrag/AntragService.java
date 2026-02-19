@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragReferenceUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
@@ -12,6 +13,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -83,6 +85,26 @@ public class AntragService {
     }
 
     /**
+     * Updates the references of an Antrag.
+     *
+     * @param id the ID of the Antrag to update
+     * @param referenceUpdateDTO the DTO containing the new references
+     * @return {@code true} if the Antrag was updated (i.e., at least one reference was changed),
+     *         {@code false} if no updates were made (i.e., all references were already up to date)
+     * @throws NotFoundException if no Antrag with the given ID exists
+     */
+    public boolean updateAntragReference(final UUID id, final AntragReferenceUpdateDTO referenceUpdateDTO) {
+        log.info("Update references of antrag with id {} to {}", id, referenceUpdateDTO);
+        final Antrag antrag = antragRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Antrag with id " + id + " not found"));
+        final boolean isUpdated = updateField(antrag::setEakteCooAdresse, referenceUpdateDTO.eakteCooAdresse(), antrag.getEakteCooAdresse());
+        if (isUpdated) {
+            saveAntrag(antrag, AktualisierungArt.FACHANWENDUNG);
+        }
+        return isUpdated;
+    }
+
+    /**
      * Saves an Antrag entity to the database, updating its last modification date and type.
      *
      * @param antrag the Antrag entity to save
@@ -93,5 +115,13 @@ public class AntragService {
         antrag.setAktualisierungDatum(LocalDateTime.now());
         log.info("Save antrag with id {}", antrag.getId());
         antragRepository.save(antrag);
+    }
+
+    private <T> boolean updateField(final Consumer<T> setter, final T newValue, final T currentValue) {
+        if (newValue != null && !newValue.equals(currentValue)) {
+            setter.accept(newValue);
+            return true;
+        }
+        return false;
     }
 }
