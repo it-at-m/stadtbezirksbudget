@@ -36,7 +36,7 @@ import org.hibernate.annotations.Formula;
 public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
-    private static final String ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA = "(SELECT CASE WHEN EXISTS (SELECT 1 FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id) THEN true ELSE false END)";
+    private static final String ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA = "(SELECT EXISTS (SELECT 1 FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id))";
     private static final String SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA = "(SELECT COALESCE(SUM(az.betrag), 0) FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id)";
 
     @Positive private int bezirksausschussNr;

@@ -72,7 +72,7 @@ class AntragTest {
         }
         final List<AndererZuwendungsantrag> andereZuwendungsantraege = betraege.stream()
                 .map(betrag -> AndererZuwendungsantrag.builder().betrag(betrag).stelle("A").antragsdatum(LocalDate.now()).build())
-                .toList();
+                .collect(Collectors.toList());
         return antragBuilder.andererZuwendungsantrag(andereZuwendungsantraege).build();
     }
 
@@ -121,7 +121,7 @@ class AntragTest {
             entityManager.flush();
             entityManager.clear();
             final Antrag loaded = antragRepository.findById(created.getId()).orElseThrow();
-            assertThat(loaded.getSummeAndereZuwendungsantraege().setScale(2)).isEqualTo(expectedSumme.setScale(2));
+            assertThat(loaded.getSummeAndereZuwendungsantraege()).isEqualByComparingTo(expectedSumme);
         }
     }
 }

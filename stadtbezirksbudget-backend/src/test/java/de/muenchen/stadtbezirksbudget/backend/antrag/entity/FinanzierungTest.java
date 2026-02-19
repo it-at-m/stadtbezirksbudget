@@ -121,7 +121,7 @@ class FinanzierungTest {
             final Finanzierung created = createFinanzierung(ausgaben, Collections.nCopies(ausgaben.size(), BigDecimal.ZERO),
                     Collections.nCopies(ausgaben.size(), Kategorie.EIGENMITTEL));
             final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
-            assertThat(loaded.getGesamtkosten().setScale(2)).isEqualTo(expectedGesamtkosten.setScale(2));
+            assertThat(loaded.getGesamtkosten()).isEqualByComparingTo(expectedGesamtkosten);
         }
 
         @ParameterizedTest
@@ -130,7 +130,7 @@ class FinanzierungTest {
             final Finanzierung created = createFinanzierung(Collections.nCopies(finanzierungen.size(), BigDecimal.ZERO), finanzierungen,
                     Collections.nCopies(finanzierungen.size(), Kategorie.EIGENMITTEL));
             final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
-            assertThat(loaded.getGesamtmittel().setScale(2)).isEqualTo(expectedGesamtmittel.setScale(2));
+            assertThat(loaded.getGesamtmittel()).isEqualByComparingTo(expectedGesamtmittel);
         }
     }
 
