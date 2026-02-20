@@ -57,7 +57,7 @@ public interface AntragMapper {
 
     @Mappings(
         {
-                @Mapping(target = "bezirksausschussNr", source = "bezirksausschussNr"),
+                @Mapping(target = "bezirksinformationen.ausschussNr", source = "bezirksausschussNr"),
                 @Mapping(target = "eingangDatum", expression = "java(java.time.LocalDateTime.of(2026,2,5,15,30))"),
                 @Mapping(target = "istPersonVorsteuerabzugsberechtigt", constant = "false"),
                 @Mapping(target = "zammadTicketNr", constant = "12345"),
