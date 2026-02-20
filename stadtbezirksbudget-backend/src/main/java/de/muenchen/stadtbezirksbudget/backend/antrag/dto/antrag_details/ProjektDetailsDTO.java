@@ -14,6 +14,5 @@ public record ProjektDetailsDTO(
         LocalDate start,
         LocalDate end,
         String fristBruchBegruendung
-//TODO: Mit Fachbereich klären ob Kontaktdaten (E-mail und Telefon) auch
 ) {
 }

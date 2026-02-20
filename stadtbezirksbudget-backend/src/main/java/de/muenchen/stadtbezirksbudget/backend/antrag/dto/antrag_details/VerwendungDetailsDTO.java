@@ -11,8 +11,6 @@ import java.time.LocalDate;
 public record VerwendungDetailsDTO(
         BigDecimal betrag,
         boolean istGegendert, // Dopplung mit AllgemeinDTO
-        BigDecimal auszahlungBetrag,
-        LocalDate auszahlungsDatum,
         String status,
         BigDecimal pruefungBetrag,
         LocalDate buchungsdatum,
