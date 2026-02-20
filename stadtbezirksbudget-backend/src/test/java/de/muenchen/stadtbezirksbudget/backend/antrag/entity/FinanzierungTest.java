@@ -42,7 +42,6 @@ class FinanzierungTest {
 
     @PersistenceContext
     private EntityManager entityManager;
-
     @Autowired
     private FinanzierungRepository finanzierungRepository;
     @Autowired
