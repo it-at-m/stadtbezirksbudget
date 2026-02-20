@@ -1,8 +1,8 @@
-# CIT Integration
+# FOR Integration
 
-The CIT integration is used to transfer application data from the online form infrastructure to the Stadtbezirksbudget application.
+The FOR integration is used to transfer application data from the online form infrastructure to the Stadtbezirksbudget application.
 
-![Diagram showing the data flow between CIT, FOR-EAI and Stadtbezirksbudget.](./cit-integration.png)
+![Diagram showing the data flow between FOR, FOR-EAI and Stadtbezirksbudget.](for-integration.png)
 
 ## FOR-EAI
 
@@ -39,6 +39,6 @@ The backend consumes the Kafka messages produced by the FOR-EAI and performs the
 
 ## Summary
 
-The CIT integration ensures a reliable end-to-end data flow from the online form to the Stadtbezirksbudget database:
+The FOR integration ensures a reliable end-to-end data flow from the online form to the Stadtbezirksbudget database:
 
 This integration enables scalable, asynchronous processing while keeping the Stadtbezirksbudget application decoupled from the online form infrastructure.

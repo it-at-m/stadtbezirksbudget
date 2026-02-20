@@ -1,8 +1,8 @@
 # Reliable communication
 
-For this project, reliable communication between the individual components is required. The CIT form server, DBS (Zammad), and the Stadtbezirksbudget
+For this project, reliable communication between the individual components is required. The form server (FOR), DBS (Zammad), and the Stadtbezirksbudget
 application must
-be interconnected. In particular, the reliability and fault tolerance of the communication between CIT and the application are crucial, as incoming
+be interconnected. In particular, the reliability and fault tolerance of the communication between FOR and the application are crucial, as incoming
 citizen applications must never be lost.
 
 For this reason, we are using the Kafka event bus. It is operated centrally and with high availability, ensuring reliability without requiring the
@@ -11,13 +11,13 @@ Stadtbezirksbudget application itself to be high available.
 ```mermaid
 flowchart LR
     classDef project stroke: #0f0
-    cit[CIT form server]
+    for[FOR]
     forEai[Stadtbezirksbudget<br>FOR-EAI]
     dbs[DBS Zammad]
     dbsEai[Zammad-EAI]
     sbb[Stadtbezirksbudget<br>Backend]
     kafka[(Kafka event bus)]
-    cit --> forEai:::project
+    for --> forEai:::project
     forEai:::project --> kafka
     dbs --> dbsEai
     dbsEai --> kafka

@@ -24,7 +24,7 @@ The Stadtbezirksbudget application is the core system that caseworkers use to ma
 
 Application data, except for attachments, is stored in a PostgreSQL database.
 
-### CIT Form Server
+### Form Server (FOR)
 
 The Form Server is the platform where citizens enter their application data. It serves as the initial point of contact for users, providing a user-friendly
 interface for submitting requests.
@@ -41,7 +41,7 @@ notifications throughout the application process.
 
 ### Event Bus (Kafka)
 
-The Event Bus, powered by Kafka, facilitates high-availability communication between the CIT Form Server and the Stadtbezirksbudget application.
+The Event Bus, powered by Kafka, facilitates high-availability communication between the form server (FOR) and the Stadtbezirksbudget application.
 
 ### S3 Storage
 
