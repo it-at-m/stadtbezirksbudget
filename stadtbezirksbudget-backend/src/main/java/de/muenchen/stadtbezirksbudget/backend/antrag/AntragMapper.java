@@ -60,7 +60,6 @@ public interface AntragMapper {
         {
                 @Mapping(target = "bezirksinformationen.ausschussNr", source = "bezirksausschussNr"),
                 @Mapping(target = "eingangDatum", expression = "java(java.time.LocalDateTime.of(2026,2,5,15,30))"),
-                @Mapping(target = "istPersonVorsteuerabzugsberechtigt", constant = "false"),
                 @Mapping(target = "zammadTicketNr", constant = "12345"),
                 @Mapping(target = "aktualisierungDatum", expression = "java(java.time.LocalDateTime.of(2026,2,5,15,30))"),
                 @Mapping(target = "aktenzeichen", constant = "2026-00-00/01234"),
@@ -68,6 +67,7 @@ public interface AntragMapper {
                 @Mapping(target = "bearbeitungsstand.anmerkungen", constant = "Muster Anmerkung"),
                 @Mapping(target = "bearbeitungsstand.istMittelabruf", constant = "false"),
                 @Mapping(target = "bearbeitungsstand.status", constant = "EINGEGANGEN"),
+                @Mapping(target = "finanzierung.istPersonVorsteuerabzugsberechtigt", constant = "false"),
                 @Mapping(target = "finanzierung.istProjektVorsteuerabzugsberechtigt", constant = "false"),
                 @Mapping(target = "finanzierung.kostenAnmerkung", constant = "Muster Anmerkung"),
                 @Mapping(target = "finanzierung.begruendungEigenmittel", constant = "Muster Begründung"),

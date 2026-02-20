@@ -40,7 +40,6 @@ public class Antrag extends BaseEntity {
 
     @NotNull private LocalDateTime eingangDatum;
     private boolean istGegendert;
-    private boolean istPersonVorsteuerabzugsberechtigt;
     @NotNull private String zammadTicketNr;
     @NotNull private String aktenzeichen;
     @NotNull private String eakteCooAdresse;
