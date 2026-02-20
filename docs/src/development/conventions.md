@@ -51,18 +51,18 @@ your contribution. The labels should match the prefixes used in branch naming.
 <!-- markdownlint-disable MD060 -->
 
 | Label            | Description                                          | Color   |
-|------------------|------------------------------------------------------| ------- |
-| ✨ Enhancement    | New feature or request                               | #eeff00 |
+| ---------------- | ---------------------------------------------------- | ------- |
+| ✨ Enhancement   | New feature or request                               | #eeff00 |
 | 🐛 Bug           | Something isn't working as intended                  | #ff4545 |
-| 🚑️ Hotfix       | Critical or emergency fix                            | #b60205 |
-| 🔒️ Security     | Address security vulnerabilities                     | #b60205 |
+| 🚑️ Hotfix        | Critical or emergency fix                            | #b60205 |
+| 🔒️ Security      | Address security vulnerabilities                     | #b60205 |
 | 📌 Dependencies  | External library or package updates                  | #4da0ff |
 | 📝 Documentation | Improvements or additions to documentation           | #005999 |
 | ♻️ Refactor      | Code improvements without changing function          | #009600 |
 | 💄 UI/UX         | Changes related to the user interface and experience | #ff2590 |
-| 🛠️ Maintenance  | General maintenance and updates                      | #545454 |
-| 🏗️ Backend      | Changes related to Backend                           | #ff7f00 |
-| 🏗️ Frontend     | Changes related to Frontend                          | #ff7f00 |
-| 🏗️ FOR-EAI      | Changes related to FOR-EAI                           | #ff7f00 |
+| 🛠️ Maintenance   | General maintenance and updates                      | #545454 |
+| 🏗️ Backend       | Changes related to Backend                           | #ff7f00 |
+| 🏗️ Frontend      | Changes related to Frontend                          | #ff7f00 |
+| 🏗️ FOR-EAI       | Changes related to FOR-EAI                           | #ff7f00 |
 
 <!-- markdownlint-disable MD060 -->
