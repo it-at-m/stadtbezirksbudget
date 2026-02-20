@@ -1,8 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details;
 
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AndererZuwendungsantrag;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierungsmittel;
-import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCoverage;
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,13 +11,13 @@ import java.util.List;
 public record FinanzierungDetailsDTO(
         boolean istPersonVorsteuerabzugsberechtigt,
         boolean istProjektVorsteuerabzugsberechtigt,
-        List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben,
+        List<VoraussichtlicheAusgabeDTO> voraussichtlicheAusgaben,
         BigDecimal gesamtKosten,
         String kostenAnmerkungen,
         boolean istZuwendungDritterBeantragt,
-        List<AndererZuwendungsantrag> andererZuwendungsantraege,
+        List<AndererZuwendungsantragDTO> andererZuwendungsantraege,
         BigDecimal gesamtZuwendungenDritter,
-        List<Finanzierungsmittel> finanzierungsmittel,
+        List<FinanzierungsmittelDTO> finanzierungsmittel,
         boolean istZuwenigEigenmittel,
         String begruendungEigenmittel,
         BigDecimal gesamtMittel,
@@ -28,4 +25,10 @@ public record FinanzierungDetailsDTO(
         boolean istWebsiteFoerderhinweis,
         boolean istSonstigerFoerderhinweis,
         String sonstigeFoerderhinweise) {
+
+    public FinanzierungDetailsDTO {
+        voraussichtlicheAusgaben = voraussichtlicheAusgaben != null ? List.copyOf(voraussichtlicheAusgaben) : List.of();
+        andererZuwendungsantraege = andererZuwendungsantraege != null ? List.copyOf(andererZuwendungsantraege) : List.of();
+        finanzierungsmittel = finanzierungsmittel != null ? List.copyOf(finanzierungsmittel) : List.of();
+    }
 }
