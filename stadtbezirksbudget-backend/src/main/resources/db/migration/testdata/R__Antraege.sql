@@ -91,7 +91,7 @@ VALUES ('20000000-0000-0000-0000-000000000001', false, 'Kosten für Dekoration, 
         'Auf Bastelmaterialien beim Dorffest sichtbar', 152.77) ON CONFLICT (id) DO NOTHING;
 
 
-INSERT INTO antrag (id, bezirksausschuss_nr, eingang_datum, ist_person_vorsteuerabzugsberechtigt, zammad_ticket_nr, aktualisierung_datum, aktenzeichen,
+INSERT INTO antrag (id, bezirksinformationen_ausschuss_nr, eingang_datum, ist_person_vorsteuerabzugsberechtigt, zammad_ticket_nr, aktualisierung_datum, aktenzeichen,
                     aktualisierung_art, finanzierung_id, bearbeitungsstand_anmerkungen, bearbeitungsstand_ist_mittelabruf, bearbeitungsstand_status,
                     projekt_titel, projekt_start, projekt_frist_bruch_begruendung, projekt_ende, projekt_beschreibung, antragsteller_name,
                     antragsteller_telefon_nr, antragsteller_email, antragsteller_rechtsform, antragsteller_zielsetzung,
