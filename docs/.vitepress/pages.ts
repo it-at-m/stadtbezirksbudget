@@ -32,6 +32,10 @@ const pages: Page[] = [
         link: "/features/zammad-integration",
       },
       {
+        text: "FOR integration",
+        link: "/features/for-integration/",
+      },
+      {
         text: "Reliable communication",
         link: "/features/reliable-communication",
       },

@@ -1,6 +1,7 @@
 server:
   port: 39146
 spring:
+  cloud.stream.kafka.binder.brokers: localhost:29092
   # Spring JPA
   jpa:
     # Logging for database operation
@@ -26,12 +27,6 @@ spring:
           # requires client to be in audience claim, see https://www.keycloak.org/docs/latest/server_admin/#_audience_resolve
           audiences:
             - ${sso.client}
-  kafka:
-    bootstrap-servers: localhost:29092
-    consumer:
-      group-id: stadtbezirksbudget-backend
-    template:
-      default-topic: stadtbezirksbudget-cit-backend-local
 
 # Enable swagger-ui
 springdoc:
@@ -63,3 +58,6 @@ refarch:
     client-id: ${sso.client}
     user-info-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
     logging-mode: all
+
+kafka:
+  topic: stadtbezirksbudget-cit-backend-local
