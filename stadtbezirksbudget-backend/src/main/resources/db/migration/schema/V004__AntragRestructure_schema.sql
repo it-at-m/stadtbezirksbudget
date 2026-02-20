@@ -9,3 +9,6 @@ UPDATE finanzierung
 
 ALTER TABLE antrag
     DROP COLUMN ist_person_vorsteuerabzugsberechtigt;
+
+ALTER TABLE antrag
+    ADD COLUMN antragsteller_vorname VARCHAR(256) NOT NULL default '';
