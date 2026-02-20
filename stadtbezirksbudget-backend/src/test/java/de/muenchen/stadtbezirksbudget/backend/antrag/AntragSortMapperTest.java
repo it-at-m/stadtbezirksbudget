@@ -41,7 +41,7 @@ class AntragSortMapperTest {
                 Arguments.of("status", "bearbeitungsstand.status"),
                 Arguments.of("zammadNr", "zammadTicketNr"),
                 Arguments.of("aktenzeichen", "aktenzeichen"),
-                Arguments.of("bezirksausschussNr", "bezirksausschussNr"),
+                Arguments.of("bezirksausschussNr", "bezirksinformationen.ausschussNr"),
                 Arguments.of("eingangDatum", "eingangDatum"),
                 Arguments.of("antragstellerName", "antragsteller.name"),
                 Arguments.of("projektTitel", "projekt.titel"),

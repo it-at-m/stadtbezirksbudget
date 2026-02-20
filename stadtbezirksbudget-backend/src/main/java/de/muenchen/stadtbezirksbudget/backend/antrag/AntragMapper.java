@@ -28,6 +28,7 @@ public interface AntragMapper {
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
     @Mapping(target = "finanzierungArt", source = "antrag.finanzierung.art")
     @Mapping(target = "aktualisierung", source = "aktualisierungArt")
+    @Mapping(target = "bezirksausschussNr", source = "antrag.bezirksinformationen.ausschussNr")
     AntragSummaryDTO toAntragSummaryDTO(Antrag antrag);
 
     /**

@@ -283,6 +283,7 @@ public class AntragBuilder {
 
     private Bezirksinformationen initializeBezirksinformationen() {
         return Bezirksinformationen.builder()
+                .ausschussNr(bezirksausschussNr)
                 .bescheidDatum(null)
                 .risNr("")
                 .bewilligteFoerderung(null)
@@ -296,7 +297,6 @@ public class AntragBuilder {
             final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
             final Antrag antrag = Antrag.builder()
                     .eingangDatum(eingangDatum)
-                    .bezirksausschussNr(bezirksausschussNr)
                     .bearbeitungsstand(initializeBearbeitungsstand(status))
                     .aktualisierungArt(aktualisierungArt)
                     .zammadTicketNr(zammadNr)
