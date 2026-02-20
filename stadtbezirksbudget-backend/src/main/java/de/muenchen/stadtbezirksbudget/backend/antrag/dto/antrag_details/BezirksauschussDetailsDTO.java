@@ -10,7 +10,7 @@ public record BezirksauschussDetailsDTO(
         int bezirksauschussNr,
         LocalDate sitzungDatum,
         String risNr,
-        //TODO was ist BESCHLUSS??? Attribut muss hier noch rein
+        String beschluss,
         BigDecimal bewilligteFoerderung,
         LocalDate bescheidDatum) {
 }

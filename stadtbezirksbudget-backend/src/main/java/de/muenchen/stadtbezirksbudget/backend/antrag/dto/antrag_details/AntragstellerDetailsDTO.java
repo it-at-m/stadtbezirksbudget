@@ -8,13 +8,12 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragstellerDetailsDTO(
-        String name, // Dopplung mit AllgemeinDTO, sofern Zerlegung in Vor- und Nachname im Frontend
         Rechtsform rechtsform,
         String strasseHausnummer,
         String ort,
         String postleitzahl,
         String weitereAngaben,
         String email,
-        String telefon, // nur bei natürlicher Person
+        String telefon,
         String zielsetzung) {
 }
