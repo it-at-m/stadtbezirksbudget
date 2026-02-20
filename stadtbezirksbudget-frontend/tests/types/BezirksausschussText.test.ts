@@ -1,4 +1,4 @@
-import type { BezirksausschussOption } from "@/types/BezirksauschussText";
+import type { BezirksausschussOption } from "@/types/BezirksausschussText";
 
 import { describe, expect, test } from "vitest";
 
@@ -6,7 +6,7 @@ import {
   bezirksausschussOptions,
   BezirksausschussText,
   getBezirksnameByNumber,
-} from "@/types/BezirksauschussText";
+} from "@/types/BezirksausschussText";
 
 describe("BezirksausschussText", () => {
   test("BezirksausschussText maps each option value to its title", () => {
