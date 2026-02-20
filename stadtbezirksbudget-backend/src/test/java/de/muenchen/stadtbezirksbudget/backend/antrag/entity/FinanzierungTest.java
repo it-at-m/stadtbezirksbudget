@@ -13,7 +13,6 @@ import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.shaded.com.google.common.collect.Streams;
 
 @Transactional
 @Testcontainers
@@ -90,10 +90,12 @@ class FinanzierungTest {
 
     private List<Finanzierungsmittel> createFinanzierungsmittel(final List<BigDecimal> finanzierungen, final Finanzierung finanzierung,
             final List<Kategorie> kategorien) {
-        return IntStream.range(0, finanzierungen.size())
-                .mapToObj(i -> Finanzierungsmittel.builder()
-                        .kategorie(kategorien.get(i))
-                        .betrag(finanzierungen.get(i))
+        return Streams.zip(
+                finanzierungen.stream(),
+                kategorien.stream(),
+                (betrag, kategorie) -> Finanzierungsmittel.builder()
+                        .kategorie(kategorie)
+                        .betrag(betrag)
                         .direktoriumNotiz("Notiz")
                         .finanzierung(finanzierung)
                         .build())
