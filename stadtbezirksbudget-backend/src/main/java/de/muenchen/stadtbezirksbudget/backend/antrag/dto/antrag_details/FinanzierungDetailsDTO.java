@@ -24,7 +24,6 @@ public record FinanzierungDetailsDTO(
         boolean istZuwenigEigenmittel,
         String begruendungEigenmittel,
         BigDecimal gesamtMittel,
-        BigDecimal beantragtesBudget, // Dopplung mit AllgemeinDTO
         boolean istEinladungFoerderhinweis,
         boolean istWebsiteFoerderhinweis,
         boolean istSonstigerFoerderhinweis,

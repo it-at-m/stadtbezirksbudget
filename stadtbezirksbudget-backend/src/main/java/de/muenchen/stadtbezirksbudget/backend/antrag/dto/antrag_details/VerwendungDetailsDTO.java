@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record VerwendungDetailsDTO(
         BigDecimal betrag,
-        boolean istGegendert, // Dopplung mit AllgemeinDTO
         String status,
         BigDecimal pruefungBetrag,
         LocalDate buchungsdatum,

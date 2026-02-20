@@ -9,7 +9,6 @@ import java.time.LocalDate;
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record ZahlungDetailsDTO(
-        BigDecimal bewilligterZuschuss, // Dopplung mit bewilligteFoerderung in BezirksauschussDetailsDTO
         BigDecimal auszahlungBetrag,
         LocalDate auszahlungDatum,
         String anlageAv,
