@@ -11,6 +11,5 @@ public record ProjektDetailsDTO(
         String beschreibung,
         LocalDate start,
         LocalDate end,
-        String fristBruchBegruendung
-) {
+        String fristBruchBegruendung) {
 }
