@@ -30,6 +30,7 @@ import org.hibernate.annotations.Formula;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@SuppressWarnings("PMD.TooManyFields")
 public class Finanzierung extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -49,6 +50,7 @@ public class Finanzierung extends BaseEntity {
             " < " + MINDEST_EIGENMITTEL_PROZENT + " * " + GESAMTKOSTEN_FORMULA + " THEN true ELSE false END";
 
     private boolean istProjektVorsteuerabzugsberechtigt;
+    private boolean istPersonVorsteuerabzugsberechtigt;
     @NotNull private String kostenAnmerkung;
     @NotNull private String begruendungEigenmittel;
     @NotNull @PositiveOrZero private BigDecimal beantragtesBudget;

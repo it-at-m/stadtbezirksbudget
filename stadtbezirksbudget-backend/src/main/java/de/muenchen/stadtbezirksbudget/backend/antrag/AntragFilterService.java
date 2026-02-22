@@ -6,6 +6,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bezirksinformationen_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt_;
@@ -73,7 +74,7 @@ public class AntragFilterService {
 
     private Predicate filterBezirksausschussNr(final List<Integer> bezirksausschussNrList, final Root<Antrag> root, final CriteriaBuilder criteriaBuilder) {
         return (bezirksausschussNrList != null && !bezirksausschussNrList.isEmpty())
-                ? root.get(Antrag_.bezirksausschussNr).in(bezirksausschussNrList)
+                ? root.get(Antrag_.bezirksinformationen).get(Bezirksinformationen_.ausschussNr).in(bezirksausschussNrList)
                 : criteriaBuilder.conjunction();
     }
 

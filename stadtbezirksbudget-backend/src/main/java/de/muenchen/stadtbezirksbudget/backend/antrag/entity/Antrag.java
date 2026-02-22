@@ -8,7 +8,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import java.io.Serial;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -39,10 +38,8 @@ public class Antrag extends BaseEntity {
     private static final String ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA = "(SELECT EXISTS (SELECT 1 FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id))";
     private static final String SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA = "(SELECT COALESCE(SUM(az.betrag), 0) FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id)";
 
-    @Positive private int bezirksausschussNr;
     @NotNull private LocalDateTime eingangDatum;
     private boolean istGegendert;
-    private boolean istPersonVorsteuerabzugsberechtigt;
     @NotNull private String zammadTicketNr;
     @NotNull private String aktenzeichen;
     @NotNull private String eakteCooAdresse;
