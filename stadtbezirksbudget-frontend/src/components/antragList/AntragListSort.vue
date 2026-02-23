@@ -4,11 +4,14 @@
       <v-row>
         <v-col class="d-flex align-center">Sortieren nach</v-col>
         <v-col cols="auto">
-          <v-btn-primary
+          <v-btn
+            color="primary"
             data-test="antrag-list-sort-reset-btn"
+            style="text-transform: none"
+            variant="outlined"
             @click="resetSorting"
             >Sortierung zurücksetzen
-          </v-btn-primary>
+          </v-btn>
         </v-col>
       </v-row>
     </v-card-title>

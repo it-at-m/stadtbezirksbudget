@@ -5,7 +5,10 @@
         <v-col class="d-flex align-center">Filtern nach</v-col>
         <v-col cols="auto">
           <v-btn-primary
+            color="primary"
             data-test="antrag-list-filter-reset-btn"
+            style="text-transform: none"
+            variant="outlined"
             @click="resetFilters"
             >Alle Filter löschen
           </v-btn-primary>
