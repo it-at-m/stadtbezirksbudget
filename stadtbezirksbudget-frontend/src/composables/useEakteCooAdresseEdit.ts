@@ -27,7 +27,7 @@ export function useEakteCooAdresseEdit(
   const eakteCooAdresse = ref(toValue(initialEakteCooAdresse));
   const isValid = ref<boolean>(false);
   const isDirty = computed(
-    () => eakteCooAdresse.value != toValue(initialEakteCooAdresse)
+    () => eakteCooAdresse.value !== toValue(initialEakteCooAdresse)
   );
   const isSaveable = computed(() => isValid.value && isDirty.value);
 
