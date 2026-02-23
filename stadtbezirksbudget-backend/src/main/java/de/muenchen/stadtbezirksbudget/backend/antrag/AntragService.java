@@ -6,10 +6,13 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.common.NameView;
 import de.muenchen.stadtbezirksbudget.backend.common.NotFoundException;
 import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
+import de.muenchen.stadtbezirksbudget.backend.kafka.KafkaDTO;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +32,8 @@ import org.springframework.stereotype.Service;
 public class AntragService {
     private final AntragRepository antragRepository;
     private final AntragFilterService antragFilterService;
+    private final FinanzierungRepository finanzierungRepository;
+    private final AntragMapper antragMapper;
 
     /**
      * Retrieves a paginated filtered list of Antrag entities.
@@ -54,6 +59,19 @@ public class AntragService {
     public Antrag getAntrag(final UUID id) {
         log.info("Get antrag with id {}", id);
         return antragRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format("Could not find antrag with id %s", id)));
+    }
+
+    /**
+     * Creates an Antrag from a KafkaDTO and saves it to the database.
+     *
+     * @param kafkaDTO the KafkaDTO containing the data to create the Antrag
+     * @return the created Antrag
+     */
+    public Antrag createFromKafka(final KafkaDTO kafkaDTO) {
+        final Antrag antrag = antragMapper.toAntrag(kafkaDTO);
+        final Finanzierung finanzierung = antrag.getFinanzierung();
+        finanzierungRepository.save(finanzierung);
+        return antragRepository.save(antrag);
     }
 
     /**

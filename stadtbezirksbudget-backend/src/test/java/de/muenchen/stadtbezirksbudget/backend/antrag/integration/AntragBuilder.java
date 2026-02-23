@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Adresse;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AndererZuwendungsantrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bankverbindung;
@@ -17,6 +18,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Verwendungsnachweis;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Zahlung;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
@@ -49,6 +51,7 @@ public class AntragBuilder {
     private final FinanzierungRepository finanzierungRepository;
     private final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     private final FinanzierungsmittelRepository finanzierungsmittelRepository;
+    private final AndererZuwendungsantragRepository andererZuwendungsantragRepository;
     private Status status;
     private int bezirksausschussNr;
     private LocalDateTime eingangDatum;
@@ -61,15 +64,18 @@ public class AntragBuilder {
     private String eakteCooAdresse;
     private String antragstellerName;
     private String projektTitel;
+    private List<AndererZuwendungsantrag> andereZuwendungsantraege;
 
     public AntragBuilder(final AntragRepository antragRepository,
             final FinanzierungRepository finanzierungRepository,
             final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository,
-            final FinanzierungsmittelRepository finanzierungsmittelRepository) {
+            final FinanzierungsmittelRepository finanzierungsmittelRepository,
+            final AndererZuwendungsantragRepository andererZuwendungsantragRepository) {
         this.antragRepository = antragRepository;
         this.finanzierungRepository = finanzierungRepository;
         this.voraussichtlicheAusgabeRepository = voraussichtlicheAusgabeRepository;
         this.finanzierungsmittelRepository = finanzierungsmittelRepository;
+        this.andererZuwendungsantragRepository = andererZuwendungsantragRepository;
         setRandomValues();
     }
 
@@ -90,6 +96,7 @@ public class AntragBuilder {
         eakteCooAdresse = String.valueOf(RANDOM.nextInt(LIMIT));
         antragstellerName = generateRandomUuidString();
         projektTitel = generateRandomUuidString();
+        andereZuwendungsantraege = new ArrayList<>();
     }
 
     public AntragBuilder status(final Status status) {
@@ -144,6 +151,11 @@ public class AntragBuilder {
 
     public AntragBuilder projektTitel(final String projektTitel) {
         this.projektTitel = projektTitel;
+        return this;
+    }
+
+    public AntragBuilder andererZuwendungsantrag(final List<AndererZuwendungsantrag> andereZuwendungsantraege) {
+        this.andereZuwendungsantraege = andereZuwendungsantraege;
         return this;
     }
 
@@ -300,12 +312,17 @@ public class AntragBuilder {
                     .projekt(initializeProjekt(projektTitel))
                     .antragsteller(antragsteller)
                     .bankverbindung(initializeBankverbindung())
-                    .andereZuwendungsantraege(new ArrayList<>())
                     .zahlung(initializeZahlung())
                     .verwendungsnachweis(initializeVerwendungsnachweis())
                     .bezirksinformationen(initializeBezirksinformationen())
                     .build();
-            return antragRepository.save(antrag);
+            for (final AndererZuwendungsantrag andererZuwendungsantrag : andereZuwendungsantraege) {
+                andererZuwendungsantrag.setAntrag(antrag);
+            }
+            antrag.setAndereZuwendungsantraege(andereZuwendungsantraege);
+            final Antrag savedAntrag = antragRepository.save(antrag);
+            andererZuwendungsantragRepository.saveAll(andereZuwendungsantraege);
+            return savedAntrag;
         } finally {
             setRandomValues();
         }

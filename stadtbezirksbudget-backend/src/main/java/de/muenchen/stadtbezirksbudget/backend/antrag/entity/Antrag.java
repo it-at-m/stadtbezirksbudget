@@ -10,6 +10,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.io.Serial;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -19,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.EmbeddedColumnNaming;
+import org.hibernate.annotations.Formula;
 
 /**
  * Represents a request that contains various attributes such as the date of receipt,
@@ -34,6 +36,8 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
+    private static final String ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA = "(SELECT EXISTS (SELECT 1 FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id))";
+    private static final String SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA = "(SELECT COALESCE(SUM(az.betrag), 0) FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id)";
 
     @Positive private int bezirksausschussNr;
     @NotNull private LocalDateTime eingangDatum;
@@ -46,6 +50,12 @@ public class Antrag extends BaseEntity {
     @NotNull private LocalDateTime aktualisierungDatum;
     @NotNull @Enumerated(EnumType.STRING)
     private AktualisierungArt aktualisierungArt;
+
+    @Formula(ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA)
+    private boolean istZuwendungDritterBeantragt;
+
+    @Formula(SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA)
+    private BigDecimal summeAndereZuwendungsantraege;
 
     @NotNull @Embedded
     @EmbeddedColumnNaming("bearbeitungsstand_%s")

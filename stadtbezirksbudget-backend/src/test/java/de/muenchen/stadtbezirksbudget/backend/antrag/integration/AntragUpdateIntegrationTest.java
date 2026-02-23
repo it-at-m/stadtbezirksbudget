@@ -12,6 +12,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragReferenceUpdateDT
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
@@ -58,6 +59,8 @@ class AntragUpdateIntegrationTest {
     @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
     @Autowired
+    private AndererZuwendungsantragRepository andereZuwendungsantragRepository;
+    @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
@@ -67,7 +70,8 @@ class AntragUpdateIntegrationTest {
     @BeforeEach
     public void setUp() {
         antragList.clear();
-        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository);
+        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository,
+                andereZuwendungsantragRepository);
     }
 
     @Nested

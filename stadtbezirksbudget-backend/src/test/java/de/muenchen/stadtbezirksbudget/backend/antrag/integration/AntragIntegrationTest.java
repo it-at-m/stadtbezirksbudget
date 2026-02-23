@@ -13,6 +13,8 @@ import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
@@ -58,6 +60,8 @@ class AntragIntegrationTest {
     @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
     @Autowired
+    private AndererZuwendungsantragRepository andereZuwendungsantragRepository;
+    @Autowired
     private MockMvc mockMvc;
 
     private AntragBuilder antragBuilder;
@@ -65,7 +69,8 @@ class AntragIntegrationTest {
     @BeforeEach
     public void setUp() {
         antragList.clear();
-        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository);
+        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository,
+                andereZuwendungsantragRepository);
     }
 
     @Nested
