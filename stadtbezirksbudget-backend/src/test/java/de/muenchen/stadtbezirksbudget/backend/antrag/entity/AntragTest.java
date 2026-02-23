@@ -124,4 +124,34 @@ class AntragTest {
             assertThat(loaded.getSummeAndereZuwendungsantraege()).isEqualByComparingTo(expectedSumme);
         }
     }
+
+    @Nested
+    class BeschlussStatusFormula {
+        private static Arguments args(final BigDecimal beantragtesBudget, final BigDecimal bewilligteFoerderung, final BeschlussStatus expectedStatus) {
+            return Arguments.of(beantragtesBudget, bewilligteFoerderung, expectedStatus);
+        }
+
+        private static Stream<Arguments> antragStatusTestData() {
+            return Stream.of(
+                    args(BigDecimal.valueOf(1000), null, BeschlussStatus.LEER),
+                    args(BigDecimal.valueOf(1000), BigDecimal.ZERO, BeschlussStatus.ABGELEHNT),
+                    args(BigDecimal.valueOf(1000), BigDecimal.valueOf(1000), BeschlussStatus.BEWILLIGT),
+                    args(BigDecimal.valueOf(1000), BigDecimal.valueOf(500), BeschlussStatus.TEILBEWILLIGT),
+                    args(BigDecimal.valueOf(1000), BigDecimal.valueOf(1500), BeschlussStatus.TEILBEWILLIGT));
+        }
+
+        @ParameterizedTest
+        @MethodSource("antragStatusTestData")
+        void testAntragStatus(final BigDecimal beantragtesBudget, final BigDecimal bewilligteFoerderung, final BeschlussStatus expectedStatus) {
+            final Antrag created = antragBuilder
+                    .beantragtesBudget(beantragtesBudget)
+                    .bewilligteFoerderung(bewilligteFoerderung)
+                    .build();
+            entityManager.flush();
+            entityManager.clear();
+            final Antrag loaded = antragRepository.findById(created.getId()).orElseThrow();
+            final BeschlussStatus status = loaded.getBeschlussStatus();
+            assertThat(status).isEqualByComparingTo(expectedStatus);
+        }
+    }
 }
