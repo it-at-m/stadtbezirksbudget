@@ -4,8 +4,13 @@ ALTER TABLE antrag
 ALTER TABLE finanzierung
     ADD COLUMN ist_person_vorsteuerabzugsberechtigt BOOLEAN NOT NULL;
 
+ALTER TABLE finanzierung
+    DROP COLUMN bewilligter_zuschuss;
+
 UPDATE finanzierung
-    SET ist_person_vorsteuerabzugsberechtigt = antrag.ist_person_vorsteuerabzugsberechtigt FROM antrag WHERE finanzierung.id = antrag.finanzierung_id;
+SET ist_person_vorsteuerabzugsberechtigt = antrag.ist_person_vorsteuerabzugsberechtigt
+FROM antrag
+WHERE finanzierung.id = antrag.finanzierung_id;
 
 ALTER TABLE antrag
     DROP COLUMN ist_person_vorsteuerabzugsberechtigt;
