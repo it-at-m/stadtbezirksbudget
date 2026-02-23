@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragReferenceUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
@@ -14,6 +15,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import de.muenchen.stadtbezirksbudget.backend.kafka.KafkaDTO;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -97,6 +99,21 @@ public class AntragService {
         final Antrag antrag = antragRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Antrag with id " + id + " not found"));
         antrag.getBearbeitungsstand().setStatus(statusUpdateDTO.status());
+        saveAntrag(antrag, AktualisierungArt.FACHANWENDUNG);
+    }
+
+    /**
+     * Updates the references of an Antrag.
+     *
+     * @param id the ID of the Antrag to update
+     * @param referenceUpdateDTO the DTO containing the new references
+     * @throws NotFoundException if no Antrag with the given ID exists
+     */
+    public void updateAntragReference(final UUID id, final AntragReferenceUpdateDTO referenceUpdateDTO) {
+        log.info("Update references of antrag with id {} to {}", id, referenceUpdateDTO);
+        final Antrag antrag = antragRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Antrag with id " + id + " not found"));
+        Optional.ofNullable(referenceUpdateDTO.eakteCooAdresse()).ifPresent(antrag::setEakteCooAdresse);
         saveAntrag(antrag, AktualisierungArt.FACHANWENDUNG);
     }
 

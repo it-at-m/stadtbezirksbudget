@@ -1,6 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragReferenceUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
@@ -98,5 +99,18 @@ public class AntragController {
     @PreAuthorize(Authorities.ANTRAG_UPDATE_STATUS)
     public void updateAntragStatus(@PathVariable final UUID id, @RequestBody @Valid final AntragStatusUpdateDTO statusUpdateDTO) {
         antragService.updateAntragStatus(id, statusUpdateDTO);
+    }
+
+    /**
+     * Updates the references of an Antrag.
+     *
+     * @param id the ID of the Antrag to update
+     * @param referenceUpdateDTO the DTO containing the new references
+     */
+    @PatchMapping("{id}/reference")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize(Authorities.ANTRAG_UPDATE_REFERENCES)
+    public void updateAntragReference(@PathVariable final UUID id, @RequestBody @Valid final AntragReferenceUpdateDTO referenceUpdateDTO) {
+        antragService.updateAntragReference(id, referenceUpdateDTO);
     }
 }
