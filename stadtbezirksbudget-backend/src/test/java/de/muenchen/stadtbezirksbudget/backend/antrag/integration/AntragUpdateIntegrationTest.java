@@ -223,23 +223,5 @@ class AntragUpdateIntegrationTest {
             final Antrag updated = antragRepository.findById(antragId).orElseThrow();
             assertThat(updated.getEakteCooAdresse()).isEqualTo("COO.6804.7915.3.3210877");
         }
-
-        @Test
-        void testUpdateReferenceCooAdresseUnchanged() throws Exception {
-            antragList.add(antragBuilder
-                    .eakteCooAdresse("COO.6804.7915.3.3210800")
-                    .build());
-            final UUID antragId = antragList.getFirst().getId();
-            final AntragReferenceUpdateDTO dto = new AntragReferenceUpdateDTO("COO.6804.7915.3.3210800");
-
-            mockMvc
-                    .perform(patch("/antrag/" + antragId + "/reference")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(dto)))
-                    .andExpect(status().isNotModified());
-
-            final Antrag updated = antragRepository.findById(antragId).orElseThrow();
-            assertThat(updated.getEakteCooAdresse()).isEqualTo("COO.6804.7915.3.3210800");
-        }
     }
 }

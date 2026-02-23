@@ -1,9 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -304,8 +302,7 @@ class AntragServiceTest {
 
             when(antragRepository.findById(id)).thenReturn(Optional.of(antrag));
 
-            assertTrue(antragService.updateAntragReference(id,
-                    new AntragReferenceUpdateDTO("COO.6804.7915.3.3210877")));
+            antragService.updateAntragReference(id, new AntragReferenceUpdateDTO("COO.6804.7915.3.3210877"));
             verify(antragRepository).findById(id);
             verify(antragRepository).save(antrag);
             verify(antragService).saveAntrag(eq(antrag), eq(AktualisierungArt.FACHANWENDUNG));
@@ -315,25 +312,6 @@ class AntragServiceTest {
                     .ignoringFields("aktualisierungDatum")
                     .ignoringFields("aktualisierungArt")
                     .isEqualTo(originalCopy);
-        }
-
-        @Test
-        void testUpdateReferenceCooAdresseUnchanged() throws Exception {
-            final Antrag antrag = createAntrag(new Bearbeitungsstand(), new Antragsteller(), new Finanzierung(), "T", "B", Status.VOLLSTAENDIG);
-            antrag.setEakteCooAdresse("COO.6804.7915.3.3210801");
-            final UUID id = antrag.getId();
-
-            final Antrag originalCopy = objectMapper.readValue(objectMapper.writeValueAsString(antrag), Antrag.class);
-
-            when(antragRepository.findById(id)).thenReturn(Optional.of(antrag));
-
-            assertFalse(antragService.updateAntragReference(id,
-                    new AntragReferenceUpdateDTO("COO.6804.7915.3.3210801")));
-            verify(antragRepository).findById(id);
-            verify(antragRepository, never()).save(any());
-            verify(antragService, never()).saveAntrag(any(), any());
-            assertThat(antrag.getEakteCooAdresse()).isEqualTo("COO.6804.7915.3.3210801");
-            assertThat(antrag).usingRecursiveComparison().isEqualTo(originalCopy);
         }
     }
 

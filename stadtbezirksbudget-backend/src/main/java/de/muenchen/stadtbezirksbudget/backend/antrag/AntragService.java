@@ -15,8 +15,8 @@ import de.muenchen.stadtbezirksbudget.backend.common.TitelView;
 import de.muenchen.stadtbezirksbudget.backend.kafka.KafkaDTO;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -107,19 +107,14 @@ public class AntragService {
      *
      * @param id the ID of the Antrag to update
      * @param referenceUpdateDTO the DTO containing the new references
-     * @return {@code true} if the Antrag was updated (i.e., at least one reference was changed),
-     *         {@code false} if no updates were made (i.e., all references were already up to date)
      * @throws NotFoundException if no Antrag with the given ID exists
      */
-    public boolean updateAntragReference(final UUID id, final AntragReferenceUpdateDTO referenceUpdateDTO) {
+    public void updateAntragReference(final UUID id, final AntragReferenceUpdateDTO referenceUpdateDTO) {
         log.info("Update references of antrag with id {} to {}", id, referenceUpdateDTO);
         final Antrag antrag = antragRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Antrag with id " + id + " not found"));
-        final boolean isUpdated = updateField(antrag::setEakteCooAdresse, referenceUpdateDTO.eakteCooAdresse(), antrag.getEakteCooAdresse());
-        if (isUpdated) {
-            saveAntrag(antrag, AktualisierungArt.FACHANWENDUNG);
-        }
-        return isUpdated;
+        Optional.ofNullable(referenceUpdateDTO.eakteCooAdresse()).ifPresent(antrag::setEakteCooAdresse);
+        saveAntrag(antrag, AktualisierungArt.FACHANWENDUNG);
     }
 
     /**
@@ -133,13 +128,5 @@ public class AntragService {
         antrag.setAktualisierungDatum(LocalDateTime.now());
         log.info("Save antrag with id {}", antrag.getId());
         antragRepository.save(antrag);
-    }
-
-    private <T> boolean updateField(final Consumer<T> setter, final T newValue, final T currentValue) {
-        if (newValue != null && !newValue.equals(currentValue)) {
-            setter.accept(newValue);
-            return true;
-        }
-        return false;
     }
 }

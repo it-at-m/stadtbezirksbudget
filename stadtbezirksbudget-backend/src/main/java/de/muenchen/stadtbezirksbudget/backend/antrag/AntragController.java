@@ -19,7 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -107,13 +106,11 @@ public class AntragController {
      *
      * @param id the ID of the Antrag to update
      * @param referenceUpdateDTO the DTO containing the new references
-     * @return ResponseEntity with appropriate status
      */
     @PatchMapping("{id}/reference")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize(Authorities.ANTRAG_UPDATE_REFERENCES)
-    public ResponseEntity<Void> updateAntragReference(@PathVariable final UUID id, @RequestBody @Valid final AntragReferenceUpdateDTO referenceUpdateDTO) {
-        return antragService.updateAntragReference(id, referenceUpdateDTO)
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+    public void updateAntragReference(@PathVariable final UUID id, @RequestBody @Valid final AntragReferenceUpdateDTO referenceUpdateDTO) {
+        antragService.updateAntragReference(id, referenceUpdateDTO);
     }
 }
