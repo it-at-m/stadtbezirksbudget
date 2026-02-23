@@ -62,7 +62,6 @@ class FinanzierungTest {
                 .istWebsiteFoerderhinweis(false)
                 .istSonstigerFoerderhinweis(false)
                 .sonstigeFoerderhinweise("")
-                .bewilligterZuschuss(BigDecimal.ZERO)
                 .build();
 
         final List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = ausgaben.stream().map(betrag -> VoraussichtlicheAusgabe.builder()
