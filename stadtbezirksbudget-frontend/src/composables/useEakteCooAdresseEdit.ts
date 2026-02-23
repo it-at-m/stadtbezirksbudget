@@ -59,6 +59,7 @@ export function useEakteCooAdresseEdit(
    * Cancels the editing of the COO address and closes the edit menu.
    */
   function cancel() {
+    eakteCooAdresse.value = toValue(initialEakteCooAdresse);
     menu.value = false;
   }
 
