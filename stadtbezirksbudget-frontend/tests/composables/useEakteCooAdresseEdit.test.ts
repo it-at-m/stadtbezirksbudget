@@ -171,7 +171,7 @@ describe("useEakteCooAdresseEdit", () => {
       expect(validateCoo("COO.6804.7915.3.3210800")).toBeTruthy();
     });
 
-    test("returns false on correct value", () => {
+    test("returns false on invalid value", () => {
       expect(validateCoo("COO.6804.7915.33210800")).toBe(
         'Muss dem Format "COO.XXXX.XXXX.X.XXXXXXX" entsprechen'
       );
