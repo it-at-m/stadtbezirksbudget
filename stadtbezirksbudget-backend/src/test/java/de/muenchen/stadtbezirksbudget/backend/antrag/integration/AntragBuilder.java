@@ -57,6 +57,7 @@ public class AntragBuilder {
     private LocalDateTime eingangDatum;
     private LocalDateTime aktualisierungDatum;
     private BigDecimal beantragtesBudget;
+    private BigDecimal bewilligteFoerderung;
     private FinanzierungArt finanzierungArt;
     private AktualisierungArt aktualisierungArt;
     private String zammadNr;
@@ -156,6 +157,11 @@ public class AntragBuilder {
 
     public AntragBuilder andererZuwendungsantrag(final List<AndererZuwendungsantrag> andereZuwendungsantraege) {
         this.andereZuwendungsantraege = andereZuwendungsantraege;
+        return this;
+    }
+
+    public AntragBuilder bewilligteFoerderung(final BigDecimal bewilligteFoerderung) {
+        this.bewilligteFoerderung = bewilligteFoerderung;
         return this;
     }
 
@@ -286,7 +292,7 @@ public class AntragBuilder {
                 .ausschussNr(bezirksausschussNr)
                 .bescheidDatum(null)
                 .risNr("")
-                .bewilligteFoerderung(null)
+                .bewilligteFoerderung(bewilligteFoerderung)
                 .sitzungDatum(null)
                 .build();
     }
