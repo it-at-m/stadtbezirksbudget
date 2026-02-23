@@ -313,6 +313,26 @@ class AntragServiceTest {
                     .ignoringFields("aktualisierungArt")
                     .isEqualTo(originalCopy);
         }
+
+        @Test
+        void testUpdateReferenceEmpty() throws Exception {
+            final Antrag antrag = createAntrag(new Bearbeitungsstand(), new Antragsteller(), new Finanzierung(), "T", "B", Status.VOLLSTAENDIG);
+            antrag.setEakteCooAdresse("COO.6804.7915.3.3210800");
+            final UUID id = antrag.getId();
+
+            final Antrag originalCopy = objectMapper.readValue(objectMapper.writeValueAsString(antrag), Antrag.class);
+
+            when(antragRepository.findById(id)).thenReturn(Optional.of(antrag));
+
+            antragService.updateAntragReference(id, new AntragReferenceUpdateDTO(null));
+            verify(antragRepository).findById(id);
+            verify(antragRepository).save(antrag);
+            verify(antragService).saveAntrag(eq(antrag), eq(AktualisierungArt.FACHANWENDUNG));
+            assertThat(antrag).usingRecursiveComparison()
+                    .ignoringFields("aktualisierungDatum")
+                    .ignoringFields("aktualisierungArt")
+                    .isEqualTo(originalCopy);
+        }
     }
 
     @Nested
