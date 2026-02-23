@@ -19,30 +19,6 @@
     @update:options="updateOptions"
     @click:row="goToDetails"
   >
-    <template
-      v-slot:[`header.beantragtesBudget`]="{
-        column,
-        toggleSort,
-        isSorted,
-        getSortIcon,
-      }"
-    >
-      <div
-        class="d-flex v-data-table-header__cell"
-        data-test="header-beantragtes-budget"
-        style="cursor: pointer; align-items: center"
-        @click="() => toggleSort"
-      >
-        <span class="mr-1 text-left"> Beantragtes <br />Budget [€] </span>
-        <v-icon
-          :class="[
-            'v-data-table-header__sort-icon',
-            { 'v-data-table-header__sort-icon--active': isSorted(column) },
-          ]"
-          :icon="getSortIcon(column)"
-        />
-      </div>
-    </template>
     <template v-slot:[`item.status`]="{ item }">
       <antrag-status-update
         :antrag-id="item.id"
@@ -178,6 +154,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth}px`,
     },
     {
+      title: "Budget [€]",
       key: "beantragtesBudget",
       align: "end",
       maxWidth: `${baseWidth}px`,

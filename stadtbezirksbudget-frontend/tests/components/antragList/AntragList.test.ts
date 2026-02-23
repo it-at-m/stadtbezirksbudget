@@ -54,9 +54,6 @@ describe("AntragList", () => {
 
   test("renders antrag summary list", () => {
     expect(wrapper.find('[data-test="antrag-list"]').exists()).toBe(true);
-    expect(
-      wrapper.find('[data-test="header-beantragtes-budget"]').exists()
-    ).toBe(true);
     expect(wrapper.find('[data-test="item-status"]').exists()).toBe(true);
     expect(wrapper.find('[data-test="item-eingang-datum"]').exists()).toBe(
       true

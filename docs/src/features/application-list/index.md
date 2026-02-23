@@ -21,7 +21,7 @@ provide context and facilitate the processing of applications:
 | Antragsdatum         | The date when the application was submitted by the applicant.                                                   |
 | Antragsteller        | The name of the applicant who submitted the application.                                                        |
 | Projekt              | The name of the project for which the application was made.                                                     |
-| Beantragtes Budget   | The amount of budget requested in the application.                                                              |
+| Budget               | The amount of budget requested in the application.                                                              |
 | Art                  | The type of application submitted ("Fehl" or "Fest").                                                           |
 | Aktualisierung       | Shows in which of the involved systems (Zammad, EAkte) the last activity occurred.                              |
 | Datum Aktualisierung | The date when the last update was made to the application.                                                      |
