@@ -92,6 +92,7 @@
         :antrag-id="item.id"
         :eakte-coo-adresse="item.eakteCooAdresse"
         data-test="item-aktenzeichen"
+        @reference-updated="fetchItems"
         @click.stop
         @mousedown.stop
       />

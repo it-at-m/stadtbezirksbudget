@@ -34,7 +34,7 @@
       <eakte-coo-adresse-edit
         :antrag-id="antragId"
         :eakte-coo-adresse="eakteCooAdresse"
-        @save="menu = false"
+        @save="onSave"
       />
     </v-list>
   </v-menu>
@@ -52,5 +52,10 @@ const { antragId, aktenzeichen, eakteCooAdresse } = defineProps<{
   aktenzeichen: string;
   eakteCooAdresse: string;
 }>();
+const emit = defineEmits<(e: "reference-updated") => void>();
+const onSave = () => {
+  menu.value = false;
+  emit("reference-updated");
+};
 const menu = ref<boolean>(false);
 </script>
