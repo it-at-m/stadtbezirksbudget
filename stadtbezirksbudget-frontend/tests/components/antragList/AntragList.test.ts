@@ -249,4 +249,16 @@ describe("AntragList", () => {
 
     expect(mockUseAntragList.fetchItems).toHaveBeenCalled();
   });
+
+  test("calls fetchItems on reference updated emit", async () => {
+    const referenceComponent = wrapper.findComponent({
+      name: "EakteReference",
+    });
+    expect(referenceComponent.exists()).toBe(true);
+
+    referenceComponent.vm.$emit("reference-updated");
+    await wrapper.vm.$nextTick();
+
+    expect(mockUseAntragList.fetchItems).toHaveBeenCalled();
+  });
 });
