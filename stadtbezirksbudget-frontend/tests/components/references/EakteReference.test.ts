@@ -66,7 +66,7 @@ describe("EakteReference", () => {
     );
   });
 
-  test("closes menu on edit save", async () => {
+  test("closes menu and emits on edit save", async () => {
     const wrapper = createWrapper();
     const menu = wrapper.findComponent({ name: "VMenu" });
     const button = wrapper.findComponent({ name: "VBtn" });
@@ -77,5 +77,6 @@ describe("EakteReference", () => {
     const cooEdit = wrapper.findComponent({ name: "EakteCooAdresseEdit" });
     await cooEdit.vm.$emit("save");
     expect(menu.props("modelValue")).toBe(false);
+    expect(wrapper.emitted()).toHaveProperty("reference-updated");
   });
 });
