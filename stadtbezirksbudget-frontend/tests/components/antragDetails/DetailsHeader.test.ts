@@ -5,10 +5,13 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 import { nextTick } from "vue";
 
 import DetailsHeader from "@/components/antragDetails/DetailsHeader.vue";
+import { ROUTES_HOME } from "@/constants.ts";
 import pinia from "@/plugins/pinia.ts";
+import router from "@/plugins/router.ts";
 import vuetify from "@/plugins/vuetify.ts";
 import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock";
 
+vi.mock("@/plugins/router.ts", () => ({ default: { push: vi.fn() } }));
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const mockAntrag = {
@@ -38,6 +41,21 @@ describe("DetailsHeader", () => {
         },
       },
       props: { antrag: mockAntrag },
+    });
+  });
+
+  describe("BackButton", () => {
+    test("renders back button", () => {
+      const backButton = wrapper.find("[data-test=details-back-button]");
+      expect(backButton.exists()).toBe(true);
+      expect(backButton.text()).toBe("Zurück zur Übersicht");
+    });
+
+    test("navigates to home on back button click", async () => {
+      (router.push as vi.Mock).mockResolvedValue(undefined);
+      const backButton = wrapper.find("[data-test=details-back-button]");
+      await backButton.trigger("click");
+      expect(router.push).toHaveBeenCalledWith({ name: ROUTES_HOME });
     });
   });
 
