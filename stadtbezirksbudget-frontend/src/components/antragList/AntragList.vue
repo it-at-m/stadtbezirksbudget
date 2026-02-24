@@ -16,6 +16,7 @@
     :loading="loading"
     :page="page"
     data-test="antrag-list"
+    items-per-page-text="Anträge pro Seite:"
     @update:options="updateOptions"
     @click:row="goToDetails"
   >
