@@ -98,6 +98,7 @@ public class AntragBuilder {
         antragstellerName = generateRandomUuidString();
         projektTitel = generateRandomUuidString();
         andereZuwendungsantraege = new ArrayList<>();
+        bewilligteFoerderung = null;
     }
 
     public AntragBuilder status(final Status status) {
