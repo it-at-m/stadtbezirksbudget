@@ -42,6 +42,7 @@ describe("DetailsHeader", () => {
       },
       props: { antrag: mockAntrag },
     });
+    vi.mocked(router.push).mockClear();
   });
 
   describe("BackButton", () => {
@@ -52,7 +53,7 @@ describe("DetailsHeader", () => {
     });
 
     test("navigates to home on back button click", async () => {
-      (router.push as vi.Mock).mockResolvedValue(undefined);
+      vi.mocked(router.push).mockResolvedValue(undefined);
       const backButton = wrapper.find("[data-test=details-back-button]");
       await backButton.trigger("click");
       expect(router.push).toHaveBeenCalledWith({ name: ROUTES_HOME });
