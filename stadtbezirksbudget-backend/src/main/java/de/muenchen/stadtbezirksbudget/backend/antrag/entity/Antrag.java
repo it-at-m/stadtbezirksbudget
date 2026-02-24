@@ -8,8 +8,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import java.io.Serial;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.EmbeddedColumnNaming;
+import org.hibernate.annotations.Formula;
 
 /**
  * Represents a request that contains various attributes such as the date of receipt,
@@ -34,11 +35,19 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 public class Antrag extends BaseEntity {
     @Serial
     private static final long serialVersionUID = 1L;
+    private static final String ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA = "(SELECT EXISTS (SELECT 1 FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id))";
+    private static final String SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA = "(SELECT COALESCE(SUM(az.betrag), 0) FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id)";
 
-    @Positive private int bezirksausschussNr;
+    private static final String BESCHLUSS_STATUS_FORMULA = "(CASE " +
+            "   WHEN bezirksinformationen_bewilligte_foerderung IS NULL THEN 'LEER' " +
+            "   WHEN bezirksinformationen_bewilligte_foerderung = 0 THEN 'ABGELEHNT' " +
+            "   WHEN bezirksinformationen_bewilligte_foerderung = (SELECT f.beantragtes_budget FROM finanzierung f WHERE f.id = finanzierung_id) THEN 'BEWILLIGT' "
+            +
+            "   ELSE 'TEILBEWILLIGT' " +
+            "END)";
+
     @NotNull private LocalDateTime eingangDatum;
     private boolean istGegendert;
-    private boolean istPersonVorsteuerabzugsberechtigt;
     @NotNull private String zammadTicketNr;
     @NotNull private String aktenzeichen;
     @NotNull private String eakteCooAdresse;
@@ -46,6 +55,16 @@ public class Antrag extends BaseEntity {
     @NotNull private LocalDateTime aktualisierungDatum;
     @NotNull @Enumerated(EnumType.STRING)
     private AktualisierungArt aktualisierungArt;
+
+    @Formula(ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA)
+    private boolean istZuwendungDritterBeantragt;
+
+    @Formula(SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA)
+    private BigDecimal summeAndereZuwendungsantraege;
+
+    @Formula(BESCHLUSS_STATUS_FORMULA)
+    @Enumerated(EnumType.STRING)
+    private BeschlussStatus beschlussStatus;
 
     @NotNull @Embedded
     @EmbeddedColumnNaming("bearbeitungsstand_%s")

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragFilterDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragReferenceUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragStatusUpdateDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.FilterOptionsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
@@ -48,6 +49,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 @ExtendWith(MockitoExtension.class)
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class AntragServiceTest {
     private final ObjectMapper objectMapper = createObjectMapper();
 
@@ -79,7 +81,6 @@ class AntragServiceTest {
         final Antrag antrag = new Antrag();
         antrag.setId(UUID.randomUUID());
         antrag.setBearbeitungsstand(bearbeitungsstand);
-        antrag.setBezirksausschussNr(123);
         antrag.setEingangDatum(LocalDate.now().atStartOfDay());
         antrag.setProjekt(projekt);
         antrag.setAntragsteller(antragsteller);
@@ -275,6 +276,62 @@ class AntragServiceTest {
             assertThrows(NotFoundException.class, () -> antragService.updateAntragStatus(randomId, new AntragStatusUpdateDTO(Status.AUSZAHLUNG)));
             verify(antragRepository).findById(randomId);
             verify(antragRepository, never()).save(any());
+        }
+    }
+
+    @Nested
+    class UpdateAntragReference {
+        @Test
+        void testUpdateReferenceNotFoundThrows() {
+            final UUID randomId = UUID.randomUUID();
+            when(antragRepository.findById(randomId)).thenReturn(Optional.empty());
+
+            assertThrows(NotFoundException.class, () -> antragService.updateAntragReference(
+                    randomId, new AntragReferenceUpdateDTO("COO.6804.7915.3.3210800")));
+            verify(antragRepository).findById(randomId);
+            verify(antragRepository, never()).save(any());
+        }
+
+        @Test
+        void testUpdateReferenceCooAdresse() throws Exception {
+            final Antrag antrag = createAntrag(new Bearbeitungsstand(), new Antragsteller(), new Finanzierung(), "T", "B", Status.VOLLSTAENDIG);
+            antrag.setEakteCooAdresse("COO.6804.7915.3.3210800");
+            final UUID id = antrag.getId();
+
+            final Antrag originalCopy = objectMapper.readValue(objectMapper.writeValueAsString(antrag), Antrag.class);
+
+            when(antragRepository.findById(id)).thenReturn(Optional.of(antrag));
+
+            antragService.updateAntragReference(id, new AntragReferenceUpdateDTO("COO.6804.7915.3.3210877"));
+            verify(antragRepository).findById(id);
+            verify(antragRepository).save(antrag);
+            verify(antragService).saveAntrag(eq(antrag), eq(AktualisierungArt.FACHANWENDUNG));
+            assertThat(antrag.getEakteCooAdresse()).isEqualTo("COO.6804.7915.3.3210877");
+            assertThat(antrag).usingRecursiveComparison()
+                    .ignoringFields("eakteCooAdresse")
+                    .ignoringFields("aktualisierungDatum")
+                    .ignoringFields("aktualisierungArt")
+                    .isEqualTo(originalCopy);
+        }
+
+        @Test
+        void testUpdateReferenceEmpty() throws Exception {
+            final Antrag antrag = createAntrag(new Bearbeitungsstand(), new Antragsteller(), new Finanzierung(), "T", "B", Status.VOLLSTAENDIG);
+            antrag.setEakteCooAdresse("COO.6804.7915.3.3210800");
+            final UUID id = antrag.getId();
+
+            final Antrag originalCopy = objectMapper.readValue(objectMapper.writeValueAsString(antrag), Antrag.class);
+
+            when(antragRepository.findById(id)).thenReturn(Optional.of(antrag));
+
+            antragService.updateAntragReference(id, new AntragReferenceUpdateDTO(null));
+            verify(antragRepository).findById(id);
+            verify(antragRepository).save(antrag);
+            verify(antragService).saveAntrag(eq(antrag), eq(AktualisierungArt.FACHANWENDUNG));
+            assertThat(antrag).usingRecursiveComparison()
+                    .ignoringFields("aktualisierungDatum")
+                    .ignoringFields("aktualisierungArt")
+                    .isEqualTo(originalCopy);
         }
     }
 

@@ -30,6 +30,7 @@ public class Antragsteller implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @NotNull private String vorname;
     @NotBlank private String name;
     @NotNull private String telefonNr;
     @NotBlank private String email;

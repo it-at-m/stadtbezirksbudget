@@ -110,7 +110,7 @@
               variant: 'underlined',
             }"
             data-test="antrag-list-filter-beantragtes-budget"
-            label="Beantragtes Budget"
+            label="Budget"
           />
         </v-col>
       </v-row>

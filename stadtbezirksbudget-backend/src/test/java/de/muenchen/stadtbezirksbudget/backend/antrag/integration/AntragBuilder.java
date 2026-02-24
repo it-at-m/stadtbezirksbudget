@@ -2,6 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Adresse;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AndererZuwendungsantrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bankverbindung;
@@ -17,6 +18,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Verwendungsnachweis;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Zahlung;
+import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
 import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
@@ -41,7 +43,7 @@ import java.util.UUID;
  * </pre>
  */
 
-@SuppressWarnings({ "PMD.AvoidFieldNameMatchingMethodName", "PMD.CouplingBetweenObjects" })
+@SuppressWarnings({ "PMD.AvoidFieldNameMatchingMethodName", "PMD.CouplingBetweenObjects", "PMD.NullAssignment" })
 public class AntragBuilder {
     private static final int LIMIT = 100_000;
     private static final Random RANDOM = new Random();
@@ -49,11 +51,13 @@ public class AntragBuilder {
     private final FinanzierungRepository finanzierungRepository;
     private final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
     private final FinanzierungsmittelRepository finanzierungsmittelRepository;
+    private final AndererZuwendungsantragRepository andererZuwendungsantragRepository;
     private Status status;
     private int bezirksausschussNr;
     private LocalDateTime eingangDatum;
     private LocalDateTime aktualisierungDatum;
     private BigDecimal beantragtesBudget;
+    private BigDecimal bewilligteFoerderung;
     private FinanzierungArt finanzierungArt;
     private AktualisierungArt aktualisierungArt;
     private String zammadNr;
@@ -61,15 +65,18 @@ public class AntragBuilder {
     private String eakteCooAdresse;
     private String antragstellerName;
     private String projektTitel;
+    private List<AndererZuwendungsantrag> andereZuwendungsantraege;
 
     public AntragBuilder(final AntragRepository antragRepository,
             final FinanzierungRepository finanzierungRepository,
             final VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository,
-            final FinanzierungsmittelRepository finanzierungsmittelRepository) {
+            final FinanzierungsmittelRepository finanzierungsmittelRepository,
+            final AndererZuwendungsantragRepository andererZuwendungsantragRepository) {
         this.antragRepository = antragRepository;
         this.finanzierungRepository = finanzierungRepository;
         this.voraussichtlicheAusgabeRepository = voraussichtlicheAusgabeRepository;
         this.finanzierungsmittelRepository = finanzierungsmittelRepository;
+        this.andererZuwendungsantragRepository = andererZuwendungsantragRepository;
         setRandomValues();
     }
 
@@ -79,7 +86,7 @@ public class AntragBuilder {
 
     private void setRandomValues() {
         status = Status.values()[RANDOM.nextInt(Status.values().length)];
-        bezirksausschussNr = RANDOM.nextInt(LIMIT);
+        bezirksausschussNr = RANDOM.nextInt(LIMIT - 1) + 1; // Ensure > 0
         eingangDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
         aktualisierungDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
         beantragtesBudget = BigDecimal.valueOf(RANDOM.nextInt(LIMIT) / 100);
@@ -90,6 +97,8 @@ public class AntragBuilder {
         eakteCooAdresse = String.valueOf(RANDOM.nextInt(LIMIT));
         antragstellerName = generateRandomUuidString();
         projektTitel = generateRandomUuidString();
+        andereZuwendungsantraege = new ArrayList<>();
+        bewilligteFoerderung = null;
     }
 
     public AntragBuilder status(final Status status) {
@@ -144,6 +153,21 @@ public class AntragBuilder {
 
     public AntragBuilder projektTitel(final String projektTitel) {
         this.projektTitel = projektTitel;
+        return this;
+    }
+
+    public AntragBuilder andererZuwendungsantrag(final List<AndererZuwendungsantrag> andereZuwendungsantraege) {
+        this.andereZuwendungsantraege = andereZuwendungsantraege;
+        return this;
+    }
+
+    public AntragBuilder bewilligteFoerderung(final BigDecimal bewilligteFoerderung) {
+        this.bewilligteFoerderung = bewilligteFoerderung;
+        return this;
+    }
+
+    public AntragBuilder eakteCooAdresse(final String eakteCooAdresse) {
+        this.eakteCooAdresse = eakteCooAdresse;
         return this;
     }
 
@@ -271,9 +295,10 @@ public class AntragBuilder {
 
     private Bezirksinformationen initializeBezirksinformationen() {
         return Bezirksinformationen.builder()
+                .ausschussNr(bezirksausschussNr)
                 .bescheidDatum(null)
                 .risNr("")
-                .bewilligteFoerderung(null)
+                .bewilligteFoerderung(bewilligteFoerderung)
                 .sitzungDatum(null)
                 .build();
     }
@@ -284,7 +309,6 @@ public class AntragBuilder {
             final Antragsteller antragsteller = initializeAntragsteller(adresse, antragstellerName);
             final Antrag antrag = Antrag.builder()
                     .eingangDatum(eingangDatum)
-                    .bezirksausschussNr(bezirksausschussNr)
                     .bearbeitungsstand(initializeBearbeitungsstand(status))
                     .aktualisierungArt(aktualisierungArt)
                     .zammadTicketNr(zammadNr)
@@ -295,12 +319,17 @@ public class AntragBuilder {
                     .projekt(initializeProjekt(projektTitel))
                     .antragsteller(antragsteller)
                     .bankverbindung(initializeBankverbindung())
-                    .andereZuwendungsantraege(new ArrayList<>())
                     .zahlung(initializeZahlung())
                     .verwendungsnachweis(initializeVerwendungsnachweis())
                     .bezirksinformationen(initializeBezirksinformationen())
                     .build();
-            return antragRepository.save(antrag);
+            for (final AndererZuwendungsantrag andererZuwendungsantrag : andereZuwendungsantraege) {
+                andererZuwendungsantrag.setAntrag(antrag);
+            }
+            antrag.setAndereZuwendungsantraege(andereZuwendungsantraege);
+            final Antrag savedAntrag = antragRepository.save(antrag);
+            andererZuwendungsantragRepository.saveAll(andereZuwendungsantraege);
+            return savedAntrag;
         } finally {
             setRandomValues();
         }

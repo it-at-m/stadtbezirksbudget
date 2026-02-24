@@ -101,7 +101,7 @@ export const sortDefinitions = {
     ],
   },
   beantragtesBudget: {
-    label: "Beantragtes Budget",
+    label: "Budget",
     dataTest: "antrag-list-sort-beantragtes-budget",
     options: [
       {

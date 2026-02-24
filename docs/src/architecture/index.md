@@ -24,14 +24,14 @@ The Stadtbezirksbudget application is the core system that caseworkers use to ma
 
 Application data, except for attachments, is stored in a PostgreSQL database.
 
-### CIT Form Server
+### Form Server (FOR)
 
 The Form Server is the platform where citizens enter their application data. It serves as the initial point of contact for users, providing a user-friendly
 interface for submitting requests.
 
-### SBB-CIT-EAI
+### SBB-FOR-EAI
 
-The SBB-CIT-EAI component acts as an intermediary, managing the flow of data between the Form Server and the Stadtbezirksbudget application. It ensures that
+The SBB-FOR-EAI component acts as an intermediary, managing the flow of data between the Form Server and the Stadtbezirksbudget application. It ensures that
 information is accurately transmitted via the event bus and an S3 storage.
 
 ### DBS (Zammad)
@@ -41,7 +41,7 @@ notifications throughout the application process.
 
 ### Event Bus (Kafka)
 
-The Event Bus, powered by Kafka, facilitates high-availability communication between the CIT Form Server and the Stadtbezirksbudget application.
+The Event Bus, powered by Kafka, facilitates high-availability communication between the form server (FOR) and the Stadtbezirksbudget application.
 
 ### S3 Storage
 

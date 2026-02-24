@@ -11,6 +11,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.repository.Voraussichtliche
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
@@ -25,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.shaded.com.google.common.collect.Streams;
 
 @Transactional
 @Testcontainers
@@ -40,7 +42,6 @@ class FinanzierungTest {
 
     @PersistenceContext
     private EntityManager entityManager;
-
     @Autowired
     private FinanzierungRepository finanzierungRepository;
     @Autowired
@@ -48,7 +49,10 @@ class FinanzierungTest {
     @Autowired
     private FinanzierungsmittelRepository finanzierungsmittelRepository;
 
-    private Finanzierung createFinanzierung(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen) {
+    private Finanzierung createFinanzierung(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final List<Kategorie> kategorien) {
+        if (finanzierungen.size() != kategorien.size()) {
+            throw new IllegalArgumentException("Kategorien und finanzierungen müssen die gleiche Anzahl von Elementen (size) haben.");
+        }
         final Finanzierung finanzierung = Finanzierung.builder()
                 .istProjektVorsteuerabzugsberechtigt(false)
                 .kostenAnmerkung("Kosten Anmerkung")
@@ -58,7 +62,6 @@ class FinanzierungTest {
                 .istWebsiteFoerderhinweis(false)
                 .istSonstigerFoerderhinweis(false)
                 .sonstigeFoerderhinweise("")
-                .bewilligterZuschuss(BigDecimal.ZERO)
                 .build();
 
         final List<VoraussichtlicheAusgabe> voraussichtlicheAusgaben = ausgaben.stream().map(betrag -> VoraussichtlicheAusgabe.builder()
@@ -68,12 +71,7 @@ class FinanzierungTest {
                 .finanzierung(finanzierung)
                 .build()).toList();
 
-        final List<Finanzierungsmittel> finanzierungsmittel = finanzierungen.stream().map(betrag -> Finanzierungsmittel.builder()
-                .kategorie(Kategorie.EIGENMITTEL)
-                .betrag(betrag)
-                .direktoriumNotiz("Notiz")
-                .finanzierung(finanzierung)
-                .build()).toList();
+        final List<Finanzierungsmittel> finanzierungsmittel = createFinanzierungsmittel(finanzierungen, finanzierung, kategorien);
 
         finanzierung.setVoraussichtlicheAusgaben(voraussichtlicheAusgaben);
         finanzierung.setFinanzierungsmittel(finanzierungsmittel);
@@ -86,6 +84,53 @@ class FinanzierungTest {
         entityManager.clear();
 
         return savedFinanzierung;
+    }
+
+    private List<Finanzierungsmittel> createFinanzierungsmittel(final List<BigDecimal> finanzierungen, final Finanzierung finanzierung,
+            final List<Kategorie> kategorien) {
+        return Streams.zip(
+                finanzierungen.stream(),
+                kategorien.stream(),
+                (betrag, kategorie) -> Finanzierungsmittel.builder()
+                        .kategorie(kategorie)
+                        .betrag(betrag)
+                        .direktoriumNotiz("Notiz")
+                        .finanzierung(finanzierung)
+                        .build())
+                .toList();
+    }
+
+    @Nested
+    class GesamtFormula {
+        private static Arguments args(final List<BigDecimal> ausgaben, final BigDecimal expectedGesamtkosten) {
+            return Arguments.of(ausgaben, expectedGesamtkosten);
+        }
+
+        private static Stream<Arguments> gesamtFormulaTestData() {
+            return Stream.of(
+                    args(List.of(BigDecimal.valueOf(2000.01), BigDecimal.valueOf(3000.99)), BigDecimal.valueOf(5001)),
+                    args(List.of(BigDecimal.valueOf(1000.37), BigDecimal.valueOf(500)), BigDecimal.valueOf(1500.37)),
+                    args(List.of(BigDecimal.valueOf(2500), BigDecimal.valueOf(750)), BigDecimal.valueOf(3250)),
+                    args(List.of(BigDecimal.valueOf(2000)), BigDecimal.valueOf(2000)));
+        }
+
+        @ParameterizedTest
+        @MethodSource("gesamtFormulaTestData")
+        void testGesamtkostenCalculation(final List<BigDecimal> ausgaben, final BigDecimal expectedGesamtkosten) {
+            final Finanzierung created = createFinanzierung(ausgaben, Collections.nCopies(ausgaben.size(), BigDecimal.ZERO),
+                    Collections.nCopies(ausgaben.size(), Kategorie.EIGENMITTEL));
+            final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
+            assertThat(loaded.getGesamtkosten()).isEqualByComparingTo(expectedGesamtkosten);
+        }
+
+        @ParameterizedTest
+        @MethodSource("gesamtFormulaTestData")
+        void testGesamtmittelCalculation(final List<BigDecimal> finanzierungen, final BigDecimal expectedGesamtmittel) {
+            final Finanzierung created = createFinanzierung(Collections.nCopies(finanzierungen.size(), BigDecimal.ZERO), finanzierungen,
+                    Collections.nCopies(finanzierungen.size(), Kategorie.EIGENMITTEL));
+            final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
+            assertThat(loaded.getGesamtmittel()).isEqualByComparingTo(expectedGesamtmittel);
+        }
     }
 
     @Nested
@@ -113,9 +158,66 @@ class FinanzierungTest {
         @ParameterizedTest
         @MethodSource("artTestData")
         void testArtDetermination(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final FinanzierungArt expectedArt) {
-            final Finanzierung created = createFinanzierung(ausgaben, finanzierungen);
+            final Finanzierung created = createFinanzierung(ausgaben, finanzierungen, Collections.nCopies(finanzierungen.size(), Kategorie.EIGENMITTEL));
             final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
             assertThat(loaded.getArt()).isEqualTo(expectedArt);
+        }
+    }
+
+    @Nested
+    class ZuwenigEigenmittel {
+        private static Arguments args(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final List<Kategorie> kategorien,
+                final boolean expectedResult) {
+            return Arguments.of(ausgaben, finanzierungen, kategorien, expectedResult);
+        }
+
+        private static Stream<Arguments> zuwenigEigenmittelTestData() {
+            return Stream.of(
+                    args(List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000), BigDecimal.valueOf(0)),
+                            List.of(BigDecimal.valueOf(1250), BigDecimal.valueOf(0), BigDecimal.valueOf(0)),
+                            List.of(Kategorie.EIGENMITTEL, Kategorie.EINNAHMEN, Kategorie.ZUWENDUNGEN_DRITTER),
+                            false),
+                    args(List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000), BigDecimal.valueOf(0)),
+                            List.of(BigDecimal.valueOf(1249), BigDecimal.valueOf(0), BigDecimal.valueOf(0)),
+                            List.of(Kategorie.EIGENMITTEL, Kategorie.EINNAHMEN, Kategorie.ZUWENDUNGEN_DRITTER),
+                            true),
+                    args(List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000), BigDecimal.valueOf(0)),
+                            List.of(BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(0)),
+                            List.of(Kategorie.EIGENMITTEL, Kategorie.EINNAHMEN, Kategorie.ZUWENDUNGEN_DRITTER),
+                            true),
+                    args(List.of(BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(1)),
+                            List.of(BigDecimal.valueOf(0), BigDecimal.valueOf(0), BigDecimal.valueOf(0)),
+                            List.of(Kategorie.EIGENMITTEL, Kategorie.EINNAHMEN, Kategorie.ZUWENDUNGEN_DRITTER),
+                            true),
+                    args(List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000)),
+                            List.of(BigDecimal.valueOf(1000), BigDecimal.valueOf(250)),
+                            List.of(Kategorie.EIGENMITTEL, Kategorie.EINNAHMEN),
+                            true),
+                    args(List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000)),
+                            List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000)),
+                            List.of(Kategorie.ZUWENDUNGEN_DRITTER, Kategorie.EINNAHMEN),
+                            true),
+                    args(List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000)),
+                            List.of(BigDecimal.valueOf(1500), BigDecimal.valueOf(750)),
+                            List.of(Kategorie.EINNAHMEN, Kategorie.EINNAHMEN),
+                            true),
+                    args(List.of(BigDecimal.valueOf(2000)),
+                            List.of(BigDecimal.valueOf(100)),
+                            List.of(Kategorie.ZUWENDUNGEN_DRITTER),
+                            true),
+                    args(List.of(BigDecimal.valueOf(2000), BigDecimal.valueOf(3000)),
+                            List.of(BigDecimal.valueOf(1000), BigDecimal.valueOf(500)),
+                            List.of(Kategorie.ZUWENDUNGEN_DRITTER, Kategorie.EIGENMITTEL),
+                            true));
+        }
+
+        @ParameterizedTest
+        @MethodSource("zuwenigEigenmittelTestData")
+        void testZuwenigEigenmittel(final List<BigDecimal> ausgaben, final List<BigDecimal> finanzierungen, final List<Kategorie> kategorien,
+                final boolean expectedResult) {
+            final Finanzierung created = createFinanzierung(ausgaben, finanzierungen, kategorien);
+            final Finanzierung loaded = finanzierungRepository.findById(created.getId()).orElseThrow();
+            assertThat(loaded.isIstZuwenigEigenmittel()).isEqualTo(expectedResult);
         }
     }
 }

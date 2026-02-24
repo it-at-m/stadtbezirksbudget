@@ -16,33 +16,10 @@
     :loading="loading"
     :page="page"
     data-test="antrag-list"
+    items-per-page-text="Anträge pro Seite:"
     @update:options="updateOptions"
     @click:row="goToDetails"
   >
-    <template
-      v-slot:[`header.beantragtesBudget`]="{
-        column,
-        toggleSort,
-        isSorted,
-        getSortIcon,
-      }"
-    >
-      <div
-        class="d-flex v-data-table-header__cell"
-        data-test="header-beantragtes-budget"
-        style="cursor: pointer; align-items: center"
-        @click="() => toggleSort"
-      >
-        <span class="mr-1 text-left"> Beantragtes <br />Budget [€] </span>
-        <v-icon
-          :class="[
-            'v-data-table-header__sort-icon',
-            { 'v-data-table-header__sort-icon--active': isSorted(column) },
-          ]"
-          :icon="getSortIcon(column)"
-        />
-      </div>
-    </template>
     <template v-slot:[`item.status`]="{ item }">
       <antrag-status-update
         :antrag-id="item.id"
@@ -87,10 +64,12 @@
       />
     </template>
     <template v-slot:[`item.aktenzeichen`]="{ item }">
-      <eakte-link
+      <eakte-reference
         :aktenzeichen="item.aktenzeichen"
+        :antrag-id="item.id"
         :eakte-coo-adresse="item.eakteCooAdresse"
         data-test="item-aktenzeichen"
+        @reference-updated="fetchItems"
         @click.stop
         @mousedown.stop
       />
@@ -105,7 +84,7 @@ import { useDebounceFn } from "@vueuse/core";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 
 import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
-import EakteLink from "@/components/references/EakteLink.vue";
+import EakteReference from "@/components/references/EakteReference.vue";
 import ZammadLink from "@/components/references/ZammadLink.vue";
 import { useAntragList } from "@/composables/useAntragList.ts";
 import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
@@ -178,6 +157,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth}px`,
     },
     {
+      title: "Budget [€]",
       key: "beantragtesBudget",
       align: "end",
       maxWidth: `${baseWidth}px`,

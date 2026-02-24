@@ -3,6 +3,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bearbeitungsstand_;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Bezirksinformationen_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Finanzierung_;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt_;
 import de.muenchen.stadtbezirksbudget.backend.common.InvalidSortPropertyException;
@@ -22,7 +23,7 @@ public class AntragSortMapper {
             Map.entry("status", path(Antrag_.bearbeitungsstand, Bearbeitungsstand_.status)),
             Map.entry("zammadNr", path(Antrag_.zammadTicketNr)),
             Map.entry("aktenzeichen", path(Antrag_.aktenzeichen)),
-            Map.entry("bezirksausschussNr", path(Antrag_.bezirksausschussNr)),
+            Map.entry("bezirksausschussNr", path(Antrag_.bezirksinformationen, Bezirksinformationen_.ausschussNr)),
             Map.entry("eingangDatum", path(Antrag_.eingangDatum)),
             Map.entry("antragstellerName", path(Antrag_.antragsteller, Antragsteller_.name)),
             Map.entry("projektTitel", path(Antrag_.projekt, Projekt_.titel)),

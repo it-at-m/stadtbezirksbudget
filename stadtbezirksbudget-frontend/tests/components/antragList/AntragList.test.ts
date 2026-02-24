@@ -54,9 +54,6 @@ describe("AntragList", () => {
 
   test("renders antrag summary list", () => {
     expect(wrapper.find('[data-test="antrag-list"]').exists()).toBe(true);
-    expect(
-      wrapper.find('[data-test="header-beantragtes-budget"]').exists()
-    ).toBe(true);
     expect(wrapper.find('[data-test="item-status"]').exists()).toBe(true);
     expect(wrapper.find('[data-test="item-eingang-datum"]').exists()).toBe(
       true
@@ -74,7 +71,9 @@ describe("AntragList", () => {
       true
     );
     expect(wrapper.find('[data-test="item-zammad-nr"]').exists()).toBe(true);
-    expect(wrapper.find('[data-test="item-aktenzeichen"]').exists()).toBe(true);
+    expect(wrapper.findComponent({ name: "EakteReference" }).exists()).toBe(
+      true
+    );
   });
 
   test("updates ui on screen size change", async () => {
@@ -243,6 +242,18 @@ describe("AntragList", () => {
     expect(statusComponent.exists()).toBe(true);
 
     statusComponent.vm.$emit("status-updated");
+    await wrapper.vm.$nextTick();
+
+    expect(mockUseAntragList.fetchItems).toHaveBeenCalled();
+  });
+
+  test("calls fetchItems on reference updated emit", async () => {
+    const referenceComponent = wrapper.findComponent({
+      name: "EakteReference",
+    });
+    expect(referenceComponent.exists()).toBe(true);
+
+    referenceComponent.vm.$emit("reference-updated");
     await wrapper.vm.$nextTick();
 
     expect(mockUseAntragList.fetchItems).toHaveBeenCalled();
