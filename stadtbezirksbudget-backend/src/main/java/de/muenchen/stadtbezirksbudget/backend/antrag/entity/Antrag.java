@@ -38,12 +38,11 @@ public class Antrag extends BaseEntity {
     private static final String ZUWENDUNG_DRITTER_BEANTRAGT_FORMULA = "(SELECT EXISTS (SELECT 1 FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id))";
     private static final String SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA = "(SELECT COALESCE(SUM(az.betrag), 0) FROM anderer_zuwendungsantrag az WHERE az.antrag_id = id)";
 
-    private static final String BEANTRAGT = "(SELECT f.beantragtes_budget FROM finanzierung f WHERE f.id = finanzierung_id)";
-    private static final String BEWILLIGT = "(SELECT bezirksinformationen_bewilligte_foerderung FROM antrag a WHERE a.id = id)";
     private static final String BESCHLUSS_STATUS_FORMULA = "(CASE " +
-            "   WHEN " + BEWILLIGT + " IS NULL THEN 'LEER' " +
-            "   WHEN " + BEWILLIGT + " = 0 THEN 'ABGELEHNT' " +
-            "   WHEN " + BEWILLIGT + " = " + BEANTRAGT + " THEN 'BEWILLIGT' " +
+            "   WHEN bezirksinformationen_bewilligte_foerderung IS NULL THEN 'LEER' " +
+            "   WHEN bezirksinformationen_bewilligte_foerderung = 0 THEN 'ABGELEHNT' " +
+            "   WHEN bezirksinformationen_bewilligte_foerderung = (SELECT f.beantragtes_budget FROM finanzierung f WHERE f.id = finanzierung_id) THEN 'BEWILLIGT' "
+            +
             "   ELSE 'TEILBEWILLIGT' " +
             "END)";
 
@@ -62,12 +61,6 @@ public class Antrag extends BaseEntity {
 
     @Formula(SUMME_ANDERE_ZUWENDUNGSANTRAEGE_FORMULA)
     private BigDecimal summeAndereZuwendungsantraege;
-
-    @Formula(BEANTRAGT)
-    private BigDecimal beantragt;
-
-    @Formula(BEWILLIGT)
-    private BigDecimal bewilligt;
 
     @Formula(BESCHLUSS_STATUS_FORMULA)
     @Enumerated(EnumType.STRING)

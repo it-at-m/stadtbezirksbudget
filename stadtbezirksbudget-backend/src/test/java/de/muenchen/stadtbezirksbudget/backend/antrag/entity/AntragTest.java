@@ -151,7 +151,7 @@ class AntragTest {
             entityManager.clear();
             final Antrag loaded = antragRepository.findById(created.getId()).orElseThrow();
             final BeschlussStatus status = loaded.getBeschlussStatus();
-            assertThat(status).isEqualByComparingTo(expectedStatus);
+            assertThat(status).isEqualTo(expectedStatus);
         }
     }
 }
