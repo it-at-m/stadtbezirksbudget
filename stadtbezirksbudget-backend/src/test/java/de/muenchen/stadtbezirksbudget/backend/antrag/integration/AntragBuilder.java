@@ -43,7 +43,7 @@ import java.util.UUID;
  * </pre>
  */
 
-@SuppressWarnings({ "PMD.AvoidFieldNameMatchingMethodName", "PMD.CouplingBetweenObjects" })
+@SuppressWarnings({ "PMD.AvoidFieldNameMatchingMethodName", "PMD.CouplingBetweenObjects", "PMD.NullAssignment" })
 public class AntragBuilder {
     private static final int LIMIT = 100_000;
     private static final Random RANDOM = new Random();
@@ -86,7 +86,7 @@ public class AntragBuilder {
 
     private void setRandomValues() {
         status = Status.values()[RANDOM.nextInt(Status.values().length)];
-        bezirksausschussNr = RANDOM.nextInt(LIMIT);
+        bezirksausschussNr = RANDOM.nextInt(LIMIT - 1) + 1; // Ensure > 0
         eingangDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
         aktualisierungDatum = LocalDateTime.now().withNano(0).minusDays(RANDOM.nextInt(LIMIT));
         beantragtesBudget = BigDecimal.valueOf(RANDOM.nextInt(LIMIT) / 100);
