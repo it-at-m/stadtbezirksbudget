@@ -7,7 +7,6 @@ import ActiveFilterNotice from "@/components/antragList/ActiveFilterNotice.vue";
 import vuetify from "@/plugins/vuetify.ts";
 
 vi.stubGlobal("visualViewport", new EventTarget());
-// vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 describe("ActiveFilterNotice", () => {
   let wrapper: VueWrapper<InstanceType<typeof ActiveFilterNotice>>;
