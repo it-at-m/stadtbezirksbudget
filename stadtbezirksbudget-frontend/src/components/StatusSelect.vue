@@ -22,16 +22,3 @@ const itemProps = (item: StatusOption) => ({
   title: item.shortText,
 });
 </script>
-
-<style scoped>
-/*noinspection CssUnusedSymbol*/
-:deep(.v-field__input) {
-  flex-wrap: nowrap;
-}
-/*noinspection CssUnusedSymbol*/
-:deep(.v-autocomplete__selection) {
-  display: inline-block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
