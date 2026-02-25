@@ -18,12 +18,11 @@ describe("App", () => {
   const components = [
     "TheSnackbar",
     "TheAppBar",
-    "VNavigationDrawer",
     "VMain",
     "VContainer",
     "RouterView",
   ];
-  const stubs = ["TheSnackbar", "TheAppBar", "VNavigationDrawer", "RouterView"];
+  const stubs = ["TheSnackbar", "TheAppBar", "RouterView"];
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -51,35 +50,5 @@ describe("App", () => {
     });
 
     expect(vi.mocked(useInitializeStores)).toHaveBeenCalled();
-  });
-
-  test("toggles navigation drawer when TheAppBar emits toggle-navigation-drawer", async () => {
-    const navigationRef = ref(false);
-    const toggleMock = vi.fn(
-      () => (navigationRef.value = !navigationRef.value)
-    );
-    vi.mocked(useToggle).mockReturnValue([navigationRef, toggleMock]);
-
-    const wrapper = mount(App, {
-      global: {
-        plugins: [pinia, vuetify],
-        stubs,
-      },
-    });
-
-    const appBar = wrapper.findComponent({ name: "TheAppBar" });
-    const navigationDrawer = wrapper.findComponent({
-      name: "VNavigationDrawer",
-    });
-    expect(appBar.exists()).toBe(true);
-    expect(navigationDrawer.exists()).toBe(true);
-    expect(navigationRef.value).toBe(false);
-    expect(navigationDrawer.props("modelValue")).toBe(false);
-
-    await appBar.vm.$emit("toggle-navigation-drawer");
-
-    expect(toggleMock).toHaveBeenCalled();
-    expect(navigationRef.value).toBe(true);
-    expect(navigationDrawer.props("modelValue")).toBe(true);
   });
 });

@@ -42,15 +42,6 @@ describe("TheAppBar", () => {
     expect(title.text()).toBe("Stadtbezirksbudget");
   });
 
-  test("renders navigation icon that emits on click", () => {
-    const wrapper = mountComponent();
-
-    const navIcon = wrapper.findComponent({ name: "VAppBarNavIcon" });
-    expect(navIcon.exists()).toBe(true);
-    navIcon.trigger("click");
-    expect(wrapper.emitted()).toHaveProperty("toggleNavigationDrawer");
-  });
-
   test("renders app switcher", () => {
     const wrapper = mountComponent();
 

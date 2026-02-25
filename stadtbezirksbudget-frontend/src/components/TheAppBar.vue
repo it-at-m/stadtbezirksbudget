@@ -5,9 +5,8 @@
         class="d-flex align-center justify-start"
         cols="3"
       >
-        <v-app-bar-nav-icon @click.stop="emit('toggleNavigationDrawer')" />
         <router-link
-          class="text-decoration-none"
+          class="text-decoration-none pa-4"
           to="/"
         >
           <v-toolbar-title class="font-weight-bold">
@@ -60,8 +59,6 @@ import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import { useRouteCheck } from "@/composables/useRouteCheck.ts";
 import { APPSWITCHER_URL } from "@/constants.ts";
 import { useUserStore } from "@/stores/useUserStore.ts";
-
-const emit = defineEmits<(e: "toggleNavigationDrawer") => void>();
 
 const userStore = useUserStore();
 const { isHomePage } = useRouteCheck();

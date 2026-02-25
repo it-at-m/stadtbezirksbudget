@@ -1,8 +1,7 @@
 <template>
   <v-app>
     <the-snackbar />
-    <the-app-bar @toggle-navigation-drawer="toggleNavigationDrawer" />
-    <v-navigation-drawer v-model="navigationDrawer"></v-navigation-drawer>
+    <the-app-bar />
     <v-main>
       <v-container fluid>
         <router-view v-slot="{ Component }">
@@ -16,13 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useToggle } from "@vueuse/core";
-
 import TheAppBar from "@/components/TheAppBar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useInitializeStores } from "@/composables/useInitializeStores.ts";
 
 useInitializeStores();
-
-const [navigationDrawer, toggleNavigationDrawer] = useToggle();
 </script>
