@@ -39,7 +39,7 @@ describe("ActiveFilterNotice", () => {
   test("closes snackbar on button click", async () => {
     await wrapper.setProps({ active: true });
     const snackbar = wrapper.findComponent({ name: "VSnackbar" });
-    const button = wrapper.findComponent({ name: "VBtn" });
+    const button = wrapper.findComponent({ name: "VBtnPrimary" });
     expect(button.text()).toBe("Schließen");
 
     await button.trigger("click");

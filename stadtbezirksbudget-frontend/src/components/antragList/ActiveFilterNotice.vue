@@ -3,15 +3,21 @@
     v-model="show"
     :timeout="-1"
   >
-    Aktuell werden nicht alle Datensätze angezeigt, da Filter aktiviert sind.
-    <v-btn
-      color="primary"
-      data-test="filter-notice-close"
-      variant="text"
-      @click="show = false"
-    >
-      Schließen
-    </v-btn>
+    <v-row align="center">
+      <v-col>
+        Aktuell werden nicht alle Datensätze angezeigt, da Filter aktiviert
+        sind.
+      </v-col>
+      <v-col cols="auto">
+        <v-btn-primary
+          data-test="filter-notice-close"
+          variant="flat"
+          @click="show = false"
+        >
+          Schließen
+        </v-btn-primary>
+      </v-col>
+    </v-row>
   </v-snackbar>
 </template>
 
