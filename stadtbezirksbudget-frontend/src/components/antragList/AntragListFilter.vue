@@ -37,7 +37,7 @@
             data-test="antrag-list-filter-bezirksausschuss"
             density="compact"
             hide-details="auto"
-            label="Bezirk"
+            label="BA"
             multiple
             variant="underlined"
             @focusout="updateFilters"
