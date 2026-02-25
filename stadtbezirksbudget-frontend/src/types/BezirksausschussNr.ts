@@ -4,7 +4,7 @@ const bezirksausschussNrDefinitions = Array.from(
   { length: COUNT_BEZIRKE },
   (_, i) => ({
     value: i + 1,
-    title: `Bezirk ${i + 1}`,
+    title: `BA ${i + 1}`,
   })
 );
 

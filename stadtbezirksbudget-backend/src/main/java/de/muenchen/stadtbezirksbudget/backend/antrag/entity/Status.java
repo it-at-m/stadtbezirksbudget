@@ -1,5 +1,8 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
+/**
+ * Represents the information, in which status the corresponding Antrag currently is.
+ */
 public enum Status {
     EINGEGANGEN,
     WARTEN_AUF_BUERGERRUECKMELDUNG,

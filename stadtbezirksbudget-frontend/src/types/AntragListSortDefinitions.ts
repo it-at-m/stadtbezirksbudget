@@ -45,7 +45,7 @@ export const sortDefinitions = {
     ],
   },
   bezirksausschussNr: {
-    label: "Bezirk",
+    label: "BA",
     dataTest: "antrag-list-sort-bezirksausschuss-nr",
     options: [
       {
@@ -73,7 +73,7 @@ export const sortDefinitions = {
     ],
   },
   antragstellerName: {
-    label: "Antragsteller/in",
+    label: "Antragsteller*in",
     dataTest: "antrag-list-sort-antragsteller-name",
     options: [
       {

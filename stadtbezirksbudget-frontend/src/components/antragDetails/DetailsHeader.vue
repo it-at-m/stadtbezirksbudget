@@ -1,6 +1,13 @@
 <template>
   <v-row>
-    <v-col></v-col>
+    <v-col>
+      <v-btn-primary
+        :prepend-icon="mdiArrowLeft"
+        data-test="details-back-button"
+        text="Zurück zur Übersicht"
+        @click="router.push({ name: ROUTES_HOME })"
+      />
+    </v-col>
     <v-col cols="auto">
       <zammad-button
         :zammad-nr="antrag.allgemein.zammadNr"
@@ -14,10 +21,13 @@
 <script lang="ts" setup>
 import type { AntragDetails } from "@/types/antragDetails/AntragDetails.ts";
 
+import { mdiArrowLeft } from "@mdi/js";
 import { ref, watch } from "vue";
 
 import EakteButton from "@/components/references/EakteButton.vue";
 import ZammadButton from "@/components/references/ZammadButton.vue";
+import { ROUTES_HOME } from "@/constants.ts";
+import router from "@/plugins/router.ts";
 
 const props = defineProps<{ antrag: AntragDetails }>();
 

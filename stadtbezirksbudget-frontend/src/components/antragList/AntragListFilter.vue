@@ -4,11 +4,11 @@
       <v-row>
         <v-col class="d-flex align-center">Filtern nach</v-col>
         <v-col cols="auto">
-          <v-btn-primary
+          <v-btn-secondary
             data-test="antrag-list-filter-reset-btn"
             @click="resetFilters"
             >Alle Filter löschen
-          </v-btn-primary>
+          </v-btn-secondary>
         </v-col>
       </v-row>
     </v-card-title>
@@ -37,7 +37,7 @@
             data-test="antrag-list-filter-bezirksausschuss"
             density="compact"
             hide-details="auto"
-            label="Bezirk"
+            label="BA"
             multiple
             variant="underlined"
             @focusout="updateFilters"
@@ -72,7 +72,7 @@
             data-test="antrag-list-filter-antragsteller-name"
             density="compact"
             hide-details="auto"
-            label="Antragsteller/in"
+            label="Antragsteller*in"
             variant="underlined"
             @focusout="updateFilters"
           />
@@ -183,3 +183,13 @@ import { finanzierungArtOptions } from "@/types/FinanzierungArt.ts";
 const { updateFilters, resetFilters, filters } = useAntragListFilter();
 const { filterOptions } = useAntragListFilterOptionsStore();
 </script>
+
+<style scoped>
+/*noinspection CssUnusedSymbol*/
+:deep(.v-field__input) {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

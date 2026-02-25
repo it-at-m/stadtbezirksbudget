@@ -147,7 +147,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth}px`,
     },
     {
-      title: "Antragsteller/in",
+      title: "Antragsteller*in",
       key: "antragstellerName",
       maxWidth: `${baseWidth}px`,
     },
