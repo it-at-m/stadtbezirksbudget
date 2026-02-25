@@ -10,19 +10,21 @@ const commonBtnStyle = {
   size: "default",
   rounded: "lg",
   variant: "elevated",
+  style: "text-transform: none",
 };
 export const defaults = {
   VBtnPrimary: {
-    color: "#006A63",
     ...commonBtnStyle,
+    color: "#006A63",
   },
   VBtnSecondary: {
-    color: "#D4F9F4",
     ...commonBtnStyle,
+    color: "#006A63",
+    variant: "outlined",
   },
   VBtnTertiary: {
-    color: "#47617A",
     ...commonBtnStyle,
+    color: "#47617A",
   },
   VNumberInput: {
     variant: "outlined",
