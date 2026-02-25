@@ -15,11 +15,9 @@
 </template>
 
 <script lang="ts" setup>
-
 import TheAppBar from "@/components/TheAppBar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import {useInitializeStores} from "@/composables/useInitializeStores.ts";
+import { useInitializeStores } from "@/composables/useInitializeStores.ts";
 
 useInitializeStores();
-
 </script>
