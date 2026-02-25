@@ -28,10 +28,7 @@ describe("AntragListFilterMenu", () => {
   test("renders menu, open button and notice", async () => {
     const wrapper = createWrapper(false);
     const menu = wrapper.findComponent({ name: "VMenu" });
-    const button = wrapper.findComponent({
-      name: "VBtn",
-      props: { "data-test": "antrag-list-filter-open-btn" },
-    });
+    const button = wrapper.findComponent({ name: "VBtn" });
 
     expect(menu.exists()).toBe(true);
     expect(button.exists()).toBe(true);
@@ -43,10 +40,7 @@ describe("AntragListFilterMenu", () => {
 
   test("changes button and notice props if hasActiveFilters", () => {
     const wrapper = createWrapper(true);
-    const button = wrapper.findComponent({
-      name: "VBtn",
-      props: { "data-test": "antrag-list-filter-open-btn" },
-    });
+    const button = wrapper.findComponent({ name: "VBtn" });
     expect(button.props("variant")).toBe("outlined");
 
     const notice = wrapper.findComponent({ name: "ActiveFilterNotice" });

@@ -14,12 +14,6 @@ describe("ActiveFilterNotice", () => {
   beforeEach(() => {
     wrapper = mount(ActiveFilterNotice, {
       global: { plugins: [vuetify] },
-      stubs: {
-        VSnackbar: {
-          name: "VSnackbar",
-          template: "<div><slot /></div>",
-        },
-      },
     });
   });
 
