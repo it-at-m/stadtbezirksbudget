@@ -72,7 +72,7 @@
             data-test="antrag-list-filter-antragsteller-name"
             density="compact"
             hide-details="auto"
-            label="Antragsteller/in"
+            label="Antragsteller*in"
             variant="underlined"
             @focusout="updateFilters"
           />

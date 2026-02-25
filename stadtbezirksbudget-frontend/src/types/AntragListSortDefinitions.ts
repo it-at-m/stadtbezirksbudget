@@ -73,7 +73,7 @@ export const sortDefinitions = {
     ],
   },
   antragstellerName: {
-    label: "Antragsteller/in",
+    label: "Antragsteller*in",
     dataTest: "antrag-list-sort-antragsteller-name",
     options: [
       {
