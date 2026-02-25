@@ -1,5 +1,8 @@
 <template>
-  <v-menu :close-on-content-click="false">
+  <v-menu
+    :close-on-content-click="false"
+    width="500"
+  >
     <template #activator="{ props }">
       <v-btn
         :icon="mdiSort"
