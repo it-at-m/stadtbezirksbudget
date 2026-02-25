@@ -43,7 +43,7 @@ These filters can be combined to narrow down the list of applications and make i
 all applications where all the following conditions are met:
 
 - The status is "_Offen_" or "_Vorbereitung_"
-- The Bezirk is "_Bezirk 1_"
+- The BA is "_BA 1_"
 - The application was created between 27.10.2025 and 27.11.2025
 - The amount requested is greater than or equal to 1,000 EUR
 - The type of the application is "_Fehl_"
