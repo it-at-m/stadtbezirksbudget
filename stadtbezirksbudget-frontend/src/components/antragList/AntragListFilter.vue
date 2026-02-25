@@ -4,14 +4,11 @@
       <v-row>
         <v-col class="d-flex align-center">Filtern nach</v-col>
         <v-col cols="auto">
-          <v-btn
-            color="primary"
+          <v-btn-secondary
             data-test="antrag-list-filter-reset-btn"
-            style="text-transform: none"
-            variant="outlined"
             @click="resetFilters"
             >Alle Filter löschen
-          </v-btn>
+          </v-btn-secondary>
         </v-col>
       </v-row>
     </v-card-title>
