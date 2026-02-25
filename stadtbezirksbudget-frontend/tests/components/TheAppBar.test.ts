@@ -20,6 +20,7 @@ describe("TheAppBar", () => {
         stubs: {
           VAppBar: { template: "<div><slot /></div>" },
           RouterLink: { template: "<a><slot/></a>" },
+          AntragListFilterMenu: { name: "AntragListFilterMenu" },
         },
       },
     });
