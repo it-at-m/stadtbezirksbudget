@@ -183,3 +183,13 @@ import { finanzierungArtOptions } from "@/types/FinanzierungArt.ts";
 const { updateFilters, resetFilters, filters } = useAntragListFilter();
 const { filterOptions } = useAntragListFilterOptionsStore();
 </script>
+
+<style scoped>
+/*noinspection CssUnusedSymbol*/
+:deep(.v-field__input) {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

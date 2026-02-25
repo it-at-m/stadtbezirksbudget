@@ -28,6 +28,7 @@ public interface AntragMapper {
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
     @Mapping(target = "finanzierungArt", source = "antrag.finanzierung.art")
     @Mapping(target = "aktualisierung", source = "aktualisierungArt")
+    @Mapping(target = "bezirksausschussNr", source = "antrag.bezirksinformationen.ausschussNr")
     AntragSummaryDTO toAntragSummaryDTO(Antrag antrag);
 
     /**
@@ -57,9 +58,8 @@ public interface AntragMapper {
 
     @Mappings(
         {
-                @Mapping(target = "bezirksausschussNr", source = "bezirksausschussNr"),
+                @Mapping(target = "bezirksinformationen.ausschussNr", source = "bezirksausschussNr"),
                 @Mapping(target = "eingangDatum", expression = "java(java.time.LocalDateTime.of(2026,2,5,15,30))"),
-                @Mapping(target = "istPersonVorsteuerabzugsberechtigt", constant = "false"),
                 @Mapping(target = "zammadTicketNr", constant = "12345"),
                 @Mapping(target = "aktualisierungDatum", expression = "java(java.time.LocalDateTime.of(2026,2,5,15,30))"),
                 @Mapping(target = "aktenzeichen", constant = "2026-00-00/01234"),
@@ -67,6 +67,7 @@ public interface AntragMapper {
                 @Mapping(target = "bearbeitungsstand.anmerkungen", constant = "Muster Anmerkung"),
                 @Mapping(target = "bearbeitungsstand.istMittelabruf", constant = "false"),
                 @Mapping(target = "bearbeitungsstand.status", constant = "EINGEGANGEN"),
+                @Mapping(target = "finanzierung.istPersonVorsteuerabzugsberechtigt", constant = "false"),
                 @Mapping(target = "finanzierung.istProjektVorsteuerabzugsberechtigt", constant = "false"),
                 @Mapping(target = "finanzierung.kostenAnmerkung", constant = "Muster Anmerkung"),
                 @Mapping(target = "finanzierung.begruendungEigenmittel", constant = "Muster Begründung"),
@@ -75,7 +76,6 @@ public interface AntragMapper {
                 @Mapping(target = "finanzierung.istWebsiteFoerderhinweis", constant = "true"),
                 @Mapping(target = "finanzierung.istSonstigerFoerderhinweis", constant = "true"),
                 @Mapping(target = "finanzierung.sonstigeFoerderhinweise", constant = "Muster Förderhinweis"),
-                @Mapping(target = "finanzierung.bewilligterZuschuss", expression = "java(new java.math.BigDecimal(\"1500.00\"))"),
                 @Mapping(
                         target = "finanzierung.voraussichtlicheAusgaben",
                         expression = "java(java.util.List.of(de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe.builder().kategorie(\"Muster Kategorie\").betrag(new java.math.BigDecimal(5000)).direktoriumNotiz(\"Muster Notiz\").build()))"
