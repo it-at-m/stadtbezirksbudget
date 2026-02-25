@@ -15,6 +15,6 @@ public record ZahlungDetailsDTO(
         String anlageNr,
         String kreditor,
         String rechnungNr,
-        String fiBelegnr,
+        String fiBelegNr,
         String bestellung) {
 }

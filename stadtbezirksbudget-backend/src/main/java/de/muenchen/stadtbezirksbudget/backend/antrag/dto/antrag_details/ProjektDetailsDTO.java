@@ -10,6 +10,6 @@ import java.time.LocalDate;
 public record ProjektDetailsDTO(
         String beschreibung,
         LocalDate start,
-        LocalDate end,
+        LocalDate ende,
         String fristBruchBegruendung) {
 }

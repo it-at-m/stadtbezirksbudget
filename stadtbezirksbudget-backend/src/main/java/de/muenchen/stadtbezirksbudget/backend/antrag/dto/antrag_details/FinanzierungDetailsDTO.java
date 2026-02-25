@@ -12,15 +12,15 @@ public record FinanzierungDetailsDTO(
         boolean istPersonVorsteuerabzugsberechtigt,
         boolean istProjektVorsteuerabzugsberechtigt,
         List<VoraussichtlicheAusgabeDTO> voraussichtlicheAusgaben,
-        BigDecimal gesamtKosten,
-        String kostenAnmerkungen,
+        BigDecimal gesamtkosten,
+        String kostenAnmerkung,
         boolean istZuwendungDritterBeantragt,
-        List<AndererZuwendungsantragDTO> andererZuwendungsantraege,
-        BigDecimal gesamtZuwendungenDritter,
+        List<AndererZuwendungsantragDTO> andereZuwendungsantraege,
+        BigDecimal summeAndereZuwendungsantraege,
         List<FinanzierungsmittelDTO> finanzierungsmittel,
         boolean istZuwenigEigenmittel,
         String begruendungEigenmittel,
-        BigDecimal gesamtMittel,
+        BigDecimal gesamtmittel,
         boolean istEinladungFoerderhinweis,
         boolean istWebsiteFoerderhinweis,
         boolean istSonstigerFoerderhinweis,
@@ -28,7 +28,7 @@ public record FinanzierungDetailsDTO(
 
     public FinanzierungDetailsDTO {
         voraussichtlicheAusgaben = voraussichtlicheAusgaben != null ? List.copyOf(voraussichtlicheAusgaben) : List.of();
-        andererZuwendungsantraege = andererZuwendungsantraege != null ? List.copyOf(andererZuwendungsantraege) : List.of();
+        andereZuwendungsantraege = andereZuwendungsantraege != null ? List.copyOf(andereZuwendungsantraege) : List.of();
         finanzierungsmittel = finanzierungsmittel != null ? List.copyOf(finanzierungsmittel) : List.of();
     }
 }

@@ -14,6 +14,6 @@ public record AntragstellerDetailsDTO(
         String postleitzahl,
         String weitereAngaben,
         String email,
-        String telefon,
+        String telefonNr,
         String zielsetzung) {
 }

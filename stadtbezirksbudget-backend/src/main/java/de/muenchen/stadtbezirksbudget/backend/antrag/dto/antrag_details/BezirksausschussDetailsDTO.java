@@ -10,10 +10,10 @@ import java.time.LocalDate;
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record BezirksausschussDetailsDTO(
-        int bezirksauschussNr,
+        int ausschussNr,
         LocalDate sitzungDatum,
         String risNr,
-        BeschlussStatus beschluss,
+        BeschlussStatus beschlussStatus,
         BigDecimal bewilligteFoerderung,
         LocalDate bescheidDatum) {
 }

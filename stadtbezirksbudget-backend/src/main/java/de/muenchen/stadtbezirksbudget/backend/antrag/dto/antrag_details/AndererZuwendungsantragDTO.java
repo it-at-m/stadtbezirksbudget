@@ -10,7 +10,7 @@ import java.time.LocalDate;
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AndererZuwendungsantragDTO(
-        LocalDate antragDatum,
+        LocalDate antragsdatum,
         String stelle,
         BigDecimal betrag,
         AndererZuwendungsantragStatus status) {

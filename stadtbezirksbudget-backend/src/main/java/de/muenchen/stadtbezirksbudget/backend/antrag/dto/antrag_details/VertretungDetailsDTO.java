@@ -7,13 +7,13 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record VertretungDetailsDTO(
-        String name,
+        String nachname,
         String vorname,
         String strasseHausnummer,
         String ort,
         String postleitzahl,
         String weitereAngaben,
         String email,
-        String telefon,
-        String mobil) {
+        String telefonNr,
+        String mobilNr) {
 }

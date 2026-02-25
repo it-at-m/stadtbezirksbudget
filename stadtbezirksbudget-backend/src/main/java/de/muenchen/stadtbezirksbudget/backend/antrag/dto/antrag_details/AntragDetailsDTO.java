@@ -10,10 +10,10 @@ public record AntragDetailsDTO(
         AntragDetailsAllgemeinDTO allgemein,
         AntragstellerDetailsDTO antragsteller,
         BankverbindungDetailsDTO bankverbindung,
-        BezirksausschussDetailsDTO bezirksauschuss,
+        BezirksausschussDetailsDTO bezirksinformationen,
         FinanzierungDetailsDTO finanzierung,
         ProjektDetailsDTO projekt,
-        VertretungDetailsDTO vertretung,
-        VerwendungDetailsDTO verwendung,
+        VertretungDetailsDTO vertretungsberechtigter,
+        VerwendungDetailsDTO verwendungsnachweis,
         ZahlungDetailsDTO zahlung) {
 }

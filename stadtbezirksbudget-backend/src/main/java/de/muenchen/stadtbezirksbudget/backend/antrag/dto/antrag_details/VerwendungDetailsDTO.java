@@ -12,6 +12,6 @@ public record VerwendungDetailsDTO(
         BigDecimal betrag,
         String status,
         BigDecimal pruefungBetrag,
-        LocalDate buchungsdatum,
+        LocalDate buchungsDatum,
         LocalDate sapEingangsdatum) {
 }
