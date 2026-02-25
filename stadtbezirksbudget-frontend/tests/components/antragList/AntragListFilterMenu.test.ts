@@ -13,7 +13,7 @@ vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 function createWrapper(hasActiveFilters: boolean) {
   vi.mocked(useAntragListFilter).mockReturnValue({
-    hasActiveFilters: () => computed(() => hasActiveFilters),
+    hasActiveFilters: computed(() => hasActiveFilters),
   });
 
   return mount(AntragListFilterMenu, {

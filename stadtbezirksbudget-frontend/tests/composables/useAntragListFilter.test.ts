@@ -68,7 +68,7 @@ describe("useAntragListFilter", () => {
       filterStoreMock = { filters: testFilters, setFilters: vi.fn() };
       vi.mocked(useAntragListFilterStore).mockReturnValue(filterStoreMock);
       const { hasActiveFilters } = useAntragListFilter();
-      expect(hasActiveFilters().value).toBe(true);
+      expect(hasActiveFilters.value).toBe(true);
     });
 
     test("returns false on no active filters", async () => {
@@ -78,7 +78,7 @@ describe("useAntragListFilter", () => {
       };
       vi.mocked(useAntragListFilterStore).mockReturnValue(filterStoreMock);
       const { hasActiveFilters } = useAntragListFilter();
-      expect(hasActiveFilters().value).toBe(false);
+      expect(hasActiveFilters.value).toBe(false);
     });
   });
 });

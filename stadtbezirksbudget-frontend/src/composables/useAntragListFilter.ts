@@ -33,20 +33,18 @@ export function useAntragListFilter() {
   }
 
   /**
-   * Check whether any filters are active
+   * Computed ref that is true when any filters are active
    */
-  function hasActiveFilters() {
-    return computed(
-      () =>
-        JSON.stringify(filterStore.filters) !==
-        JSON.stringify(emptyAntragListFilter())
-    );
-  }
+  const hasActiveFilters = computed(
+    () =>
+      JSON.stringify(filterStore.filters) !==
+      JSON.stringify(emptyAntragListFilter())
+  );
 
   return {
     updateFilters,
     resetFilters,
-    hasActiveFilters,
     filters,
+    hasActiveFilters,
   };
 }

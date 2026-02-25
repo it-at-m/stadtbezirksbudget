@@ -6,7 +6,7 @@
     <template #activator="{ props }">
       <v-btn
         :icon="mdiFilter"
-        :variant="hasActiveFilters().value ? 'outlined' : undefined"
+        :variant="hasActiveFilters ? 'outlined' : undefined"
         aria-label="Anträge filtern"
         data-test="antrag-list-filter-open-btn"
         v-bind="props"
@@ -14,7 +14,7 @@
     </template>
     <antrag-list-filter />
   </v-menu>
-  <active-filter-notice :active="hasActiveFilters().value" />
+  <active-filter-notice :active="hasActiveFilters" />
 </template>
 
 <script lang="ts" setup>
