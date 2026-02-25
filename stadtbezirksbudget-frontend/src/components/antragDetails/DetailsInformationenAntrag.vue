@@ -29,7 +29,7 @@
           v-model="antrag.allgemein.antragstellerName"
           data-test="antragsteller-name"
           hide-details="auto"
-          label="Antragsteller/in"
+          label="Antragsteller*in"
           readonly
           variant="outlined"
         />
