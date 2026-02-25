@@ -45,7 +45,7 @@ export const sortDefinitions = {
     ],
   },
   bezirksausschussNr: {
-    label: "Bezirk",
+    label: "BA",
     dataTest: "antrag-list-sort-bezirksausschuss-nr",
     options: [
       {
