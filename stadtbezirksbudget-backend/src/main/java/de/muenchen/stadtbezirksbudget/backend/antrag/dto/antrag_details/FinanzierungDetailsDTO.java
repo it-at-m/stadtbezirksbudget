@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Data Transfer Object (DTO) representing the information of Finanzierung (and related tables).
  */
-@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier and therefore unreasonable to test.")
 public record FinanzierungDetailsDTO(
         boolean istPersonVorsteuerabzugsberechtigt,
         boolean istProjektVorsteuerabzugsberechtigt,
