@@ -62,4 +62,23 @@ describe("useAntragListFilter", () => {
       expect(filterStoreMock.setFilters).toHaveBeenCalled();
     });
   });
+
+  describe("hasActiveFilters", () => {
+    test("returns true on active filters", async () => {
+      filterStoreMock = { filters: testFilters, setFilters: vi.fn() };
+      vi.mocked(useAntragListFilterStore).mockReturnValue(filterStoreMock);
+      const { hasActiveFilters } = useAntragListFilter();
+      expect(hasActiveFilters.value).toBe(true);
+    });
+
+    test("returns false on no active filters", async () => {
+      filterStoreMock = {
+        filters: emptyAntragListFilter(),
+        setFilters: vi.fn(),
+      };
+      vi.mocked(useAntragListFilterStore).mockReturnValue(filterStoreMock);
+      const { hasActiveFilters } = useAntragListFilter();
+      expect(hasActiveFilters.value).toBe(false);
+    });
+  });
 });
