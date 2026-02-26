@@ -151,6 +151,10 @@ class AntragIntegrationTest {
 
     @Nested
     class GetDetails {
+        private static String safeToString(final Object obj) {
+            return (obj == null) ? null : obj.toString();
+        }
+
         @Test
         void testGetDetails() throws Exception {
             final Antrag antrag = antragBuilder.build();
@@ -161,16 +165,78 @@ class AntragIntegrationTest {
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.allgemein.projektTitel", is(antrag.getProjekt().getTitel())))
-                    .andExpect(jsonPath("$.allgemein.eingangDatum", is(antrag.getEingangDatum().toString())))
+                    .andExpect(jsonPath("$.allgemein.eingangDatum", is(safeToString(antrag.getEingangDatum()))))
                     .andExpect(jsonPath("$.allgemein.antragstellerName", is(antrag.getAntragsteller().getName())))
-                    .andExpect(jsonPath("$.allgemein.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
-                    .andExpect(jsonPath("$.allgemein.rubrik", is("Rubrik")))
+                    .andExpect(jsonPath("$.allgemein.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget()))
+                    .andExpect(jsonPath("$.allgemein.rubrik", is(antrag.getProjekt().getRubrik())))
                     .andExpect(jsonPath("$.allgemein.status", is(antrag.getBearbeitungsstand().getStatus().name())))
                     .andExpect(jsonPath("$.allgemein.zammadNr", is(antrag.getZammadTicketNr())))
                     .andExpect(jsonPath("$.allgemein.aktenzeichen", is(antrag.getAktenzeichen())))
-                    .andExpect(jsonPath("$.allgemein.istGegendert", is(false)))
+                    .andExpect(jsonPath("$.allgemein.istGegendert", is(antrag.isIstGegendert())))
                     .andExpect(jsonPath("$.allgemein.eakteCooAdresse", is(antrag.getEakteCooAdresse())))
-                    .andExpect(jsonPath("$.allgemein.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
+                    .andExpect(jsonPath("$.allgemein.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())))
+
+                    .andExpect(jsonPath("$.antragsteller.rechtsform", is(antrag.getAntragsteller().getRechtsform().name())))
+                    .andExpect(jsonPath("$.antragsteller.strasseHausnummer", is(antrag.getAntragsteller().getAdresse().getStrasseHausnummer())))
+                    .andExpect(jsonPath("$.antragsteller.ort", is(antrag.getAntragsteller().getAdresse().getOrt())))
+                    .andExpect(jsonPath("$.antragsteller.postleitzahl", is(antrag.getAntragsteller().getAdresse().getPostleitzahl())))
+                    .andExpect(jsonPath("$.antragsteller.weitereAngaben", is(antrag.getAntragsteller().getAdresse().getWeitereAngaben())))
+                    .andExpect(jsonPath("$.antragsteller.email", is(antrag.getAntragsteller().getEmail())))
+                    .andExpect(jsonPath("$.antragsteller.telefonNr", is(antrag.getAntragsteller().getTelefonNr())))
+                    .andExpect(jsonPath("$.antragsteller.zielsetzung", is(antrag.getAntragsteller().getZielsetzung())))
+
+                    .andExpect(jsonPath("$.bankverbindung.istVonVertretungsberechtigtem", is(antrag.getBankverbindung().isIstVonVertretungsberechtigtem())))
+                    .andExpect(jsonPath("$.bankverbindung.geldinstitut", is(antrag.getBankverbindung().getGeldinstitut())))
+                    .andExpect(jsonPath("$.bankverbindung.iban", is(antrag.getBankverbindung().getIban())))
+                    .andExpect(jsonPath("$.bankverbindung.bic", is(antrag.getBankverbindung().getBic())))
+
+                    .andExpect(jsonPath("$.bezirksinformationen.ausschussNr", is(antrag.getBezirksinformationen().getAusschussNr())))
+                    .andExpect(jsonPath("$.bezirksinformationen.sitzungDatum", is(safeToString(antrag.getBezirksinformationen().getSitzungDatum()))))
+                    .andExpect(jsonPath("$.bezirksinformationen.risNr", is(antrag.getBezirksinformationen().getRisNr())))
+                    .andExpect(jsonPath("$.bezirksinformationen.beschlussStatus", is(safeToString(antrag.getBeschlussStatus()))))
+                    .andExpect(jsonPath("$.bezirksinformationen.bewilligteFoerderung",
+                            is(safeToString(antrag.getBezirksinformationen().getBewilligteFoerderung()))))
+                    .andExpect(jsonPath("$.bezirksinformationen.bescheidDatum", is(safeToString(antrag.getBezirksinformationen().getBescheidDatum()))))
+
+                    .andExpect(
+                            jsonPath("$.finanzierung.istPersonVorsteuerabzugsberechtigt", is(antrag.getFinanzierung().isIstPersonVorsteuerabzugsberechtigt())))
+                    .andExpect(jsonPath("$.finanzierung.istProjektVorsteuerabzugsberechtigt",
+                            is(antrag.getFinanzierung().isIstProjektVorsteuerabzugsberechtigt())))
+                    .andExpect(jsonPath("$.finanzierung.gesamtkosten", is(safeToString(antrag.getFinanzierung().getGesamtkosten()))))
+                    .andExpect(jsonPath("$.finanzierung.kostenAnmerkung", is(antrag.getFinanzierung().getKostenAnmerkung())))
+                    .andExpect(jsonPath("$.finanzierung.istZuwendungDritterBeantragt", is(antrag.isIstZuwendungDritterBeantragt())))
+                    .andExpect(jsonPath("$.finanzierung.summeAndereZuwendungsantraege", is(safeToString(antrag.getSummeAndereZuwendungsantraege()))))
+                    .andExpect(jsonPath("$.finanzierung.istZuwenigEigenmittel", is(antrag.getFinanzierung().isIstZuwenigEigenmittel())))
+                    .andExpect(jsonPath("$.finanzierung.begruendungEigenmittel", is(antrag.getFinanzierung().getBegruendungEigenmittel())))
+                    .andExpect(jsonPath("$.finanzierung.gesamtmittel", is(safeToString(antrag.getFinanzierung().getGesamtmittel()))))
+                    .andExpect(jsonPath("$.finanzierung.istEinladungFoerderhinweis", is(antrag.getFinanzierung().isIstEinladungFoerderhinweis())))
+                    .andExpect(jsonPath("$.finanzierung.istWebsiteFoerderhinweis", is(antrag.getFinanzierung().isIstWebsiteFoerderhinweis())))
+                    .andExpect(jsonPath("$.finanzierung.istSonstigerFoerderhinweis", is(antrag.getFinanzierung().isIstSonstigerFoerderhinweis())))
+                    .andExpect(jsonPath("$.finanzierung.sonstigeFoerderhinweise", is(antrag.getFinanzierung().getSonstigeFoerderhinweise())))
+
+                    .andExpect(jsonPath("$.projekt.beschreibung", is(antrag.getProjekt().getBeschreibung())))
+                    .andExpect(jsonPath("$.projekt.start", is(safeToString(antrag.getProjekt().getStart()))))
+                    .andExpect(jsonPath("$.projekt.ende", is(safeToString(antrag.getProjekt().getEnde()))))
+                    .andExpect(jsonPath("$.projekt.fristBruchBegruendung", is(antrag.getProjekt().getFristBruchBegruendung())))
+
+                    .andExpect(jsonPath("$.vertretungsberechtigter.nachname").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.vorname").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.strasseHausnummer").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.ort").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.postleitzahl").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.weitereAngaben").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.email").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.telefonNr").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.mobilNr").value(is((Object) null)))
+
+                    .andExpect(jsonPath("$.zahlung.auszahlungBetrag", is(safeToString(antrag.getZahlung().getAuszahlungBetrag()))))
+                    .andExpect(jsonPath("$.zahlung.auszahlungDatum", is(safeToString(antrag.getZahlung().getAuszahlungDatum()))))
+                    .andExpect(jsonPath("$.zahlung.anlageAv", is(antrag.getZahlung().getAnlageAv())))
+                    .andExpect(jsonPath("$.zahlung.anlageNr", is(antrag.getZahlung().getAnlageNr())))
+                    .andExpect(jsonPath("$.zahlung.kreditor", is(antrag.getZahlung().getKreditor())))
+                    .andExpect(jsonPath("$.zahlung.rechnungNr", is(antrag.getZahlung().getRechnungNr())))
+                    .andExpect(jsonPath("$.zahlung.fiBelegNr", is(antrag.getZahlung().getFiBelegNr())))
+                    .andExpect(jsonPath("$.zahlung.bestellung", is(antrag.getZahlung().getBestellung())));
         }
 
         @Test
