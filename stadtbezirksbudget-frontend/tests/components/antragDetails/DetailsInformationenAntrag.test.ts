@@ -51,7 +51,11 @@ const fields = [
   },
   {
     dataTest: "beantragtes-budget",
-    expected: String(mockAntrag.allgemein.beantragtesBudget),
+    expected: mockAntrag.allgemein.beantragtesBudget.toLocaleString("de-De", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+      useGrouping: false,
+    }),
     component: "VNumberInput",
   },
   {
