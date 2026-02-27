@@ -13,7 +13,7 @@ The displayed columns represent the most important data from the citizen form, s
 provide context and facilitate the processing of applications:
 
 | Column           | Description                                                                                                     |
-|------------------| --------------------------------------------------------------------------------------------------------------- |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
 | Status           | The current [status](/about/status-values) of the application, indicating its stage in the processing workflow. |
 | Ticketnummer     | The Zammad ticket number associated with the application.                                                       |
 | Aktenzeichen     | Identifier in the E-Akte system where the application is documented.                                            |
