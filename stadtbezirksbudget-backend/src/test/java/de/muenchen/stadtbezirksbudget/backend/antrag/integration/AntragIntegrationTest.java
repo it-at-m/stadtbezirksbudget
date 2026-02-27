@@ -66,6 +66,8 @@ class AntragIntegrationTest {
     private AndererZuwendungsantragRepository andereZuwendungsantragRepository;
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private AntragBuilder antragBuilder;
 
@@ -162,7 +164,6 @@ class AntragIntegrationTest {
         @Test
         void testGetDetails() throws Exception {
             final Antrag antrag = antragBuilder.addVertretungsberechtigter().build();
-            final ObjectMapper objectMapper = new ObjectMapper();
 
             mockMvc
                     .perform(get("/antrag/" + antrag.getId())
