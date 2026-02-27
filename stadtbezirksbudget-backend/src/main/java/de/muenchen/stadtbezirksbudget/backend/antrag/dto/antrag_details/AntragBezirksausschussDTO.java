@@ -9,7 +9,7 @@ import java.time.LocalDate;
  * Data Transfer Object (DTO) representing the information of Bezirksinformationen.
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
-public record BezirksausschussDetailsDTO(
+public record AntragBezirksausschussDTO(
         int ausschussNr,
         LocalDate sitzungDatum,
         String risNr,

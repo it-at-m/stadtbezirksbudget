@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * Data Transfer Object (DTO) representing the common information of an Antrag.
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
-public record AntragDetailsAllgemeinDTO(
+public record AntragAllgemeinDTO(
         String projektTitel,
         LocalDateTime eingangDatum,
         String antragstellerName,

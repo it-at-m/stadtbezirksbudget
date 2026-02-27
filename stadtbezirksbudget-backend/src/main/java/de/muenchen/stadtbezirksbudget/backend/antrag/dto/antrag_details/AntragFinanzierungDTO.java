@@ -8,7 +8,7 @@ import java.util.List;
  * Data Transfer Object (DTO) representing the information of Finanzierung (and related tables).
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier and therefore unreasonable to test.")
-public record FinanzierungDetailsDTO(
+public record AntragFinanzierungDTO(
         boolean istPersonVorsteuerabzugsberechtigt,
         boolean istProjektVorsteuerabzugsberechtigt,
         List<VoraussichtlicheAusgabeDTO> voraussichtlicheAusgaben,
@@ -26,7 +26,7 @@ public record FinanzierungDetailsDTO(
         boolean istSonstigerFoerderhinweis,
         String sonstigeFoerderhinweise) {
 
-    public FinanzierungDetailsDTO {
+    public AntragFinanzierungDTO {
         voraussichtlicheAusgaben = voraussichtlicheAusgaben != null ? List.copyOf(voraussichtlicheAusgaben) : List.of();
         andereZuwendungsantraege = andereZuwendungsantraege != null ? List.copyOf(andereZuwendungsantraege) : List.of();
         finanzierungsmittel = finanzierungsmittel != null ? List.copyOf(finanzierungsmittel) : List.of();

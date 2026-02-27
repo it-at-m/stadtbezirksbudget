@@ -7,7 +7,7 @@ import java.time.LocalDate;
  * Data Transfer Object (DTO) representing the information of a Projekt.
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
-public record ProjektDetailsDTO(
+public record AntragProjektDTO(
         String beschreibung,
         LocalDate start,
         LocalDate ende,

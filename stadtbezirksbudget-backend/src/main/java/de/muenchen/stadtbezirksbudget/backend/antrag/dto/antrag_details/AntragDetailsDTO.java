@@ -7,13 +7,13 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragDetailsDTO(
-        AntragDetailsAllgemeinDTO allgemein,
-        AntragstellerDetailsDTO antragsteller,
-        BankverbindungDetailsDTO bankverbindung,
-        BezirksausschussDetailsDTO bezirksinformationen,
-        FinanzierungDetailsDTO finanzierung,
-        ProjektDetailsDTO projekt,
-        VertretungDetailsDTO vertretungsberechtigter,
-        VerwendungDetailsDTO verwendungsnachweis,
-        ZahlungDetailsDTO zahlung) {
+        AntragAllgemeinDTO allgemein,
+        AntragAntragstellerDTO antragsteller,
+        AntragBankverbindungDTO bankverbindung,
+        AntragBezirksausschussDTO bezirksinformationen,
+        AntragFinanzierungDTO finanzierung,
+        AntragProjektDTO projekt,
+        AntragVertretungsberechtigterDTO vertretungsberechtigter,
+        AntragVerwendungsnachweisDTO verwendungsnachweis,
+        AntragZahlungDTO zahlung) {
 }

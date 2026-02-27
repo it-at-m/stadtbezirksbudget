@@ -5,13 +5,16 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Data Transfer Object (DTO) representing the information of Verwendungsnachweis.
+ * Data Transfer Object (DTO) representing the information of Zahlung.
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
-public record VerwendungDetailsDTO(
-        BigDecimal betrag,
-        String status,
-        BigDecimal pruefungBetrag,
-        LocalDate buchungsDatum,
-        LocalDate sapEingangsdatum) {
+public record AntragZahlungDTO(
+        BigDecimal auszahlungBetrag,
+        LocalDate auszahlungDatum,
+        String anlageAv,
+        String anlageNr,
+        String kreditor,
+        String rechnungNr,
+        String fiBelegNr,
+        String bestellung) {
 }

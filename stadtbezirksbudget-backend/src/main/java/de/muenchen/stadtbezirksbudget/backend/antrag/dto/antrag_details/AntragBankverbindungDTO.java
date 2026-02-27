@@ -6,7 +6,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
  * Data Transfer Object (DTO) representing the information of Bankverbindung.
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
-public record BankverbindungDetailsDTO(
+public record AntragBankverbindungDTO(
         boolean istVonVertretungsberechtigtem,
         String geldinstitut,
         String iban,
