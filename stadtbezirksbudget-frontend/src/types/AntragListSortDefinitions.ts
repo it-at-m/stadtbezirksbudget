@@ -17,7 +17,7 @@ export const sortDefinitions = {
     ],
   },
   zammadNr: {
-    label: "Nummer",
+    label: "Ticketnummer",
     dataTest: "antrag-list-sort-zammad-nr",
     options: [
       {
@@ -143,7 +143,7 @@ export const sortDefinitions = {
     ],
   },
   aktualisierungDatum: {
-    label: "Datum Aktualisierung",
+    label: "Zuletzt geändert",
     dataTest: "antrag-list-sort-aktualisierung-datum",
     options: [
       {
