@@ -160,9 +160,9 @@ class AntragIntegrationTest {
         }
 
         @Test
-        void testGetDetailsWithoutVertretungsberechtigter() throws Exception {
-            final Antrag antrag = antragBuilder.build();
-            ObjectMapper objectMapper = new ObjectMapper();
+        void testGetDetails() throws Exception {
+            final Antrag antrag = antragBuilder.addVertretungsberechtigter().build();
+            final ObjectMapper objectMapper = new ObjectMapper();
 
             mockMvc
                     .perform(get("/antrag/" + antrag.getId())
@@ -222,33 +222,34 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.finanzierung.voraussichtlicheAusgaben").isArray())
                     .andExpect(content().json("{\"finanzierung\":{\"voraussichtlicheAusgaben\":" + objectMapper.writeValueAsString(
                             antrag.getFinanzierung().getVoraussichtlicheAusgaben().stream()
-                                    .map(va -> new VoraussichtlicheAusgabeDTO(va.getKategorie(), va.getBetrag(), va.getDirektoriumNotiz())).toList()
-                    ) + "}}"))
+                                    .map(va -> new VoraussichtlicheAusgabeDTO(va.getKategorie(), va.getBetrag(), va.getDirektoriumNotiz())).toList())
+                            + "}}"))
                     .andExpect(jsonPath("$.finanzierung.finanzierungsmittel").isArray())
                     .andExpect(content().json("{\"finanzierung\":{\"finanzierungsmittel\":" + objectMapper.writeValueAsString(
                             antrag.getFinanzierung().getFinanzierungsmittel().stream()
-                                    .map(f -> new FinanzierungsmittelDTO(f.getKategorie(), f.getBetrag(), f.getDirektoriumNotiz())).toList()
-                    ) + "}}"))
+                                    .map(f -> new FinanzierungsmittelDTO(f.getKategorie(), f.getBetrag(), f.getDirektoriumNotiz())).toList())
+                            + "}}"))
                     .andExpect(jsonPath("$.finanzierung.andereZuwendungsantraege").isArray())
                     .andExpect(content().json("{\"finanzierung\":{\"andereZuwendungsantraege\":" + objectMapper.writeValueAsString(
                             antrag.getAndereZuwendungsantraege().stream()
-                                    .map(az -> new AndererZuwendungsantragDTO(az.getAntragsdatum(), az.getStelle(), az.getBetrag(), az.getStatus())).toList()
-                    ) + "}}"))
+                                    .map(az -> new AndererZuwendungsantragDTO(az.getAntragsdatum(), az.getStelle(), az.getBetrag(), az.getStatus())).toList())
+                            + "}}"))
 
                     .andExpect(jsonPath("$.projekt.beschreibung", is(antrag.getProjekt().getBeschreibung())))
                     .andExpect(jsonPath("$.projekt.start", is(safeToString(antrag.getProjekt().getStart()))))
                     .andExpect(jsonPath("$.projekt.ende", is(safeToString(antrag.getProjekt().getEnde()))))
                     .andExpect(jsonPath("$.projekt.fristBruchBegruendung", is(antrag.getProjekt().getFristBruchBegruendung())))
 
-                    .andExpect(jsonPath("$.vertretungsberechtigter.nachname").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.vorname").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.strasseHausnummer").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.ort").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.postleitzahl").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.weitereAngaben").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.email").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.telefonNr").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.mobilNr").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.nachname", is(antrag.getVertretungsberechtigter().getNachname())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.vorname", is(antrag.getVertretungsberechtigter().getVorname())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.strasseHausnummer",
+                            is(antrag.getVertretungsberechtigter().getAdresse().getStrasseHausnummer())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.ort", is(antrag.getVertretungsberechtigter().getAdresse().getOrt())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.postleitzahl", is(antrag.getVertretungsberechtigter().getAdresse().getPostleitzahl())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.weitereAngaben", is(antrag.getVertretungsberechtigter().getAdresse().getWeitereAngaben())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.email", is(antrag.getVertretungsberechtigter().getEmail())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.telefonNr", is(antrag.getVertretungsberechtigter().getTelefonNr())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.mobilNr", is(antrag.getVertretungsberechtigter().getMobilNr())))
 
                     .andExpect(jsonPath("$.zahlung.auszahlungBetrag", is(safeToString(antrag.getZahlung().getAuszahlungBetrag()))))
                     .andExpect(jsonPath("$.zahlung.auszahlungDatum", is(safeToString(antrag.getZahlung().getAuszahlungDatum()))))
@@ -258,6 +259,24 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.zahlung.rechnungNr", is(antrag.getZahlung().getRechnungNr())))
                     .andExpect(jsonPath("$.zahlung.fiBelegNr", is(antrag.getZahlung().getFiBelegNr())))
                     .andExpect(jsonPath("$.zahlung.bestellung", is(antrag.getZahlung().getBestellung())));
+        }
+
+        @Test
+        void testGetDetailsNoVertretungsberechtigter() throws Exception {
+            final Antrag antrag = antragBuilder.build();
+
+            mockMvc
+                    .perform(get("/antrag/" + antrag.getId())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.nachname").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.vorname").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.strasseHausnummer").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.ort").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.postleitzahl").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.weitereAngaben").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.email").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.telefonNr").value(is((Object) null)))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.mobilNr").value(is((Object) null)));
         }
 
         @Test
