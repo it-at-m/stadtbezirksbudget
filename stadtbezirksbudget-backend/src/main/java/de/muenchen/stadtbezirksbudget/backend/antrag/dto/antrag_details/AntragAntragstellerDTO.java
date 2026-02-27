@@ -18,8 +18,7 @@ public record AntragAntragstellerDTO(
         String telefonNr,
         String zielsetzung) {
 
-    @NotNull
-    @Override
+    @NotNull @Override
     public String toString() {
         return "AntragAntragstellerDTO[" +
                 "rechtsform=" + rechtsform +

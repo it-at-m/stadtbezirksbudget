@@ -18,8 +18,7 @@ public record AntragVertretungsberechtigterDTO(
         String telefonNr,
         String mobilNr) {
 
-    @NotNull
-    @Override
+    @NotNull @Override
     public String toString() {
         return "AntragVertretungsberechtigterDTO[" +
                 "nachname=" + nachname +

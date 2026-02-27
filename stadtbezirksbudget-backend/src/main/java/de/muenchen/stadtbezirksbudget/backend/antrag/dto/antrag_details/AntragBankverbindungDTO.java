@@ -13,8 +13,7 @@ public record AntragBankverbindungDTO(
         String iban,
         String bic) {
 
-    @NotNull
-    @Override
+    @NotNull @Override
     public String toString() {
         final String maskedIban = iban == null || iban.length() < 4
                 ? "****"
