@@ -15,6 +15,7 @@ import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Kategorie;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Rechtsform;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
+import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Vertretungsberechtigter;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Verwendungsnachweis;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.VoraussichtlicheAusgabe;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Zahlung;
@@ -53,6 +54,7 @@ public class AntragBuilder {
     private final FinanzierungsmittelRepository finanzierungsmittelRepository;
     private final AndererZuwendungsantragRepository andererZuwendungsantragRepository;
     private Status status;
+    private boolean addVertretungsberechtigter;
     private int bezirksausschussNr;
     private LocalDateTime eingangDatum;
     private LocalDateTime aktualisierungDatum;
@@ -99,6 +101,7 @@ public class AntragBuilder {
         projektTitel = generateRandomUuidString();
         andereZuwendungsantraege = new ArrayList<>();
         bewilligteFoerderung = null;
+        addVertretungsberechtigter = false;
     }
 
     public AntragBuilder status(final Status status) {
@@ -169,6 +172,26 @@ public class AntragBuilder {
     public AntragBuilder eakteCooAdresse(final String eakteCooAdresse) {
         this.eakteCooAdresse = eakteCooAdresse;
         return this;
+    }
+
+    public AntragBuilder addVertretungsberechtigter() {
+        this.addVertretungsberechtigter = true;
+        return this;
+    }
+
+    private Vertretungsberechtigter initializeVertretungsberechtigter(final boolean addVertretungsberechtigter) {
+        if (addVertretungsberechtigter) {
+            return Vertretungsberechtigter.builder()
+                    .adresse(initializeAdresse())
+                    .email("vertretungsberechtiger@mail.com")
+                    .mobilNr("198731234")
+                    .nachname("Musterfrau")
+                    .vorname("Maxime")
+                    .telefonNr("432345345345234")
+                    .build();
+        } else {
+            return null;
+        }
     }
 
     private Adresse initializeAdresse() {
@@ -321,6 +344,7 @@ public class AntragBuilder {
                     .bankverbindung(initializeBankverbindung())
                     .zahlung(initializeZahlung())
                     .verwendungsnachweis(initializeVerwendungsnachweis())
+                    .vertretungsberechtigter(initializeVertretungsberechtigter(addVertretungsberechtigter))
                     .bezirksinformationen(initializeBezirksinformationen())
                     .build();
             for (final AndererZuwendungsantrag andererZuwendungsantrag : andereZuwendungsantraege) {
