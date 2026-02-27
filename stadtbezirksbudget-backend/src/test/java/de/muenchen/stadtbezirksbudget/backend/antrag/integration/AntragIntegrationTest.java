@@ -9,7 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AndererZuwendungsantragDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.FinanzierungsmittelDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.VoraussichtlicheAusgabeDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
@@ -156,8 +160,9 @@ class AntragIntegrationTest {
         }
 
         @Test
-        void testGetDetails() throws Exception {
+        void testGetDetailsWithoutVertretungsberechtigter() throws Exception {
             final Antrag antrag = antragBuilder.build();
+            ObjectMapper objectMapper = new ObjectMapper();
 
             mockMvc
                     .perform(get("/antrag/" + antrag.getId())
@@ -213,6 +218,22 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.finanzierung.istWebsiteFoerderhinweis", is(antrag.getFinanzierung().isIstWebsiteFoerderhinweis())))
                     .andExpect(jsonPath("$.finanzierung.istSonstigerFoerderhinweis", is(antrag.getFinanzierung().isIstSonstigerFoerderhinweis())))
                     .andExpect(jsonPath("$.finanzierung.sonstigeFoerderhinweise", is(antrag.getFinanzierung().getSonstigeFoerderhinweise())))
+
+                    .andExpect(jsonPath("$.finanzierung.voraussichtlicheAusgaben").isArray())
+                    .andExpect(content().json("{\"finanzierung\":{\"voraussichtlicheAusgaben\":" + objectMapper.writeValueAsString(
+                            antrag.getFinanzierung().getVoraussichtlicheAusgaben().stream()
+                                    .map(va -> new VoraussichtlicheAusgabeDTO(va.getKategorie(), va.getBetrag(), va.getDirektoriumNotiz())).toList()
+                    ) + "}}"))
+                    .andExpect(jsonPath("$.finanzierung.finanzierungsmittel").isArray())
+                    .andExpect(content().json("{\"finanzierung\":{\"finanzierungsmittel\":" + objectMapper.writeValueAsString(
+                            antrag.getFinanzierung().getFinanzierungsmittel().stream()
+                                    .map(f -> new FinanzierungsmittelDTO(f.getKategorie(), f.getBetrag(), f.getDirektoriumNotiz())).toList()
+                    ) + "}}"))
+                    .andExpect(jsonPath("$.finanzierung.andereZuwendungsantraege").isArray())
+                    .andExpect(content().json("{\"finanzierung\":{\"andereZuwendungsantraege\":" + objectMapper.writeValueAsString(
+                            antrag.getAndereZuwendungsantraege().stream()
+                                    .map(az -> new AndererZuwendungsantragDTO(az.getAntragsdatum(), az.getStelle(), az.getBetrag(), az.getStatus())).toList()
+                    ) + "}}"))
 
                     .andExpect(jsonPath("$.projekt.beschreibung", is(antrag.getProjekt().getBeschreibung())))
                     .andExpect(jsonPath("$.projekt.start", is(safeToString(antrag.getProjekt().getStart()))))
