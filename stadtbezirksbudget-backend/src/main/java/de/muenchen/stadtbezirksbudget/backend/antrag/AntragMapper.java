@@ -92,7 +92,7 @@ public interface AntragMapper {
     @Mapping(target = "bewilligteFoerderung", source = "antrag.bezirksinformationen.bewilligteFoerderung")
     @Mapping(target = "bescheidDatum", source = "antrag.bezirksinformationen.bescheidDatum")
     @Mapping(target = "beschlussStatus", source = "antrag.beschlussStatus")
-    AntragBezirksausschussDTO toBezirkssauschussDTO(Antrag antrag);
+    AntragBezirksausschussDTO toBezirksauschussDTO(Antrag antrag);
 
     /**
      * Maps an Antrag entity to an AntragFinanzierungDTO.
