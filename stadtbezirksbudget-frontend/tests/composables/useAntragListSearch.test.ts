@@ -34,5 +34,13 @@ describe("useAntragListSearch", () => {
       search();
       expect(filterStoreMock.setSearch).toHaveBeenCalledWith(query.value);
     });
+
+    test("empty search calls null setSearch", async () => {
+      const { query, search } = useAntragListSearch();
+      query.value = "";
+
+      search();
+      expect(filterStoreMock.setSearch).toHaveBeenCalledWith(null);
+    });
   });
 });

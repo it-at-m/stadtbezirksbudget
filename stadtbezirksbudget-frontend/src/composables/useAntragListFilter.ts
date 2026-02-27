@@ -1,6 +1,6 @@
 import type { AntragListFilter } from "@/types/AntragListFilter.ts";
 
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
@@ -32,9 +32,19 @@ export function useAntragListFilter() {
     updateFilters();
   }
 
+  /**
+   * Computed ref that is true when any filters are active
+   */
+  const hasActiveFilters = computed(
+    () =>
+      JSON.stringify(filterStore.filters) !==
+      JSON.stringify(emptyAntragListFilter())
+  );
+
   return {
     updateFilters,
     resetFilters,
     filters,
+    hasActiveFilters,
   };
 }

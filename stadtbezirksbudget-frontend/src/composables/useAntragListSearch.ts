@@ -16,7 +16,7 @@ export function useAntragListSearch() {
    * Searches the antrag list by the current query
    */
   function search() {
-    filterStore.setSearch(query.value);
+    filterStore.setSearch(query.value || null);
   }
 
   return {
