@@ -268,6 +268,8 @@ class AntragIntegrationTest {
             mockMvc
                     .perform(get("/antrag/" + antrag.getId())
                             .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                     .andExpect(jsonPath("$.vertretungsberechtigter.nachname").value(is((Object) null)))
                     .andExpect(jsonPath("$.vertretungsberechtigter.vorname").value(is((Object) null)))
                     .andExpect(jsonPath("$.vertretungsberechtigter.strasseHausnummer").value(is((Object) null)))

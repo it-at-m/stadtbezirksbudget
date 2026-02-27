@@ -179,7 +179,7 @@ public class AntragBuilder {
         return this;
     }
 
-    private Vertretungsberechtigter initializeVertretungsberechtigter(final boolean addVertretungsberechtigter) {
+    private Vertretungsberechtigter initializeVertretungsberechtigter() {
         if (addVertretungsberechtigter) {
             return Vertretungsberechtigter.builder()
                     .adresse(initializeAdresse())
@@ -344,7 +344,7 @@ public class AntragBuilder {
                     .bankverbindung(initializeBankverbindung())
                     .zahlung(initializeZahlung())
                     .verwendungsnachweis(initializeVerwendungsnachweis())
-                    .vertretungsberechtigter(initializeVertretungsberechtigter(addVertretungsberechtigter))
+                    .vertretungsberechtigter(initializeVertretungsberechtigter())
                     .bezirksinformationen(initializeBezirksinformationen())
                     .build();
             for (final AndererZuwendungsantrag andererZuwendungsantrag : andereZuwendungsantraege) {
