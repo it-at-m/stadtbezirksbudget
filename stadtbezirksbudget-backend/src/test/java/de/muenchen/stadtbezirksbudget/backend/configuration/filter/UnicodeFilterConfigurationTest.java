@@ -5,6 +5,7 @@ import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_P
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import de.muenchen.stadtbezirksbudget.backend.IntegrationTestConfiguration;
 import de.muenchen.stadtbezirksbudget.backend.StadtbezirksbudgetBackend;
 import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.theentity.TheEntity;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -31,20 +33,9 @@ import org.testcontainers.utility.DockerImageName;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@Import(IntegrationTestConfiguration.class)
 class UnicodeFilterConfigurationTest {
-
-    @Container
-    @ServiceConnection
-    @SuppressWarnings("unused")
-    private static final ConfluentKafkaContainer KAFKA_CONTAINER = new ConfluentKafkaContainer(
-            DockerImageName.parse(TestConstants.TESTCONTAINERS_KAFKA_IMAGE));
-
-    @Container
-    @ServiceConnection
-    @SuppressWarnings("unused")
-    private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
-            DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
-
+    
     private static final String ENTITY_ENDPOINT_URL = "/theEntity";
 
     /**
