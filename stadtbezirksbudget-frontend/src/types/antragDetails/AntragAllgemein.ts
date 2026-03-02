@@ -12,4 +12,5 @@ export interface AntragAllgemein {
   beschlussStatus: BeschlussStatus;
   istZuwendungDritterBeantragt: boolean;
   summeAndereZuwendungsantraege: number;
+  //TODO: andereZuwendungsantraege: AntragAndererZuwendungsantrag[];
 }

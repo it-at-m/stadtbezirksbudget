@@ -8,4 +8,5 @@ export interface AntragDetails {
   antragsteller: AntragAntragsteller;
   finanzierung: AntragFinanzierung;
   projekt: AntragProjekt;
+  //TODO: add bankverbindung,bezirksinformationen, vertretungsberechtigter, verwendungsnachweis, zahlung
 }
