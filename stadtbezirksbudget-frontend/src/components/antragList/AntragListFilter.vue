@@ -160,7 +160,7 @@
               variant: 'underlined',
             }"
             data-test="antrag-list-filter-aktualisierung-datum"
-            label="Datum Aktualisierung"
+            label="Zuletzt geändert"
           />
         </v-col>
       </v-row>

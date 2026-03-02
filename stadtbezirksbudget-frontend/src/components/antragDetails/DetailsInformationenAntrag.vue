@@ -37,11 +37,13 @@
       <v-col cols="3">
         <v-number-input
           v-model="antrag.allgemein.beantragtesBudget"
+          :precision="2"
           control-variant="hidden"
           data-test="beantragtes-budget"
           hide-details="auto"
           label="Beantragtes Budget"
           readonly
+          suffix="€"
           variant="outlined"
         />
       </v-col>
@@ -72,7 +74,7 @@
           v-model="antrag.allgemein.zammadNr"
           data-test="zammad-nr"
           hide-details="auto"
-          label="Zammad-Nummer"
+          label="Ticketnummer"
           readonly
           variant="outlined"
         />
