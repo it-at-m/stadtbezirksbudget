@@ -1,7 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
-import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
-import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,74 +7,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import de.muenchen.stadtbezirksbudget.backend.TestConstants;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AndererZuwendungsantragDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.FinanzierungsmittelDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.VoraussichtlicheAusgabeDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Transactional
-@Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class AntragIntegrationTest {
-    @Container
-    @ServiceConnection
-    @SuppressWarnings("unused")
-    private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
-            TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
-
+class AntragIntegrationTest extends AntragBaseIntegrationTest {
     private final List<Antrag> antragList = new ArrayList<>();
-
-    @Autowired
-    private AntragRepository antragRepository;
-    @Autowired
-    private FinanzierungRepository finanzierungRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
-    @Autowired
-    private AndererZuwendungsantragRepository andereZuwendungsantragRepository;
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    private AntragBuilder antragBuilder;
-
-    @BeforeEach
-    public void setUp() {
-        antragList.clear();
-        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository,
-                andereZuwendungsantragRepository);
-    }
 
     @Nested
     class GetAntragSummaryPage {
