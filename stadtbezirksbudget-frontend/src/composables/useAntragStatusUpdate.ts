@@ -33,7 +33,7 @@ export function useAntragStatusUpdate(
    * Updates the status of the Antrag both locally and in the backend.
    * @param newStatus - The new status to set for the Antrag.
    */
-  function updateStatus(newStatus: Status | undefined) {
+  function updateStatus(newStatus: Status) {
     if (!newStatus) return;
     updateAntragStatus(antragId.value, newStatus)
       .then(() => {
