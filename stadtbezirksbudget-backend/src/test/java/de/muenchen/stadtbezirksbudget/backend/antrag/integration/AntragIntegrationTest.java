@@ -170,26 +170,33 @@ class AntragIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.allgemein.projektTitel", is(antrag.getProjekt().getTitel())))
                     .andExpect(jsonPath("$.allgemein.eingangDatum", is(antrag.getEingangDatum().toString())))
-                    .andExpect(jsonPath("$.allgemein.antragstellerName", is(antrag.getAntragsteller().getName())))
-                    .andExpect(jsonPath("$.allgemein.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget()))
-                    .andExpect(jsonPath("$.allgemein.rubrik", is(antrag.getProjekt().getRubrik())))
                     .andExpect(jsonPath("$.allgemein.status", is(antrag.getBearbeitungsstand().getStatus().name())))
-                    .andExpect(jsonPath("$.allgemein.zammadNr", is(antrag.getZammadTicketNr())))
+                    .andExpect(jsonPath("$.allgemein.zammadTicketNr", is(antrag.getZammadTicketNr())))
                     .andExpect(jsonPath("$.allgemein.aktenzeichen", is(antrag.getAktenzeichen())))
                     .andExpect(jsonPath("$.allgemein.istGegendert", is(antrag.isIstGegendert())))
                     .andExpect(jsonPath("$.allgemein.eakteCooAdresse", is(antrag.getEakteCooAdresse())))
                     .andExpect(jsonPath("$.allgemein.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())))
+                    .andExpect(jsonPath("$.allgemein.beschlussStatus", is(antrag.getBeschlussStatus())))
+                    .andExpect(jsonPath("$.allgemein.istZuwendungDritterBeantragt", is(antrag.isIstZuwendungDritterBeantragt())))
+                    .andExpect(jsonPath("$.allgemein.summeAndereZuwendungsantraege", is(antrag.getSummeAndereZuwendungsantraege())))
+
+                    .andExpect(jsonPath("$.allgemein.andereZuwendungsantraege").isArray())
+                    .andExpect(content().json("{\"allgemein\":{\"andereZuwendungsantraege\":" + objectMapper.writeValueAsString(
+                            antrag.getAndereZuwendungsantraege().stream()
+                                    .map(az -> new AndererZuwendungsantragDTO(az.getAntragsdatum(), az.getStelle(), az.getBetrag(), az.getStatus())).toList())
+                            + "}}"))
 
                     .andExpect(jsonPath("$.antragsteller.rechtsform", is(antrag.getAntragsteller().getRechtsform().name())))
-                    .andExpect(jsonPath("$.antragsteller.strasseHausnummer", is(antrag.getAntragsteller().getAdresse().getStrasseHausnummer())))
-                    .andExpect(jsonPath("$.antragsteller.ort", is(antrag.getAntragsteller().getAdresse().getOrt())))
-                    .andExpect(jsonPath("$.antragsteller.postleitzahl", is(antrag.getAntragsteller().getAdresse().getPostleitzahl())))
-                    .andExpect(jsonPath("$.antragsteller.weitereAngaben", is(antrag.getAntragsteller().getAdresse().getWeitereAngaben())))
+                    .andExpect(jsonPath("$.antragsteller.adresse.strasseHausnummer", is(antrag.getAntragsteller().getAdresse().getStrasseHausnummer())))
+                    .andExpect(jsonPath("$.antragsteller.adresse.ort", is(antrag.getAntragsteller().getAdresse().getOrt())))
+                    .andExpect(jsonPath("$.antragsteller.adresse.postleitzahl", is(antrag.getAntragsteller().getAdresse().getPostleitzahl())))
+                    .andExpect(jsonPath("$.antragsteller.adresse.weitereAngaben", is(antrag.getAntragsteller().getAdresse().getWeitereAngaben())))
                     .andExpect(jsonPath("$.antragsteller.email", is(antrag.getAntragsteller().getEmail())))
                     .andExpect(jsonPath("$.antragsteller.telefonNr", is(antrag.getAntragsteller().getTelefonNr())))
                     .andExpect(jsonPath("$.antragsteller.zielsetzung", is(antrag.getAntragsteller().getZielsetzung())))
+                    .andExpect(jsonPath("$.antragsteller.vorname", is(antrag.getAntragsteller().getVorname())))
+                    .andExpect(jsonPath("$.antragsteller.name", is(antrag.getAntragsteller().getName())))
 
                     .andExpect(jsonPath("$.bankverbindung.istVonVertretungsberechtigtem", is(antrag.getBankverbindung().isIstVonVertretungsberechtigtem())))
                     .andExpect(jsonPath("$.bankverbindung.geldinstitut", is(antrag.getBankverbindung().getGeldinstitut())))
@@ -199,7 +206,6 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.bezirksinformationen.ausschussNr", is(antrag.getBezirksinformationen().getAusschussNr())))
                     .andExpect(jsonPath("$.bezirksinformationen.sitzungDatum", is(safeToString(antrag.getBezirksinformationen().getSitzungDatum()))))
                     .andExpect(jsonPath("$.bezirksinformationen.risNr", is(antrag.getBezirksinformationen().getRisNr())))
-                    .andExpect(jsonPath("$.bezirksinformationen.beschlussStatus", is(antrag.getBeschlussStatus())))
                     .andExpect(jsonPath("$.bezirksinformationen.bewilligteFoerderung",
                             is(safeToString(antrag.getBezirksinformationen().getBewilligteFoerderung()))))
                     .andExpect(jsonPath("$.bezirksinformationen.bescheidDatum", is(safeToString(antrag.getBezirksinformationen().getBescheidDatum()))))
@@ -210,8 +216,6 @@ class AntragIntegrationTest {
                             is(antrag.getFinanzierung().isIstProjektVorsteuerabzugsberechtigt())))
                     .andExpect(jsonPath("$.finanzierung.gesamtkosten", is(antrag.getFinanzierung().getGesamtkosten())))
                     .andExpect(jsonPath("$.finanzierung.kostenAnmerkung", is(antrag.getFinanzierung().getKostenAnmerkung())))
-                    .andExpect(jsonPath("$.finanzierung.istZuwendungDritterBeantragt", is(antrag.isIstZuwendungDritterBeantragt())))
-                    .andExpect(jsonPath("$.finanzierung.summeAndereZuwendungsantraege", is(antrag.getSummeAndereZuwendungsantraege())))
                     .andExpect(jsonPath("$.finanzierung.istZuwenigEigenmittel", is(antrag.getFinanzierung().isIstZuwenigEigenmittel())))
                     .andExpect(jsonPath("$.finanzierung.begruendungEigenmittel", is(antrag.getFinanzierung().getBegruendungEigenmittel())))
                     .andExpect(jsonPath("$.finanzierung.gesamtmittel", is(antrag.getFinanzierung().getGesamtmittel())))
@@ -219,6 +223,7 @@ class AntragIntegrationTest {
                     .andExpect(jsonPath("$.finanzierung.istWebsiteFoerderhinweis", is(antrag.getFinanzierung().isIstWebsiteFoerderhinweis())))
                     .andExpect(jsonPath("$.finanzierung.istSonstigerFoerderhinweis", is(antrag.getFinanzierung().isIstSonstigerFoerderhinweis())))
                     .andExpect(jsonPath("$.finanzierung.sonstigeFoerderhinweise", is(antrag.getFinanzierung().getSonstigeFoerderhinweise())))
+                    .andExpect(jsonPath("$.finanzierung.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget()))
 
                     .andExpect(jsonPath("$.finanzierung.voraussichtlicheAusgaben").isArray())
                     .andExpect(content().json("{\"finanzierung\":{\"voraussichtlicheAusgaben\":" + objectMapper.writeValueAsString(
@@ -230,27 +235,32 @@ class AntragIntegrationTest {
                             antrag.getFinanzierung().getFinanzierungsmittel().stream()
                                     .map(f -> new FinanzierungsmittelDTO(f.getKategorie(), f.getBetrag(), f.getDirektoriumNotiz())).toList())
                             + "}}"))
-                    .andExpect(jsonPath("$.finanzierung.andereZuwendungsantraege").isArray())
-                    .andExpect(content().json("{\"finanzierung\":{\"andereZuwendungsantraege\":" + objectMapper.writeValueAsString(
-                            antrag.getAndereZuwendungsantraege().stream()
-                                    .map(az -> new AndererZuwendungsantragDTO(az.getAntragsdatum(), az.getStelle(), az.getBetrag(), az.getStatus())).toList())
-                            + "}}"))
 
+                    .andExpect(jsonPath("$.projekt.titel", is(antrag.getProjekt().getTitel())))
                     .andExpect(jsonPath("$.projekt.beschreibung", is(antrag.getProjekt().getBeschreibung())))
+                    .andExpect(jsonPath("$.projekt.rubrik", is(antrag.getProjekt().getRubrik())))
                     .andExpect(jsonPath("$.projekt.start", is(antrag.getProjekt().getStart().toString())))
                     .andExpect(jsonPath("$.projekt.ende", is(antrag.getProjekt().getEnde().toString())))
                     .andExpect(jsonPath("$.projekt.fristBruchBegruendung", is(antrag.getProjekt().getFristBruchBegruendung())))
 
                     .andExpect(jsonPath("$.vertretungsberechtigter.nachname", is(antrag.getVertretungsberechtigter().getNachname())))
                     .andExpect(jsonPath("$.vertretungsberechtigter.vorname", is(antrag.getVertretungsberechtigter().getVorname())))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.strasseHausnummer",
+                    .andExpect(jsonPath("$.vertretungsberechtigter.adresse.strasseHausnummer",
                             is(antrag.getVertretungsberechtigter().getAdresse().getStrasseHausnummer())))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.ort", is(antrag.getVertretungsberechtigter().getAdresse().getOrt())))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.postleitzahl", is(antrag.getVertretungsberechtigter().getAdresse().getPostleitzahl())))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.weitereAngaben", is(antrag.getVertretungsberechtigter().getAdresse().getWeitereAngaben())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.adresse.ort", is(antrag.getVertretungsberechtigter().getAdresse().getOrt())))
+                    .andExpect(
+                            jsonPath("$.vertretungsberechtigter.adresse.postleitzahl", is(antrag.getVertretungsberechtigter().getAdresse().getPostleitzahl())))
+                    .andExpect(jsonPath("$.vertretungsberechtigter.adresse.weitereAngaben",
+                            is(antrag.getVertretungsberechtigter().getAdresse().getWeitereAngaben())))
                     .andExpect(jsonPath("$.vertretungsberechtigter.email", is(antrag.getVertretungsberechtigter().getEmail())))
                     .andExpect(jsonPath("$.vertretungsberechtigter.telefonNr", is(antrag.getVertretungsberechtigter().getTelefonNr())))
                     .andExpect(jsonPath("$.vertretungsberechtigter.mobilNr", is(antrag.getVertretungsberechtigter().getMobilNr())))
+
+                    .andExpect(jsonPath("$.verwendungsnachweis.betrag", is(safeToString(antrag.getVerwendungsnachweis().getBetrag()))))
+                    .andExpect(jsonPath("$.verwendungsnachweis.status", is(antrag.getVerwendungsnachweis().getStatus())))
+                    .andExpect(jsonPath("$.verwendungsnachweis.pruefungBetrag", is(safeToString(antrag.getVerwendungsnachweis().getPruefungBetrag()))))
+                    .andExpect(jsonPath("$.verwendungsnachweis.buchungsDatum", is(safeToString(antrag.getVerwendungsnachweis().getBuchungsDatum()))))
+                    .andExpect(jsonPath("$.verwendungsnachweis.sapEingangsdatum", is(safeToString(antrag.getVerwendungsnachweis().getSapEingangsdatum()))))
 
                     .andExpect(jsonPath("$.zahlung.auszahlungBetrag", is(safeToString(antrag.getZahlung().getAuszahlungBetrag()))))
                     .andExpect(jsonPath("$.zahlung.auszahlungDatum", is(safeToString(antrag.getZahlung().getAuszahlungDatum()))))
@@ -271,15 +281,7 @@ class AntragIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.nachname").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.vorname").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.strasseHausnummer").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.ort").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.postleitzahl").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.weitereAngaben").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.email").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.telefonNr").value(is((Object) null)))
-                    .andExpect(jsonPath("$.vertretungsberechtigter.mobilNr").value(is((Object) null)));
+                    .andExpect(jsonPath("$.vertretungsberechtigter").value(is((Object) null)));
         }
 
         @Test
