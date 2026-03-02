@@ -34,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.kafka.ConfluentKafkaContainer;
+import org.testcontainers.utility.DockerImageName;
 
 @Transactional
 @Testcontainers
@@ -42,11 +44,18 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class AntragUpdateIntegrationTest {
+
+    @Container
+    @ServiceConnection
+    @SuppressWarnings("unused")
+    private static final ConfluentKafkaContainer KAFKA_CONTAINER = new ConfluentKafkaContainer(
+            DockerImageName.parse(TestConstants.TESTCONTAINERS_KAFKA_IMAGE));
+
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")
     private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
-            TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
+            DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
 
     private final List<Antrag> antragList = new ArrayList<>();
 

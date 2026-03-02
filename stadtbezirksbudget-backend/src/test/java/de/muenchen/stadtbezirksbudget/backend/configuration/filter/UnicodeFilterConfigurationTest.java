@@ -21,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.kafka.ConfluentKafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 // TODO (#317): Has to be refactored as soon as any controller in productive code can be used instead of theentity (requires post-Endpoint with text-field in body).
@@ -31,6 +32,12 @@ import org.testcontainers.utility.DockerImageName;
 )
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class UnicodeFilterConfigurationTest {
+
+    @Container
+    @ServiceConnection
+    @SuppressWarnings("unused")
+    private static final ConfluentKafkaContainer KAFKA_CONTAINER = new ConfluentKafkaContainer(
+            DockerImageName.parse(TestConstants.TESTCONTAINERS_KAFKA_IMAGE));
 
     @Container
     @ServiceConnection
