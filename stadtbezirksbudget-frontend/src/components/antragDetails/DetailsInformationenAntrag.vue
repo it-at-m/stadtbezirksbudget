@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <v-text-field
-          v-model="antrag.allgemein.projektTitel"
+          v-model="antrag.projekt.titel"
           data-test="projekt-titel"
           hide-details="auto"
           label="Projekttitel"
@@ -26,7 +26,7 @@
     <v-row>
       <v-col>
         <v-text-field
-          v-model="antrag.allgemein.antragstellerName"
+          v-model="antrag.antragsteller.name"
           data-test="antragsteller-name"
           hide-details="auto"
           label="Antragsteller*in"
@@ -36,7 +36,7 @@
       </v-col>
       <v-col cols="3">
         <v-number-input
-          v-model="antrag.allgemein.beantragtesBudget"
+          v-model="antrag.finanzierung.beantragtesBudget"
           :precision="2"
           control-variant="hidden"
           data-test="beantragtes-budget"
@@ -49,7 +49,7 @@
       </v-col>
       <v-col cols="3">
         <v-text-field
-          v-model="antrag.allgemein.rubrik"
+          v-model="antrag.projekt.rubrik"
           data-test="rubrik"
           hide-details="auto"
           label="Rubrik"
@@ -71,7 +71,7 @@
       </v-col>
       <v-col cols="3">
         <v-text-field
-          v-model="antrag.allgemein.zammadNr"
+          v-model="antrag.allgemein.zammadTicketNr"
           data-test="zammad-nr"
           hide-details="auto"
           label="Ticketnummer"

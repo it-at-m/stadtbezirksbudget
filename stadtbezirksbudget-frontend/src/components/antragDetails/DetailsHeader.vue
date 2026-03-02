@@ -10,7 +10,7 @@
     </v-col>
     <v-col cols="auto">
       <zammad-button
-        :zammad-nr="antrag.allgemein.zammadNr"
+        :zammad-nr="antrag.allgemein.zammadTicketNr"
         class="me-5"
       />
       <eakte-button :eakte-coo-adresse="antrag.allgemein.eakteCooAdresse" />

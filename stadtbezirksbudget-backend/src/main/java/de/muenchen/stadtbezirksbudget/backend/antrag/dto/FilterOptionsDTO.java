@@ -9,7 +9,7 @@ import java.util.List;
  * This DTO encapsulates lists of distinct Antragsteller names and Projekt titles,
  * which can be used for filtering purposes.
  */
-@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier and therefore unreasonable to test.")
 public record FilterOptionsDTO(List<String> antragstellerNamen, List<String> projektTitel) {
 
     public FilterOptionsDTO {

@@ -6,5 +6,14 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
  * Data Transfer Object (DTO) representing the details of an Antrag.
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
-public record AntragDetailsDTO(AntragDetailsAllgemeinDTO allgemein) {
+public record AntragDetailsDTO(
+        AntragAllgemeinDTO allgemein,
+        AntragAntragstellerDTO antragsteller,
+        AntragBankverbindungDTO bankverbindung,
+        AntragBezirksausschussDTO bezirksinformationen,
+        AntragFinanzierungDTO finanzierung,
+        AntragProjektDTO projekt,
+        AntragVertretungsberechtigterDTO vertretungsberechtigter,
+        AntragVerwendungsnachweisDTO verwendungsnachweis,
+        AntragZahlungDTO zahlung) {
 }

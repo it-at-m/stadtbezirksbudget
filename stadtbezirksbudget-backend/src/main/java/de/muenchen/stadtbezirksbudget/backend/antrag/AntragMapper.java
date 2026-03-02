@@ -1,7 +1,7 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragDetailsAllgemeinDTO;
+import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragAllgemeinDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragDetailsDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.kafka.KafkaDTO;
@@ -41,20 +41,14 @@ public interface AntragMapper {
     AntragDetailsDTO toDetailsDTO(Antrag antrag);
 
     /**
-     * Maps an Antrag entity to an AntragDetailsAllgemeinDTO.
+     * Maps an Antrag entity to an AntragAllgemeinDTO.
      *
      * @param antrag the Antrag entity
-     * @return the corresponding AntragDetailsAllgemeinDTO
+     * @return the corresponding AntragAllgemeinDTO
      */
-    @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
-    @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
-    @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
-    @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
-    @Mapping(target = "rubrik", source = "antrag.projekt.rubrik")
-    @Mapping(target = "zammadNr", source = "zammadTicketNr")
-    @Mapping(target = "istGegendert", source = "antrag.istGegendert")
+    @Mapping(target = "status", source = "bearbeitungsstand.status")
     @Mapping(target = "anmerkungen", source = "bearbeitungsstand.anmerkungen")
-    AntragDetailsAllgemeinDTO toAllgemeinDTO(Antrag antrag);
+    AntragAllgemeinDTO toAllgemeinDTO(Antrag antrag);
 
     @Mappings(
         {
