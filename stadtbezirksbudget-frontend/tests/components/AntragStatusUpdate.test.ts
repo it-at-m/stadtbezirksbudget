@@ -26,7 +26,7 @@ describe("AntragStatusUpdate", () => {
       status: ref("EINGEGANGEN"),
       search: ref(""),
       updateStatus: vi.fn(),
-      toggleStatusAndSearch: vi.fn(),
+      onFocusChange: vi.fn(),
       onStatusUpdated: vi.fn(),
     };
 
@@ -71,28 +71,24 @@ describe("AntragStatusUpdate", () => {
     );
   });
 
-  test("calls toggleStatusAndSearch when focused", async () => {
+  test("calls onFocusChange when focused", async () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
 
     await autocomplete.vm.$emit("update:focused", true);
 
-    expect(
-      mockUseAntragStatusUpdate.toggleStatusAndSearch
-    ).toHaveBeenCalledWith(true);
+    expect(mockUseAntragStatusUpdate.onFocusChange).toHaveBeenCalledWith(true);
   });
 
-  test("calls toggleStatusAndSearch when unfocused", async () => {
+  test("calls onFocusChange when unfocused", async () => {
     const wrapper = createWrapper();
 
     const autocomplete = wrapper.findComponent({ name: "VAutocomplete" });
 
     await autocomplete.vm.$emit("update:focused", false);
 
-    expect(
-      mockUseAntragStatusUpdate.toggleStatusAndSearch
-    ).toHaveBeenCalledWith(false);
+    expect(mockUseAntragStatusUpdate.onFocusChange).toHaveBeenCalledWith(false);
   });
 
   test("emits status-updated on callback call", async () => {
