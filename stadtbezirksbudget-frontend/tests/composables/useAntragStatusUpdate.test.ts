@@ -197,5 +197,20 @@ describe("useAntragStatusUpdate", () => {
       expect(search.value).toBe("");
       expect(onUpdate).not.toHaveBeenCalled();
     });
+
+    test("does nothing on focus", () => {
+      const { status, onFocusChange } = useAntragStatusUpdate(
+        ref("1"),
+        ref("EINGEGANGEN"),
+        onUpdate
+      );
+
+      onFocusChange(true);
+
+      status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
+
+      expect(status.value).toBe("ABGELEHNT_KEINE_RUECKMELDUNG");
+      expect(onUpdate).not.toHaveBeenCalled();
+    });
   });
 });
