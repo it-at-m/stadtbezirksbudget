@@ -8,7 +8,9 @@ import java.time.LocalDate;
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragProjektDTO(
+        String titel,
         String beschreibung,
+        String rubrik,
         LocalDate start,
         LocalDate ende,
         String fristBruchBegruendung) {

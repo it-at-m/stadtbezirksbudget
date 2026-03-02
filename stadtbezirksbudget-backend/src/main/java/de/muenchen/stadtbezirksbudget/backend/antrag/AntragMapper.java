@@ -2,11 +2,7 @@ package de.muenchen.stadtbezirksbudget.backend.antrag;
 
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.AntragSummaryDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragAllgemeinDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragAntragstellerDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragBezirksausschussDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragDetailsDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragFinanzierungDTO;
-import de.muenchen.stadtbezirksbudget.backend.antrag.dto.antrag_details.AntragVertretungsberechtigterDTO;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.kafka.KafkaDTO;
 import org.mapstruct.Mapper;
@@ -42,10 +38,6 @@ public interface AntragMapper {
      * @return the corresponding AntragDetailsDTO
      */
     @Mapping(target = "allgemein", source = ".")
-    @Mapping(target = "antragsteller", source = ".")
-    @Mapping(target = "bezirksinformationen", source = ".")
-    @Mapping(target = "finanzierung", source = ".")
-    @Mapping(target = "vertretungsberechtigter", source = ".")
     AntragDetailsDTO toDetailsDTO(Antrag antrag);
 
     /**
@@ -54,63 +46,9 @@ public interface AntragMapper {
      * @param antrag the Antrag entity
      * @return the corresponding AntragAllgemeinDTO
      */
-    @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
-    @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
-    @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
-    @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
-    @Mapping(target = "rubrik", source = "antrag.projekt.rubrik")
-    @Mapping(target = "zammadNr", source = "zammadTicketNr")
-    @Mapping(target = "istGegendert", source = "antrag.istGegendert")
+    @Mapping(target = "status", source = "bearbeitungsstand.status")
     @Mapping(target = "anmerkungen", source = "bearbeitungsstand.anmerkungen")
     AntragAllgemeinDTO toAllgemeinDTO(Antrag antrag);
-
-    /**
-     * Maps an Antrag entity to an AntragAntragstellerDTO.
-     *
-     * @param antrag the Antrag entity
-     * @return the corresponding AntragAntragstellerDTO
-     */
-    @Mapping(target = ".", source = "antrag.antragsteller")
-    @Mapping(target = "strasseHausnummer", source = "antrag.antragsteller.adresse.strasseHausnummer")
-    @Mapping(target = "ort", source = "antrag.antragsteller.adresse.ort")
-    @Mapping(target = "postleitzahl", source = "antrag.antragsteller.adresse.postleitzahl")
-    @Mapping(target = "weitereAngaben", source = "antrag.antragsteller.adresse.weitereAngaben")
-    AntragAntragstellerDTO toAntragstellerDTO(Antrag antrag);
-
-    /**
-     * Maps an Antrag entity to an AntragBezirksausschussDTO.
-     *
-     * @param antrag the Antrag entity
-     * @return the corresponding AntragBezirksausschussDTO
-     */
-    @Mapping(target = ".", source = "antrag.bezirksinformationen")
-    @Mapping(target = "beschlussStatus", source = "antrag.beschlussStatus")
-    AntragBezirksausschussDTO toBezirksauschussDTO(Antrag antrag);
-
-    /**
-     * Maps an Antrag entity to an AntragFinanzierungDTO.
-     *
-     * @param antrag the Antrag entity
-     * @return the corresponding AntragFinanzierungDTO
-     */
-    @Mapping(target = ".", source = "antrag.finanzierung")
-    @Mapping(target = "istZuwendungDritterBeantragt", source = "antrag.istZuwendungDritterBeantragt")
-    @Mapping(target = "summeAndereZuwendungsantraege", source = "antrag.summeAndereZuwendungsantraege")
-    @Mapping(target = "andereZuwendungsantraege", source = "antrag.andereZuwendungsantraege")
-    AntragFinanzierungDTO toFinanzierungDTO(Antrag antrag);
-
-    /**
-     * Maps an Antrag entity to an AntragVertretungsberechtigterDTO.
-     *
-     * @param antrag the Antrag entity
-     * @return the corresponding AntragVertretungsberechtigterDTO
-     */
-    @Mapping(target = ".", source = "antrag.vertretungsberechtigter")
-    @Mapping(target = "strasseHausnummer", source = "antrag.vertretungsberechtigter.adresse.strasseHausnummer")
-    @Mapping(target = "ort", source = "antrag.vertretungsberechtigter.adresse.ort")
-    @Mapping(target = "postleitzahl", source = "antrag.vertretungsberechtigter.adresse.postleitzahl")
-    @Mapping(target = "weitereAngaben", source = "antrag.vertretungsberechtigter.adresse.weitereAngaben")
-    AntragVertretungsberechtigterDTO toVertretungDTO(Antrag antrag);
 
     @Mappings(
         {

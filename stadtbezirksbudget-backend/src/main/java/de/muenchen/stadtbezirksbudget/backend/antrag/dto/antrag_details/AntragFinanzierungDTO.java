@@ -9,14 +9,12 @@ import java.util.List;
  */
 @ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier and therefore unreasonable to test.")
 public record AntragFinanzierungDTO(
+        BigDecimal beantragtesBudget,
         boolean istPersonVorsteuerabzugsberechtigt,
         boolean istProjektVorsteuerabzugsberechtigt,
         List<VoraussichtlicheAusgabeDTO> voraussichtlicheAusgaben,
         BigDecimal gesamtkosten,
         String kostenAnmerkung,
-        boolean istZuwendungDritterBeantragt,
-        List<AndererZuwendungsantragDTO> andereZuwendungsantraege,
-        BigDecimal summeAndereZuwendungsantraege,
         List<FinanzierungsmittelDTO> finanzierungsmittel,
         boolean istZuwenigEigenmittel,
         String begruendungEigenmittel,
@@ -28,7 +26,6 @@ public record AntragFinanzierungDTO(
 
     public AntragFinanzierungDTO {
         voraussichtlicheAusgaben = voraussichtlicheAusgaben != null ? List.copyOf(voraussichtlicheAusgaben) : List.of();
-        andereZuwendungsantraege = andereZuwendungsantraege != null ? List.copyOf(andereZuwendungsantraege) : List.of();
         finanzierungsmittel = finanzierungsmittel != null ? List.copyOf(finanzierungsmittel) : List.of();
     }
 }
