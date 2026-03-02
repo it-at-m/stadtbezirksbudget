@@ -13,23 +13,34 @@ vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const mockAntrag = {
   allgemein: {
-    projektTitel: "Projekt Titel",
     eingangDatum: "2024-10-01",
-    antragstellerName: "Max Mustermann",
-    beantragtesBudget: 1234,
-    rubrik: "Rubrik",
     status: "EINGEGANGEN",
-    zammadNr: "Z-123",
+    zammadTicketNr: "Z-123",
     aktenzeichen: "AZ-456",
     istGegendert: true,
     anmerkungen: "Anmerkungen",
   },
+  antragsteller: {
+    name: "Mustermann",
+  },
+  bankverbindung: null,
+  bezirksinformationen: null,
+  finanzierung: {
+    beantragtesBudget: 1234,
+  },
+  projekt: {
+    titel: "Projekt Titel",
+    rubrik: "Rubrik",
+  },
+  vertretungsberechtigter: null,
+  verwendungsnachweis: null,
+  zahlung: null,
 };
 
 const fields = [
   {
     dataTest: "projekt-titel",
-    expected: mockAntrag.allgemein.projektTitel,
+    expected: mockAntrag.projekt.titel,
     component: "VTextField",
   },
   {
@@ -46,21 +57,24 @@ const fields = [
   },
   {
     dataTest: "antragsteller-name",
-    expected: mockAntrag.allgemein.antragstellerName,
+    expected: mockAntrag.antragsteller.name,
     component: "VTextField",
   },
   {
     dataTest: "beantragtes-budget",
-    expected: mockAntrag.allgemein.beantragtesBudget.toLocaleString("de-De", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-      useGrouping: false,
-    }),
+    expected: mockAntrag.finanzierung.beantragtesBudget.toLocaleString(
+      "de-De",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+        useGrouping: false,
+      }
+    ),
     component: "VNumberInput",
   },
   {
     dataTest: "rubrik",
-    expected: mockAntrag.allgemein.rubrik,
+    expected: mockAntrag.projekt.rubrik,
     component: "VTextField",
   },
   {
@@ -69,8 +83,8 @@ const fields = [
     component: "StatusSelect",
   },
   {
-    dataTest: "zammad-nr",
-    expected: mockAntrag.allgemein.zammadNr,
+    dataTest: "zammad-ticket-nr",
+    expected: mockAntrag.allgemein.zammadTicketNr,
     component: "VTextField",
   },
   {
