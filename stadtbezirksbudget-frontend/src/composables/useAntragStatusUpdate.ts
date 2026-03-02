@@ -60,11 +60,12 @@ export function useAntragStatusUpdate(
   /**
    * Handles focus changes on input field.
    *
-   * @param {boolean} focus - If not focused restores to old status.
+   * @param {boolean} focus - If not focused restores to old status and clears search.
    */
   function onFocusChange(focus: boolean) {
     if (!focus) {
       status.value = oldStatus.value;
+      search.value = "";
     }
   }
 

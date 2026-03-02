@@ -190,27 +190,29 @@ describe("useAntragStatusUpdate", () => {
       );
 
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
-
-      onFocusChange(false);
       search.value = "abc";
 
+      onFocusChange(false);
+
       expect(status.value).toBe("EINGEGANGEN");
-      expect(search.value).toBe("abc");
+      expect(search.value).toBe("");
       expect(onUpdate).not.toHaveBeenCalled();
     });
 
     test("does nothing on focus", () => {
-      const { status, onFocusChange } = useAntragStatusUpdate(
+      const { status, onFocusChange, search } = useAntragStatusUpdate(
         ref("1"),
         ref("EINGEGANGEN"),
         onUpdate
       );
 
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
+      search.value = "abc";
 
       onFocusChange(true);
 
       expect(status.value).toBe("ABGELEHNT_KEINE_RUECKMELDUNG");
+      expect(search.value).toBe("abc");
       expect(onUpdate).not.toHaveBeenCalled();
     });
   });
