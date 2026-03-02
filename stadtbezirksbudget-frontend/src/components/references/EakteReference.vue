@@ -18,6 +18,8 @@
           <eakte-link
             :aktenzeichen="aktenzeichen"
             :eakte-coo-adresse="eakteCooAdresse"
+            @click.stop
+            @mousedown.stop
           />
         </v-col>
         <v-col cols="auto">
