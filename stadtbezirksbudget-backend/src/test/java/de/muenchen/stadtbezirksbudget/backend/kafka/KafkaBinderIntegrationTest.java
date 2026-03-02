@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.kafka;
 
+import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_KAFKA_TEST_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.mockito.Mockito.timeout;
@@ -25,7 +26,7 @@ import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE, SPRING_KAFKA_TEST_PROFILE })
 @EmbeddedKafka(partitions = 1, topics = "${kafka.topic}")
 class KafkaBinderIntegrationTest {
 
