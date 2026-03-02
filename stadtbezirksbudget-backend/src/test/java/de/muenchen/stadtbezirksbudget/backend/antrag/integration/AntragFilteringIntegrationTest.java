@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import de.muenchen.stadtbezirksbudget.backend.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.IntegrationTestConfiguration;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.AktualisierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.FinanzierungArt;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Status;
@@ -28,35 +28,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.kafka.ConfluentKafkaContainer;
-import org.testcontainers.utility.DockerImageName;
 
 @Transactional
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@Import(IntegrationTestConfiguration.class)
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class AntragFilteringIntegrationTest {
-    @Container
-    @ServiceConnection
-    @SuppressWarnings("unused")
-    private static final ConfluentKafkaContainer KAFKA_CONTAINER = new ConfluentKafkaContainer(
-            DockerImageName.parse(TestConstants.TESTCONTAINERS_KAFKA_IMAGE));
 
-    @Container
-    @ServiceConnection
-    @SuppressWarnings("unused")
-    private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
-            DockerImageName.parse(TestConstants.TESTCONTAINERS_POSTGRES_IMAGE));
     @Autowired
     private AntragRepository antragRepository;
     @Autowired
@@ -207,9 +194,9 @@ class AntragFilteringIntegrationTest {
                 .build();
 
         mockMvc.perform(get("/antrag")
-                        .param("beantragtesBudgetVon", "1000")
-                        .param("beantragtesBudgetBis", "5000")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .param("beantragtesBudgetVon", "1000")
+                .param("beantragtesBudgetBis", "5000")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(4)))
@@ -371,10 +358,10 @@ class AntragFilteringIntegrationTest {
                 .build();
 
         mockMvc.perform(get("/antrag")
-                        .param("projektTitel", "Projekt XYZ 0")
-                        .param("beantragtesBudgetVon", "1000")
-                        .param("beantragtesBudgetBis", "5000")
-                        .contentType(MediaType.APPLICATION_JSON))
+                .param("projektTitel", "Projekt XYZ 0")
+                .param("beantragtesBudgetVon", "1000")
+                .param("beantragtesBudgetBis", "5000")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(3)))
