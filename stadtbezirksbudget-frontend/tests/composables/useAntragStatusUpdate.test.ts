@@ -192,9 +192,10 @@ describe("useAntragStatusUpdate", () => {
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
 
       onFocusChange(false);
+      search.value = "abc";
 
       expect(status.value).toBe("EINGEGANGEN");
-      expect(search.value).toBe("");
+      expect(search.value).toBe("abc");
       expect(onUpdate).not.toHaveBeenCalled();
     });
 
@@ -205,9 +206,9 @@ describe("useAntragStatusUpdate", () => {
         onUpdate
       );
 
-      onFocusChange(true);
-
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
+
+      onFocusChange(true);
 
       expect(status.value).toBe("ABGELEHNT_KEINE_RUECKMELDUNG");
       expect(onUpdate).not.toHaveBeenCalled();
