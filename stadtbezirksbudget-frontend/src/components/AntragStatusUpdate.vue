@@ -7,7 +7,7 @@
     hide-details="auto"
     variant="plain"
     @update:model-value="updateStatus"
-    @update:focused="toggleStatusAndSearch"
+    @update:focused="onFocusChange"
   />
 </template>
 
@@ -25,13 +25,9 @@ const emit = defineEmits<(e: "status-updated", newStatus: Status) => void>();
 const onStatusUpdated = (newStatus: Status) =>
   emit("status-updated", newStatus);
 
-const { updateStatus, toggleStatusAndSearch, status, search } =
-  useAntragStatusUpdate(antragId, initialStatus, onStatusUpdated);
+const { updateStatus, onFocusChange, status, search } = useAntragStatusUpdate(
+  antragId,
+  initialStatus,
+  onStatusUpdated
+);
 </script>
-
-<style scoped>
-/*noinspection CssUnusedSymbol*/
-:deep(.v-field__input) {
-  overflow: hidden;
-}
-</style>

@@ -6,7 +6,6 @@ import { ref, watch } from "vue";
 import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
-import { StatusText } from "@/types/Status.ts";
 
 /**
  * Composable function that manages the status selection for an Antrag.
@@ -34,7 +33,7 @@ export function useAntragStatusUpdate(
    * Updates the status of the Antrag both locally and in the backend.
    * @param newStatus - The new status to set for the Antrag.
    */
-  function updateStatus(newStatus: Status) {
+  function updateStatus(newStatus: Status | undefined) {
     if (!newStatus) return;
     updateAntragStatus(antragId.value, newStatus)
       .then(() => {
@@ -59,18 +58,13 @@ export function useAntragStatusUpdate(
   }
 
   /**
-   * Toggles status and search based on focus state.
+   * Handles focus changes on input field.
    *
-   * @param {boolean} focus - If focused updates search and clears status,
-   *                          If not focused restores status and clears search.
+   * @param {boolean} focus - If not focused restores to old status.
    */
-  function toggleStatusAndSearch(focus: boolean) {
-    if (focus) {
-      search.value = StatusText[oldStatus.value].shortText;
-      status.value = undefined;
-    } else {
+  function onFocusChange(focus: boolean) {
+    if (!focus) {
       status.value = oldStatus.value;
-      search.value = "";
     }
   }
 
@@ -84,7 +78,7 @@ export function useAntragStatusUpdate(
 
   return {
     updateStatus,
-    toggleStatusAndSearch,
+    onFocusChange,
     // Current status of the Antrag
     status,
     // Search term for filtering status options
