@@ -35,10 +35,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.kafka.ConfluentKafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @Transactional
+@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
@@ -205,9 +207,9 @@ class AntragFilteringIntegrationTest {
                 .build();
 
         mockMvc.perform(get("/antrag")
-                .param("beantragtesBudgetVon", "1000")
-                .param("beantragtesBudgetBis", "5000")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .param("beantragtesBudgetVon", "1000")
+                        .param("beantragtesBudgetBis", "5000")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(4)))
@@ -369,10 +371,10 @@ class AntragFilteringIntegrationTest {
                 .build();
 
         mockMvc.perform(get("/antrag")
-                .param("projektTitel", "Projekt XYZ 0")
-                .param("beantragtesBudgetVon", "1000")
-                .param("beantragtesBudgetBis", "5000")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .param("projektTitel", "Projekt XYZ 0")
+                        .param("beantragtesBudgetVon", "1000")
+                        .param("beantragtesBudgetBis", "5000")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.content", hasSize(3)))

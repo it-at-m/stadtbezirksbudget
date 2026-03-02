@@ -20,9 +20,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.kafka.ConfluentKafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
+@Testcontainers
 @SpringBootTest(
         classes = { StadtbezirksbudgetBackend.class },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
