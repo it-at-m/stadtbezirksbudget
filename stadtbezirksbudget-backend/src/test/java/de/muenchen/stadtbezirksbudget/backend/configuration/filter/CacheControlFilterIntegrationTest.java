@@ -20,16 +20,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.kafka.ConfluentKafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
-@Testcontainers
 @SpringBootTest(
         classes = { StadtbezirksbudgetBackend.class },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class CacheControlFilterIntegrationTest {
+
+    @Container
+    @ServiceConnection
+    @SuppressWarnings("unused")
+    private static final ConfluentKafkaContainer KAFKA_CONTAINER = new ConfluentKafkaContainer(
+            DockerImageName.parse(TestConstants.TESTCONTAINERS_KAFKA_IMAGE));
+
     @Container
     @ServiceConnection
     @SuppressWarnings("unused")

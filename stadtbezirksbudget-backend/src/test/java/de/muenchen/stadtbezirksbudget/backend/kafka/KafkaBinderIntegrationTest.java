@@ -1,6 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.kafka;
 
-import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_KAFKA_TEST_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.mockito.Mockito.timeout;
@@ -16,19 +15,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.test.context.EmbeddedKafka;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.kafka.ConfluentKafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE, SPRING_KAFKA_TEST_PROFILE })
-@EmbeddedKafka(partitions = 1, topics = "${kafka.topic}")
+@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 class KafkaBinderIntegrationTest {
+
+    @Container
+    @ServiceConnection
+    @SuppressWarnings("unused")
+    private static final ConfluentKafkaContainer KAFKA_CONTAINER = new ConfluentKafkaContainer(
+            DockerImageName.parse(TestConstants.TESTCONTAINERS_KAFKA_IMAGE));
 
     @Container
     @ServiceConnection
