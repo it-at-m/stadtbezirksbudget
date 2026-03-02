@@ -126,7 +126,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth}px`,
     },
     {
-      title: "Nummer",
+      title: "Ticketnummer",
       key: "zammadNr",
       maxWidth: `${baseWidth}px`,
     },
@@ -173,7 +173,7 @@ const computedHeaders = computed<DataTableHeader[]>(() => {
       maxWidth: `${baseWidth}px`,
     },
     {
-      title: "Datum Aktualisierung",
+      title: "Zuletzt geändert",
       key: "aktualisierungDatum",
       maxWidth: `${baseWidth}px`,
     },

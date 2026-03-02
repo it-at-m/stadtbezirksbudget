@@ -12,19 +12,19 @@ require attention and to navigate through the applications with ease.
 The displayed columns represent the most important data from the citizen form, such as the applicant or project title. Additionally, a few additional columns
 provide context and facilitate the processing of applications:
 
-| Column               | Description                                                                                                     |
-| -------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Status               | The current [status](/about/status-values) of the application, indicating its stage in the processing workflow. |
-| Nummer               | The Zammad ticket number associated with the application.                                                       |
-| Aktenzeichen         | Identifier in the E-Akte system where the application is documented.                                            |
-| BA                   | The administrative district (Bezirk) relevant to the application.                                               |
-| Antragsdatum         | The date when the application was submitted by the applicant.                                                   |
-| Antragsteller        | The name of the applicant who submitted the application.                                                        |
-| Projekt              | The name of the project for which the application was made.                                                     |
-| Budget               | The amount of budget requested in the application.                                                              |
-| Art                  | The type of application submitted ("Fehl" or "Fest").                                                           |
-| Aktualisierung       | Shows in which of the involved systems (Zammad, EAkte) the last activity occurred.                              |
-| Datum Aktualisierung | The date when the last update was made to the application.                                                      |
+| Column           | Description                                                                                                     |
+| ---------------- | --------------------------------------------------------------------------------------------------------------- |
+| Status           | The current [status](/about/status-values) of the application, indicating its stage in the processing workflow. |
+| Ticketnummer     | The Zammad ticket number associated with the application.                                                       |
+| Aktenzeichen     | Identifier in the E-Akte system where the application is documented.                                            |
+| BA               | The administrative district (Bezirk) relevant to the application.                                               |
+| Antragsdatum     | The date when the application was submitted by the applicant.                                                   |
+| Antragsteller    | The name of the applicant who submitted the application.                                                        |
+| Projekt          | The name of the project for which the application was made.                                                     |
+| Budget           | The amount of budget requested in the application.                                                              |
+| Art              | The type of application submitted ("Fehl" or "Fest").                                                           |
+| Aktualisierung   | Shows in which of the involved systems (Zammad, EAkte) the last activity occurred.                              |
+| Zuletzt geändert | The date when the last update was made to the application.                                                      |
 
 ## Updating application status
 
