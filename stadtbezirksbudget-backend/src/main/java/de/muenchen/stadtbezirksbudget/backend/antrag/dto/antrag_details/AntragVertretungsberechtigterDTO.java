@@ -9,7 +9,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
 public record AntragVertretungsberechtigterDTO(
         String nachname,
         String vorname,
-        AdressDTO adresse,
+        AdresseDTO adresse,
         String email,
         String telefonNr,
         String mobilNr) {

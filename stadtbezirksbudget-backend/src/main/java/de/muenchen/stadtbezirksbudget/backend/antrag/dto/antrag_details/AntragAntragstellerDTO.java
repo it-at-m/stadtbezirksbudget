@@ -14,5 +14,5 @@ public record AntragAntragstellerDTO(
         String email,
         String zielsetzung,
         Rechtsform rechtsform,
-        AdressDTO adresse) {
+        AdresseDTO adresse) {
 }
