@@ -23,7 +23,7 @@ public record AntragAllgemeinDTO(
         boolean istZuwendungDritterBeantragt,
         BigDecimal summeAndereZuwendungsantraege,
         List<AndererZuwendungsantragDTO> andereZuwendungsantraege) {
-    
+
     public AntragAllgemeinDTO {
         andereZuwendungsantraege = andereZuwendungsantraege != null ? List.copyOf(andereZuwendungsantraege) : List.of();
     }
