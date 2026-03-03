@@ -27,7 +27,7 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
-@JsonIgnoreProperties(value = "fullName")
+@JsonIgnoreProperties("fullName")
 public class Antragsteller implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
