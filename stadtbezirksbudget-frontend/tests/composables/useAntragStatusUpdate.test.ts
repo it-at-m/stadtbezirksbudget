@@ -7,7 +7,6 @@ import { updateAntragStatus } from "@/api/update-antragStatus.ts";
 import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
-import { StatusText } from "@/types/Status.ts";
 
 vi.mock("@/api/update-antragStatus.ts");
 vi.mock("@/stores/useSnackbarStore.ts");
@@ -182,36 +181,38 @@ describe("useAntragStatusUpdate", () => {
     });
   });
 
-  describe("toggleStatusAndSearch", () => {
-    test("toggles status and search when unfocused", () => {
-      const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
+  describe("onFocusChange", () => {
+    test("resets status when unfocused", () => {
+      const { status, onFocusChange, search } = useAntragStatusUpdate(
         ref("1"),
         ref("EINGEGANGEN"),
         onUpdate
       );
 
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
+      search.value = "abc";
 
-      toggleStatusAndSearch(false);
+      onFocusChange(false);
 
       expect(status.value).toBe("EINGEGANGEN");
       expect(search.value).toBe("");
       expect(onUpdate).not.toHaveBeenCalled();
     });
 
-    test("toggles status and search when focused", () => {
-      const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
+    test("does nothing on focus", () => {
+      const { status, onFocusChange, search } = useAntragStatusUpdate(
         ref("1"),
         ref("EINGEGANGEN"),
         onUpdate
       );
 
-      status.value = "ABGELEHNT_NICHT_ZUSTAENDIG";
+      status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
+      search.value = "abc";
 
-      toggleStatusAndSearch(true);
+      onFocusChange(true);
 
-      expect(status.value).toBeUndefined();
-      expect(search.value).toBe(StatusText["EINGEGANGEN"].shortText);
+      expect(status.value).toBe("ABGELEHNT_KEINE_RUECKMELDUNG");
+      expect(search.value).toBe("abc");
       expect(onUpdate).not.toHaveBeenCalled();
     });
   });

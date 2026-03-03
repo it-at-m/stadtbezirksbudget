@@ -5,7 +5,7 @@ import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_P
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import de.muenchen.stadtbezirksbudget.backend.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.IntegrationTestConfiguration;
 import de.muenchen.stadtbezirksbudget.backend.common.InvalidSortPropertyException;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -15,24 +15,17 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@Testcontainers
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
+@Import(IntegrationTestConfiguration.class)
 class AntragSortMapperTest {
-    @Container
-    @ServiceConnection
-    @SuppressWarnings("unused")
-    private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
-            TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
-
     @Autowired
     private AntragSortMapper antragSortMapper;
 

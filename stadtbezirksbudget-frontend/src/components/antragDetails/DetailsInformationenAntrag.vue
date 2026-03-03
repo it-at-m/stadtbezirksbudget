@@ -60,7 +60,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <status-select
+        <status-select-detailed
           v-model="antrag.allgemein.status"
           data-test="status"
           hide-details="auto"
@@ -123,7 +123,7 @@ import type { AntragDetails } from "@/types/antragDetails/AntragDetails.ts";
 import { ref, watch } from "vue";
 
 import DetailsCard from "@/components/antragDetails/DetailsCard.vue";
-import StatusSelect from "@/components/StatusSelect.vue";
+import StatusSelectDetailed from "@/components/StatusSelectDetailed.vue";
 
 const props = defineProps<{ antrag: AntragDetails }>();
 

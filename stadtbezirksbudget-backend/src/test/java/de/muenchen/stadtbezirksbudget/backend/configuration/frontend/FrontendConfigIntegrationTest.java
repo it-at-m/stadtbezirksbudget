@@ -6,29 +6,22 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import de.muenchen.stadtbezirksbudget.backend.TestConstants;
+import de.muenchen.stadtbezirksbudget.backend.IntegrationTestConfiguration;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Testcontainers
 @ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 class FrontendConfigIntegrationTest {
-    @Container
-    @ServiceConnection
-    @SuppressWarnings("unused")
-    private static final PostgreSQLContainer<?> POSTGRE_SQL_CONTAINER = new PostgreSQLContainer<>(
-            TestConstants.TESTCONTAINERS_POSTGRES_IMAGE);
 
     @Nested
     @AutoConfigureMockMvc
@@ -39,6 +32,7 @@ class FrontendConfigIntegrationTest {
                     "frontend.config.eakte-base-url=https://eakte.example.local"
             }
     )
+    @Import(IntegrationTestConfiguration.class)
     class GetFrontendConfig {
         @Autowired
         private MockMvc mockMvc;
@@ -65,6 +59,7 @@ class FrontendConfigIntegrationTest {
     @Nested
     @AutoConfigureMockMvc
     @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+    @Import(IntegrationTestConfiguration.class)
     class GetFrontendConfigDefault {
         @Autowired
         private MockMvc mockMvc;
