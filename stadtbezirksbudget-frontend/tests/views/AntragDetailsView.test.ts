@@ -24,14 +24,12 @@ const cards = ["DetailsHeader", "DetailsInformationenAntrag"];
 function createCardStub(name: string) {
   return {
     props: ["antrag"],
-    template: `<div data-test="card-${name}">{{ antrag?.allgemein.projektTitel }}</div>`,
+    template: `<div data-test="card-${name}">{{ antrag?.test }}</div>`,
   };
 }
 
-function mountViewWithStubs(cardNames: string[]) {
-  const stubs = Object.fromEntries(
-    cardNames.map((n) => [n, createCardStub(n)])
-  );
+function mountViewWithStubs() {
+  const stubs = Object.fromEntries(cards.map((n) => [n, createCardStub(n)]));
 
   return mount(AntragDetailsView, {
     global: {
@@ -48,7 +46,7 @@ describe("AntragDetailsView", () => {
 
   test("calls useAntragDetails with correct parameters", () => {
     const mockDetails = ref({
-      allgemein: { projektTitel: "Projekt Test" },
+      test: "TestAntrag",
     });
 
     vi.mocked(useAntragDetails).mockReturnValue({
@@ -58,14 +56,14 @@ describe("AntragDetailsView", () => {
       params: { id: "123" },
     } as unknown as ReturnType<typeof useRoute>);
 
-    mountViewWithStubs([]);
+    mountViewWithStubs();
 
     expect(useAntragDetails).toHaveBeenCalledWith("123");
   });
 
   test("renders container and cards when details are available", () => {
     const mockDetails = ref({
-      allgemein: { projektTitel: "Projekt Test" },
+      test: "TestAntrag",
     });
 
     vi.mocked(useAntragDetails).mockReturnValue({ details: mockDetails });
@@ -73,7 +71,7 @@ describe("AntragDetailsView", () => {
       params: { id: "123" },
     } as unknown as ReturnType<typeof useRoute>);
 
-    const wrapper = mountViewWithStubs(cards);
+    const wrapper = mountViewWithStubs();
 
     expect(wrapper.findComponent({ name: "VContainer" }).exists()).toBe(true);
     expect(wrapper.findAllComponents({ name: "VRow" }).length).toBe(
@@ -86,7 +84,7 @@ describe("AntragDetailsView", () => {
 
   test.each(cards)("renders %s when details are available", (cardName) => {
     const mockDetails = ref({
-      allgemein: { projektTitel: "Projekt Test" },
+      test: "TestAntrag",
     });
 
     vi.mocked(useAntragDetails).mockReturnValue({ details: mockDetails });
@@ -94,11 +92,11 @@ describe("AntragDetailsView", () => {
       params: { id: "123" },
     } as unknown as ReturnType<typeof useRoute>);
 
-    const wrapper = mountViewWithStubs([cardName]);
+    const wrapper = mountViewWithStubs();
 
     const node = wrapper.find(`[data-test="card-${cardName}"]`);
     expect(node.exists()).toBe(true);
-    expect(node.text()).toContain("Projekt Test");
+    expect(node.text()).toBe("TestAntrag");
   });
 
   test("does not render container when details is undefined", () => {
@@ -109,7 +107,7 @@ describe("AntragDetailsView", () => {
       params: { id: "123" },
     } as unknown as ReturnType<typeof useRoute>);
 
-    const wrapper = mountViewWithStubs(cards);
+    const wrapper = mountViewWithStubs();
 
     expect(wrapper.findComponent({ name: "VContainer" }).exists()).toBe(false);
   });

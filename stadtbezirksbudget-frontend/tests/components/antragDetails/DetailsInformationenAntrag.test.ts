@@ -1,13 +1,12 @@
-import type { VueWrapper } from "@vue/test-utils";
-
-import { mount } from "@vue/test-utils";
-import { beforeEach, describe, expect, test, vi } from "vitest";
+import type {VueWrapper} from "@vue/test-utils";
+import {mount} from "@vue/test-utils";
+import {beforeEach, describe, expect, test, vi} from "vitest";
 
 import DetailsCard from "@/components/antragDetails/DetailsCard.vue";
 import DetailsInformationenAntrag from "@/components/antragDetails/DetailsInformationenAntrag.vue";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
-import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock";
+import {ResizeObserverMock} from "../../_testUtils/ResizeObserverMock";
 
 vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
@@ -23,8 +22,6 @@ const mockAntrag = {
   antragsteller: {
     name: "Mustermann",
   },
-  bankverbindung: null,
-  bezirksinformationen: null,
   finanzierung: {
     beantragtesBudget: 1234,
   },
@@ -32,9 +29,6 @@ const mockAntrag = {
     titel: "Projekt Titel",
     rubrik: "Rubrik",
   },
-  vertretungsberechtigter: null,
-  verwendungsnachweis: null,
-  zahlung: null,
 };
 
 const fields = [
@@ -83,7 +77,7 @@ const fields = [
     component: "StatusSelect",
   },
   {
-    dataTest: "zammad-ticket-nr",
+    dataTest: "zammad-nr",
     expected: mockAntrag.allgemein.zammadTicketNr,
     component: "VTextField",
   },

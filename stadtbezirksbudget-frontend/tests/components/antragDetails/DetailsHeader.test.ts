@@ -1,5 +1,4 @@
 import type { VueWrapper } from "@vue/test-utils";
-
 import { mount } from "@vue/test-utils";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { nextTick } from "vue";
@@ -16,7 +15,7 @@ vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
 const mockAntrag = {
   allgemein: {
-    zammadNr: "1234",
+    zammadTicketNr: "1234",
     eakteCooAdresse: "COO.1234.5678.9.0123456",
   },
 };
@@ -66,19 +65,19 @@ describe("DetailsHeader", () => {
       expect(zammadButton.exists()).toBe(true);
     });
 
-    test("passes zammadNr to zammad button", () => {
+    test("passes zammadTicketNr to zammad button", () => {
       const zammadButton = wrapper.findComponent({ name: "ZammadButton" });
       expect(zammadButton.props("zammadNr")).toBe(
-        mockAntrag.allgemein.zammadNr
+        mockAntrag.allgemein.zammadTicketNr
       );
-      expect(zammadButton.text()).toBe(mockAntrag.allgemein.zammadNr);
+      expect(zammadButton.text()).toBe(mockAntrag.allgemein.zammadTicketNr);
     });
 
-    test("updates zammadNr when antrag prop changes", async () => {
+    test("updates zammadTicketNr when antrag prop changes", async () => {
       const newAntrag = {
         allgemein: {
           ...mockAntrag.allgemein,
-          zammadNr: "4567",
+          zammadTicketNr: "4567",
         },
       };
       await wrapper.setProps({ antrag: newAntrag });
