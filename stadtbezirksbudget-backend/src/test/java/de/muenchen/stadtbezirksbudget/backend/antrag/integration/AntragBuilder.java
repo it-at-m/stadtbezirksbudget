@@ -180,18 +180,15 @@ public class AntragBuilder {
     }
 
     private Vertretungsberechtigter initializeVertretungsberechtigter() {
-        if (addVertretungsberechtigter) {
-            return Vertretungsberechtigter.builder()
-                    .adresse(initializeAdresse())
-                    .email("vertretungsberechtiger@mail.com")
-                    .mobilNr("198731234")
-                    .nachname("Musterfrau")
-                    .vorname("Maxime")
-                    .telefonNr("432345345345234")
-                    .build();
-        } else {
-            return null;
-        }
+        return addVertretungsberechtigter ? Vertretungsberechtigter.builder()
+                .adresse(initializeAdresse())
+                .email("vertretungsberechtiger@mail.com")
+                .mobilNr("198731234")
+                .nachname("Musterfrau")
+                .vorname("Maxime")
+                .telefonNr("432345345345234")
+                .build()
+                : null;
     }
 
     private Adresse initializeAdresse() {
