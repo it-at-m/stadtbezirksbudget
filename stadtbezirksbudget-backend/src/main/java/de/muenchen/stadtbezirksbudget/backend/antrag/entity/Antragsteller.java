@@ -46,7 +46,8 @@ public class Antragsteller implements Serializable {
     /**
      * Gets the full name of the antragsteller.
      *
-     * @return the full name in the format "firstName name" if the first name is not blank, otherwise just the name.
+     * @return the full name in the format "firstName name" if the first name is not blank, otherwise
+     *         just the name.
      */
     public String getFullName() {
         String fullName = name;
