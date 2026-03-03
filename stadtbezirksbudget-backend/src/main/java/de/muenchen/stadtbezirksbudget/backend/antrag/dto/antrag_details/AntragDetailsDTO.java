@@ -10,7 +10,7 @@ public record AntragDetailsDTO(
         AntragAllgemeinDTO allgemein,
         AntragAntragstellerDTO antragsteller,
         AntragBankverbindungDTO bankverbindung,
-        AntragBezirksausschussDTO bezirksinformationen,
+        AntragBezirksinformationenDTO bezirksinformationen,
         AntragFinanzierungDTO finanzierung,
         AntragProjektDTO projekt,
         AntragVertretungsberechtigterDTO vertretungsberechtigter,
