@@ -50,7 +50,7 @@ public class Antragsteller implements Serializable {
      */
     public String getFullName() {
         String fullName = name;
-        if (!vorname.isBlank()) {
+        if (vorname != null && !vorname.isBlank()) {
             fullName = vorname + " " + fullName;
         }
         return fullName;

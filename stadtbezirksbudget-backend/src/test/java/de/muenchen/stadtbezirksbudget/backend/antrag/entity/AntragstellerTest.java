@@ -23,5 +23,13 @@ public class AntragstellerTest {
             antragsteller.setName("Doe");
             assertThat(antragsteller.getFullName()).isEqualTo("Doe");
         }
+
+        @Test
+        public void testOnlyNameWithNullFirstName() {
+            Antragsteller antragsteller = new Antragsteller();
+            antragsteller.setVorname(null);
+            antragsteller.setName("Doe");
+            assertThat(antragsteller.getFullName()).isEqualTo("Doe");
+        }
     }
 }
