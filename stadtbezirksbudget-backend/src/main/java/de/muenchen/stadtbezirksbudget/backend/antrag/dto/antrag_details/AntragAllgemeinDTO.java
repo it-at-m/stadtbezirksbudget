@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Data Transfer Object (DTO) representing the common information of an Antrag.
  */
-@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier and therefore unreasonable to test.")
 public record AntragAllgemeinDTO(
         LocalDateTime eingangDatum,
         Status status,
@@ -23,6 +23,7 @@ public record AntragAllgemeinDTO(
         boolean istZuwendungDritterBeantragt,
         BigDecimal summeAndereZuwendungsantraege,
         List<AndererZuwendungsantragDTO> andereZuwendungsantraege) {
+    
     public AntragAllgemeinDTO {
         andereZuwendungsantraege = andereZuwendungsantraege != null ? List.copyOf(andereZuwendungsantraege) : List.of();
     }
