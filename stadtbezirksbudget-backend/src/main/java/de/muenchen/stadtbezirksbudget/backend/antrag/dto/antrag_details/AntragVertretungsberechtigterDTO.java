@@ -5,7 +5,7 @@ import de.muenchen.stadtbezirksbudget.backend.common.ExcludedFromGeneratedCovera
 /**
  * Data Transfer Object (DTO) representing the information of a Vertretungsberechtigter.
  */
-@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier and therefore unreasonable to test.")
+@ExcludedFromGeneratedCoverage(reason = "DTO is a pure data carrier (no logic) and therefore unreasonable to test.")
 public record AntragVertretungsberechtigterDTO(
         String nachname,
         String vorname,
