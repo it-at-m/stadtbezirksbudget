@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
@@ -26,6 +27,7 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@JsonIgnoreProperties(value = "fullName")
 public class Antragsteller implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

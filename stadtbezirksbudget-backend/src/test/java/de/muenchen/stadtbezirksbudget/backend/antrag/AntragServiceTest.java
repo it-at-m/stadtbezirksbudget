@@ -71,6 +71,7 @@ class AntragServiceTest {
             final String titel, final String beschreibung,
             final Status status) {
         bearbeitungsstand.setStatus(status);
+        antragsteller.setVorname("");
 
         final Projekt projekt = new Projekt();
         projekt.setTitel(titel);

@@ -185,6 +185,7 @@ public class AntragBuilder {
                 .zielsetzung("Förderung von Projekten ")
                 .rechtsform(Rechtsform.NATUERLICHE_PERSON)
                 .build();
+        antragsteller.setVorname("");
         antragsteller.setTelefonNr("0123456789");
         antragsteller.setAdresse(adresse);
         antragsteller.setEmail("max@mustermann.de");
