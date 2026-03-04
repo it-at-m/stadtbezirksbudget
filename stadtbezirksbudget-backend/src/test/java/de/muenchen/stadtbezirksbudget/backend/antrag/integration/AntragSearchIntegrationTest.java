@@ -1,7 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
-import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
-import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,55 +7,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import de.muenchen.stadtbezirksbudget.backend.IntegrationTestConfiguration;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Transactional
-@Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
-@Import(IntegrationTestConfiguration.class)
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class AntragSearchIntegrationTest {
-
-    private AntragBuilder antragBuilder;
-
-    @Autowired
-    private AntragRepository antragRepository;
-    @Autowired
-    private FinanzierungRepository finanzierungRepository;
-    @Autowired
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
-    private AndererZuwendungsantragRepository andereZuwendungsantragRepository;
-    @Autowired
-    private MockMvc mockMvc;
-
-    @BeforeEach
-    public void setUp() {
-        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository,
-                andereZuwendungsantragRepository);
-    }
-
+class AntragSearchIntegrationTest extends AntragBaseIntegrationTest {
     @Test
     void testNullSearch() throws Exception {
         final Antrag antrag = antragBuilder.build();

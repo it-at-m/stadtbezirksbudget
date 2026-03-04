@@ -1,7 +1,5 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.integration;
 
-import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_NO_SECURITY_PROFILE;
-import static de.muenchen.stadtbezirksbudget.backend.TestConstants.SPRING_TEST_PROFILE;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -9,62 +7,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import de.muenchen.stadtbezirksbudget.backend.IntegrationTestConfiguration;
+import de.muenchen.stadtbezirksbudget.backend.antrag.AntragMapper;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antrag;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Antragsteller;
 import de.muenchen.stadtbezirksbudget.backend.antrag.entity.Projekt;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AndererZuwendungsantragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.AntragRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.FinanzierungsmittelRepository;
-import de.muenchen.stadtbezirksbudget.backend.antrag.repository.VoraussichtlicheAusgabeRepository;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Transactional
-@Testcontainers
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureMockMvc
-@ActiveProfiles(profiles = { SPRING_TEST_PROFILE, SPRING_NO_SECURITY_PROFILE })
-@Import(IntegrationTestConfiguration.class)
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-class AntragIntegrationTest {
-
+class AntragIntegrationTest extends AntragBaseIntegrationTest {
     private final List<Antrag> antragList = new ArrayList<>();
 
     @Autowired
-    private AntragRepository antragRepository;
-    @Autowired
-    private FinanzierungRepository finanzierungRepository;
-    @Autowired
-    private VoraussichtlicheAusgabeRepository voraussichtlicheAusgabeRepository;
-    @Autowired
-    private FinanzierungsmittelRepository finanzierungsmittelRepository;
-    @Autowired
-    private AndererZuwendungsantragRepository andereZuwendungsantragRepository;
-    @Autowired
-    private MockMvc mockMvc;
-
-    private AntragBuilder antragBuilder;
-
-    @BeforeEach
-    public void setUp() {
-        antragList.clear();
-        antragBuilder = new AntragBuilder(antragRepository, finanzierungRepository, voraussichtlicheAusgabeRepository, finanzierungsmittelRepository,
-                andereZuwendungsantragRepository);
-    }
+    private AntragMapper antragMapper;
 
     @Nested
     class GetAntragSummaryPage {
@@ -145,6 +104,7 @@ class AntragIntegrationTest {
 
     @Nested
     class GetDetails {
+
         @Test
         void testGetDetails() throws Exception {
             final Antrag antrag = antragBuilder.build();
@@ -154,17 +114,7 @@ class AntragIntegrationTest {
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(jsonPath("$.allgemein.projektTitel", is(antrag.getProjekt().getTitel())))
-                    .andExpect(jsonPath("$.allgemein.eingangDatum", is(antrag.getEingangDatum().toString())))
-                    .andExpect(jsonPath("$.allgemein.antragstellerName", is(antrag.getAntragsteller().getName())))
-                    .andExpect(jsonPath("$.allgemein.beantragtesBudget").value(antrag.getFinanzierung().getBeantragtesBudget().toPlainString()))
-                    .andExpect(jsonPath("$.allgemein.rubrik", is("Rubrik")))
-                    .andExpect(jsonPath("$.allgemein.status", is(antrag.getBearbeitungsstand().getStatus().name())))
-                    .andExpect(jsonPath("$.allgemein.zammadNr", is(antrag.getZammadTicketNr())))
-                    .andExpect(jsonPath("$.allgemein.aktenzeichen", is(antrag.getAktenzeichen())))
-                    .andExpect(jsonPath("$.allgemein.istGegendert", is(false)))
-                    .andExpect(jsonPath("$.allgemein.eakteCooAdresse", is(antrag.getEakteCooAdresse())))
-                    .andExpect(jsonPath("$.allgemein.anmerkungen", is(antrag.getBearbeitungsstand().getAnmerkungen())));
+                    .andExpect(content().json(objectMapper.writeValueAsString(antragMapper.toDetailsDTO(antrag))));
         }
 
         @Test
