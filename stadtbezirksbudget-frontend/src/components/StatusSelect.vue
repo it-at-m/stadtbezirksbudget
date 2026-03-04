@@ -11,7 +11,7 @@
 </template>
 
 <script generic="T = Status | Status[]" lang="ts" setup>
-import type { StatusOption } from "@/types/antrag/Status.ts";
+import type { Status, StatusOption } from "@/types/antrag/Status.ts";
 
 import { statusOptions } from "@/types/antrag/Status.ts";
 
