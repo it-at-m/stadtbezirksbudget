@@ -1,5 +1,6 @@
 package de.muenchen.stadtbezirksbudget.backend.antrag.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.EnumType;
@@ -26,6 +27,7 @@ import org.hibernate.annotations.EmbeddedColumnNaming;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
+@JsonIgnoreProperties("fullName")
 public class Antragsteller implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -40,4 +42,18 @@ public class Antragsteller implements Serializable {
     @NotNull @Embedded
     @EmbeddedColumnNaming("adresse_%s")
     private Adresse adresse;
+
+    /**
+     * Gets the full name of the antragsteller.
+     *
+     * @return the full name in the format "firstName name" if the first name is not blank, otherwise
+     *         just the name.
+     */
+    public String getFullName() {
+        String fullName = name;
+        if (vorname != null && !vorname.isBlank()) {
+            fullName = vorname + " " + fullName;
+        }
+        return fullName;
+    }
 }
