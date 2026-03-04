@@ -1,4 +1,4 @@
-import type AntragSummary from "@/types/AntragSummary.ts";
+import type AntragSummary from "@/types/antragList/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
 import { computed, readonly, ref } from "vue";
@@ -10,7 +10,7 @@ import router from "@/plugins/router.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore.ts";
 import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
-import { antragListSortToSortItem } from "@/types/AntragListSort.ts";
+import { antragListSortToSortItem } from "@/types/antragList/AntragListSort.ts";
 
 /**
  * Composable function that manages the state and operations for a list of

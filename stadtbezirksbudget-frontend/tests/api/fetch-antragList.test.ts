@@ -2,8 +2,11 @@ import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { getAntragList } from "@/api/fetch-antragList.ts";
 import { BACKEND } from "@/constants.ts";
-import { defaultAntragListFilter } from "@/types/AntragListFilter";
-import { AntragListSort, createEmptyListSort } from "@/types/AntragListSort";
+import { defaultAntragListFilter } from "@/types/antragList/AntragListFilter.ts";
+import {
+  AntragListSort,
+  createEmptyListSort,
+} from "@/types/antragList/AntragListSort.ts";
 
 global.fetch = vi.fn();
 

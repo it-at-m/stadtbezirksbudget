@@ -1,11 +1,11 @@
-import type { FinanzierungArtOption } from "@/types/FinanzierungArt";
+import type { FinanzierungArtOption } from "@/types/antrag/FinanzierungArt.ts";
 
 import { describe, expect, test } from "vitest";
 
 import {
   finanzierungArtOptions,
   FinanzierungArtText,
-} from "@/types/FinanzierungArt.ts";
+} from "@/types/antrag/FinanzierungArt.ts";
 
 describe("FinanzierungArt", () => {
   test("FinanzierungArtText maps each option value to its title", () => {

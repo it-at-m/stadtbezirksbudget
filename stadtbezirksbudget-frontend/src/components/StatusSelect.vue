@@ -11,9 +11,9 @@
 </template>
 
 <script generic="T = Status | Status[]" lang="ts" setup>
-import type { Status, StatusOption } from "@/types/Status.ts";
+import type { StatusOption } from "@/types/antrag/Status.ts";
 
-import { statusOptions } from "@/types/Status.ts";
+import { statusOptions } from "@/types/antrag/Status.ts";
 
 const model = defineModel<T>();
 

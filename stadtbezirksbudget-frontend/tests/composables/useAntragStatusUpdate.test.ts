@@ -1,4 +1,4 @@
-import type { Status } from "@/types/Status.ts";
+import type { Status } from "@/types/antrag/Status.ts";
 
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
@@ -181,38 +181,36 @@ describe("useAntragStatusUpdate", () => {
     });
   });
 
-  describe("onFocusChange", () => {
-    test("resets status when unfocused", () => {
-      const { status, onFocusChange, search } = useAntragStatusUpdate(
+  describe("toggleStatusAndSearch", () => {
+    test("toggles status and search when unfocused", () => {
+      const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
         ref("1"),
         ref("EINGEGANGEN"),
         onUpdate
       );
 
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
-      search.value = "abc";
 
-      onFocusChange(false);
+      toggleStatusAndSearch(false);
 
       expect(status.value).toBe("EINGEGANGEN");
       expect(search.value).toBe("");
       expect(onUpdate).not.toHaveBeenCalled();
     });
 
-    test("does nothing on focus", () => {
-      const { status, onFocusChange, search } = useAntragStatusUpdate(
+    test("toggles status and search when focused", () => {
+      const { status, toggleStatusAndSearch, search } = useAntragStatusUpdate(
         ref("1"),
         ref("EINGEGANGEN"),
         onUpdate
       );
 
-      status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
-      search.value = "abc";
+      status.value = "ABGELEHNT_NICHT_ZUSTAENDIG";
 
-      onFocusChange(true);
+      toggleStatusAndSearch(true);
 
-      expect(status.value).toBe("ABGELEHNT_KEINE_RUECKMELDUNG");
-      expect(search.value).toBe("abc");
+      expect(status.value).toBeUndefined();
+      expect(search.value).toBe(StatusText["EINGEGANGEN"].shortText);
       expect(onUpdate).not.toHaveBeenCalled();
     });
   });

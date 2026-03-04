@@ -10,7 +10,7 @@ import {
   AntragListSortOption,
   createDefaultListSort,
   createEmptyListSort,
-} from "@/types/AntragListSort";
+} from "@/types/antragList/AntragListSort.ts";
 
 vi.mock("@/stores/useAntragListSortingStore.ts");
 

@@ -1,9 +1,9 @@
-import type { AntragListSort } from "@/types/AntragListSort.ts";
+import type { AntragListSort } from "@/types/antragList/AntragListSort.ts";
 
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { createDefaultListSort } from "@/types/AntragListSort.ts";
+import { createDefaultListSort } from "@/types/antragList/AntragListSort.ts";
 
 /**
  * Pinia store for managing the sorting options applied to the Antrag list.

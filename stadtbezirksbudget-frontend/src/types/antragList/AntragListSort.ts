@@ -1,6 +1,6 @@
 import type { DataTableSortItem } from "vuetify";
 
-import { sortDefinitions } from "@/types/AntragListSortDefinitions.ts";
+import { sortDefinitions } from "@/types/antragList/AntragListSortDefinitions.ts";
 
 const DEFAULT_SORT_KEY: keyof typeof sortDefinitions = "eingangDatum";
 const DEFAULT_SORT_DIRECTION: sortDirection = "desc";

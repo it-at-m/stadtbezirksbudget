@@ -1,5 +1,5 @@
 import type { BeschlussStatus } from "@/types/antrag/BeschlussStatus.ts";
-import type { Status } from "@/types/Status.ts";
+import type { Status } from "@/types/antrag/Status.ts";
 
 export interface AntragAllgemein {
   eingangDatum: string; // ISO date string from API

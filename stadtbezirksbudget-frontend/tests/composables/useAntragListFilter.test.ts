@@ -6,7 +6,7 @@ import {
   AntragListFilter,
   defaultAntragListFilter,
   emptyAntragListFilter,
-} from "@/types/AntragListFilter";
+} from "@/types/antragList/AntragListFilter.ts";
 
 vi.mock("@/stores/useAntragListFilterStore.ts");
 

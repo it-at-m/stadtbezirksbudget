@@ -1,4 +1,4 @@
-import type { AntragListFilter } from "@/types/AntragListFilter.ts";
+import type { AntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 
 import { toLocalISOString } from "@/util/formatter.ts";
 

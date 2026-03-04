@@ -1,9 +1,9 @@
-import type { AntragListFilter } from "@/types/AntragListFilter.ts";
+import type { AntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { defaultAntragListFilter } from "@/types/AntragListFilter.ts";
+import { defaultAntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 
 /**
  * Pinia store for managing the filters applied to the Antrag list.
