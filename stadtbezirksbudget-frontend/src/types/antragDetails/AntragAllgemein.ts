@@ -1,5 +1,6 @@
 import type { BeschlussStatus } from "@/types/antrag/BeschlussStatus.ts";
 import type { Status } from "@/types/antrag/Status.ts";
+import type { AntragAndererZuwendungsantrag } from "@/types/antragDetails/AntragAndererZuwendungsantrag.ts";
 
 export interface AntragAllgemein {
   eingangDatum: string; // ISO date string from API
@@ -12,5 +13,5 @@ export interface AntragAllgemein {
   beschlussStatus: BeschlussStatus;
   istZuwendungDritterBeantragt: boolean;
   summeAndereZuwendungsantraege: number;
-  //TODO: andereZuwendungsantraege: AntragAndererZuwendungsantrag[];
+  andereZuwendungsantraege: AntragAndererZuwendungsantrag[];
 }
