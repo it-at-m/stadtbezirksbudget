@@ -23,7 +23,7 @@ spring:
       bindings:
         antragConsumer-in-0:
           destination: ${kafka.topic}
-          group: stadtbezirksbudget-backend
+          group: ${kafka.group}
           consumer:
             max-attempts: 3
             retryable-exceptions:
