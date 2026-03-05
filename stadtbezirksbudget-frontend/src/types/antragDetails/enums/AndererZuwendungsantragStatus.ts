@@ -1,13 +1,12 @@
 // Array of all AndererZuwendungsantragStatus options
-export const andererZuwendungsantragStatusOptions: readonly AndererZuwendungsantragStatusOption[] =
-  [
-    {
-      value: "BEANTRAGT",
-    },
-    {
-      value: "ZUGESAGT",
-    },
-  ] as const;
+export const andererZuwendungsantragStatusOptions = [
+  {
+    value: "BEANTRAGT",
+  },
+  {
+    value: "ZUGESAGT",
+  },
+] as const satisfies readonly AndererZuwendungsantragStatusOption[];
 
 // Type representing all possible AndererZuwendungsantragStatus values
 export type AndererZuwendungsantragStatus =
