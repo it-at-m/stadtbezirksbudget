@@ -23,7 +23,7 @@ public interface AntragMapper {
      */
     @Mapping(target = "status", source = "antrag.bearbeitungsstand.status")
     @Mapping(target = "zammadNr", source = "zammadTicketNr")
-    @Mapping(target = "antragstellerName", source = "antrag.antragsteller.name")
+    @Mapping(target = "antragstellerName", source = "antrag.antragsteller.fullName")
     @Mapping(target = "projektTitel", source = "antrag.projekt.titel")
     @Mapping(target = "beantragtesBudget", source = "antrag.finanzierung.beantragtesBudget")
     @Mapping(target = "finanzierungArt", source = "antrag.finanzierung.art")
