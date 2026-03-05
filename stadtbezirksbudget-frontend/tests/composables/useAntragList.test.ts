@@ -1,4 +1,4 @@
-import type AntragSummary from "@/types/AntragSummary.ts";
+import type AntragSummary from "@/types/antragList/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
 import { beforeEach, describe, expect, test, vi } from "vitest";
@@ -15,12 +15,12 @@ import { useSnackbarStore } from "@/stores/useSnackbarStore.ts";
 import {
   AntragListFilter,
   defaultAntragListFilter,
-} from "@/types/AntragListFilter.ts";
+} from "@/types/antragList/AntragListFilter.ts";
 import {
   AntragListSort,
   antragListSortOptionFromSortItems,
   createEmptyListSort,
-} from "@/types/AntragListSort";
+} from "@/types/antragList/AntragListSort.ts";
 
 vi.mock("@/api/fetch-antragList.ts");
 vi.mock("@/stores/useSnackbarStore.ts");

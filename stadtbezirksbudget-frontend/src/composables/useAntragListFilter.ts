@@ -1,9 +1,9 @@
-import type { AntragListFilter } from "@/types/AntragListFilter.ts";
+import type { AntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 
 import { computed, ref } from "vue";
 
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
-import { emptyAntragListFilter } from "@/types/AntragListFilter.ts";
+import { emptyAntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 
 /**
  * Composable for managing the Antrag list filters.

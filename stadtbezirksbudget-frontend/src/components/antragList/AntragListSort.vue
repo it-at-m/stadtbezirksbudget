@@ -38,8 +38,8 @@
 
 <script lang="ts" setup>
 import { useAntragListSort } from "@/composables/useAntragListSort.ts";
-import { sortOptionsByField } from "@/types/AntragListSort.ts";
-import { sortDefinitions } from "@/types/AntragListSortDefinitions.ts";
+import { sortOptionsByField } from "@/types/antragList/AntragListSort.ts";
+import { sortDefinitions } from "@/types/antragList/AntragListSortDefinitions.ts";
 
 const { sorting, resetSorting, clearSorting, updateSorting } =
   useAntragListSort();

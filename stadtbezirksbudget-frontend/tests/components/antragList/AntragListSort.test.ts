@@ -8,7 +8,7 @@ import AntragListSort from "@/components/antragList/AntragListSort.vue";
 import { useAntragListSort } from "@/composables/useAntragListSort";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
-import { createEmptyListSort } from "@/types/AntragListSort";
+import { createEmptyListSort } from "@/types/antragList/AntragListSort.ts";
 import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock";
 
 vi.mock("@/composables/useAntragListSort.ts", () => ({

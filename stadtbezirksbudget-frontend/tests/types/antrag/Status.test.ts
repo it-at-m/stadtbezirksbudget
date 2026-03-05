@@ -1,8 +1,8 @@
-import type { StatusOption } from "@/types/Status.ts";
+import type { StatusOption } from "@/types/antrag/Status.ts";
 
 import { describe, expect, test } from "vitest";
 
-import { statusOptions, StatusText } from "@/types/Status.ts";
+import { statusOptions, StatusText } from "@/types/antrag/Status.ts";
 
 describe("Status", () => {
   test("StatusText maps each option value to its short and long text", () => {

@@ -1,4 +1,4 @@
-import type { Status } from "@/types/Status.ts";
+import type { Status } from "@/types/antrag/Status.ts";
 
 import {
   defaultCatchHandler,

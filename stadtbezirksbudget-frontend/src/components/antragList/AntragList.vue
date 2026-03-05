@@ -87,8 +87,8 @@ import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import EakteReference from "@/components/references/EakteReference.vue";
 import ZammadLink from "@/components/references/ZammadLink.vue";
 import { useAntragList } from "@/composables/useAntragList.ts";
-import { AktualisierungArtText } from "@/types/AktualisierungArt.ts";
-import { FinanzierungArtText } from "@/types/FinanzierungArt.ts";
+import { AktualisierungArtText } from "@/types/antrag/AktualisierungArt.ts";
+import { FinanzierungArtText } from "@/types/antrag/FinanzierungArt.ts";
 import { toDateString, toNumberString } from "@/util/formatter.ts";
 
 const {

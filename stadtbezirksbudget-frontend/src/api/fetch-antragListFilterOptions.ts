@@ -1,4 +1,4 @@
-import type { AntragListFilterOptions } from "@/types/AntragListFilter.ts";
+import type { AntragListFilterOptions } from "@/types/antragList/AntragListFilter.ts";
 
 import {
   defaultCatchHandler,

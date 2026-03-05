@@ -2,7 +2,7 @@ import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import { useAntragListSearch } from "@/composables/useAntragListSearch.ts";
 import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
-import { defaultAntragListFilter } from "@/types/AntragListFilter";
+import { defaultAntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 
 vi.mock("@/stores/useAntragListFilterStore.ts");
 

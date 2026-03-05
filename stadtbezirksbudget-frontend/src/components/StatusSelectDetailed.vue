@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { StatusOption } from "@/types/Status.ts";
+import type { StatusOption } from "@/types/antrag/Status.ts";
 
 import { ref } from "vue";
 

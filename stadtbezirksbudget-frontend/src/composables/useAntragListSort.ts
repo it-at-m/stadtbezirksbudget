@@ -1,7 +1,7 @@
 import type {
   AntragListSort,
   AntragListSortOption,
-} from "@/types/AntragListSort.ts";
+} from "@/types/antragList/AntragListSort.ts";
 import type { DataTableSortItem } from "vuetify";
 
 import { computed } from "vue";
@@ -11,7 +11,7 @@ import {
   antragListSortOptionFromSortItems,
   createDefaultListSort,
   createEmptyListSort,
-} from "@/types/AntragListSort.ts";
+} from "@/types/antragList/AntragListSort.ts";
 
 /**
  * Composable for managing the Antrag list sorting options.

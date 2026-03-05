@@ -1,5 +1,5 @@
 // Array of all BeschlussStatus options
-export const beschlussStatusOptions: readonly BeschlussStatusOption[] = [
+export const beschlussStatusOptions = [
   {
     value: "BEWILLIGT",
   },
@@ -12,7 +12,7 @@ export const beschlussStatusOptions: readonly BeschlussStatusOption[] = [
   {
     value: "LEER",
   },
-] as const;
+] as const satisfies readonly BeschlussStatusOption[];
 
 // Type representing all possible BeschlussStatus values
 export type BeschlussStatus = (typeof beschlussStatusOptions)[number]["value"];

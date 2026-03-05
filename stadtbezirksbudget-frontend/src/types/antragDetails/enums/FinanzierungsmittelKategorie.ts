@@ -1,16 +1,15 @@
 // Array of all FinanzierungsmittelKategorie options
-export const finanzierungsmittelKategorieOptions: readonly FinanzierungsmittelKategorieOption[] =
-  [
-    {
-      value: "EINNAHMEN",
-    },
-    {
-      value: "EIGENMITTEL",
-    },
-    {
-      value: "ZUWENDUNGEN_DRITTER",
-    },
-  ] as const;
+export const finanzierungsmittelKategorieOptions = [
+  {
+    value: "EINNAHMEN",
+  },
+  {
+    value: "EIGENMITTEL",
+  },
+  {
+    value: "ZUWENDUNGEN_DRITTER",
+  },
+] as const satisfies readonly FinanzierungsmittelKategorieOption[];
 
 // Type representing all possible FinanzierungsmittelKategorie values
 export type FinanzierungsmittelKategorie =
