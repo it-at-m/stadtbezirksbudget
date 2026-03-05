@@ -1,5 +1,5 @@
-import type { Rechtsform } from "@/types/antrag/Rechtsform.ts";
 import type { AntragAdresse } from "@/types/antragDetails/AntragAdresse.ts";
+import type { Rechtsform } from "@/types/antragDetails/enums/Rechtsform.ts";
 
 export interface AntragAntragsteller {
   vorname: string;

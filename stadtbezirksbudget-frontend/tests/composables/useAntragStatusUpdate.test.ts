@@ -1,4 +1,4 @@
-import type { Status } from "@/types/Status.ts";
+import type { Status } from "@/types/antrag/Status.ts";
 
 import { beforeEach, describe, expect, test, vi } from "vitest";
 import { ref } from "vue";
@@ -190,7 +190,6 @@ describe("useAntragStatusUpdate", () => {
       );
 
       status.value = "ABGELEHNT_KEINE_RUECKMELDUNG";
-      search.value = "abc";
 
       onFocusChange(false);
 

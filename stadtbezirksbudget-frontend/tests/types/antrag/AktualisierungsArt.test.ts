@@ -1,11 +1,11 @@
-import type { AktualisierungArtOption } from "@/types/AktualisierungArt";
+import type { AktualisierungArtOption } from "@/types/antrag/AktualisierungArt.ts";
 
 import { describe, expect, test } from "vitest";
 
 import {
   aktualisierungArtOptions,
   AktualisierungArtText,
-} from "@/types/AktualisierungArt.ts";
+} from "@/types/antrag/AktualisierungArt.ts";
 
 describe("AktualisierungArt", () => {
   test("AktualisierungArtText maps each option value to its title", () => {

@@ -1,4 +1,4 @@
-import type { AntragListFilterOptions } from "@/types/AntragListFilter";
+import type { AntragListFilterOptions } from "@/types/antragList/AntragListFilter.ts";
 
 import { afterEach, describe, expect, test, vi } from "vitest";
 

@@ -1,4 +1,4 @@
-import type { FinanzierungsmittelKategorie } from "@/types/antrag/FinanzierungsmittelKategorie.ts";
+import type { FinanzierungsmittelKategorie } from "@/types/antragDetails/enums/FinanzierungsmittelKategorie.ts";
 
 export interface AntragFinanzierungsmittel {
   kategorie: FinanzierungsmittelKategorie;

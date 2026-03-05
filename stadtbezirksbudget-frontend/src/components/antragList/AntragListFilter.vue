@@ -176,9 +176,9 @@ import RangeInput from "@/components/common/RangeInput.vue";
 import StatusSelect from "@/components/StatusSelect.vue";
 import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
 import { useAntragListFilterOptionsStore } from "@/stores/useAntragListFilterOptionsStore.ts";
-import { aktualisierungArtOptions } from "@/types/AktualisierungArt.ts";
-import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
-import { finanzierungArtOptions } from "@/types/FinanzierungArt.ts";
+import { aktualisierungArtOptions } from "@/types/antrag/AktualisierungArt.ts";
+import { bezirksausschussNrOptions } from "@/types/antrag/BezirksausschussNr.ts";
+import { finanzierungArtOptions } from "@/types/antrag/FinanzierungArt.ts";
 
 const { updateFilters, resetFilters, filters } = useAntragListFilter();
 const { filterOptions } = useAntragListFilterOptionsStore();
