@@ -15,7 +15,7 @@ export interface AntragDetails {
   bezirksinformationen: AntragBezirksinformationen;
   finanzierung: AntragFinanzierung;
   projekt: AntragProjekt;
-  vertretungsberechtigter: AntragVertretungsberechtigter;
+  vertretungsberechtigter?: AntragVertretungsberechtigter;
   verwendungsnachweis: AntragVerwendungsnachweis;
   zahlung: AntragZahlung;
 }
