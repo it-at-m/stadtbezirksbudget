@@ -1,5 +1,5 @@
 // Array of all finanzierung art options
-export const finanzierungArtOptions: readonly FinanzierungArtOption[] = [
+export const finanzierungArtOptions = [
   {
     value: "FEHL",
     title: "Fehl",
@@ -8,7 +8,7 @@ export const finanzierungArtOptions: readonly FinanzierungArtOption[] = [
     value: "FEST",
     title: "Fest",
   },
-] as const;
+] as const satisfies readonly FinanzierungArtOption[];
 
 // Type representing all possible finanzierung art values
 export type FinanzierungArt = (typeof finanzierungArtOptions)[number]["value"];
@@ -21,4 +21,10 @@ export interface FinanzierungArtOption {
 
 // Mapping of finanzierung art values to their corresponding short and long texts
 export const FinanzierungArtText: Record<FinanzierungArt, string> =
-  Object.fromEntries(finanzierungArtOptions.map((a) => [a.value, a.title]));
+  finanzierungArtOptions.reduce(
+    (acc, a) => {
+      acc[a.value as FinanzierungArt] = a.title;
+      return acc;
+    },
+    {} as Record<FinanzierungArt, string>
+  );

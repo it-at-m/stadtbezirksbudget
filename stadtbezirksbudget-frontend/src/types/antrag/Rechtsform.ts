@@ -1,5 +1,5 @@
 // Array of all rechtsform options
-export const rechtsformOptions: readonly RechtsformOption[] = [
+export const rechtsformOptions = [
   {
     value: "NATUERLICHE_PERSON",
   },
@@ -9,7 +9,7 @@ export const rechtsformOptions: readonly RechtsformOption[] = [
   {
     value: "SONSTIGE_VEREINIGUNGEN",
   },
-] as const;
+] as const satisfies readonly RechtsformOption[];
 
 // Type representing all possible rechtsform values
 export type Rechtsform = (typeof rechtsformOptions)[number]["value"];

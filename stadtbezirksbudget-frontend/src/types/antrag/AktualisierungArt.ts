@@ -1,5 +1,5 @@
 // Array of all aktualisierung art options
-export const aktualisierungArtOptions: readonly AktualisierungArtOption[] = [
+export const aktualisierungArtOptions = [
   {
     value: "E_AKTE",
     title: "E-Akte",
@@ -12,7 +12,7 @@ export const aktualisierungArtOptions: readonly AktualisierungArtOption[] = [
     value: "FACHANWENDUNG",
     title: "Fachanwendung",
   },
-] as const;
+] as const satisfies readonly AktualisierungArtOption[];
 
 // Type representing all possible aktualisierung art values
 export type AktualisierungArt =
@@ -26,4 +26,10 @@ export interface AktualisierungArtOption {
 
 // Mapping of aktualisierung art values to their corresponding short and long texts
 export const AktualisierungArtText: Record<AktualisierungArt, string> =
-  Object.fromEntries(aktualisierungArtOptions.map((a) => [a.value, a.title]));
+  aktualisierungArtOptions.reduce(
+    (acc, a) => {
+      acc[a.value as AktualisierungArt] = a.title;
+      return acc;
+    },
+    {} as Record<AktualisierungArt, string>
+  );
