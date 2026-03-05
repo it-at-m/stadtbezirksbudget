@@ -23,4 +23,6 @@ refarch:
     user-info-uri: NotNeeded
     logging-mode: all
 
-kafka.topic: stadtbezirksbudget-cit-backend-local
+kafka:
+  topic: stadtbezirksbudget-cit-backend-local
+  group: stadbezirksbudget-backend
