@@ -25,4 +25,4 @@ refarch:
 
 kafka:
   topic: stadtbezirksbudget-cit-backend-local
-  group: stadbezirksbudget-backend
+  group: stadtbezirksbudget-backend
