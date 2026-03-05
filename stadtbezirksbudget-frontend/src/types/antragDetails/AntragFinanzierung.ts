@@ -8,7 +8,6 @@ export interface AntragFinanzierung {
   voraussichtlicheAusgaben: AntragVoraussichtlicheAusgabe[];
   gesamtkosten: number;
   kostenAnmerkung: string;
-  istZuwendungDritterBeantragt: boolean;
   finanzierungsmittel: AntragFinanzierungsmittel[];
   istZuwenigEigenmittel: boolean;
   begruendungEigenmittel: string;

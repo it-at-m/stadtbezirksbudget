@@ -6,7 +6,7 @@ import AntragStatusUpdate from "@/components/AntragStatusUpdate.vue";
 import { useAntragStatusUpdate } from "@/composables/useAntragStatusUpdate.ts";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
-import { Status, statusOptions } from "@/types/Status";
+import { Status, statusOptions } from "@/types/antrag/Status.ts";
 
 vi.mock("@/composables/useAntragStatusUpdate.ts");
 

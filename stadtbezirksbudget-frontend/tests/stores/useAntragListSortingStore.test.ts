@@ -5,7 +5,7 @@ import { useAntragListSortingStore } from "@/stores/useAntragListSortingStore";
 import {
   createDefaultListSort,
   createEmptyListSort,
-} from "@/types/AntragListSort";
+} from "@/types/antragList/AntragListSort.ts";
 
 const testSorting = {
   ...createEmptyListSort(),

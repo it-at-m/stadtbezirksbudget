@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Status } from "@/types/Status.ts";
+import type { Status } from "@/types/antrag/Status.ts";
 
 import { toRefs } from "vue";
 

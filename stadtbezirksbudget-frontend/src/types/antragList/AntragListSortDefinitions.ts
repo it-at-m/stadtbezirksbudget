@@ -1,4 +1,4 @@
-import type { AntragListSortOption } from "@/types/AntragListSort.ts";
+import type { AntragListSortOption } from "@/types/antragList/AntragListSort.ts";
 
 // Defines which sorting options are available for different values
 export const sortDefinitions = {

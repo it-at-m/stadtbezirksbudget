@@ -1,6 +1,6 @@
-import type { AntragListFilter } from "@/types/AntragListFilter.ts";
-import type { AntragListSort } from "@/types/AntragListSort.ts";
-import type AntragSummary from "@/types/AntragSummary.ts";
+import type { AntragListFilter } from "@/types/antragList/AntragListFilter.ts";
+import type { AntragListSort } from "@/types/antragList/AntragListSort.ts";
+import type AntragSummary from "@/types/antragList/AntragSummary.ts";
 import type Page from "@/types/Page.ts";
 
 import {
@@ -9,8 +9,8 @@ import {
   getConfig,
 } from "@/api/fetch-utils.ts";
 import { BACKEND } from "@/constants.ts";
-import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
-import { antragListSortToSortDto } from "@/types/AntragListSort.ts";
+import { antragListFilterToDTO } from "@/types/antragList/AntragListFilterDTO.ts";
+import { antragListSortToSortDto } from "@/types/antragList/AntragListSort.ts";
 import { objectToSearchParams } from "@/util/converter.ts";
 
 /**

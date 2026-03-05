@@ -5,7 +5,7 @@ import { useAntragListFilterStore } from "@/stores/useAntragListFilterStore.ts";
 import {
   AntragListFilter,
   defaultAntragListFilter,
-} from "@/types/AntragListFilter";
+} from "@/types/antragList/AntragListFilter.ts";
 
 const testFilters: AntragListFilter = {
   status: ["EINGEGANGEN", "ABGESCHLOSSEN"],

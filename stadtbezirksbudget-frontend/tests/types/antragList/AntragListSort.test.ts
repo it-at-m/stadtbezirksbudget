@@ -9,8 +9,8 @@ import {
   createDefaultListSort,
   createEmptyListSort,
   sortOptionsByField,
-} from "@/types/AntragListSort";
-import { sortDefinitions } from "@/types/AntragListSortDefinitions";
+} from "@/types/antragList/AntragListSort.ts";
+import { sortDefinitions } from "@/types/antragList/AntragListSortDefinitions.ts";
 
 describe("AntragListSort", () => {
   test("create empty AntragListSort returns empty AntragListSort", () => {
@@ -155,7 +155,7 @@ describe("AntragListSort", () => {
     test("returns empty sort if no default sort is defined", async () => {
       const spy = vi
         .spyOn(
-          await import("@/types/AntragListSortDefinitions"),
+          await import("@/types/antragList/AntragListSortDefinitions.ts"),
           "sortDefinitions",
           "get"
         )

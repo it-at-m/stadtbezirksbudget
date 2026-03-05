@@ -8,7 +8,7 @@ import AntragListFilter from "@/components/antragList/AntragListFilter.vue";
 import { useAntragListFilter } from "@/composables/useAntragListFilter.ts";
 import pinia from "@/plugins/pinia.ts";
 import vuetify from "@/plugins/vuetify.ts";
-import { defaultAntragListFilter } from "@/types/AntragListFilter.ts";
+import { defaultAntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 import { ResizeObserverMock } from "../../_testUtils/ResizeObserverMock.ts";
 
 vi.mock("@/composables/useAntragListFilter.ts");

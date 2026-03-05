@@ -1,8 +1,8 @@
-import type { AntragListFilter } from "@/types/AntragListFilter";
+import type { AntragListFilter } from "@/types/antragList/AntragListFilter.ts";
 
 import { describe, expect, test } from "vitest";
 
-import { antragListFilterToDTO } from "@/types/AntragListFilterDTO.ts";
+import { antragListFilterToDTO } from "@/types/antragList/AntragListFilterDTO.ts";
 import { toLocalISOString } from "@/util/formatter.ts";
 
 describe("AntragListFilterDTO", () => {

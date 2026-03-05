@@ -1,6 +1,6 @@
-import type { AktualisierungArt } from "@/types/AktualisierungArt.ts";
-import type { FinanzierungArt } from "@/types/FinanzierungArt.ts";
-import type { Status } from "@/types/Status.ts";
+import type { AktualisierungArt } from "@/types/antrag/AktualisierungArt.ts";
+import type { FinanzierungArt } from "@/types/antrag/FinanzierungArt.ts";
+import type { Status } from "@/types/antrag/Status.ts";
 
 export default interface AntragSummary {
   id: string;

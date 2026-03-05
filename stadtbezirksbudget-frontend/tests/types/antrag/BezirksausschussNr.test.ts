@@ -1,8 +1,8 @@
-import type { BezirksausschussNrOption } from "@/types/BezirksausschussNr";
+import type { BezirksausschussNrOption } from "@/types/antrag/BezirksausschussNr.ts";
 
 import { describe, expect, test } from "vitest";
 
-import { bezirksausschussNrOptions } from "@/types/BezirksausschussNr.ts";
+import { bezirksausschussNrOptions } from "@/types/antrag/BezirksausschussNr.ts";
 
 describe("BezirksausschussNr", () => {
   describe("bezirksausschussNrOptions", () => {
