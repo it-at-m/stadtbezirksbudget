@@ -27,7 +27,7 @@
     "vuetify": "3.12.3"
   },
   "devDependencies": {
-    "@cyclonedx/cyclonedx-npm": "4.1.2",
+    "@cyclonedx/cyclonedx-npm": "4.2.1",
     "@intlify/eslint-plugin-vue-i18n": "4.2.0",
     "@intlify/unplugin-vue-i18n": "11.0.7",
     "@mdi/js": "7.4.47",
