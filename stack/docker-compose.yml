@@ -148,7 +148,7 @@ services:
       - kafka
 
   kafka:
-    image: confluentinc/cp-kafka:7.9.10@sha256:07c3d60362e67c296f7f34b690b1240e5ecdcde4a84f5e73cab320fb4041f58c
+    image: confluentinc/cp-kafka:7.9.11@sha256:900c8308578371e874892eb6b121d15cc2f6a0a1f1be50f319746fb36d052bf6
     depends_on:
       zookeeper:
         condition: service_healthy
@@ -182,7 +182,7 @@ services:
       - kafka
 
   init-kafka:
-    image: confluentinc/cp-kafka:7.9.10@sha256:07c3d60362e67c296f7f34b690b1240e5ecdcde4a84f5e73cab320fb4041f58c
+    image: confluentinc/cp-kafka:7.9.11@sha256:900c8308578371e874892eb6b121d15cc2f6a0a1f1be50f319746fb36d052bf6
     depends_on:
       - kafka
     entrypoint: ["/bin/bash", "-c"]
