@@ -1,25 +1,37 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "github>it-at-m/refarch//refarch-tools/refarch-renovate/refarch-renovate-config.json5",
-    "schedule:weekends",
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'github>it-at-m/refarch//refarch-tools/refarch-renovate/refarch-renovate-config.json5',
+    'schedule:weekends',
   ],
-  "timezone": "Europe/Berlin",
-  "labels": ["📌 Dependencies"],
-  "commitMessagePrefix": "⬆️",
-  "commitMessageAction": "Upgrade",
-  "packageRules": [
+  timezone: 'Europe/Berlin',
+  labels: [
+    '📌 Dependencies',
+  ],
+  commitMessagePrefix: '⬆️',
+  commitMessageAction: 'Upgrade',
+  packageRules: [
     {
-      "matchUpdateTypes": ["pin", "pinDigest", "digest"],
-      "commitMessagePrefix": "📌",
-      "commitMessageAction": "Pin"
+      matchUpdateTypes: [
+        'pin',
+        'pinDigest',
+        'digest',
+      ],
+      commitMessagePrefix: '📌',
+      commitMessageAction: 'Pin',
     },
     {
-      "matchUpdateTypes": ["rollback"],
-      "commitMessagePrefix": "⬇️",
-      "commitMessageAction": "Downgrade"
-    }
+      matchUpdateTypes: [
+        'rollback',
+      ],
+      commitMessagePrefix: '⬇️',
+      commitMessageAction: 'Downgrade',
+    },
   ],
-  "dependencyDashboardTitle": "📌 Dependency Dashboard",
-  "dependencyDashboardLabels": ["📌 Dependencies"]
+  dependencyDashboard: {
+    title: '📌 Dependency Dashboard',
+    labels: [
+      '📌 Dependencies',
+    ],
+  },
 }
